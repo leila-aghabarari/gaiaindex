@@ -10,17 +10,17 @@
   <script src="assets/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg:        #f0f4f8;
-      --surface:   #e8edf4;
+      --bg:        #f4f7fc;
+      --surface:   #edf2f9;
       --card:      #ffffff;
-      --border:    #dde3ed;
-      --teal:      #2563eb;
-      --teal-dim:  #1d4ed8;
-      --teal-glow: rgba(37,99,235,0.08);
-      --cyan:      #0ea5e9;
-      --text:      #1e293b;
-      --muted:     #64748b;
-      --faint:     #94a3b8;
+      --border:    #dde6f0;
+      --teal:      #1e88e5;
+      --teal-dim:  #1565c0;
+      --teal-glow: rgba(30,136,229,0.09);
+      --cyan:      #42a5f5;
+      --text:      #1a2635;
+      --muted:     #5b7a96;
+      --faint:     #96b2c8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -609,8 +609,8 @@ function updateChartsInner(rows) {
   document.getElementById('sAvgLbl').textContent = 'Avg ' + (colHeaders[rater][1] || 'Score');
 
   if (typeof Chart === 'undefined') return;
-  Chart.defaults.color = '#64748b';
-  Chart.defaults.borderColor = '#dde3ed';
+  Chart.defaults.color = '#5b7a96';
+  Chart.defaults.borderColor = '#dde6f0';
   Chart.defaults.font.family = 'Inter, sans-serif';
   Chart.defaults.font.size = 11;
 
@@ -641,7 +641,7 @@ function updateChartsInner(rows) {
           tooltip: { callbacks: { label: c => ` ${c.parsed.x.toFixed(1)}% avg exposure` } }
         },
         scales: {
-          x: { min:0, max:100, grid:{color:'#dde3ed'}, ticks:{callback: v => v+'%'} },
+          x: { min:0, max:100, grid:{color:'#dde6f0'}, ticks:{callback: v => v+'%'} },
           y: { grid:{display:false}, ticks:{font:{size:10}} }
         },
         onClick: (evt, els) => {
@@ -685,7 +685,7 @@ function updateChartsInner(rows) {
         },
         scales: {
           x: { grid:{display:false}, ticks:{font:{size:9}, maxRotation:0} },
-          y: { grid:{color:'#dde3ed'}, ticks:{precision:0} }
+          y: { grid:{color:'#dde6f0'}, ticks:{precision:0} }
         }
       }
     });

@@ -10,17 +10,17 @@
   <script src="assets/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg:        #f0f4f8;
-      --surface:   #e8edf4;
+      --bg:        #f4f7fc;
+      --surface:   #edf2f9;
       --card:      #ffffff;
-      --border:    #dde3ed;
-      --teal:      #2563eb;
-      --teal-dim:  #1d4ed8;
-      --teal-glow: rgba(37,99,235,0.08);
-      --cyan:      #0ea5e9;
-      --text:      #1e293b;
-      --muted:     #64748b;
-      --faint:     #94a3b8;
+      --border:    #dde6f0;
+      --teal:      #1e88e5;
+      --teal-dim:  #1565c0;
+      --teal-glow: rgba(30,136,229,0.09);
+      --cyan:      #42a5f5;
+      --text:      #1a2635;
+      --muted:     #5b7a96;
+      --faint:     #96b2c8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -179,40 +179,42 @@
     }
 
     .stat-card {
-      background: var(--card);
-      border: 1px solid var(--border);
+      background: linear-gradient(135deg, var(--teal), var(--teal-dim));
+      border: none;
       border-radius: 12px;
       padding: 1.25rem 1.5rem;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 4px 14px rgba(30,136,229,0.28);
     }
 
     .stat-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--teal), transparent);
+      top: -30px; right: -30px;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
     }
 
     .stat-card .val {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 2rem;
       font-weight: 700;
-      color: var(--teal);
+      color: #ffffff;
       line-height: 1;
       margin-bottom: 0.3rem;
     }
 
     .stat-card .label {
       font-size: 0.8rem;
-      color: var(--muted);
+      color: rgba(255,255,255,0.82);
       font-weight: 500;
     }
 
     .stat-card .sub {
       font-size: 0.72rem;
-      color: var(--faint);
+      color: rgba(255,255,255,0.6);
       margin-top: 0.25rem;
     }
 

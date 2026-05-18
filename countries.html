@@ -10,17 +10,17 @@
   <script src="assets/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg:        #f0f4f8;
-      --surface:   #e8edf4;
+      --bg:        #f4f7fc;
+      --surface:   #edf2f9;
       --card:      #ffffff;
-      --border:    #dde3ed;
-      --teal:      #2563eb;
-      --teal-dim:  #1d4ed8;
-      --teal-glow: rgba(37,99,235,0.08);
-      --cyan:      #0ea5e9;
-      --text:      #1e293b;
-      --muted:     #64748b;
-      --faint:     #94a3b8;
+      --border:    #dde6f0;
+      --teal:      #1e88e5;
+      --teal-dim:  #1565c0;
+      --teal-glow: rgba(30,136,229,0.09);
+      --cyan:      #42a5f5;
+      --text:      #1a2635;
+      --muted:     #5b7a96;
+      --faint:     #96b2c8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1043,11 +1043,11 @@ function setSort(val) {
 
 // ── CHARTS ──
 const INCOME_COLORS = {
-  'High':         '#2563eb',
-  'Upper-middle': '#0ea5e9',
-  'Lower-middle': '#f59e0b',
-  'Low':          '#ef4444',
-  'Other':        '#94a3b8',
+  'High':         '#1e88e5',
+  'Upper-middle': '#42a5f5',
+  'Lower-middle': '#ffb300',
+  'Low':          '#ef5350',
+  'Other':        '#90a4ae',
 };
 function incomeColor(g) { return INCOME_COLORS[g] || '#7aada5'; }
 
@@ -1083,8 +1083,8 @@ function updateChartsInner() {
   document.getElementById('cAipi').textContent  = avgOf(aipis) != null ? avgOf(aipis).toFixed(2) : '—';
 
   if (typeof Chart === 'undefined') return;
-  Chart.defaults.color = '#64748b';
-  Chart.defaults.borderColor = '#dde3ed';
+  Chart.defaults.color = '#5b7a96';
+  Chart.defaults.borderColor = '#dde6f0';
   Chart.defaults.font.family = 'Inter, sans-serif';
   Chart.defaults.font.size = 11;
 
@@ -1115,7 +1115,7 @@ function updateChartsInner() {
           tooltip: { callbacks: { label: c => ` ${_barMi ? _barMi.fmt(c.parsed.x) : c.parsed.x}` } }
         },
         scales: {
-          x: { grid:{color:'#dde3ed'}, ticks:{callback: v => _barMi ? _barMi.fmt(v) : v} },
+          x: { grid:{color:'#dde6f0'}, ticks:{callback: v => _barMi ? _barMi.fmt(v) : v} },
           y: { grid:{display:false}, ticks:{font:{size:10}} }
         },
         onClick: (evt, els) => {
@@ -1176,8 +1176,8 @@ function updateChartsInner() {
           }
         },
         scales: {
-          x: { title:{display:true, text:'Work Use %', color:'#7aada5', font:{size:10}}, grid:{color:'#dde3ed'}, ticks:{callback:v=>v+'%'} },
-          y: { title:{display:true, text:'AI Net Optimism (pp)', color:'#7aada5', font:{size:10}}, grid:{color:'#dde3ed'}, ticks:{callback:v=>(v>=0?'+':'')+v} }
+          x: { title:{display:true, text:'Work Use %', color:'#7aada5', font:{size:10}}, grid:{color:'#dde6f0'}, ticks:{callback:v=>v+'%'} },
+          y: { title:{display:true, text:'AI Net Optimism (pp)', color:'#7aada5', font:{size:10}}, grid:{color:'#dde6f0'}, ticks:{callback:v=>(v>=0?'+':'')+v} }
         },
         onClick: (evt, els) => {
           if (!els.length) return;
