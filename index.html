@@ -10,17 +10,17 @@
   <script src="assets/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg:        #09191d;
-      --surface:   #0d2229;
-      --card:      #112c35;
-      --border:    #1e404c;
-      --teal:      #00c9a7;
-      --teal-dim:  #00967d;
-      --teal-glow: rgba(0,201,167,0.12);
-      --cyan:      #22d3ee;
-      --text:      #e2f0ed;
-      --muted:     #7aada5;
-      --faint:     #3a6068;
+      --bg:        #f0f4f8;
+      --surface:   #e8edf4;
+      --card:      #ffffff;
+      --border:    #dde3ed;
+      --teal:      #2563eb;
+      --teal-dim:  #1d4ed8;
+      --teal-glow: rgba(37,99,235,0.08);
+      --cyan:      #0ea5e9;
+      --text:      #1e293b;
+      --muted:     #64748b;
+      --faint:     #94a3b8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,9 +44,10 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(9, 25, 29, 0.92);
+      background: rgba(255,255,255,0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       padding: 0 2rem;
     }
 
@@ -153,11 +154,11 @@
 
     .btn-primary {
       background: var(--teal);
-      color: #09191d;
+      color: #ffffff;
     }
     .btn-primary:hover {
-      background: var(--cyan);
-      color: #09191d;
+      background: var(--teal-dim);
+      color: #ffffff;
     }
 
     .btn-ghost {
@@ -349,7 +350,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.75rem 1.5rem;
-      border-bottom: 1px solid rgba(30, 64, 76, 0.5);
+      border-bottom: 1px solid var(--border);
       gap: 1rem;
     }
 
@@ -473,7 +474,7 @@
     .source-card .tag {
       display: inline-block;
       margin-top: 0.6rem;
-      background: rgba(0,201,167,0.1);
+      background: var(--teal-glow);
       border: 1px solid var(--teal-dim);
       color: var(--teal);
       font-size: 0.7rem;

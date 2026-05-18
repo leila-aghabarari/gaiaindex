@@ -10,17 +10,17 @@
   <script src="assets/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg:        #09191d;
-      --surface:   #0d2229;
-      --card:      #112c35;
-      --border:    #1e404c;
-      --teal:      #00c9a7;
-      --teal-dim:  #00967d;
-      --teal-glow: rgba(0,201,167,0.12);
-      --cyan:      #22d3ee;
-      --text:      #e2f0ed;
-      --muted:     #7aada5;
-      --faint:     #3a6068;
+      --bg:        #f0f4f8;
+      --surface:   #e8edf4;
+      --card:      #ffffff;
+      --border:    #dde3ed;
+      --teal:      #2563eb;
+      --teal-dim:  #1d4ed8;
+      --teal-glow: rgba(37,99,235,0.08);
+      --cyan:      #0ea5e9;
+      --text:      #1e293b;
+      --muted:     #64748b;
+      --faint:     #94a3b8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,9 +44,10 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(9, 25, 29, 0.92);
+      background: rgba(255,255,255,0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       padding: 0 2rem;
     }
 
@@ -153,11 +154,11 @@
 
     .btn-primary {
       background: var(--teal);
-      color: #09191d;
+      color: #ffffff;
     }
     .btn-primary:hover {
-      background: var(--cyan);
-      color: #09191d;
+      background: var(--teal-dim);
+      color: #ffffff;
     }
 
     .btn-ghost {
@@ -581,7 +582,7 @@
       padding: .6rem .85rem; outline: none;
       cursor: pointer; transition: border-color .2s;
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237aada5' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right .75rem center;
       padding-right: 2.2rem;
@@ -683,11 +684,11 @@
     thead th.sorted { color: var(--teal); }
 
     tbody tr {
-      border-bottom: 1px solid rgba(30,64,76,.5);
+      border-bottom: 1px solid var(--border);
       transition: background .15s;
       cursor: pointer;
     }
-    tbody tr:hover { background: rgba(17,44,53,.6); }
+    tbody tr:hover { background: rgba(37,99,235,0.04); }
     td { padding: .75rem 1rem; vertical-align: middle; }
 
     .td-rank {
@@ -1042,11 +1043,11 @@ function setSort(val) {
 
 // ── CHARTS ──
 const INCOME_COLORS = {
-  'High':         '#00c9a7',
-  'Upper-middle': '#22d3ee',
-  'Lower-middle': '#fbbf24',
-  'Low':          '#ef6c5a',
-  'Other':        '#7aada5',
+  'High':         '#2563eb',
+  'Upper-middle': '#0ea5e9',
+  'Lower-middle': '#f59e0b',
+  'Low':          '#ef4444',
+  'Other':        '#94a3b8',
 };
 function incomeColor(g) { return INCOME_COLORS[g] || '#7aada5'; }
 
@@ -1082,8 +1083,8 @@ function updateChartsInner() {
   document.getElementById('cAipi').textContent  = avgOf(aipis) != null ? avgOf(aipis).toFixed(2) : '—';
 
   if (typeof Chart === 'undefined') return;
-  Chart.defaults.color = '#7aada5';
-  Chart.defaults.borderColor = '#1e404c';
+  Chart.defaults.color = '#64748b';
+  Chart.defaults.borderColor = '#dde3ed';
   Chart.defaults.font.family = 'Inter, sans-serif';
   Chart.defaults.font.size = 11;
 
@@ -1114,7 +1115,7 @@ function updateChartsInner() {
           tooltip: { callbacks: { label: c => ` ${_barMi ? _barMi.fmt(c.parsed.x) : c.parsed.x}` } }
         },
         scales: {
-          x: { grid:{color:'#1e404c'}, ticks:{callback: v => _barMi ? _barMi.fmt(v) : v} },
+          x: { grid:{color:'#dde3ed'}, ticks:{callback: v => _barMi ? _barMi.fmt(v) : v} },
           y: { grid:{display:false}, ticks:{font:{size:10}} }
         },
         onClick: (evt, els) => {
@@ -1175,8 +1176,8 @@ function updateChartsInner() {
           }
         },
         scales: {
-          x: { title:{display:true, text:'Work Use %', color:'#7aada5', font:{size:10}}, grid:{color:'#1e404c'}, ticks:{callback:v=>v+'%'} },
-          y: { title:{display:true, text:'AI Net Optimism (pp)', color:'#7aada5', font:{size:10}}, grid:{color:'#1e404c'}, ticks:{callback:v=>(v>=0?'+':'')+v} }
+          x: { title:{display:true, text:'Work Use %', color:'#7aada5', font:{size:10}}, grid:{color:'#dde3ed'}, ticks:{callback:v=>v+'%'} },
+          y: { title:{display:true, text:'AI Net Optimism (pp)', color:'#7aada5', font:{size:10}}, grid:{color:'#dde3ed'}, ticks:{callback:v=>(v>=0?'+':'')+v} }
         },
         onClick: (evt, els) => {
           if (!els.length) return;

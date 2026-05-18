@@ -9,17 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg:        #09191d;
-      --surface:   #0d2229;
-      --card:      #112c35;
-      --border:    #1e404c;
-      --teal:      #00c9a7;
-      --teal-dim:  #00967d;
-      --teal-glow: rgba(0,201,167,0.12);
-      --cyan:      #22d3ee;
-      --text:      #e2f0ed;
-      --muted:     #7aada5;
-      --faint:     #3a6068;
+      --bg:        #f0f4f8;
+      --surface:   #e8edf4;
+      --card:      #ffffff;
+      --border:    #dde3ed;
+      --teal:      #2563eb;
+      --teal-dim:  #1d4ed8;
+      --teal-glow: rgba(37,99,235,0.08);
+      --cyan:      #0ea5e9;
+      --text:      #1e293b;
+      --muted:     #64748b;
+      --faint:     #94a3b8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,9 +38,10 @@
     /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(9,25,29,0.92);
+      background: rgba(255,255,255,0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       padding: 0 2rem;
     }
     .nav-inner {
