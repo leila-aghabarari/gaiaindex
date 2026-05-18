@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — GAIA Index</title>
+  <meta name="description" content="About Leila Aghabarari and the GAIA Global AI Adoption Index." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #09191d;
+      --surface:   #0d2229;
+      --card:      #112c35;
+      --border:    #1e404c;
+      --teal:      #00c9a7;
+      --teal-dim:  #00967d;
+      --teal-glow: rgba(0,201,167,0.12);
+      --cyan:      #22d3ee;
+      --text:      #e2f0ed;
+      --muted:     #7aada5;
+      --faint:     #3a6068;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(9,25,29,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.2rem; color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* PROFILE HERO */
+    .profile-hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 2rem;
+    }
+    .profile-row {
+      max-width: 900px; margin: 0 auto;
+      display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;
+    }
+    .avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal-dim), var(--teal));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem; font-weight: 700; color: #09191d;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 3px var(--teal-glow), 0 0 0 4px var(--border);
+    }
+    .profile-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.02em; margin-bottom: .25rem;
+    }
+    .profile-title { font-size: .9rem; color: var(--muted); margin-bottom: .75rem; }
+    .profile-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .85rem; }
+    .tag {
+      font-size: .7rem; font-weight: 600; padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid var(--teal-dim);
+      background: var(--teal-glow);
+      color: var(--teal);
+    }
+    .profile-links { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .profile-link {
+      font-size: .8rem; color: var(--muted);
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: all .2s;
+    }
+    .profile-link:hover { color: var(--text); border-color: var(--teal-dim); }
+
+    /* CONTAINER */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* SECTIONS */
+    .sec { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .sec:last-child { border-bottom: none; }
+
+    .sec-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .5rem;
+    }
+
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: .75rem; color: var(--text);
+    }
+
+    .bio-text p { font-size: .95rem; color: var(--muted); line-height: 1.8; margin-bottom: .85rem; }
+    .bio-text p:last-child { margin-bottom: 0; }
+    .bio-text strong { color: var(--text); font-weight: 600; }
+    .bio-text em { color: var(--teal); font-style: normal; }
+
+    /* AGENDA GRID */
+    .agenda-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin-top: 1.25rem;
+    }
+    .agenda-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.25rem;
+      position: relative; overflow: hidden;
+    }
+    .agenda-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+    }
+    .agenda-icon { font-size: 1.25rem; margin-bottom: .4rem; }
+    .agenda-title { font-size: .88rem; font-weight: 600; margin-bottom: .25rem; color: var(--text); }
+    .agenda-desc { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+
+    /* GAIA BOX */
+    .gaia-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0;
+      position: relative; overflow: hidden;
+    }
+    .gaia-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+    }
+    .gaia-box h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--teal); margin-bottom: .5rem; font-size: 1rem; font-weight: 600;
+    }
+    .gaia-box p { color: var(--muted); font-size: .88rem; line-height: 1.65; margin-bottom: 1rem; }
+
+    .btn {
+      display: inline-flex; align-items: center;
+      padding: .5rem 1.1rem; border-radius: 7px;
+      font-size: .82rem; font-weight: 600; text-decoration: none;
+      margin-right: .5rem; margin-bottom: .5rem; transition: all .2s;
+    }
+    .btn-teal { background: var(--teal); color: #09191d; }
+    .btn-teal:hover { background: var(--cyan); color: #09191d; }
+    .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-outline:hover { color: var(--text); border-color: var(--teal-dim); }
+
+    /* PAPERS */
+    .paper {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.25rem; margin-bottom: .85rem;
+    }
+    .paper:last-child { margin-bottom: 0; }
+    .paper-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: .5rem;
+      flex-wrap: wrap; gap: .5rem;
+    }
+    .paper-title { font-size: .95rem; font-weight: 600; line-height: 1.4; color: var(--text); }
+    .paper-badge {
+      font-size: .72rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+    }
+    .paper-authors { font-size: .78rem; color: var(--faint); margin-bottom: .5rem; }
+    .paper-abstract { font-size: .82rem; color: var(--muted); line-height: 1.65; margin-bottom: .65rem; }
+    .paper-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .paper-tag {
+      font-size: .68rem; padding: 2px 7px; border-radius: 4px;
+      background: var(--surface); border: 1px solid var(--border); color: var(--faint);
+    }
+
+    /* METHODOLOGY */
+    .method-step {
+      display: flex; gap: .85rem; padding: .85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .method-step:last-child { border-bottom: none; }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      color: var(--teal);
+      font-size: .75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-title { font-size: .88rem; font-weight: 600; margin-bottom: .2rem; color: var(--text); }
+    .step-desc { font-size: .8rem; color: var(--muted); line-height: 1.55; }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .contact-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem; text-align: center;
+    }
+    .contact-icon { font-size: 1.3rem; margin-bottom: .4rem; }
+    .contact-label {
+      font-size: .7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .3rem;
+    }
+    .contact-val { font-size: .82rem; font-weight: 500; color: var(--text); }
+    .contact-val a { color: var(--teal); }
+    .contact-val a:hover { color: var(--cyan); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--muted); }
+    .footer-logo span { color: var(--teal); }
+    footer p { color: var(--faint); font-size: .8rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    @media (max-width: 640px) {
+      .profile-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="profile-hero">
+  <div class="profile-row">
+    <div class="avatar">LA</div>
+    <div>
+      <p class="profile-name">Leila Aghabarari</p>
+      <p class="profile-title">Economist · International Finance Corporation, World Bank Group · Washington DC</p>
+      <div class="profile-tags">
+        <span class="tag">AI &amp; Development</span>
+        <span class="tag">Credit Markets</span>
+        <span class="tag">Emerging Markets</span>
+        <span class="tag">Impact Measurement</span>
+        <span class="tag">West Africa · LAC · MENA · South Asia</span>
+      </div>
+      <div class="profile-links">
+        <a href="mailto:aghabarari.leila@gmail.com" class="profile-link">✉ Email</a>
+        <a href="https://linkedin.com/in/leila-aghabarari" class="profile-link" target="_blank">LinkedIn</a>
+        <a href="data/gaia_occupations.csv" download class="profile-link">⬇ GAIA Data</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="sec">
+    <p class="sec-label">About</p>
+    <h2>Economist at the intersection of AI and development finance</h2>
+    <div class="bio-text">
+      <p>I am an economist at the <strong>International Finance Corporation (IFC), World Bank Group</strong>, where I work on the impact measurement and monitoring of IFC's financial sector projects. My work focuses on measuring the development impact of investment in emerging markets.</p>
+      <p>My research sits at the intersection of <strong>AI economics, Labor economics, development finance, and credit markets</strong>. I study how artificial intelligence is reshaping labor markets, firm productivity, and financial access — with a particular focus on the Global South, where the implications differ sharply from patterns documented in the US and European literature.</p>
+      <p>I hold a <strong>PhD in Economics</strong> and have peer-reviewed publications in <em>Economic Inquiry</em>, <em>Oxford Economic Papers</em>, and <em>Global Economy Journal</em>. My regional expertise spans West Africa, Latin America, South and Southeast Asia, and the Middle East and North Africa.</p>
+      <p>I built <strong>GAIA (Global AI Adoption Index)</strong> as a contribution to the empirical infrastructure for AI economics research.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <p class="sec-label">Research agenda</p>
+    <h2>Current focus areas</h2>
+    <div class="agenda-grid">
+      <div class="agenda-card">
+        <div class="agenda-icon">🤖</div>
+        <p class="agenda-title">AI &amp; Credit Markets</p>
+        <p class="agenda-desc">How generative AI exposure affects firm credit conditions, bank lending behavior, and the financial accelerator channel in emerging markets.</p>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-icon">📊</div>
+        <p class="agenda-title">Development Impact Measurement</p>
+        <p class="agenda-desc">Automating AIMM-style scoring using LLMs. AI as a tool for development finance due diligence and portfolio monitoring.</p>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-icon">🌍</div>
+        <p class="agenda-title">Algorithmic Divide</p>
+        <p class="agenda-desc">Cross-country evidence on differential AI adoption — why low-income countries adopt AI through education rather than production.</p>
+      </div>
+      <div class="agenda-card">
+        <div class="agenda-icon">🏦</div>
+        <p class="agenda-title">Government Credit &amp; Monetary Policy</p>
+        <p class="agenda-desc">How fiscally backed credit programs interact with monetary policy transmission — evidence from Brazil's credit registry.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <p class="sec-label">GAIA Dataset</p>
+    <h2>Global AI Adoption Index</h2>
+    <div class="gaia-box">
+      <h3>What GAIA measures</h3>
+      <p>GAIA combines three independent sources — Anthropic's observed Claude.ai usage data, OpenAI's GPT-4 task annotation (Eloundou et al., Science 2024), and the pre-GPT Suitability for Machine Learning baseline (Brynjolfsson et al., AEA 2018) — into a composite AI exposure index at the occupation level, plus a country-level behavioral panel covering 178 countries.</p>
+      <a href="occupations.html" class="btn btn-teal">Occupation Explorer →</a>
+      <a href="countries.html" class="btn btn-outline">Country Explorer →</a>
+      <a href="data/gaia_occupations.csv" download class="btn btn-outline">Download CSV →</a>
+    </div>
+  </div>
+
+  <div class="sec" id="research">
+    <p class="sec-label">Publications &amp; working papers</p>
+    <h2>Selected research</h2>
+
+    <div class="paper" style="border-left: 3px solid var(--teal)">
+      <div class="paper-header">
+        <p class="paper-title">AI Exposure, Credit Markets, and Employment in Brazil</p>
+        <span class="paper-badge" style="background:var(--teal-glow);color:var(--teal);border:1px solid var(--teal-dim)">Working Paper 2026</span>
+      </div>
+      <p class="paper-authors">Leila Aghabarari · Bernardus Van Doornik (Banco Central do Brasil)</p>
+      <p class="paper-abstract">We study how AI exposure affects firm credit outcomes and employment using detailed credit registry data from Brazil. We construct a sector-level AI exposure index from three independent sources and crosswalk it to Brazilian firm sectors. Exploiting the November 2022 generative AI shock in a difference-in-differences framework with 16 years of pre-treatment data, we find that firms in high-AI-exposure sectors face tighter credit conditions post-2022, with effects concentrated in micro and small firms and partially offset by government bank lending. We further trace how credit tightening transmits to employment and wages, documenting a financial accelerator channel for AI-induced labor market adjustment.</p>
+      <div class="paper-tags">
+        <span class="paper-tag">AI Economics</span><span class="paper-tag">Credit Markets</span><span class="paper-tag">Brazil</span><span class="paper-tag">Employment</span><span class="paper-tag">DiD</span>
+      </div>
+    </div>
+
+    <div class="paper" style="border-left: 3px solid var(--cyan)">
+      <div class="paper-header">
+        <p class="paper-title">The Nuanced Role of Government Credit in Monetary Policy Transmission</p>
+        <span class="paper-badge" style="background:rgba(34,211,238,0.1);color:var(--cyan);border:1px solid #0e7490">BCB WP 636 · 2025</span>
+      </div>
+      <p class="paper-authors">Leila Aghabarari · Sophia Chen (IMF) · Deniz Igan (IMF &amp; CEPR) · Bernardus Van Doornik (BCB)</p>
+      <p class="paper-abstract">We study how fiscally backed credit interventions affect monetary policy transmission using detailed credit registry data from Brazil. Government direct credit weakens pass-through to loan rates and offsets contractions in private credit, especially during tightening, while supporting SMEs. Government-subsidized earmarked credit interacts with lending relationships to shape pass-through, consistent with a relationship-based hold-up channel. These effects are strongest during tightening and largely muted during loosening.</p>
+      <div class="paper-tags">
+        <span class="paper-tag">Monetary Policy</span><span class="paper-tag">Government Banks</span><span class="paper-tag">Brazil</span><span class="paper-tag">SMEs</span>
+      </div>
+    </div>
+
+    <div class="paper" style="border-left: 3px solid #fbbf24">
+      <div class="paper-header">
+        <p class="paper-title">Is There Help Indeed, If There Is Help in Need? Credit Unions During the Global Financial Crisis</p>
+        <span class="paper-badge" style="background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid #713f12">Economic Inquiry · 2021</span>
+      </div>
+      <p class="paper-authors">Leila Aghabarari · Andre Guettler · Mahvish Naeem · Bernardus Van Doornik (BCB)</p>
+      <p class="paper-abstract">We exploit the 2008/09 financial crisis as a shock to Brazilian banks and analyze credit union lending behavior. Credit unions tightened members' credit access less than other bank types (insurance effect). The labor market impact is positive for very small firms — micro firms with higher pre-crisis CU lending increased employment and paid higher wages during the crisis. Published in Economic Inquiry, Vol. 59, pp. 1215–1233.</p>
+      <div class="paper-tags">
+        <span class="paper-tag">Credit Unions</span><span class="paper-tag">Financial Crisis</span><span class="paper-tag">Brazil</span><span class="paper-tag">Labor Markets</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="methodology">
+    <p class="sec-label">Methodology</p>
+    <h2>How GAIA is built</h2>
+    <div class="method-step">
+      <div class="step-num">1</div>
+      <div>
+        <p class="step-title">Anthropic Economic Index — observed usage</p>
+        <p class="step-desc">Downloaded from Hugging Face (Anthropic/EconomicIndex). Task-level Claude.ai usage aggregated by occupation and country. Matched to O*NET task descriptions. SOC-level exposure = employment-weighted sum of task usage percentages.</p>
+      </div>
+    </div>
+    <div class="method-step">
+      <div class="step-num">2</div>
+      <div>
+        <p class="step-title">OpenAI E1+E2 — theoretical exposure</p>
+        <p class="step-desc">Eloundou et al. (Science 2024) replication data. E1+E2 = share of occupation tasks performable by GPT-4 plus software tools. Main specification in empirical work. SOC 2018 codes, 923 occupations.</p>
+      </div>
+    </div>
+    <div class="method-step">
+      <div class="step-num">3</div>
+      <div>
+        <p class="step-title">Brynjolfsson SML — pre-GPT baseline</p>
+        <p class="step-desc">Recomputed from raw CrowdFlower ratings (ICPSR 114436). 2,069 direct work activities scored by crowd workers on 23 rubric questions. Aggregated via O*NET Tasks-to-DWAs bridge. Used as falsification test.</p>
+      </div>
+    </div>
+    <div class="method-step">
+      <div class="step-num">4</div>
+      <div>
+        <p class="step-title">Composite index</p>
+        <p class="step-desc">All measures normalized to 0–1. Composite = mean of OpenAI E1+E2 and SML (full 923-occupation coverage). Three-source composite via PCA available for 177 occupations where Anthropic data matches.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="contact">
+    <p class="sec-label">Contact</p>
+    <h2>Get in touch</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <p class="contact-label">Email</p>
+        <p class="contact-val"><a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">💼</div>
+        <p class="contact-label">LinkedIn</p>
+        <p class="contact-val"><a href="https://linkedin.com/in/leila-aghabarari" target="_blank">leila-aghabarari</a></p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📄</div>
+        <p class="contact-label">Citation</p>
+        <p class="contact-val" style="font-size:.72rem;color:var(--muted)">Aghabarari, L. (2026). GAIA — Global AI Adoption Index. gaiaindex.org</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a> · <a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a></p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+    <p>© 2026 Leila Aghabarari · gaiaindex.org</p>
+  </div>
+</footer>
+
+</body>
+</html>

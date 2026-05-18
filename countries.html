@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Country Explorer — GAIA Index</title>
+  <meta name="description" content="How 178 countries use Claude.ai — work vs personal, collaboration style, task success." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="assets/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:        #09191d;
+      --surface:   #0d2229;
+      --card:      #112c35;
+      --border:    #1e404c;
+      --teal:      #00c9a7;
+      --teal-dim:  #00967d;
+      --teal-glow: rgba(0,201,167,0.12);
+      --cyan:      #22d3ee;
+      --text:      #e2f0ed;
+      --muted:     #7aada5;
+      --faint:     #3a6068;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 25, 29, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--teal); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 2rem 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--teal-glow);
+      border: 1px solid var(--teal-dim);
+      color: var(--teal);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.25rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: #09191d;
+    }
+    .btn-primary:hover {
+      background: var(--cyan);
+      color: #09191d;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-ghost:hover {
+      border-color: var(--teal-dim);
+      color: var(--text);
+    }
+
+    /* Hero right: stat cards */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+    }
+
+    .stat-card .val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-card .label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .stat-card .sub {
+      font-size: 0.72rem;
+      color: var(--faint);
+      margin-top: 0.25rem;
+    }
+
+    /* ── SECTION ── */
+    section {
+      padding: 80px 2rem;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── USE CASE SECTION ── */
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .canvas-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .legend-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-text .pct {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .legend-text .name {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ── OCCUPATIONS PREVIEW ── */
+    .occ-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .occ-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .occ-panel-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .occ-panel-header .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .occ-panel-header .title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .occ-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(30, 64, 76, 0.5);
+      gap: 1rem;
+    }
+
+    .occ-row:last-child { border-bottom: none; }
+
+    .occ-name {
+      font-size: 0.875rem;
+      color: var(--text);
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .occ-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .occ-bar-bg {
+      width: 80px;
+      height: 6px;
+      background: var(--surface);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .occ-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .occ-pct {
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      width: 2.5rem;
+      text-align: right;
+    }
+
+    /* ── COLLAB BARS ── */
+    .collab-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .collab-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .collab-card .pct {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .collab-card .name {
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .collab-card .desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── SOURCES ── */
+    .sources-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .source-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .source-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .source-card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .source-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .source-card .tag {
+      display: inline-block;
+      margin-top: 0.6rem;
+      background: rgba(0,201,167,0.1);
+      border: 1px solid var(--teal-dim);
+      color: var(--teal);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .footer-logo span { color: var(--teal); }
+
+    footer p {
+      color: var(--faint);
+      font-size: 0.8rem;
+    }
+
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 1.25rem 50px;
+        gap: 3rem;
+      }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .usage-grid { grid-template-columns: 1fr; }
+      .occ-grid { grid-template-columns: 1fr; }
+      .collab-grid { grid-template-columns: 1fr 1fr; }
+      .sources-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      section { padding: 60px 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+    }
+
+    /* ── COUNTRIES PAGE ── */
+
+    /* PAGE HEADER */
+    .page-header {
+      max-width: 1200px; margin: 0 auto;
+      padding: 56px 2rem 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .6rem;
+    }
+    .page-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -.02em; margin-bottom: .6rem;
+    }
+    .page-header p { color: var(--muted); max-width: 600px; font-size: .9rem; }
+
+    /* CONTROLS */
+    .controls {
+      max-width: 1200px; margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+    }
+    .search-wrap { position: relative; flex: 1; min-width: 220px; }
+    .search-wrap svg {
+      position: absolute; left: .85rem; top: 50%;
+      transform: translateY(-50%); opacity: .4; pointer-events: none;
+    }
+    #searchInput {
+      width: 100%;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: .875rem;
+      padding: .6rem .85rem .6rem 2.4rem;
+      outline: none; transition: border-color .2s;
+    }
+    #searchInput::placeholder { color: var(--faint); }
+    #searchInput:focus { border-color: var(--teal-dim); }
+
+    select {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: .875rem;
+      padding: .6rem .85rem; outline: none;
+      cursor: pointer; transition: border-color .2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237aada5' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .75rem center;
+      padding-right: 2.2rem;
+    }
+    select:focus { border-color: var(--teal-dim); }
+
+    /* DETAIL PANEL */
+    .detail-panel {
+      display: none;
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 1rem;
+    }
+    .detail-panel.visible { display: block; }
+    .detail-inner {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+    }
+    .detail-inner::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      border-radius: 12px 12px 0 0;
+    }
+    .detail-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .country-flag { font-size: 2rem; margin-right: .75rem; }
+    .country-name-big {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--text);
+    }
+    .country-rank { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+    .close-btn {
+      background: none; border: 1px solid var(--border);
+      border-radius: 6px; color: var(--muted);
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: .9rem; flex-shrink: 0;
+      transition: all .2s;
+    }
+    .close-btn:hover { border-color: var(--teal-dim); color: var(--text); }
+
+    .metrics-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: .75rem; margin-bottom: 1.25rem;
+    }
+    .metric-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: .75rem;
+    }
+    .metric-label {
+      font-size: .7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: 4px;
+    }
+    .metric-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--text);
+    }
+
+    .collab-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: .6rem;
+    }
+    .bbar-row { display: flex; align-items: center; gap: 10px; margin-bottom: .4rem; }
+    .bbar-label { font-size: .8rem; color: var(--muted); width: 140px; flex-shrink: 0; }
+    .bbar-bg { flex: 1; height: 6px; background: var(--surface); border-radius: 3px; overflow: hidden; }
+    .bbar-fill { height: 100%; border-radius: 3px; }
+    .bbar-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .78rem; font-weight: 600; width: 38px; text-align: right;
+    }
+
+    /* TABLE */
+    .table-wrap {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 2rem;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+
+    thead th {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: .75rem 1rem;
+      text-align: left;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      position: sticky; top: 60px;
+    }
+    thead th:hover { color: var(--text); }
+    thead th.sorted { color: var(--teal); }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(30,64,76,.5);
+      transition: background .15s;
+      cursor: pointer;
+    }
+    tbody tr:hover { background: rgba(17,44,53,.6); }
+    td { padding: .75rem 1rem; vertical-align: middle; }
+
+    .td-rank {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .78rem; color: var(--faint); font-weight: 600;
+    }
+    .td-country { font-weight: 500; color: var(--text); }
+    .td-code-badge { font-size: .72rem; color: var(--faint); font-family: 'Space Grotesk', sans-serif; }
+
+    .income-badge {
+      display: inline-block;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 4px; padding: .15rem .55rem;
+      font-size: .7rem; font-weight: 500; color: var(--muted);
+    }
+
+    .pct-bar { display: flex; align-items: center; gap: 6px; }
+    .mini-bar-bg {
+      flex: 1; height: 5px; background: var(--surface);
+      border-radius: 3px; overflow: hidden; max-width: 80px;
+    }
+    .mini-bar-fill { height: 100%; border-radius: 3px; }
+    .pct-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .78rem; font-weight: 600;
+    }
+    .td-global {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .82rem; font-weight: 600; color: var(--muted);
+    }
+
+    .loading { text-align: center; padding: 3rem; color: var(--faint); }
+
+    .source-note {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 3rem;
+      font-size: .78rem; color: var(--faint);
+    }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--muted); }
+    .footer-logo span { color: var(--teal); }
+    footer p { color: var(--faint); font-size: .8rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    /* ── VIZ ── */
+    .stat-row {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+    .stat-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+    }
+    .stat-chip.hi-border { border-color: var(--teal-dim); }
+    .stat-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem; font-weight: 700;
+      color: var(--text); line-height: 1;
+    }
+    .stat-val.teal { color: var(--teal); }
+    .stat-lbl {
+      font-size: 0.68rem; color: var(--muted);
+      margin-top: 0.25rem;
+      text-transform: uppercase; letter-spacing: 0.07em;
+    }
+    .viz-panel {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .viz-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.25rem 1rem;
+    }
+    .viz-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.69rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); margin-bottom: 0.75rem;
+    }
+    .chart-area { position: relative; }
+
+    @media (max-width: 768px) {
+      .controls { flex-direction: column; align-items: stretch; }
+      td, th { padding: .6rem .75rem; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .viz-panel { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html" class="active">Countries</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="label">Country Explorer</div>
+  <h1>AI Adoption Across 178 Countries</h1>
+  <p>How countries use Claude.ai — work vs personal, collaboration style, task success. Week of Feb 5–12, 2026.</p>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Search countries — e.g. Brazil, Nigeria…" autocomplete="off" />
+  </div>
+  <select id="incomeFilter">
+    <option value="">All income groups</option>
+    <option value="High">High income</option>
+    <option value="Upper-middle">Upper-middle income</option>
+    <option value="Lower-middle">Lower-middle income</option>
+    <option value="Low">Low income</option>
+  </select>
+  <select id="sortSelect">
+    <option value="usage_desc">Sort: Global usage (high→low)</option>
+    <option value="work_desc">Sort: Work use % (high→low)</option>
+    <option value="course_desc">Sort: Coursework % (high→low)</option>
+    <option value="aipi_desc">Sort: IMF AIPI (high→low)</option>
+    <option value="sentiment_desc">Sort: AI sentiment (high→low)</option>
+    <option value="regulation_desc">Sort: AI policies (high→low)</option>
+    <option value="name_asc">Sort: A→Z</option>
+  </select>
+</div>
+
+<!-- Stats Row -->
+<div class="stat-row">
+  <div class="stat-chip">
+    <div class="stat-val" id="cCount">—</div>
+    <div class="stat-lbl">Countries</div>
+  </div>
+  <div class="stat-chip hi-border">
+    <div class="stat-val teal" id="cWork">—</div>
+    <div class="stat-lbl">Avg Work Use</div>
+  </div>
+  <div class="stat-chip">
+    <div class="stat-val" id="cSent">—</div>
+    <div class="stat-lbl">Avg AI Sentiment</div>
+  </div>
+  <div class="stat-chip">
+    <div class="stat-val" id="cAipi">—</div>
+    <div class="stat-lbl">Avg IMF AIPI</div>
+  </div>
+</div>
+
+<!-- Charts -->
+<div class="viz-panel">
+  <div class="viz-card">
+    <div class="viz-card-title" id="barChartTitle">Top Countries — click bar for detail</div>
+    <div class="chart-area" style="height:300px">
+      <canvas id="topBar"></canvas>
+    </div>
+  </div>
+  <div class="viz-card">
+    <div class="viz-card-title">Work Use % vs AI Sentiment — bubble size = Claude traffic share</div>
+    <div class="chart-area" style="height:300px">
+      <canvas id="scatterChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div id="detailPanel" class="detail-panel"></div>
+
+<div class="table-wrap">
+  <div class="loading" id="loading">Loading country data…</div>
+  <table id="countryTable" style="display:none">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Country</th>
+        <th>Income Group</th>
+        <th onclick="setSort('work_desc')">Work use %</th>
+        <th onclick="setSort('course_desc')">Coursework %</th>
+        <th onclick="setSort('aipi_desc')" title="IMF AI Preparedness Index (0–1)">IMF AIPI</th>
+        <th onclick="setSort('sentiment_desc')" title="Gallup 2021: % AI mostly helpful minus % mostly harmful">AI Sentiment</th>
+        <th onclick="setSort('regulation_desc')" title="Total AI policy initiatives (OECD.AI Observatory 2024)">AI Policies</th>
+        <th onclick="setSort('usage_desc')" class="sorted">Global share</th>
+      </tr>
+    </thead>
+    <tbody id="countryTbody"></tbody>
+  </table>
+</div>
+
+<div class="source-note">
+  Sources: Anthropic Economic Index (Feb 2026) · IMF AIPI (2023) · Gallup World Poll via OWID (2021) · OECD.AI Observatory (2024) · Eurostat ICT survey (2024).
+  <a href="data/gaia_countries.csv" download>Download CSV →</a>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a></p>
+    <p>Data: Anthropic Economic Index · Feb 2026</p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+const FLAGS = {US:'🇺🇸',BR:'🇧🇷',IN:'🇮🇳',GB:'🇬🇧',DE:'🇩🇪',FR:'🇫🇷',JP:'🇯🇵',KR:'🇰🇷',CA:'🇨🇦',AU:'🇦🇺',MX:'🇲🇽',ES:'🇪🇸',IT:'🇮🇹',NG:'🇳🇬',ZA:'🇿🇦',ID:'🇮🇩',PH:'🇵🇭',PK:'🇵🇰',TR:'🇹🇷',NL:'🇳🇱',PL:'🇵🇱',SE:'🇸🇪',AR:'🇦🇷',CO:'🇨🇴',EG:'🇪🇬',VN:'🇻🇳',TH:'🇹🇭',MY:'🇲🇾',BD:'🇧🇩',GH:'🇬🇭',KE:'🇰🇪',ET:'🇪🇹',SG:'🇸🇬',CL:'🇨🇱',PE:'🇵🇪',MA:'🇲🇦',UA:'🇺🇦',PT:'🇵🇹',CH:'🇨🇭',NO:'🇳🇴',DK:'🇩🇰',FI:'🇫🇮',NZ:'🇳🇿',SA:'🇸🇦',AE:'🇦🇪',IL:'🇮🇱'};
+
+let allData = [], filtered = [], sentimentMap = {}, regulationMap = {}, adoptionMap = {};
+
+function fmt(v, d = 1) {
+  const n = parseFloat(v);
+  return isNaN(n) ? '—' : n.toFixed(d) + '%';
+}
+
+function aipiBar(val) {
+  const n = parseFloat(val);
+  if (isNaN(n)) return '<span style="color:var(--faint);font-size:.78rem">—</span>';
+  const color = n >= 0.65 ? 'var(--teal)' : n >= 0.45 ? 'var(--cyan)' : 'var(--faint)';
+  return `<div class="pct-bar">
+    <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${(n*100).toFixed(0)}%;background:${color}"></div></div>
+    <span class="pct-val" style="color:${color}">${n.toFixed(2)}</span>
+  </div>`;
+}
+
+function miniBar(val, color, max = 80) {
+  const n = parseFloat(val);
+  if (isNaN(n)) return '<span style="color:var(--faint);font-size:.78rem">—</span>';
+  const pct = Math.min(100, (n / max) * 100);
+  return `<div class="pct-bar">
+    <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+    <span class="pct-val" style="color:${color}">${n.toFixed(1)}%</span>
+  </div>`;
+}
+
+function showDetail(geoId) {
+  const row = allData.find(r => r.geo_id === geoId);
+  if (!row) return;
+  const flag = FLAGS[geoId] || '🌐';
+  const name = row.country_name || geoId;
+  const rank = allData.filter(r => parseFloat(r.usage_pct_global) > parseFloat(row.usage_pct_global)).length + 1;
+  const panel = document.getElementById('detailPanel');
+  panel.className = 'detail-panel visible';
+  panel.innerHTML = `<div class="detail-inner">
+    <div class="detail-top">
+      <div style="display:flex;align-items:center">
+        <span class="country-flag">${flag}</span>
+        <div>
+          <p class="country-name-big">${name}</p>
+          <p class="country-rank">Rank #${rank} globally · ${fmt(row.usage_pct_global, 2)} of global Claude.ai traffic · ${row.income_group || ''}</p>
+        </div>
+      </div>
+      <button class="close-btn" onclick="document.getElementById('detailPanel').className='detail-panel'">✕</button>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-box"><p class="metric-label">Global share</p><p class="metric-val">${fmt(row.usage_pct_global, 2)}</p></div>
+      <div class="metric-box" style="border-color:var(--teal-dim)"><p class="metric-label" style="color:var(--teal)">Work use</p><p class="metric-val" style="color:var(--teal)">${fmt(row.uc_work)}</p></div>
+      <div class="metric-box" style="border-color:#0e7490"><p class="metric-label" style="color:var(--cyan)">Personal</p><p class="metric-val" style="color:var(--cyan)">${fmt(row.uc_personal)}</p></div>
+      <div class="metric-box" style="border-color:#713f12"><p class="metric-label" style="color:#fbbf24">Coursework</p><p class="metric-val" style="color:#fbbf24">${fmt(row.uc_coursework)}</p></div>
+      <div class="metric-box"><p class="metric-label">Task success</p><p class="metric-val">${fmt(row.ts_yes)}</p></div>
+      ${row.aipi_overall ? `<div class="metric-box" style="border-color:#0e7490"><p class="metric-label" style="color:#0e9ab0">IMF AI Preparedness</p><p class="metric-val" style="color:#0e9ab0">${parseFloat(row.aipi_overall).toFixed(2)}</p></div>` : ''}
+      ${row._sentiment != null ? `<div class="metric-box" style="border-color:var(--teal-dim)"><p class="metric-label" style="color:var(--teal)">AI Sentiment</p><p class="metric-val" style="color:var(--teal)">${row._sentiment > 0 ? '+' : ''}${row._sentiment.toFixed(1)} pp</p></div>` : ''}
+      ${row._regulation != null ? `<div class="metric-box" style="border-color:#4f46e5"><p class="metric-label" style="color:#818cf8">AI Policies</p><p class="metric-val" style="color:#818cf8">${row._regulation}</p></div>` : ''}
+      ${row._oecd_adoption != null ? `<div class="metric-box" style="border-color:#d97706"><p class="metric-label" style="color:#fbbf24">Firm AI Adoption</p><p class="metric-val" style="color:#fbbf24">${row._oecd_adoption.toFixed(1)}%</p></div>` : ''}
+    </div>
+    <p class="collab-label">Collaboration style</p>
+    ${[['Directive', row.collab_directive, '#ef6c5a'], ['Task iteration', row.collab_task_iteration, '#60a5fa'], ['Learning', row.collab_learning, 'var(--teal)'], ['Feedback loop', row.collab_feedback_loop, '#fbbf24']].map(([l, v, c]) => {
+      const n = parseFloat(v);
+      if (isNaN(n)) return '';
+      return `<div class="bbar-row"><span class="bbar-label">${l}</span><div class="bbar-bg"><div class="bbar-fill" style="width:${Math.min(100, n)}%;background:${c}"></div></div><span class="bbar-val" style="color:${c}">${n.toFixed(1)}%</span></div>`;
+    }).join('')}
+  </div>`;
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const income = document.getElementById('incomeFilter').value;
+  filtered = allData.filter(row => {
+    const name = (row.country_name || row.geo_id || '').toLowerCase();
+    return (!q || name.includes(q) || row.geo_id.toLowerCase().includes(q)) &&
+           (!income || row.income_group === income);
+  });
+
+  const sortMap = {
+    'usage_desc':      ['usage_pct_global', -1],
+    'work_desc':       ['uc_work', -1],
+    'course_desc':     ['uc_coursework', -1],
+    'aipi_desc':       ['aipi_overall', -1],
+    'sentiment_desc':  ['_sentiment', -1],
+    'regulation_desc': ['_regulation', -1],
+    'name_asc':        ['country_name', 1]
+  };
+  const [sf, dir] = sortMap[document.getElementById('sortSelect').value] || ['usage_pct_global', -1];
+  filtered.sort((a, b) => {
+    let av = a[sf], bv = b[sf];
+    if (sf === 'country_name') { av = av || ''; bv = bv || ''; return dir * av.localeCompare(bv); }
+    av = parseFloat(av) || -999; bv = parseFloat(bv) || -999;
+    return dir * (bv - av);
+  });
+
+  const tbody = document.getElementById('countryTbody');
+  tbody.innerHTML = filtered.map(row => {
+    const flag = FLAGS[row.geo_id] || '🌐';
+    const name = row.country_name || row.geo_id;
+    const rank = allData.filter(r => parseFloat(r.usage_pct_global) > parseFloat(row.usage_pct_global)).length + 1;
+    const sent = row._sentiment;
+    const reg  = row._regulation;
+    const sentCell = (sent != null) ? miniBar(sent, sent >= 30 ? 'var(--teal)' : sent >= 10 ? 'var(--cyan)' : 'var(--muted)', 60) : '<span style="color:var(--faint);font-size:.78rem">—</span>';
+    const regCell  = (reg  != null) ? `<span style="color:${reg >= 50 ? 'var(--teal)' : reg >= 15 ? 'var(--cyan)' : 'var(--muted)'};font-size:.85rem">${reg}</span>` : '<span style="color:var(--faint);font-size:.78rem">—</span>';
+    return `<tr onclick="showDetail('${row.geo_id}')">
+      <td class="td-rank">#${rank}</td>
+      <td class="td-country">${flag} ${name} <span class="td-code-badge">${row.geo_id}</span></td>
+      <td><span class="income-badge">${row.income_group || '—'}</span></td>
+      <td>${miniBar(row.uc_work, 'var(--teal)', 80)}</td>
+      <td>${miniBar(row.uc_coursework, '#fbbf24', 50)}</td>
+      <td>${aipiBar(row.aipi_overall)}</td>
+      <td>${sentCell}</td>
+      <td>${regCell}</td>
+      <td class="td-global">${fmt(row.usage_pct_global, 2)}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('countryTable').style.display = filtered.length ? 'table' : 'none';
+  updateCharts();
+}
+
+function setSort(val) {
+  document.getElementById('sortSelect').value = val;
+  applyFilters();
+}
+
+// ── CHARTS ──
+const INCOME_COLORS = {
+  'High':         '#00c9a7',
+  'Upper-middle': '#22d3ee',
+  'Lower-middle': '#fbbf24',
+  'Low':          '#ef6c5a',
+  'Other':        '#7aada5',
+};
+function incomeColor(g) { return INCOME_COLORS[g] || '#7aada5'; }
+
+let topBarChart = null, scatChart = null;
+let _barMi = null;        // current metric info for bar chart callbacks
+let _barGeoIds = [];      // current geo IDs for bar chart click handler
+
+const METRIC_INFO = {
+  'usage_desc':      { field:'usage_pct_global', label:'Global Claude Usage %',  fmt: v => v.toFixed(2)+'%' },
+  'work_desc':       { field:'uc_work',          label:'Work Use %',             fmt: v => v.toFixed(1)+'%' },
+  'course_desc':     { field:'uc_coursework',    label:'Coursework %',           fmt: v => v.toFixed(1)+'%' },
+  'aipi_desc':       { field:'aipi_overall',     label:'IMF AIPI Score',         fmt: v => v.toFixed(2) },
+  'sentiment_desc':  { field:'_sentiment',       label:'AI Net Optimism (pp)',   fmt: v => (v>=0?'+':'')+v.toFixed(1) },
+  'regulation_desc': { field:'_regulation',      label:'AI Policy Initiatives',  fmt: v => String(Math.round(v)) },
+  'name_asc':        { field:'usage_pct_global', label:'Global Claude Usage %',  fmt: v => v.toFixed(2)+'%' },
+};
+
+function updateCharts() {
+  if (!filtered.length) return;
+  updateChartsInner();
+}
+
+function updateChartsInner() {
+  // ── Stats chips (always update, no Chart.js needed) ──
+  const works = filtered.map(r => parseFloat(r.uc_work)).filter(v => !isNaN(v));
+  const sents = filtered.map(r => r._sentiment).filter(v => v != null && !isNaN(v));
+  const aipis = filtered.map(r => parseFloat(r.aipi_overall)).filter(v => !isNaN(v));
+  const avgOf = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
+  document.getElementById('cCount').textContent = filtered.length;
+  document.getElementById('cWork').textContent  = avgOf(works) != null ? avgOf(works).toFixed(1)+'%' : '—';
+  const avgSent = avgOf(sents);
+  document.getElementById('cSent').textContent  = avgSent != null ? (avgSent>=0?'+':'')+avgSent.toFixed(1) : '—';
+  document.getElementById('cAipi').textContent  = avgOf(aipis) != null ? avgOf(aipis).toFixed(2) : '—';
+
+  if (typeof Chart === 'undefined') return;
+  Chart.defaults.color = '#7aada5';
+  Chart.defaults.borderColor = '#1e404c';
+  Chart.defaults.font.family = 'Inter, sans-serif';
+  Chart.defaults.font.size = 11;
+
+  // ── Top bar chart ──
+  const sortVal = document.getElementById('sortSelect').value;
+  _barMi = METRIC_INFO[sortVal] || METRIC_INFO['usage_desc'];
+  document.getElementById('barChartTitle').textContent = `Top 12 by ${_barMi.label} — click for detail`;
+
+  const top12 = filtered
+    .map(r => ({ row:r, val: parseFloat(r[_barMi.field]) }))
+    .filter(d => !isNaN(d.val))
+    .sort((a,b) => b.val - a.val)
+    .slice(0, 12);
+
+  _barGeoIds = top12.map(d => d.row.geo_id);
+  const bLabels = top12.map(d => (d.row.country_name || d.row.geo_id).replace(/\s*\(.*\)/, '').trim());
+  const bVals   = top12.map(d => d.val);
+  const bColors = top12.map(d => incomeColor(d.row.income_group));
+
+  if (!topBarChart) {
+    topBarChart = new Chart(document.getElementById('topBar'), {
+      type: 'bar',
+      data: { labels: bLabels, datasets: [{ data: bVals, backgroundColor: bColors, borderRadius: 3, barThickness: 16 }] },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${_barMi ? _barMi.fmt(c.parsed.x) : c.parsed.x}` } }
+        },
+        scales: {
+          x: { grid:{color:'#1e404c'}, ticks:{callback: v => _barMi ? _barMi.fmt(v) : v} },
+          y: { grid:{display:false}, ticks:{font:{size:10}} }
+        },
+        onClick: (evt, els) => {
+          if (!els.length) return;
+          showDetail(_barGeoIds[els[0].index]);
+        },
+        onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }
+      }
+    });
+  } else {
+    topBarChart.data.labels = bLabels;
+    topBarChart.data.datasets[0].data = bVals;
+    topBarChart.data.datasets[0].backgroundColor = bColors;
+    topBarChart.update('none');
+  }
+
+  // ── Bubble: work % vs AI sentiment, size = usage share ──
+  const incomeGroups = Object.keys(INCOME_COLORS);
+  const scatDatasets = incomeGroups.map(ig => ({
+    label: ig + ' income',
+    data: filtered
+      .filter(r => {
+        const grp = r.income_group || 'Other';
+        const work = parseFloat(r.uc_work);
+        const sent = r._sentiment;
+        return grp === ig && sent != null && !isNaN(sent) && !isNaN(work);
+      })
+      .map(r => ({
+        x: parseFloat(r.uc_work),
+        y: parseFloat(r._sentiment),
+        r: Math.max(4, Math.sqrt(Math.max(0, parseFloat(r.usage_pct_global) || 0)) * 3.5),
+        label: r.country_name || r.geo_id,
+        geoId: r.geo_id,
+      })),
+    backgroundColor: INCOME_COLORS[ig] + 'aa',
+    borderColor: INCOME_COLORS[ig],
+    borderWidth: 1,
+  })).filter(ds => ds.data.length > 0);
+
+  if (!scatChart) {
+    scatChart = new Chart(document.getElementById('scatterChart'), {
+      type: 'bubble',
+      data: { datasets: scatDatasets },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { usePointStyle: true, pointStyle: 'circle', boxWidth: 8, font:{size:10} }
+          },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                const pt = ctx.dataset.data[ctx.dataIndex];
+                return ` ${pt.label}  Work: ${pt.x.toFixed(1)}%  Sentiment: ${pt.y>=0?'+':''}${pt.y.toFixed(1)}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: { title:{display:true, text:'Work Use %', color:'#7aada5', font:{size:10}}, grid:{color:'#1e404c'}, ticks:{callback:v=>v+'%'} },
+          y: { title:{display:true, text:'AI Net Optimism (pp)', color:'#7aada5', font:{size:10}}, grid:{color:'#1e404c'}, ticks:{callback:v=>(v>=0?'+':'')+v} }
+        },
+        onClick: (evt, els) => {
+          if (!els.length) return;
+          const pt = scatChart.data.datasets[els[0].datasetIndex].data[els[0].index];
+          if (pt.geoId) showDetail(pt.geoId);
+        },
+        onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }
+      }
+    });
+  } else {
+    scatChart.data.datasets = scatDatasets;
+    scatChart.update('none');
+  }
+}
+
+function parseCsv(url) {
+  return new Promise((res, rej) => Papa.parse(url, {
+    download: true, header: true, skipEmptyLines: true,
+    complete: r => res(r.data),
+    error: () => res([])
+  }));
+}
+
+Promise.all([
+  parseCsv('data/gaia_countries.csv'),
+  parseCsv('data/hai_sentiment.csv'),
+  parseCsv('data/ai_regulation.csv'),
+  parseCsv('data/oecd_adoption.csv'),
+]).then(([main, sentiment, regulation, adoption]) => {
+  sentimentMap   = Object.fromEntries(sentiment.map(r  => [r.iso3,  parseFloat(r.ai_net_optimism)]).filter(([,v]) => !isNaN(v)));
+  regulationMap  = Object.fromEntries(regulation.map(r => [r.iso3,  parseInt(r.ai_policies)]).filter(([,v]) => !isNaN(v)));
+  // oecd_adoption uses ISO2 geo codes matching gaia_countries geo_id
+  adoptionMap    = Object.fromEntries(adoption.map(r   => [r.geo,   parseFloat(r.ai_adoption_latest)]).filter(([,v]) => !isNaN(v)));
+
+  allData = main.map(r => {
+    const iso3 = r.iso3 || '';
+    const geo  = r.geo_id || '';
+    r._sentiment    = sentimentMap[iso3]   ?? null;
+    r._regulation   = regulationMap[iso3]  ?? null;
+    r._oecd_adoption= adoptionMap[geo]     ?? null;
+    return r;
+  });
+
+  document.getElementById('loading').style.display = 'none';
+  filtered = [...allData];
+  applyFilters();
+  document.getElementById('searchInput').addEventListener('input', applyFilters);
+  document.getElementById('incomeFilter').addEventListener('change', applyFilters);
+  document.getElementById('sortSelect').addEventListener('change', applyFilters);
+}).catch(() => {
+  document.getElementById('loading').textContent = 'Error loading data.';
+});
+</script>
+</body>
+</html>

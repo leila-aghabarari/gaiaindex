@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Sources — GAIA Index</title>
+  <meta name="description" content="All data sources used in the GAIA Global AI Adoption Index, with download links." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #09191d;
+      --surface:   #0d2229;
+      --card:      #112c35;
+      --border:    #1e404c;
+      --teal:      #00c9a7;
+      --teal-dim:  #00967d;
+      --teal-glow: rgba(0,201,167,0.12);
+      --cyan:      #22d3ee;
+      --text:      #e2f0ed;
+      --muted:     #7aada5;
+      --faint:     #3a6068;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(9,25,29,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.2rem; color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    .page-hero {
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 2rem 48px;
+    }
+    .page-tag {
+      display: inline-block;
+      background: var(--teal-glow);
+      border: 1px solid var(--teal-dim);
+      color: var(--teal);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.25rem;
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    h1 span { color: var(--teal); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .content {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin: 3rem 0 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 10px 16px;
+      background: var(--surface);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(30,64,76,0.5);
+      vertical-align: top;
+    }
+    .data-table tr:hover td { background: var(--card); }
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .source-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .source-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-glow);
+      border: 1px solid var(--teal-dim);
+      color: var(--teal);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+    }
+    .dl-btn:hover {
+      background: rgba(0,201,167,0.2);
+      color: var(--cyan);
+    }
+
+    .tag-pill {
+      display: inline-block;
+      background: rgba(34,211,238,0.08);
+      border: 1px solid rgba(34,211,238,0.2);
+      color: var(--cyan);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    .cols-list {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: var(--surface);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      margin-top: 4px;
+      display: inline-block;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--faint);
+      font-size: 0.85rem;
+    }
+    footer .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1rem;
+    }
+    .footer-logo span { color: var(--teal); }
+    footer p { color: var(--muted); font-size: 0.82rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    @media (max-width: 768px) {
+      .nav-links { gap: 1.25rem; }
+      .data-table { font-size: 0.82rem; }
+      .data-table td, .data-table th { padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="data.html" class="active">Data</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <span class="page-tag">Open Data</span>
+  <h1>All Data <span>Sources</span></h1>
+  <p class="hero-sub">Every dataset used in GAIA is available for download. Click any row to download the CSV directly. All data is derived from public research and official government sources.</p>
+</div>
+
+<div class="content">
+
+  <div class="section-title">Occupational AI Exposure</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width:30%">Source</th>
+        <th>Coverage</th>
+        <th>Key Metric</th>
+        <th>Year</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="source-name">GAIA Occupations (composite)</div>
+          <div class="source-desc">Merged dataset combining OpenAI exposure ratings, Brynjolfsson SML scores, and Anthropic AEI behavioral data across 923 O*NET-SOC occupations.</div>
+        </td>
+        <td><span class="tag-pill">923 occupations</span></td>
+        <td>Alpha/Beta/Gamma exposure · SML score · AEI task success</td>
+        <td>2023–2026</td>
+        <td><a class="dl-btn" href="data/gaia_occupations.csv" download>↓ gaia_occupations.csv</a></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="source-name">OpenAI Occupational Exposure</div>
+          <div class="source-desc">AI and human expert ratings of task-level AI exposure. Alpha = fully automatable, Beta = partially, Gamma = any exposure. Based on O*NET task structure.</div>
+        </td>
+        <td><span class="tag-pill">923 occupations</span></td>
+        <td>dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma</td>
+        <td>2023</td>
+        <td><span style="color:var(--faint);font-size:.82rem">Included in composite CSV</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="source-name">SML — What Can Machines Learn?</div>
+          <div class="source-desc">Crowd-sourced susceptibility-to-machine-learning scores at the DWA task level, aggregated to occupations. Brynjolfsson, Mitchell &amp; Rock (2018), NBER Working Paper 24196.</div>
+        </td>
+        <td><span class="tag-pill">813 occupations</span></td>
+        <td>sml_score (0–100%)</td>
+        <td>2018</td>
+        <td><span style="color:var(--faint);font-size:.82rem">Included in composite CSV</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="source-name">Anthropic Economic Index (AEI)</div>
+          <div class="source-desc">Behavioral data from Claude.ai API showing which O*NET tasks AI is being used for. Metrics: task success rate, AI autonomy level, share of work tasks vs. personal/learning. Released Feb 2026.</div>
+        </td>
+        <td><span class="tag-pill">628 occupations</span></td>
+        <td>aei_task_success, aei_autonomy_pct, aei_work_pct</td>
+        <td>Feb 2026</td>
+        <td><span style="color:var(--faint);font-size:.82rem">Included in composite CSV</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Country-Level AI Readiness &amp; Adoption</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width:30%">Source</th>
+        <th>Coverage</th>
+        <th>Key Metric</th>
+        <th>Year</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="source-name">GAIA Countries (composite)</div>
+          <div class="source-desc">Country-level dataset with Anthropic usage patterns, IMF AIPI scores, ISO codes, and income classifications for 138 countries.</div>
+        </td>
+        <td><span class="tag-pill">138 countries</span></td>
+        <td>usage_pct_global, uc_work, ts_yes, aipi_overall</td>
+        <td>2023–2026</td>
+        <td><a class="dl-btn" href="data/gaia_countries.csv" download>↓ gaia_countries.csv</a></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="source-name">IMF AI Preparedness Index (AIPI)</div>
+          <div class="source-desc">Composite index measuring country readiness for AI adoption across four pillars: digital infrastructure, innovation &amp; economic integration, human capital &amp; labor market policies, and AI regulation.</div>
+        </td>
+        <td><span class="tag-pill">174 countries</span></td>
+        <td>aipi_overall, aipi_digital_infra, aipi_innovation, aipi_human_capital, aipi_regulation</td>
+        <td>2023</td>
+        <td><a class="dl-btn" href="data/imf_aipi.csv" download>↓ imf_aipi.csv</a></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="source-name">Gallup World Poll — AI Sentiment</div>
+          <div class="source-desc">Public attitudes toward AI: share who believe AI will mostly help vs. mostly harm society in the next 20 years. Sourced from Our World in Data (Gallup World Poll 2021).</div>
+        </td>
+        <td><span class="tag-pill">119 countries</span></td>
+        <td>ai_mostly_help, ai_mostly_harm, ai_net_optimism</td>
+        <td>2021</td>
+        <td><a class="dl-btn" href="data/hai_sentiment.csv" download>↓ hai_sentiment.csv</a></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="source-name">OECD.AI — Policy Initiatives</div>
+          <div class="source-desc">Total number of national AI policy initiatives per country tracked by the OECD AI Policy Observatory. Includes strategies, legislative acts, regulatory frameworks, and policy recommendations.</div>
+        </td>
+        <td><span class="tag-pill">138 countries</span></td>
+        <td>ai_policies, has_strategy (0/1), has_law (0/1)</td>
+        <td>2024</td>
+        <td><a class="dl-btn" href="data/ai_regulation.csv" download>↓ ai_regulation.csv</a></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="source-name">Eurostat ICT Survey — Firm AI Adoption</div>
+          <div class="source-desc">Share of enterprises with 10 or more employees that use AI technologies (e.g. machine learning, NLP, computer vision, robots). Eurostat dataset isoc_eb_ai, indicator E_AI_TANY.</div>
+        </td>
+        <td><span class="tag-pill">33 European countries</span></td>
+        <td>ai_adoption_latest, ai_adoption_2024, ai_adoption_2023, ai_adoption_2021</td>
+        <td>2024</td>
+        <td><a class="dl-btn" href="data/oecd_adoption.csv" download>↓ oecd_adoption.csv</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">AI Awareness &amp; Diffusion</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width:30%">Source</th>
+        <th>Coverage</th>
+        <th>Key Metric</th>
+        <th>Year</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="source-name">Google Trends — ChatGPT Search Interest</div>
+          <div class="source-desc">Weekly relative search interest (0–100 index) for "ChatGPT" for the top 20 Claude.ai countries from ChatGPT's launch in November 2022 through April 2026. Captures the global AI awareness shock wave.</div>
+        </td>
+        <td><span class="tag-pill">20 countries · 183 weeks</span></td>
+        <td>Weekly search interest index per country</td>
+        <td>Nov 2022 – Apr 2026</td>
+        <td><a class="dl-btn" href="data/google_trends.csv" download>↓ google_trends.csv</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Column Reference</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>All Columns</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="source-name">gaia_occupations.csv</td>
+        <td><code class="cols-list">O*NET-SOC Code, Title, dv_rating_alpha, dv_rating_beta, dv_rating_gamma, human_rating_alpha, human_rating_beta, human_rating_gamma, sml_score, group, aei_task_success, aei_autonomy_pct, aei_work_pct</code></td>
+      </tr>
+      <tr>
+        <td class="source-name">gaia_countries.csv</td>
+        <td><code class="cols-list">geo_id, usage_pct_global, uc_coursework, uc_personal, uc_work, collab_*, ts_yes, country_name, income_group, iso3, aipi_overall, aipi_digital_infra, aipi_innovation, aipi_human_capital, aipi_regulation</code></td>
+      </tr>
+      <tr>
+        <td class="source-name">imf_aipi.csv</td>
+        <td><code class="cols-list">iso3, country_name, aipi_overall, aipi_digital_infra, aipi_innovation, aipi_human_capital, aipi_regulation</code></td>
+      </tr>
+      <tr>
+        <td class="source-name">hai_sentiment.csv</td>
+        <td><code class="cols-list">country, iso3, year, ai_mostly_help, ai_mostly_harm, ai_no_opinion, ai_net_optimism</code></td>
+      </tr>
+      <tr>
+        <td class="source-name">ai_regulation.csv</td>
+        <td><code class="cols-list">iso3, country, ai_policies, has_strategy, has_law, source_year</code></td>
+      </tr>
+      <tr>
+        <td class="source-name">oecd_adoption.csv</td>
+        <td><code class="cols-list">geo, country, ai_adoption_latest, ai_adoption_year, ai_adoption_2024, ai_adoption_2023, ai_adoption_2021</code></td>
+      </tr>
+      <tr>
+        <td class="source-name">google_trends.csv</td>
+        <td><code class="cols-list">week, US, BR, IN, GB, DE, FR, JP, KR, CA, AU, MX, ES, IT, NG, ZA, ID, PH, PK, TR, NL (+ other country codes)</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a></p>
+    <p>Data: Anthropic · OpenAI · Brynjolfsson et al. · IMF · Gallup/OWID · OECD.AI · Eurostat · Feb 2026</p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+  </div>
+</footer>
+
+</body>
+</html>

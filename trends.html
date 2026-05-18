@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Awareness Trends — GAIA Index</title>
+  <meta name="description" content="When AI awareness hit each country — ChatGPT search interest 2022–2026 across 20 countries." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="assets/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <style>
+    :root {
+      --bg:        #09191d;
+      --surface:   #0d2229;
+      --card:      #112c35;
+      --border:    #1e404c;
+      --teal:      #00c9a7;
+      --teal-dim:  #00967d;
+      --teal-glow: rgba(0,201,167,0.12);
+      --cyan:      #22d3ee;
+      --text:      #e2f0ed;
+      --muted:     #7aada5;
+      --faint:     #3a6068;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(9,25,29,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    .page-header {
+      max-width: 1200px; margin: 0 auto;
+      padding: 56px 2rem 36px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .6rem;
+    }
+    .page-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -.02em; margin-bottom: .6rem;
+    }
+    .page-header p { color: var(--muted); max-width: 660px; font-size: .9rem; }
+
+    /* Controls */
+    .controls {
+      max-width: 1200px; margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+    }
+    .controls label { font-size: .82rem; color: var(--muted); }
+    .controls select, .controls button {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: .875rem;
+      padding: .5rem .85rem; outline: none; cursor: pointer;
+      transition: border-color .2s;
+    }
+    .controls select { appearance: none; padding-right: 2rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237aada5' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right .6rem center;
+    }
+    .controls select:focus, .controls button:hover { border-color: var(--teal-dim); color: var(--teal); }
+    .btn-animate {
+      background: var(--teal-glow); border-color: var(--teal-dim); color: var(--teal);
+      font-weight: 600;
+    }
+    .btn-animate:hover { background: rgba(0,201,167,0.2); }
+
+    /* Chart */
+    .chart-wrap {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 1.5rem;
+    }
+    .chart-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.75rem;
+      position: relative;
+    }
+    .chart-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600; margin-bottom: .25rem;
+    }
+    .chart-sub { font-size: .78rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .chart-canvas-wrap { height: 420px; }
+
+    /* Stats grid */
+    .stats-wrap {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 2rem;
+    }
+    .stats-label {
+      font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 1rem;
+    }
+    .shock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .75rem;
+    }
+    .shock-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: .9rem 1.1rem;
+      cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .shock-card:hover, .shock-card.active {
+      border-color: var(--teal-dim); background: var(--card);
+    }
+    .shock-card .country { font-size: .85rem; font-weight: 600; margin-bottom: .15rem; }
+    .shock-card .shock-week { font-size: .72rem; color: var(--teal); }
+    .shock-card .shock-bar-bg {
+      height: 3px; background: var(--border); border-radius: 2px;
+      margin-top: .4rem; overflow: hidden;
+    }
+    .shock-card .shock-bar-fill { height: 100%; border-radius: 2px; background: var(--teal); }
+
+    /* Loading */
+    #loading { text-align: center; padding: 4rem; color: var(--muted); }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 1.5rem 2rem;
+      margin-top: 3rem;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--muted); }
+    .footer-logo span { color: var(--teal); }
+    footer p { color: var(--faint); font-size: .8rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    @media (max-width: 768px) {
+      .controls { flex-direction: column; align-items: stretch; }
+      .chart-canvas-wrap { height: 280px; }
+      .shock-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="trends.html" class="active">Trends</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="label">AI Awareness Diffusion</div>
+  <h1>When AI awareness hit each country</h1>
+  <p>Weekly Google Search interest for "ChatGPT" across 20 countries, Nov 2022 – Apr 2026. Index 100 = peak week for each country. Reveals the AI awareness shock wave spreading globally after ChatGPT's launch.</p>
+</div>
+
+<div id="loading">Loading trend data…</div>
+
+<div id="mainContent" style="display:none">
+
+<div class="controls">
+  <label>View:</label>
+  <select id="viewSelect">
+    <option value="all">All 20 countries</option>
+    <option value="select">Selected countries</option>
+  </select>
+  <select id="smoothSelect">
+    <option value="0">Raw weekly data</option>
+    <option value="4" selected>4-week smoothed</option>
+    <option value="8">8-week smoothed</option>
+  </select>
+  <button class="btn-animate" id="animateBtn">▶ Animate</button>
+  <a href="data/google_trends.csv" download style="font-size:.8rem;color:var(--muted);margin-left:auto">Download CSV →</a>
+</div>
+
+<div class="chart-wrap">
+  <div class="chart-card">
+    <div class="chart-title">ChatGPT Search Interest by Country</div>
+    <div class="chart-sub">Google Trends index (0–100, country-normalized). Source: Google Trends via pytrends.</div>
+    <div class="chart-canvas-wrap">
+      <canvas id="trendsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="stats-wrap">
+  <div class="stats-label">First AI awareness spike — week search interest first crossed 10</div>
+  <div class="shock-grid" id="shockGrid"></div>
+</div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a></p>
+    <p>Data: Google Trends (ChatGPT) · Nov 2022 – Apr 2026</p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+  </div>
+</footer>
+
+<script>
+const COUNTRY_NAMES = {
+  US:'United States',IN:'India',GB:'United Kingdom',FR:'France',DE:'Germany',
+  JP:'Japan',KR:'South Korea',CA:'Canada',BR:'Brazil',IT:'Italy',
+  AU:'Australia',ES:'Spain',ID:'Indonesia',NL:'Netherlands',MX:'Mexico',
+  PL:'Poland',PH:'Philippines',TR:'Turkey',PK:'Pakistan',NG:'Nigeria'
+};
+const FLAGS = {US:'🇺🇸',IN:'🇮🇳',GB:'🇬🇧',FR:'🇫🇷',DE:'🇩🇪',JP:'🇯🇵',KR:'🇰🇷',CA:'🇨🇦',BR:'🇧🇷',IT:'🇮🇹',AU:'🇦🇺',ES:'🇪🇸',ID:'🇮🇩',NL:'🇳🇱',MX:'🇲🇽',PL:'🇵🇱',PH:'🇵🇭',TR:'🇹🇷',PK:'🇵🇰',NG:'🇳🇬'};
+
+// 20 distinct colours, teal-anchored palette
+const PALETTE = [
+  '#00c9a7','#22d3ee','#60a5fa','#a78bfa','#f472b6',
+  '#fb923c','#facc15','#4ade80','#f87171','#38bdf8',
+  '#c084fc','#86efac','#fda4af','#67e8f9','#fcd34d',
+  '#a3e635','#fb7185','#818cf8','#34d399','#e879f9'
+];
+
+let rawData = [], labels = [], countries = [], chart = null;
+let selectedCountries = new Set();
+let animFrame = null, animRunning = false;
+
+function smooth(arr, w) {
+  if (w === 0) return arr;
+  return arr.map((_, i) => {
+    const slice = arr.slice(Math.max(0, i - w + 1), i + 1);
+    return slice.reduce((s, v) => s + v, 0) / slice.length;
+  });
+}
+
+function getDatasets(countryList, smoothW) {
+  return countryList.map((c, i) => {
+    const vals = rawData.map(row => parseFloat(row[c]) || 0);
+    const smoothed = smooth(vals, smoothW);
+    const color = PALETTE[i % PALETTE.length];
+    return {
+      label: `${FLAGS[c] || ''} ${COUNTRY_NAMES[c] || c}`,
+      data: smoothed,
+      borderColor: color,
+      backgroundColor: 'transparent',
+      borderWidth: 1.5,
+      pointRadius: 0,
+      tension: 0.3,
+    };
+  });
+}
+
+function buildChart() {
+  const sw = parseInt(document.getElementById('smoothSelect').value);
+  const view = document.getElementById('viewSelect').value;
+  const list = view === 'select' && selectedCountries.size
+    ? countries.filter(c => selectedCountries.has(c))
+    : countries;
+
+  const datasets = getDatasets(list, sw);
+  const ctx = document.getElementById('trendsChart').getContext('2d');
+
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 0 },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            color: '#7aada5', font: { size: 11, family: 'Inter' },
+            boxWidth: 14, padding: 12, usePointStyle: true, pointStyleWidth: 10,
+          }
+        },
+        tooltip: {
+          backgroundColor: '#0d2229', borderColor: '#1e404c', borderWidth: 1,
+          titleColor: '#e2f0ed', bodyColor: '#7aada5', padding: 10,
+          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)}` }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#3a6068', font: { size: 10 },
+            maxTicksLimit: 16,
+            callback: function(val, i) {
+              const d = labels[i]; if (!d) return '';
+              return d.slice(0, 7); // YYYY-MM
+            }
+          },
+          grid: { color: 'rgba(30,64,76,0.4)' }
+        },
+        y: {
+          min: 0, max: 100,
+          ticks: { color: '#3a6068', font: { size: 10 }, stepSize: 25 },
+          grid: { color: 'rgba(30,64,76,0.4)' },
+          title: { display: true, text: 'Search interest (0–100)', color: '#3a6068', font: { size: 10 } }
+        }
+      }
+    }
+  });
+}
+
+function animate() {
+  if (animRunning) {
+    cancelAnimationFrame(animFrame);
+    animRunning = false;
+    document.getElementById('animateBtn').textContent = '▶ Animate';
+    buildChart();
+    return;
+  }
+  animRunning = true;
+  document.getElementById('animateBtn').textContent = '■ Stop';
+  const sw = parseInt(document.getElementById('smoothSelect').value);
+  const view = document.getElementById('viewSelect').value;
+  const list = view === 'select' && selectedCountries.size
+    ? countries.filter(c => selectedCountries.has(c))
+    : countries;
+
+  const allDatasets = getDatasets(list, sw);
+  let step = 8;
+  const total = labels.length;
+
+  function frame() {
+    if (!animRunning || step > total) {
+      animRunning = false;
+      document.getElementById('animateBtn').textContent = '▶ Animate';
+      return;
+    }
+    const slicedLabels = labels.slice(0, step);
+    const slicedData = allDatasets.map(ds => ({ ...ds, data: ds.data.slice(0, step) }));
+    if (chart) {
+      chart.data.labels = slicedLabels;
+      chart.data.datasets = slicedData;
+      chart.update('none');
+    }
+    step += 2;
+    animFrame = setTimeout(frame, 30);
+  }
+  frame();
+}
+
+function buildShockGrid(data, countryList) {
+  const grid = document.getElementById('shockGrid');
+  const shocks = countryList.map(c => {
+    const vals = data.map(row => parseFloat(row[c]) || 0);
+    const firstSpike = vals.findIndex(v => v >= 10);
+    const peakVal = Math.max(...vals);
+    return { c, firstSpike, peakVal };
+  }).sort((a, b) => a.firstSpike - b.firstSpike);
+
+  grid.innerHTML = shocks.map(({ c, firstSpike, peakVal }) => {
+    const week = firstSpike >= 0 ? labels[firstSpike] : 'No spike';
+    const pct = Math.round((peakVal / 100) * 100);
+    return `<div class="shock-card" onclick="toggleCountry('${c}', this)">
+      <div class="country">${FLAGS[c] || ''} ${COUNTRY_NAMES[c] || c}</div>
+      <div class="shock-week">${week.slice(0,7)} first crossed 10</div>
+      <div class="shock-bar-bg"><div class="shock-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCountry(c, el) {
+  if (selectedCountries.has(c)) selectedCountries.delete(c);
+  else selectedCountries.add(c);
+  el.classList.toggle('active', selectedCountries.has(c));
+  document.getElementById('viewSelect').value = selectedCountries.size ? 'select' : 'all';
+  buildChart();
+}
+
+Papa.parse('data/google_trends.csv', {
+  download: true, header: true, skipEmptyLines: true,
+  complete: function(results) {
+    rawData = results.data;
+    labels = rawData.map(r => r.week);
+    countries = Object.keys(rawData[0]).filter(k => k !== 'week');
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    buildChart();
+    buildShockGrid(rawData, countries);
+    document.getElementById('smoothSelect').addEventListener('change', buildChart);
+    document.getElementById('viewSelect').addEventListener('change', buildChart);
+    document.getElementById('animateBtn').addEventListener('click', animate);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Occupation Explorer — GAIA Index</title>
+  <meta name="description" content="Browse AI exposure ratings for 923 occupations using OpenAI and Anthropic data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="assets/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:        #09191d;
+      --surface:   #0d2229;
+      --card:      #112c35;
+      --border:    #1e404c;
+      --teal:      #00c9a7;
+      --teal-dim:  #00967d;
+      --teal-glow: rgba(0,201,167,0.12);
+      --cyan:      #22d3ee;
+      --text:      #e2f0ed;
+      --muted:     #7aada5;
+      --faint:     #3a6068;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(9,25,29,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1300px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.2rem; color: var(--text);
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* PAGE HEADER */
+    .page-header {
+      max-width: 1300px; margin: 0 auto;
+      padding: 56px 2rem 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .6rem;
+    }
+    .page-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -.02em; margin-bottom: .6rem;
+    }
+    .page-header p { color: var(--muted); max-width: 600px; font-size: .9rem; }
+
+    /* CONTROLS */
+    .controls {
+      max-width: 1300px; margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      position: relative; flex: 1; min-width: 220px;
+    }
+    .search-wrap svg {
+      position: absolute; left: .85rem; top: 50%;
+      transform: translateY(-50%); opacity: .4; pointer-events: none;
+    }
+    #search {
+      width: 100%;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: .875rem;
+      padding: .6rem .85rem .6rem 2.4rem;
+      outline: none; transition: border-color .2s;
+    }
+    #search::placeholder { color: var(--faint); }
+    #search:focus { border-color: var(--teal-dim); }
+
+    select {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: .875rem;
+      padding: .6rem .85rem; outline: none;
+      cursor: pointer; transition: border-color .2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237aada5' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .75rem center;
+      padding-right: 2.2rem;
+    }
+    select:focus { border-color: var(--teal-dim); }
+
+    .sort-btn {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--muted);
+      font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 500;
+      padding: .6rem 1rem; cursor: pointer; transition: all .2s;
+      display: flex; align-items: center; gap: .4rem;
+      white-space: nowrap;
+    }
+    .sort-btn:hover { border-color: var(--teal-dim); color: var(--text); }
+    .sort-btn.active { border-color: var(--teal); color: var(--teal); }
+
+    .result-count {
+      font-size: .8rem; color: var(--faint); white-space: nowrap;
+    }
+
+    /* TABLE */
+    .table-wrap {
+      max-width: 1300px; margin: 0 auto;
+      padding: 0 2rem 4rem;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: .875rem;
+    }
+
+    thead th {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: .75rem 1rem;
+      text-align: left;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      position: sticky; top: 60px;
+    }
+    thead th:hover { color: var(--text); }
+    thead th.sorted { color: var(--teal); }
+    thead th .sort-arrow { margin-left: .3rem; opacity: .5; }
+    thead th.sorted .sort-arrow { opacity: 1; }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(30,64,76,.5);
+      transition: background .15s;
+    }
+    tbody tr:hover { background: rgba(17,44,53,.6); }
+
+    td { padding: .75rem 1rem; vertical-align: middle; }
+
+    .td-code {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .75rem; color: var(--faint);
+      white-space: nowrap;
+    }
+
+    .td-title { color: var(--text); font-weight: 500; min-width: 220px; }
+
+    .td-group {
+      white-space: nowrap;
+    }
+
+    .group-badge {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .15rem .55rem;
+      font-size: .7rem; font-weight: 500;
+      color: var(--muted);
+    }
+
+    /* Exposure cell */
+    .exp-cell {
+      display: flex; align-items: center; gap: .6rem;
+      min-width: 110px;
+    }
+    .exp-bar-bg {
+      flex: 1; height: 5px; background: var(--surface);
+      border-radius: 3px; overflow: hidden; min-width: 50px;
+    }
+    .exp-bar-fill { height: 100%; border-radius: 3px; }
+    .exp-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .8rem; font-weight: 600;
+      width: 36px; text-align: right; flex-shrink: 0;
+    }
+
+    /* Legend */
+    .tier-legend {
+      max-width: 1300px; margin: 0 auto;
+      padding: 0 2rem 1rem;
+      display: flex; gap: 2rem; flex-wrap: wrap;
+    }
+    .tier-item {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .78rem; color: var(--muted);
+    }
+    .tier-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+
+    /* SOURCE NOTE */
+    .source-note {
+      max-width: 1300px; margin: 0 auto;
+      padding: 0 2rem .75rem;
+      font-size: .75rem; color: var(--faint);
+    }
+    .source-note a {
+      color: var(--muted); margin-left: .75rem;
+    }
+    .source-note a:hover { color: var(--teal); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1300px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--muted); }
+    .footer-logo span { color: var(--teal); }
+    footer p { color: var(--faint); font-size: .8rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    /* SML mode: hide alpha and gamma columns */
+    #occTable.sml-mode th[data-col="alpha"],
+    #occTable.sml-mode .td-alpha,
+    #occTable.sml-mode th[data-col="gamma"],
+    #occTable.sml-mode .td-gamma { display: none; }
+
+    /* ── VIZ ── */
+    .stat-row {
+      max-width: 1300px; margin: 0 auto;
+      padding: 0 2rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+    .stat-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+    }
+    .stat-chip.hi-border { border-color: var(--teal-dim); }
+    .stat-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem; font-weight: 700;
+      color: var(--text); line-height: 1;
+    }
+    .stat-val.teal { color: var(--teal); }
+    .stat-lbl {
+      font-size: 0.68rem; color: var(--muted);
+      margin-top: 0.25rem;
+      text-transform: uppercase; letter-spacing: 0.07em;
+    }
+    .viz-panel {
+      max-width: 1300px; margin: 0 auto;
+      padding: 0 2rem 1.5rem;
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      gap: 1.25rem;
+    }
+    .viz-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.25rem 1rem;
+    }
+    .viz-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.69rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); margin-bottom: 0.75rem;
+    }
+    .chart-area { position: relative; }
+
+    @media (max-width: 768px) {
+      .controls { flex-direction: column; align-items: stretch; }
+      .sort-btn { justify-content: center; }
+      td, th { padding: .6rem .75rem; }
+      .exp-cell { min-width: 80px; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .viz-panel { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html" class="active">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="label">Occupation Explorer</div>
+  <h1>AI Exposure Across 923 Occupations</h1>
+  <p>Browse exposure scores from four sources: OpenAI AI-rated &amp; human-rated tiers, Brynjolfsson et al. SML scores, and Anthropic behavioral data (task success, AI autonomy, work use). Switch sources using the dropdown.</p>
+</div>
+
+<div class="tier-legend">
+  <div class="tier-item"><div class="tier-dot" style="background:#00c9a7"></div> High exposure ≥ 66%</div>
+  <div class="tier-item"><div class="tier-dot" style="background:#22d3ee"></div> Medium exposure 33–65%</div>
+  <div class="tier-item"><div class="tier-dot" style="background:#3a6068"></div> Low exposure &lt; 33%</div>
+  <div class="tier-item" style="margin-left:auto; font-size:.75rem; color:var(--faint)" id="sourceLabel">Source: OpenAI Occupational Exposure Ratings</div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="search" type="text" placeholder="Search occupations…" autocomplete="off" />
+  </div>
+
+  <select id="groupFilter">
+    <option value="">All sectors</option>
+  </select>
+
+  <select id="raterFilter">
+    <option value="dv">AI-rated exposure</option>
+    <option value="h">Human-rated exposure</option>
+    <option value="sml">SML — Brynjolfsson et al.</option>
+    <option value="aei">AEI — Anthropic (behavioral)</option>
+  </select>
+
+  <button class="sort-btn active" id="sortBeta" title="Sort by beta exposure">
+    Sort: Beta ↓
+  </button>
+
+  <span class="result-count" id="resultCount"></span>
+</div>
+
+<div class="source-note">
+  Source: OpenAI Occupational Exposure Ratings &amp; Brynjolfsson, Mitchell &amp; Rock (2018) · 923 occupations · O*NET-SOC codes.
+  <a href="data/gaia_occupations.csv" download>Download CSV →</a>
+</div>
+
+<!-- Stats Row -->
+<div class="stat-row">
+  <div class="stat-chip">
+    <div class="stat-val" id="sCount">—</div>
+    <div class="stat-lbl">Occupations</div>
+  </div>
+  <div class="stat-chip hi-border">
+    <div class="stat-val teal" id="sAvg">—</div>
+    <div class="stat-lbl" id="sAvgLbl">Avg Score</div>
+  </div>
+  <div class="stat-chip">
+    <div class="stat-val" id="sHigh">—</div>
+    <div class="stat-lbl">High exposure ≥66%</div>
+  </div>
+  <div class="stat-chip">
+    <div class="stat-val" id="sLow">—</div>
+    <div class="stat-lbl">Low exposure &lt;33%</div>
+  </div>
+</div>
+
+<!-- Charts -->
+<div class="viz-panel">
+  <div class="viz-card">
+    <div class="viz-card-title">Sector Rankings — click bar to filter ↓</div>
+    <div class="chart-area" style="height:380px">
+      <canvas id="groupChart"></canvas>
+    </div>
+  </div>
+  <div class="viz-card">
+    <div class="viz-card-title">Score Distribution — all vs filtered</div>
+    <div class="chart-area" style="height:380px">
+      <canvas id="distChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <table id="occTable">
+    <thead>
+      <tr>
+        <th data-col="code">SOC Code <span class="sort-arrow">↕</span></th>
+        <th data-col="title">Occupation <span class="sort-arrow">↕</span></th>
+        <th data-col="group">Sector <span class="sort-arrow">↕</span></th>
+        <th data-col="alpha" id="thAlpha" class="sorted">Alpha <span class="sort-arrow">↓</span></th>
+        <th data-col="beta" id="thBeta">Beta <span class="sort-arrow">↕</span></th>
+        <th data-col="gamma" id="thGamma">Gamma <span class="sort-arrow">↕</span></th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a></p>
+    <p>Data: OpenAI Occupational Exposure · Feb 2026</p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+  </div>
+</footer>
+
+<script src="assets/occs_data.js"></script>
+<script>
+// OCCS = [code, title, dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma, sml, aei_alpha, aei_beta, aei_gamma, group]
+const IDX = { code:0, title:1, dv_alpha:2, dv_beta:3, dv_gamma:4, h_alpha:5, h_beta:6, h_gamma:7, sml:8, aei_alpha:9, aei_beta:10, aei_gamma:11, group:12 };
+
+let sortCol   = 'beta';
+let sortDir   = -1;
+let rater     = 'dv';
+let query     = '';
+let groupSel  = '';
+
+// Populate group filter
+const groups = [...new Set(OCCS.map(r => r[IDX.group]))].sort();
+const gSel = document.getElementById('groupFilter');
+groups.forEach(g => {
+  const o = document.createElement('option');
+  o.value = g; o.textContent = g;
+  gSel.appendChild(o);
+});
+
+function expColor(v) {
+  if (v >= 66) return '#00c9a7';
+  if (v >= 33) return '#22d3ee';
+  return '#3a6068';
+}
+
+function barCell(val) {
+  if (val === null || val === undefined) return '<span style="color:var(--faint)">—</span>';
+  const color = expColor(val);
+  return `<div class="exp-cell">
+    <div class="exp-bar-bg">
+      <div class="exp-bar-fill" style="width:${val}%;background:${color}"></div>
+    </div>
+    <span class="exp-val" style="color:${color}">${val}%</span>
+  </div>`;
+}
+
+function getVal(row, col) {
+  if (rater === 'sml') {
+    if (col === 'beta')  return row[IDX.sml];
+    if (col === 'alpha' || col === 'gamma') return null;
+  } else {
+    const prefix = rater + '_';
+    if (col === 'alpha') return row[IDX[prefix + 'alpha']];
+    if (col === 'beta')  return row[IDX[prefix + 'beta']];
+    if (col === 'gamma') return row[IDX[prefix + 'gamma']];
+  }
+  if (col === 'code')  return row[IDX.code];
+  if (col === 'title') return row[IDX.title];
+  if (col === 'group') return row[IDX.group];
+  return '';
+}
+
+function updateHeaders() {
+  const [a, b, g] = colHeaders[rater] || ['Alpha','Beta','Gamma'];
+  document.getElementById('thAlpha').childNodes[0].textContent = a + ' ';
+  document.getElementById('thBeta').childNodes[0].textContent  = b + ' ';
+  document.getElementById('thGamma').childNodes[0].textContent = g + ' ';
+}
+
+const sourceLabels = {
+  dv:  'Source: OpenAI Occupational Exposure Ratings (AI-rated)',
+  h:   'Source: OpenAI Occupational Exposure Ratings (Human-rated)',
+  sml: 'Source: Brynjolfsson, Mitchell & Rock — What Can Machines Learn? (2018)',
+  aei: 'Source: Anthropic Economic Index — Claude.ai behavioral data, Feb 2026',
+};
+
+const colHeaders = {
+  dv:  ['Alpha', 'Beta', 'Gamma'],
+  h:   ['Alpha', 'Beta', 'Gamma'],
+  sml: ['Alpha', 'SML Score', 'Gamma'],
+  aei: ['Task Success', 'AI Autonomy', 'Work Use %'],
+};
+
+function render() {
+  const isSML = rater === 'sml';
+  document.getElementById('occTable').classList.toggle('sml-mode', isSML);
+  document.getElementById('sourceLabel').textContent = sourceLabels[rater] || '';
+  updateHeaders();
+
+  const q = query.toLowerCase();
+  let rows = OCCS.filter(r => {
+    if (groupSel && r[IDX.group] !== groupSel) return false;
+    if (q && !r[IDX.title].toLowerCase().includes(q) && !r[IDX.code].includes(q) && !r[IDX.group].toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  rows.sort((a, b) => {
+    const av = getVal(a, sortCol);
+    const bv = getVal(b, sortCol);
+    if (av === null && bv === null) return 0;
+    if (av === null) return 1;
+    if (bv === null) return -1;
+    if (typeof av === 'number') return sortDir * (bv - av);
+    return sortDir * String(av).localeCompare(String(bv));
+  });
+
+  document.getElementById('resultCount').textContent = `${rows.length.toLocaleString()} occupations`;
+
+  const tbody = document.getElementById('tbody');
+  if (isSML) {
+    tbody.innerHTML = rows.map(r => `<tr>
+      <td class="td-code">${r[IDX.code]}</td>
+      <td class="td-title">${r[IDX.title]}</td>
+      <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
+      <td class="td-alpha"></td>
+      <td class="td-beta">${barCell(r[IDX.sml])}</td>
+      <td class="td-gamma"></td>
+    </tr>`).join('');
+  } else {
+    const prefix = rater + '_';
+    tbody.innerHTML = rows.map(r => {
+      const alpha = r[IDX[prefix+'alpha']];
+      const beta  = r[IDX[prefix+'beta']];
+      const gamma = r[IDX[prefix+'gamma']];
+      return `<tr>
+        <td class="td-code">${r[IDX.code]}</td>
+        <td class="td-title">${r[IDX.title]}</td>
+        <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
+        <td class="td-alpha">${barCell(alpha)}</td>
+        <td class="td-beta">${barCell(beta)}</td>
+        <td class="td-gamma">${barCell(gamma)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('thead th[data-col]').forEach(th => {
+    const col = th.dataset.col;
+    const arrow = th.querySelector('.sort-arrow');
+    th.classList.toggle('sorted', col === sortCol);
+    if (col === sortCol) arrow.textContent = sortDir === -1 ? '↓' : '↑';
+    else arrow.textContent = '↕';
+  });
+
+  updateCharts(rows);
+}
+
+document.getElementById('search').addEventListener('input', e => {
+  query = e.target.value; render();
+});
+
+document.getElementById('groupFilter').addEventListener('change', e => {
+  groupSel = e.target.value; render();
+});
+
+document.getElementById('raterFilter').addEventListener('change', e => {
+  rater = e.target.value;
+  sortCol = 'beta'; sortDir = -1;
+  render();
+});
+
+document.querySelectorAll('thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) sortDir *= -1;
+    else { sortCol = col; sortDir = -1; }
+    render();
+  });
+});
+
+// ── CHARTS ──
+let gChart = null, dChart = null;
+
+function updateCharts(rows) {
+  updateChartsInner(rows);
+}
+
+function updateChartsInner(rows) {
+  const score = r => getVal(r, 'beta');
+
+  // Stats (always update, no Chart.js needed)
+  const vals = rows.map(r => score(r)).filter(v => v != null);
+  const avg  = vals.length ? vals.reduce((a,b) => a+b, 0) / vals.length : null;
+  document.getElementById('sCount').textContent = rows.length.toLocaleString();
+  document.getElementById('sAvg').textContent   = avg != null ? avg.toFixed(1) + '%' : '—';
+  document.getElementById('sHigh').textContent  = vals.length ? (vals.filter(v => v >= 66).length / vals.length * 100).toFixed(0) + '%' : '—';
+  document.getElementById('sLow').textContent   = vals.length ? (vals.filter(v => v <  33).length / vals.length * 100).toFixed(0) + '%' : '—';
+  document.getElementById('sAvgLbl').textContent = 'Avg ' + (colHeaders[rater][1] || 'Score');
+
+  if (typeof Chart === 'undefined') return;
+  Chart.defaults.color = '#7aada5';
+  Chart.defaults.borderColor = '#1e404c';
+  Chart.defaults.font.family = 'Inter, sans-serif';
+  Chart.defaults.font.size = 11;
+
+  // Group bar data (computed from ALL occupations so bars don't jump when filtering)
+  const gmap = {};
+  OCCS.forEach(r => {
+    const g = r[IDX.group], v = score(r);
+    if (v != null) {
+      if (!gmap[g]) gmap[g] = { s:0, n:0 };
+      gmap[g].s += v; gmap[g].n++;
+    }
+  });
+  const gData   = Object.entries(gmap).map(([g,{s,n}]) => ({g, avg: s/n})).sort((a,b) => b.avg - a.avg);
+  const gLabels = gData.map(d => d.g);
+  const gVals   = gData.map(d => d.avg);
+  const gColors = gLabels.map(g =>
+    groupSel ? (g === groupSel ? '#00c9a7' : 'rgba(30,64,76,0.9)') : '#00c9a7'
+  );
+
+  if (!gChart) {
+    gChart = new Chart(document.getElementById('groupChart'), {
+      type: 'bar',
+      data: { labels: gLabels, datasets: [{ data: gVals, backgroundColor: gColors, borderRadius: 3, barThickness: 14 }] },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${c.parsed.x.toFixed(1)}% avg exposure` } }
+        },
+        scales: {
+          x: { min:0, max:100, grid:{color:'#1e404c'}, ticks:{callback: v => v+'%'} },
+          y: { grid:{display:false}, ticks:{font:{size:10}} }
+        },
+        onClick: (evt, els) => {
+          if (!els.length) return;
+          const g = gChart.data.labels[els[0].index];
+          const next = groupSel === g ? '' : g;
+          document.getElementById('groupFilter').value = next;
+          document.getElementById('groupFilter').dispatchEvent(new Event('change'));
+        },
+        onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }
+      }
+    });
+  } else {
+    gChart.data.labels = gLabels;
+    gChart.data.datasets[0].data = gVals;
+    gChart.data.datasets[0].backgroundColor = gColors;
+    gChart.update('none');
+  }
+
+  // Distribution histogram
+  const binLbls = ['0–9','10–19','20–29','30–39','40–49','50–59','60–69','70–79','80–89','90–100'];
+  const allB = Array(10).fill(0), filtB = Array(10).fill(0);
+  OCCS.forEach(r => { const v = score(r); if (v != null) allB[Math.min(9, Math.floor(v/10))]++; });
+  rows.forEach(r => { const v = score(r); if (v != null) filtB[Math.min(9, Math.floor(v/10))]++; });
+
+  if (!dChart) {
+    dChart = new Chart(document.getElementById('distChart'), {
+      type: 'bar',
+      data: {
+        labels: binLbls,
+        datasets: [
+          { label:'All occupations', data: allB, backgroundColor:'rgba(30,64,76,0.65)', borderRadius:2 },
+          { label:'Filtered', data: filtB, backgroundColor:'rgba(0,201,167,0.8)', borderRadius:2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position:'top', labels:{ usePointStyle:true, pointStyle:'rect', boxWidth:8, font:{size:10} } },
+          tooltip: { callbacks: { title: c => c[0].label + '%', label: c => ` ${c.dataset.label}: ${c.parsed.y}` } }
+        },
+        scales: {
+          x: { grid:{display:false}, ticks:{font:{size:9}, maxRotation:0} },
+          y: { grid:{color:'#1e404c'}, ticks:{precision:0} }
+        }
+      }
+    });
+  } else {
+    dChart.data.datasets[0].data = allB;
+    dChart.data.datasets[1].data = filtB;
+    dChart.update('none');
+  }
+}
+
+sortCol = 'beta'; sortDir = -1;
+render();
+</script>
+</body>
+</html>

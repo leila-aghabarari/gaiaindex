@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAIA — Global AI Adoption Index</title>
+  <meta name="description" content="GAIA tracks AI adoption across 178 countries and 923 occupations using Anthropic and OpenAI behavioral data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="assets/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:        #09191d;
+      --surface:   #0d2229;
+      --card:      #112c35;
+      --border:    #1e404c;
+      --teal:      #00c9a7;
+      --teal-dim:  #00967d;
+      --teal-glow: rgba(0,201,167,0.12);
+      --cyan:      #22d3ee;
+      --text:      #e2f0ed;
+      --muted:     #7aada5;
+      --faint:     #3a6068;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 25, 29, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--teal); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 2rem 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--teal-glow);
+      border: 1px solid var(--teal-dim);
+      color: var(--teal);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.25rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: #09191d;
+    }
+    .btn-primary:hover {
+      background: var(--cyan);
+      color: #09191d;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-ghost:hover {
+      border-color: var(--teal-dim);
+      color: var(--text);
+    }
+
+    /* Hero right: stat cards */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+    }
+
+    .stat-card .val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-card .label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .stat-card .sub {
+      font-size: 0.72rem;
+      color: var(--faint);
+      margin-top: 0.25rem;
+    }
+
+    /* ── SECTION ── */
+    section {
+      padding: 80px 2rem;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── USE CASE SECTION ── */
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .canvas-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .legend-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-text .pct {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .legend-text .name {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ── OCCUPATIONS PREVIEW ── */
+    .occ-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .occ-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .occ-panel-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .occ-panel-header .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .occ-panel-header .title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .occ-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(30, 64, 76, 0.5);
+      gap: 1rem;
+    }
+
+    .occ-row:last-child { border-bottom: none; }
+
+    .occ-name {
+      font-size: 0.875rem;
+      color: var(--text);
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .occ-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .occ-bar-bg {
+      width: 80px;
+      height: 6px;
+      background: var(--surface);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .occ-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .occ-pct {
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      width: 2.5rem;
+      text-align: right;
+    }
+
+    /* ── COLLAB BARS ── */
+    .collab-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .collab-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .collab-card .pct {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .collab-card .name {
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .collab-card .desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── SOURCES ── */
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .source-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .source-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .source-card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .source-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .source-card .tag {
+      display: inline-block;
+      margin-top: 0.6rem;
+      background: rgba(0,201,167,0.1);
+      border: 1px solid var(--teal-dim);
+      color: var(--teal);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .footer-logo span { color: var(--teal); }
+
+    footer p {
+      color: var(--faint);
+      font-size: 0.8rem;
+    }
+
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 1.25rem 50px;
+        gap: 3rem;
+      }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .usage-grid { grid-template-columns: 1fr; }
+      .occ-grid { grid-template-columns: 1fr; }
+      .collab-grid { grid-template-columns: 1fr 1fr; }
+      .sources-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      section { padding: 60px 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Feb 2026 · 178 Countries · 923 Occupations</div>
+    <h1>Mapping <em>AI adoption</em> across the global economy</h1>
+    <p class="hero-sub">
+      GAIA synthesizes behavioral data from Anthropic's Economic Index, OpenAI's occupational exposure ratings, and Brynjolfsson et al.'s machine-learning suitability scores to track how AI is reshaping work worldwide.
+    </p>
+    <div class="hero-actions">
+      <a href="occupations.html" class="btn btn-primary">Explore Occupations ↗</a>
+      <a href="countries.html" class="btn btn-ghost">Country Data →</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="val">178</div>
+      <div class="label">Countries tracked</div>
+      <div class="sub">via Claude.ai behavioral data</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">923</div>
+      <div class="label">Occupations rated</div>
+      <div class="sub">O*NET-SOC standard codes</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">70%</div>
+      <div class="label">Global task-success rate</div>
+      <div class="sub">across all Claude.ai requests</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">34.5%</div>
+      <div class="label">Avg AI exposure</div>
+      <div class="sub">across all occupations (beta)</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" />
+
+<!-- USE CASE SECTION -->
+<section>
+  <div class="section-inner">
+    <div class="usage-grid">
+      <div>
+        <div class="section-label">How AI is being used</div>
+        <h2 class="section-title">Work is the leading use case — ahead of personal and coursework</h2>
+        <p class="section-desc">
+          Nearly half of all Claude.ai requests in February 2026 were work-related. Personal use follows at 42%, and educational use accounts for 12% — signaling that AI has already crossed from experimentation into daily professional workflows.
+        </p>
+        <ul class="legend-list">
+          <li class="legend-item">
+            <div class="legend-dot" style="background:#00c9a7"></div>
+            <div class="legend-text">
+              <div class="pct">45.2%</div>
+              <div class="name">Work</div>
+            </div>
+          </li>
+          <li class="legend-item">
+            <div class="legend-dot" style="background:#22d3ee"></div>
+            <div class="legend-text">
+              <div class="pct">42.3%</div>
+              <div class="name">Personal</div>
+            </div>
+          </li>
+          <li class="legend-item">
+            <div class="legend-dot" style="background:#0e7490"></div>
+            <div class="legend-text">
+              <div class="pct">12.4%</div>
+              <div class="name">Coursework</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="useCaseChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- OCCUPATION PREVIEW -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Occupation exposure</div>
+    <h2 class="section-title">Which jobs are most — and least — exposed to AI?</h2>
+    <p class="section-desc">
+      AI-rated exposure (beta) estimates the share of tasks within an occupation that AI can meaningfully assist with. Knowledge-intensive roles lead; physical and service roles trail.
+    </p>
+
+    <div class="occ-grid">
+      <div class="occ-panel">
+        <div class="occ-panel-header">
+          <div class="dot" style="background:var(--teal)"></div>
+          <div class="title">Highest AI exposure</div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Mathematicians</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:100%;background:var(--teal)"></div></div>
+            <div class="occ-pct" style="color:var(--teal)">100%</div>
+          </div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Proofreaders &amp; Copy Markers</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:98%;background:var(--teal)"></div></div>
+            <div class="occ-pct" style="color:var(--teal)">98%</div>
+          </div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Blockchain Engineers</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:97%;background:var(--teal)"></div></div>
+            <div class="occ-pct" style="color:var(--teal)">97%</div>
+          </div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Correspondence Clerks</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:96%;background:var(--teal)"></div></div>
+            <div class="occ-pct" style="color:var(--teal)">96%</div>
+          </div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Court Reporters</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:96%;background:var(--teal)"></div></div>
+            <div class="occ-pct" style="color:var(--teal)">96%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="occ-panel">
+        <div class="occ-panel-header">
+          <div class="dot" style="background:var(--faint)"></div>
+          <div class="title">Lowest AI exposure</div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Athletes &amp; Sports Competitors</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
+            <div class="occ-pct" style="color:var(--faint)">0%</div>
+          </div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Orderlies</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
+            <div class="occ-pct" style="color:var(--faint)">0%</div>
+          </div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Cooks, Fast Food</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
+            <div class="occ-pct" style="color:var(--faint)">0%</div>
+          </div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Cooks, Short Order</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
+            <div class="occ-pct" style="color:var(--faint)">0%</div>
+          </div>
+        </div>
+        <div class="occ-row">
+          <div class="occ-name">Dining Room Attendants</div>
+          <div class="occ-bar-wrap">
+            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
+            <div class="occ-pct" style="color:var(--faint)">0%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem; text-align:center;">
+      <a href="occupations.html" class="btn btn-ghost">Browse all 923 occupations →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- COLLABORATION MODES -->
+<section style="background:var(--surface);">
+  <div class="section-inner">
+    <div class="section-label">Human–AI collaboration</div>
+    <h2 class="section-title">How people collaborate with AI at work</h2>
+    <p class="section-desc">
+      Claude.ai logs show six distinct collaboration modes. Directive use — giving direct instructions to complete tasks — dominates, followed by task iteration and learning.
+    </p>
+
+    <div class="collab-grid">
+      <div class="collab-card">
+        <div class="pct">32.6%</div>
+        <div class="name">Directive</div>
+        <div class="desc">User issues explicit instructions for AI to execute</div>
+      </div>
+      <div class="collab-card">
+        <div class="pct">25.6%</div>
+        <div class="name">Task Iteration</div>
+        <div class="desc">Refining outputs through back-and-forth exchanges</div>
+      </div>
+      <div class="collab-card">
+        <div class="pct">22.4%</div>
+        <div class="name">Learning</div>
+        <div class="desc">Using AI to build understanding or gain knowledge</div>
+      </div>
+      <div class="collab-card">
+        <div class="pct">11.5%</div>
+        <div class="name">Feedback Loop</div>
+        <div class="desc">Giving AI structured feedback to improve responses</div>
+      </div>
+      <div class="collab-card">
+        <div class="pct">4.9%</div>
+        <div class="name">Validation</div>
+        <div class="desc">AI checks or confirms human-generated work</div>
+      </div>
+      <div class="collab-card">
+        <div class="pct">3.0%</div>
+        <div class="name">None / Other</div>
+        <div class="desc">Unclassified or minimal interaction patterns</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- DATA SOURCES -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Data sources</div>
+    <h2 class="section-title">Built on open, peer-reviewed data</h2>
+    <p class="section-desc">
+      GAIA combines three complementary datasets — real-world AI usage behavior, occupational AI exposure ratings, and crowd-sourced machine-learning suitability scores from academic research.
+    </p>
+
+    <div class="sources-grid">
+      <div class="source-card">
+        <div class="source-icon" style="background:rgba(0,201,167,0.12); color:var(--teal)">⬡</div>
+        <div>
+          <h3>Anthropic Economic Index</h3>
+          <p>Behavioral data from Claude.ai across 178 countries, covering task success, collaboration modes, autonomy levels, and use-case classification. Release: Feb 5–12, 2026.</p>
+          <span class="tag">1M+ requests analyzed</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon" style="background:rgba(34,211,238,0.1); color:var(--cyan)">⬡</div>
+        <div>
+          <h3>OpenAI Occupational Exposure</h3>
+          <p>AI and human expert ratings of occupational task exposure across 923 O*NET-SOC codes, using alpha (high), beta (moderate), and gamma (any) exposure tiers.</p>
+          <span class="tag">923 occupations rated</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon" style="background:rgba(14,116,144,0.12); color:#0e9ab0">⬡</div>
+        <div>
+          <h3>SML — What Can Machines Learn?</h3>
+          <p>Crowd-sourced susceptibility to machine learning (SML) scores at the task level, aggregated to 813 occupations via O*NET DWA ratings. Brynjolfsson, Mitchell &amp; Rock (2018).</p>
+          <span class="tag">813 occupations scored</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon" style="background:rgba(251,191,36,0.1); color:#fbbf24">⬡</div>
+        <div>
+          <h3>IMF AI Preparedness Index</h3>
+          <p>Country-level composite index measuring readiness for AI adoption across four pillars: digital infrastructure, innovation &amp; economic integration, human capital, and regulation. IMF 2023.</p>
+          <span class="tag">174 countries scored</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon" style="background:rgba(96,165,250,0.1); color:#60a5fa">⬡</div>
+        <div>
+          <h3>Google Trends — AI Awareness</h3>
+          <p>Weekly "ChatGPT" search interest from Nov 2022 to Apr 2026 for the top 20 countries by Claude.ai usage. Reveals the AI awareness shock wave spreading globally after ChatGPT's launch.</p>
+          <span class="tag">20 countries · 183 weeks</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon" style="background:rgba(16,185,129,0.1); color:#10b981">⬡</div>
+        <div>
+          <h3>Gallup World Poll — AI Sentiment</h3>
+          <p>Public attitudes toward AI across 119 countries: share who believe AI will mostly help vs. mostly harm society. Net optimism scores from the 2021 Gallup wave via Our World in Data.</p>
+          <span class="tag">119 countries · 2021</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon" style="background:rgba(79,70,229,0.12); color:#818cf8">⬡</div>
+        <div>
+          <h3>OECD.AI — Policy Initiatives</h3>
+          <p>Total number of national AI policy initiatives per country tracked by the OECD AI Policy Observatory, including strategies, regulations, and recommendations. Data as of 2024.</p>
+          <span class="tag">138 countries · OECD.AI 2024</span>
+        </div>
+      </div>
+      <div class="source-card">
+        <div class="source-icon" style="background:rgba(217,119,6,0.1); color:#fbbf24">⬡</div>
+        <div>
+          <h3>Eurostat — Firm AI Adoption</h3>
+          <p>Share of enterprises with 10+ employees using AI technologies, from the Eurostat ICT survey. Covers 33 European countries with data for 2021, 2023, and 2024.</p>
+          <span class="tag">33 EU countries · Eurostat 2024</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a> · <a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a></p>
+    <p>Data: Anthropic · OpenAI · Brynjolfsson et al. · IMF · Gallup/OWID · OECD.AI · Eurostat · Feb 2026</p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+  </div>
+</footer>
+
+<script>
+  // Donut chart — use case distribution
+  const ctx = document.getElementById('useCaseChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Work', 'Personal', 'Coursework'],
+      datasets: [{
+        data: [45.2, 42.3, 12.4],
+        backgroundColor: ['#00c9a7', '#22d3ee', '#0e7490'],
+        borderColor: '#112c35',
+        borderWidth: 3,
+        hoverOffset: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '68%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => ` ${ctx.label}: ${ctx.parsed}%`
+          },
+          backgroundColor: '#0d2229',
+          borderColor: '#1e404c',
+          borderWidth: 1,
+          titleColor: '#e2f0ed',
+          bodyColor: '#7aada5',
+          padding: 10,
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+iso3,country,ai_policies,has_strategy,has_law,source_year
+ARE,United Arab Emirates,42,1,1,2024
+ALB,Albania,5,1,0,2024
+ARM,Armenia,4,0,0,2024
+AGO,Angola,1,0,0,2024
+ARG,Argentina,12,1,0,2024
+AUT,Austria,22,1,0,2024
+AUS,Australia,58,1,0,2024
+AZE,Azerbaijan,4,1,0,2024
+BIH,Bosnia,2,0,0,2024
+BRB,Barbados,1,0,0,2024
+BGD,Bangladesh,2,1,0,2024
+BEL,Belgium,28,1,0,2024
+BFA,Burkina Faso,0,0,0,2024
+BGR,Bulgaria,8,1,0,2024
+BHR,Bahrain,10,1,0,2024
+BEN,Benin,0,0,0,2024
+BRN,Brunei,3,1,0,2024
+BOL,Bolivia,1,0,0,2024
+BRA,Brazil,14,1,0,2024
+BTN,Bhutan,1,1,0,2024
+BWA,Botswana,1,0,0,2024
+BLZ,Belize,0,0,0,2024
+CAN,Canada,62,1,0,2024
+COG,Congo,0,0,0,2024
+CHE,Switzerland,18,1,0,2024
+CIV,Ivory Coast,2,1,0,2024
+CHL,Chile,9,1,0,2024
+CMR,Cameroon,1,0,0,2024
+COL,Colombia,8,1,0,2024
+CRI,Costa Rica,4,1,0,2024
+CZE,Czech Republic,16,1,0,2024
+DEU,Germany,72,1,0,2024
+DJI,Djibouti,0,0,0,2024
+DNK,Denmark,26,1,0,2024
+DOM,Dominican Republic,3,1,0,2024
+DZA,Algeria,3,1,0,2024
+ECU,Ecuador,4,1,0,2024
+EST,Estonia,18,1,0,2024
+EGY,Egypt,9,1,0,2024
+ESP,Spain,68,1,0,2024
+FIN,Finland,35,1,0,2024
+FJI,Fiji,1,0,0,2024
+FRA,France,65,1,0,2024
+GBR,United Kingdom,62,1,0,2024
+GRD,Grenada,0,0,0,2024
+GEO,Georgia,5,1,0,2024
+GHA,Ghana,4,1,0,2024
+GMB,Gambia,0,0,0,2024
+GIN,Guinea,0,0,0,2024
+GRC,Greece,14,1,0,2024
+GTM,Guatemala,2,0,0,2024
+HND,Honduras,1,0,0,2024
+HRV,Croatia,10,1,0,2024
+HTI,Haiti,0,0,0,2024
+HUN,Hungary,12,1,0,2024
+IDN,Indonesia,8,1,0,2024
+IRL,Ireland,14,1,0,2024
+ISR,Israel,12,1,0,2024
+IND,India,15,1,0,2024
+IRQ,Iraq,1,0,0,2024
+ITA,Italy,38,1,0,2024
+JAM,Jamaica,2,1,0,2024
+JOR,Jordan,6,1,0,2024
+JPN,Japan,52,1,0,2024
+KEN,Kenya,6,1,0,2024
+KGZ,Kyrgyzstan,1,0,0,2024
+KHM,Cambodia,2,1,0,2024
+COM,Comoros,0,0,0,2024
+KOR,South Korea,42,1,1,2024
+KWT,Kuwait,6,1,0,2024
+KAZ,Kazakhstan,8,1,0,2024
+LBN,Lebanon,2,0,0,2024
+LCA,Saint Lucia,0,0,0,2024
+LKA,Sri Lanka,3,1,0,2024
+LBR,Liberia,0,0,0,2024
+LTU,Lithuania,12,1,0,2024
+LUX,Luxembourg,16,1,0,2024
+LVA,Latvia,10,1,0,2024
+MAR,Morocco,6,1,0,2024
+MDA,Moldova,4,0,0,2024
+MNE,Montenegro,4,1,0,2024
+MDG,Madagascar,0,0,0,2024
+MKD,North Macedonia,4,1,0,2024
+MNG,Mongolia,2,1,0,2024
+MRT,Mauritania,0,0,0,2024
+MUS,Mauritius,5,1,0,2024
+MDV,Maldives,1,1,0,2024
+MWI,Malawi,1,0,0,2024
+MEX,Mexico,10,1,0,2024
+MYS,Malaysia,12,1,0,2024
+MOZ,Mozambique,1,0,0,2024
+NER,Niger,0,0,0,2024
+NGA,Nigeria,6,1,0,2024
+NLD,Netherlands,42,1,0,2024
+NOR,Norway,22,1,0,2024
+NPL,Nepal,2,1,0,2024
+NZL,New Zealand,14,1,0,2024
+OMN,Oman,6,1,0,2024
+PAN,Panama,3,1,0,2024
+PER,Peru,5,1,0,2024
+PNG,Papua New Guinea,0,0,0,2024
+PHL,Philippines,6,1,0,2024
+PAK,Pakistan,4,1,0,2024
+POL,Poland,18,1,0,2024
+PSE,Palestine,1,0,0,2024
+PRT,Portugal,18,1,0,2024
+PRY,Paraguay,2,1,0,2024
+QAT,Qatar,10,1,0,2024
+ROU,Romania,10,1,0,2024
+SRB,Serbia,8,1,0,2024
+RWA,Rwanda,4,1,0,2024
+SAU,Saudi Arabia,15,1,0,2024
+SWE,Sweden,32,1,0,2024
+SGP,Singapore,20,1,1,2024
+SVN,Slovenia,10,1,0,2024
+SVK,Slovakia,10,1,0,2024
+SLE,Sierra Leone,0,0,0,2024
+SEN,Senegal,3,1,0,2024
+TCD,Chad,0,0,0,2024
+TGO,Togo,1,0,0,2024
+THA,Thailand,10,1,0,2024
+TJK,Tajikistan,1,0,0,2024
+TLS,Timor-Leste,0,0,0,2024
+TUN,Tunisia,4,1,0,2024
+TUR,Turkey,12,1,0,2024
+TTO,Trinidad and Tobago,2,0,0,2024
+TWN,Taiwan,14,1,0,2024
+TZA,Tanzania,2,1,0,2024
+UKR,Ukraine,8,1,0,2024
+UGA,Uganda,3,1,0,2024
+USA,United States,145,1,1,2024
+URY,Uruguay,8,1,0,2024
+UZB,Uzbekistan,4,1,0,2024
+VCT,Saint Vincent,0,0,0,2024
+VNM,Vietnam,6,1,0,2024
+ZAF,South Africa,10,1,0,2024
+ZMB,Zambia,2,0,0,2024
+ZWE,Zimbabwe,1,0,0,2024
