@@ -172,6 +172,16 @@
       color: var(--text);
     }
 
+    .doi-badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .22rem .72rem; border-radius: 2rem;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      color: var(--teal); font-size: .72rem; font-weight: 600;
+      letter-spacing: .01em; text-decoration: none;
+      transition: background .2s; margin-bottom: 1rem;
+    }
+    .doi-badge:hover { background: rgba(30,136,229,0.16); color: var(--teal-dim); }
+
     /* Hero right: stat cards */
     .hero-stats {
       display: grid;
@@ -588,6 +598,7 @@
   <div class="hero-left">
     <div class="hero-tag">Feb 2026 · 178 Countries · 923 Occupations</div>
     <h1>Mapping <em>AI adoption</em> across the global economy</h1>
+    <a href="https://doi.org/10.5281/zenodo.20320112" class="doi-badge" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20320112</a>
     <p class="hero-sub">
       GAIA synthesizes behavioral data from Anthropic's Economic Index, OpenAI's occupational exposure ratings, and Brynjolfsson et al.'s machine-learning suitability scores to track how AI is reshaping work worldwide.
     </p>

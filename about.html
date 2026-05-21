@@ -170,6 +170,15 @@
     .btn-teal:hover { background: var(--cyan); color: #09191d; }
     .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
     .btn-outline:hover { color: var(--text); border-color: var(--teal-dim); }
+    .doi-badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .22rem .72rem; border-radius: 2rem;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      color: var(--teal); font-size: .72rem; font-weight: 600;
+      letter-spacing: .01em; text-decoration: none;
+      transition: background .2s; margin-bottom: 1rem;
+    }
+    .doi-badge:hover { background: rgba(30,136,229,0.16); color: var(--teal-dim); }
 
     /* PAPERS */
     .paper {
@@ -330,6 +339,7 @@
   <div class="sec">
     <p class="sec-label">GAIA Dataset</p>
     <h2>Global AI Adoption Index</h2>
+    <a href="https://doi.org/10.5281/zenodo.20320112" class="doi-badge" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20320112</a>
     <div class="gaia-box">
       <h3>What GAIA measures</h3>
       <p>GAIA combines three independent sources — Anthropic's observed Claude.ai usage data, OpenAI's GPT-4 task annotation (Eloundou et al., Science 2024), and the pre-GPT Suitability for Machine Learning baseline (Brynjolfsson et al., AEA 2018) — into a composite AI exposure index at the occupation level, plus a country-level behavioral panel covering 178 countries.</p>
@@ -400,7 +410,7 @@
       <div class="contact-card">
         <div class="contact-icon">📄</div>
         <p class="contact-label">Citation</p>
-        <p class="contact-val" style="font-size:.72rem;color:var(--muted)">Aghabarari, L. (2026). GAIA — Global AI Adoption Index. gaiaindex.org</p>
+        <p class="contact-val" style="font-size:.72rem;color:var(--muted)">Aghabarari, L. (2026). GAIA — Global AI Adoption Index (Version 1.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.20320112" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.20320112</a></p>
       </div>
     </div>
   </div>
