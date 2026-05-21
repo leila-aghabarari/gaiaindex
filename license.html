@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>License &amp; Attribution — GAIA Index</title>
+  <meta name="description" content="License, attribution, and citation requirements for the GAIA Global AI Adoption Index dataset." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #f4f7fc;
+      --surface:   #edf2f9;
+      --card:      #ffffff;
+      --border:    #dde6f0;
+      --teal:      #1e88e5;
+      --teal-dim:  #1565c0;
+      --teal-glow: rgba(30,136,229,0.09);
+      --cyan:      #42a5f5;
+      --text:      #1a2635;
+      --muted:     #5b7a96;
+      --faint:     #96b2c8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.2rem; color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-logo-sub { color: var(--faint) !important; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; margin-left: 0.3rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 2rem;
+    }
+    .page-hero-inner { max-width: 900px; margin: 0 auto; }
+    .hero-tag {
+      display: inline-block;
+      background: var(--teal-glow);
+      border: 1px solid var(--teal-dim);
+      color: var(--teal);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.28rem 0.75rem; border-radius: 2rem;
+      margin-bottom: 1rem;
+    }
+    .page-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 0.6rem;
+    }
+    .page-hero p {
+      color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 640px;
+    }
+
+    /* CONTAINER */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* SECTIONS */
+    .sec { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .sec:last-child { border-bottom: none; }
+    .sec-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .5rem;
+    }
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: .85rem; color: var(--text);
+    }
+    h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--teal); margin-bottom: .4rem;
+    }
+
+    /* CC LICENSE BOX */
+    .license-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.75rem;
+      position: relative; overflow: hidden;
+      display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap;
+    }
+    .license-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--cyan), transparent);
+    }
+    .license-badge {
+      flex-shrink: 0;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      border-radius: 8px; padding: .75rem 1rem; text-align: center;
+      min-width: 110px;
+    }
+    .license-badge .cc-icons {
+      font-size: 1.6rem; display: block; margin-bottom: .3rem; letter-spacing: .1em;
+    }
+    .license-badge .cc-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--teal);
+    }
+    .license-text { flex: 1; min-width: 220px; }
+    .license-text p { font-size: .9rem; color: var(--muted); line-height: 1.7; margin-bottom: .6rem; }
+    .license-text p:last-child { margin-bottom: 0; }
+    .license-text strong { color: var(--text); font-weight: 600; }
+    .license-text a { font-weight: 500; }
+
+    /* CITATION CARDS */
+    .citation-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; margin-bottom: 1rem; overflow: hidden;
+    }
+    .citation-card:last-child { margin-bottom: 0; }
+    .citation-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap;
+    }
+    .citation-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      color: var(--teal); font-size: .75rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .citation-meta { flex: 1; }
+    .citation-title { font-size: .95rem; font-weight: 600; color: var(--text); margin-bottom: .2rem; }
+    .citation-authors { font-size: .78rem; color: var(--faint); margin-bottom: .35rem; }
+    .citation-venue {
+      display: inline-block; font-size: .7rem; font-weight: 600; padding: 2px 8px;
+      border-radius: 4px; background: var(--teal-glow);
+      border: 1px solid var(--teal-dim); color: var(--teal);
+    }
+    .bibtex-block {
+      padding: 1rem 1.25rem;
+      background: #f8fafc;
+    }
+    .bibtex-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--faint); margin-bottom: .5rem;
+    }
+    pre {
+      font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', monospace;
+      font-size: .78rem; line-height: 1.65;
+      color: var(--muted);
+      white-space: pre-wrap; word-break: break-word;
+      background: none; border: none;
+    }
+    pre .key { color: var(--teal); }
+    pre .val { color: #2e6f9e; }
+
+    /* TERMS */
+    .terms-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin-top: 1rem;
+    }
+    .terms-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.25rem;
+      position: relative; overflow: hidden;
+    }
+    .terms-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .terms-card.allowed::before { background: #16a34a; }
+    .terms-card.required::before { background: var(--teal); }
+    .terms-card.prohibited::before { background: #dc2626; }
+    .terms-icon { font-size: 1.25rem; margin-bottom: .4rem; }
+    .terms-title { font-size: .88rem; font-weight: 600; color: var(--text); margin-bottom: .5rem; }
+    .terms-list { list-style: none; padding: 0; }
+    .terms-list li {
+      font-size: .78rem; color: var(--muted); line-height: 1.5;
+      padding: .2rem 0; display: flex; gap: .4rem;
+    }
+    .terms-list li::before { content: '–'; color: var(--faint); flex-shrink: 0; }
+
+    /* ATTRIBUTION TEMPLATE */
+    .attr-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.25rem; margin-top: 1rem;
+    }
+    .attr-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--faint); margin-bottom: .6rem;
+    }
+    .attr-text {
+      font-size: .85rem; color: var(--text); line-height: 1.7;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: .85rem 1rem;
+      font-style: italic;
+    }
+
+    /* CONTACT */
+    .contact-row {
+      display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;
+    }
+    .contact-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.25rem;
+      display: flex; gap: .75rem; align-items: center; flex: 1; min-width: 200px;
+    }
+    .contact-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .contact-label {
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted); margin-bottom: .15rem;
+    }
+    .contact-val { font-size: .85rem; font-weight: 500; color: var(--text); }
+    .contact-val a { color: var(--teal); }
+    .contact-val a:hover { color: var(--cyan); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--muted); }
+    .footer-logo span { color: var(--teal); }
+    footer p { color: var(--faint); font-size: .8rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    @media (max-width: 640px) {
+      .license-box { flex-direction: column; }
+      .nav-links { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="license.html" class="active">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="hero-tag">License &amp; Attribution</span>
+    <h1>Open Data, Proper Credit</h1>
+    <p>GAIA data is freely available for research and education under Creative Commons Attribution 4.0. This page describes the terms of use and provides citation information for all underlying data sources.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- LICENSE -->
+  <div class="sec">
+    <p class="sec-label">License</p>
+    <h2>GAIA Copyright &amp; License</h2>
+    <div class="license-box">
+      <div class="license-badge">
+        <span class="cc-icons">CC&nbsp;BY</span>
+        <span class="cc-label">4.0</span>
+      </div>
+      <div class="license-text">
+        <p><strong>© 2026 Leila Aghabarari.</strong> The GAIA (Global AI Adoption Index) dataset, composite scores, country panel, and associated documentation are licensed under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0 International License (CC BY 4.0)</a>.</p>
+        <p>You are free to <strong>share</strong> (copy and redistribute in any medium or format) and <strong>adapt</strong> (remix, transform, and build upon the material for any purpose, including commercially) — provided you give appropriate credit, include a link to the license, and indicate if changes were made.</p>
+        <p>The underlying source datasets (Anthropic Economic Index, OpenAI GPT-4 exposure ratings, Brynjolfsson SML scores) carry their own licenses and attribution requirements, detailed in the Citations section below.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CITATIONS -->
+  <div class="sec" id="citations">
+    <p class="sec-label">Required Citations</p>
+    <h2>How to Cite the Data Sources</h2>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem;">When using GAIA data in published work, please cite GAIA itself <em>and</em> the underlying source(s) you draw on. BibTeX entries are provided below.</p>
+
+    <!-- GAIA -->
+    <div class="citation-card">
+      <div class="citation-header">
+        <div class="citation-num">1</div>
+        <div class="citation-meta">
+          <p class="citation-title">GAIA — Global AI Adoption Index</p>
+          <p class="citation-authors">Leila Aghabarari</p>
+          <span class="citation-venue">Working Paper · 2026 · gaiaindex.org</span>
+        </div>
+      </div>
+      <div class="bibtex-block">
+        <p class="bibtex-label">BibTeX</p>
+        <pre>@misc{<span class="key">aghabarari2026gaia</span>,
+  <span class="key">author</span>  = {<span class="val">Aghabarari, Leila</span>},
+  <span class="key">title</span>   = {{GAIA}: {G}lobal {AI} {A}doption {I}ndex},
+  <span class="key">year</span>    = {<span class="val">2026</span>},
+  <span class="key">url</span>     = {<span class="val">https://gaiaindex.org</span>},
+  <span class="key">note</span>    = {<span class="val">Dataset covering 178 countries and 923 occupations.
+             Licensed under CC BY 4.0</span>}
+}</pre>
+      </div>
+    </div>
+
+    <!-- Anthropic -->
+    <div class="citation-card">
+      <div class="citation-header">
+        <div class="citation-num">2</div>
+        <div class="citation-meta">
+          <p class="citation-title">The Anthropic Economic Index</p>
+          <p class="citation-authors">Anthropic</p>
+          <span class="citation-venue">Dataset · Hugging Face · 2025</span>
+        </div>
+      </div>
+      <div class="bibtex-block">
+        <p class="bibtex-label">BibTeX</p>
+        <pre>@misc{<span class="key">anthropic2025economicindex</span>,
+  <span class="key">author</span>  = {<span class="val">{Anthropic}</span>},
+  <span class="key">title</span>   = {The {A}nthropic {E}conomic {I}ndex},
+  <span class="key">year</span>    = {<span class="val">2025</span>},
+  <span class="key">url</span>     = {<span class="val">https://huggingface.co/datasets/Anthropic/EconomicIndex</span>},
+  <span class="key">note</span>    = {<span class="val">Observed Claude.ai task-level usage data aggregated
+             by occupation and country</span>}
+}</pre>
+      </div>
+    </div>
+
+    <!-- Eloundou et al. -->
+    <div class="citation-card">
+      <div class="citation-header">
+        <div class="citation-num">3</div>
+        <div class="citation-meta">
+          <p class="citation-title">GPTs are GPTs: Labor market impacts of language models</p>
+          <p class="citation-authors">Tyna Eloundou · Sam Manning · Pamela Mishkin · Daniel Rock</p>
+          <span class="citation-venue">Science · Vol. 384 · 2024</span>
+        </div>
+      </div>
+      <div class="bibtex-block">
+        <p class="bibtex-label">BibTeX</p>
+        <pre>@article{<span class="key">eloundou2024gpts</span>,
+  <span class="key">author</span>  = {<span class="val">Eloundou, Tyna and Manning, Sam and Mishkin, Pamela
+             and Rock, Daniel</span>},
+  <span class="key">title</span>   = {{GPT}s are {GPT}s: {L}abor market impacts of language models},
+  <span class="key">journal</span> = {<span class="val">Science</span>},
+  <span class="key">year</span>    = {<span class="val">2024</span>},
+  <span class="key">volume</span>  = {<span class="val">384</span>},
+  <span class="key">number</span>  = {<span class="val">6702</span>},
+  <span class="key">pages</span>   = {<span class="val">1306--1311</span>},
+  <span class="key">doi</span>     = {<span class="val">10.1126/science.adj0998</span>}
+}</pre>
+      </div>
+    </div>
+
+    <!-- Brynjolfsson et al. -->
+    <div class="citation-card">
+      <div class="citation-header">
+        <div class="citation-num">4</div>
+        <div class="citation-meta">
+          <p class="citation-title">What Can Machines Learn, and What Does It Mean for Occupations and the Economy?</p>
+          <p class="citation-authors">Erik Brynjolfsson · Tom Mitchell · Daniel Rock</p>
+          <span class="citation-venue">NBER Working Paper 24196 · 2018</span>
+        </div>
+      </div>
+      <div class="bibtex-block">
+        <p class="bibtex-label">BibTeX</p>
+        <pre>@techreport{<span class="key">brynjolfsson2018sml</span>,
+  <span class="key">author</span>      = {<span class="val">Brynjolfsson, Erik and Mitchell, Tom and Rock, Daniel</span>},
+  <span class="key">title</span>       = {<span class="val">What Can Machines Learn, and What Does It Mean
+                 for Occupations and the Economy?</span>},
+  <span class="key">institution</span> = {<span class="val">National Bureau of Economic Research</span>},
+  <span class="key">year</span>        = {<span class="val">2018</span>},
+  <span class="key">type</span>        = {<span class="val">Working Paper</span>},
+  <span class="key">number</span>      = {<span class="val">24196</span>},
+  <span class="key">doi</span>         = {<span class="val">10.3386/w24196</span>}
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMS OF USE -->
+  <div class="sec" id="terms">
+    <p class="sec-label">Terms of Use</p>
+    <h2>What You May Do with GAIA Data</h2>
+
+    <div class="terms-grid">
+      <div class="terms-card allowed">
+        <div class="terms-icon">✓</div>
+        <p class="terms-title">Permitted uses</p>
+        <ul class="terms-list">
+          <li>Academic research and peer-reviewed publication</li>
+          <li>Educational use in courses and curricula</li>
+          <li>Policy analysis and non-profit reporting</li>
+          <li>Journalism and data visualization</li>
+          <li>Building derivative datasets with attribution</li>
+        </ul>
+      </div>
+      <div class="terms-card required">
+        <div class="terms-icon">!</div>
+        <p class="terms-title">Required with all uses</p>
+        <ul class="terms-list">
+          <li>Cite GAIA and applicable upstream sources</li>
+          <li>Link to gaiaindex.org or the license</li>
+          <li>Indicate if data was modified or subsetted</li>
+          <li>Do not imply endorsement by the author or IFC/World Bank</li>
+        </ul>
+      </div>
+      <div class="terms-card prohibited">
+        <div class="terms-icon">✕</div>
+        <p class="terms-title">Requires prior permission</p>
+        <ul class="terms-list">
+          <li>Commercial products or SaaS platforms</li>
+          <li>Redistribution as a standalone commercial dataset</li>
+          <li>Integration into proprietary indices for sale</li>
+          <li>Use in ways that violate upstream source terms</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="attr-box">
+      <p class="attr-label">Suggested attribution text</p>
+      <p class="attr-text">"Data from the GAIA (Global AI Adoption Index), Aghabarari (2026), gaiaindex.org, licensed under CC BY 4.0. Underlying sources: Anthropic Economic Index (Anthropic, 2025); Eloundou et al. (Science, 2024); Brynjolfsson, Mitchell &amp; Rock (NBER WP 24196, 2018)."</p>
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="sec">
+    <p class="sec-label">Disclaimer</p>
+    <h2>Views &amp; Representations</h2>
+    <div style="font-size:.88rem;color:var(--muted);line-height:1.8;">
+      <p style="margin-bottom:.75rem;">The GAIA dataset and this website are personal research outputs. <strong style="color:var(--text)">They do not represent the views, positions, or endorsement of the International Finance Corporation, the World Bank Group, or any affiliated organization.</strong></p>
+      <p style="margin-bottom:.75rem;">GAIA data is derived from third-party sources (Anthropic, OpenAI, ICPSR, ILO, IMF, Gallup/OWID, OECD.Ai, Eurostat) and is provided "as is" without warranty of any kind. Users are responsible for verifying fitness for their specific purpose and for compliance with the terms of each underlying source.</p>
+      <p>Country-level usage data reflect behavioral signals from API and consumer products and should not be interpreted as representative surveys of national AI adoption.</p>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="sec" id="contact">
+    <p class="sec-label">Contact</p>
+    <h2>Commercial Use &amp; Inquiries</h2>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:1rem;">For commercial licensing, collaboration, or any questions about attribution requirements, please get in touch directly.</p>
+    <div class="contact-row">
+      <div class="contact-card">
+        <div class="contact-icon">✉</div>
+        <div>
+          <p class="contact-label">Email</p>
+          <p class="contact-val"><a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">💼</div>
+        <div>
+          <p class="contact-label">LinkedIn</p>
+          <p class="contact-val"><a href="https://linkedin.com/in/leila-aghabarari" target="_blank" rel="noopener">leila-aghabarari</a></p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">⬇</div>
+        <div>
+          <p class="contact-label">Download data</p>
+          <p class="contact-val"><a href="data.html">Data page →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a> · <a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a></p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+    <p>© 2026 Leila Aghabarari · gaiaindex.org</p>
+  </div>
+</footer>
+
+</body>
+</html>

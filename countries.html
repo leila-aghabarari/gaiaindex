@@ -69,6 +69,7 @@
     }
 
     .nav-logo span { color: var(--teal); }
+    .nav-logo-sub { color: var(--faint) !important; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; margin-left: 0.3rem; }
 
     .nav-links {
       display: flex;
@@ -575,6 +576,28 @@
     #searchInput::placeholder { color: var(--faint); }
     #searchInput:focus { border-color: var(--teal-dim); }
 
+    /* COUNTRY LOOKUP */
+    .country-lookup {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 1rem;
+    }
+    .country-lookup-inner {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+    }
+    .country-lookup-inner::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+    }
+    .lookup-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal); white-space: nowrap;
+    }
+
     select {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 8px; color: var(--text);
@@ -800,7 +823,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="occupations.html">Occupations</a></li>
@@ -808,6 +831,8 @@
       <li><a href="trends.html">Trends</a></li>
       <li><a href="data.html">Data</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="license.html">License</a></li>
     </ul>
   </div>
 </nav>
@@ -819,10 +844,6 @@
 </div>
 
 <div class="controls">
-  <div class="search-wrap">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchInput" placeholder="Search countries — e.g. Brazil, Nigeria…" autocomplete="off" />
-  </div>
   <select id="incomeFilter">
     <option value="">All income groups</option>
     <option value="High">High income</option>
@@ -873,6 +894,17 @@
     <div class="viz-card-title">Work Use % vs AI Sentiment — bubble size = Claude traffic share</div>
     <div class="chart-area" style="height:300px">
       <canvas id="scatterChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Country Profile Search -->
+<div class="country-lookup">
+  <div class="country-lookup-inner">
+    <span class="lookup-label">Highlight country</span>
+    <div class="search-wrap" style="flex:1;min-width:220px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search a country to highlight it in the chart — e.g. Brazil, Nigeria…" autocomplete="off" />
     </div>
   </div>
 </div>
@@ -985,13 +1017,8 @@ function showDetail(geoId) {
 }
 
 function applyFilters() {
-  const q = document.getElementById('searchInput').value.toLowerCase().trim();
   const income = document.getElementById('incomeFilter').value;
-  filtered = allData.filter(row => {
-    const name = (row.country_name || row.geo_id || '').toLowerCase();
-    return (!q || name.includes(q) || row.geo_id.toLowerCase().includes(q)) &&
-           (!income || row.income_group === income);
-  });
+  filtered = allData.filter(row => !income || row.income_group === income);
 
   const sortMap = {
     'usage_desc':      ['usage_pct_global', -1],
@@ -1091,7 +1118,21 @@ function updateChartsInner() {
   // ── Top bar chart ──
   const sortVal = document.getElementById('sortSelect').value;
   _barMi = METRIC_INFO[sortVal] || METRIC_INFO['usage_desc'];
-  document.getElementById('barChartTitle').textContent = `Top 12 by ${_barMi.label} — click for detail`;
+
+  // Resolve search highlight country (searched against full allData, not filtered)
+  const searchQ = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+  let searchGeoId = null;
+  if (searchQ.length >= 2) {
+    const found = allData.find(r =>
+      (r.country_name || r.geo_id).toLowerCase().includes(searchQ) ||
+      r.geo_id.toLowerCase() === searchQ
+    );
+    if (found) searchGeoId = found.geo_id;
+  }
+
+  document.getElementById('barChartTitle').textContent = searchGeoId
+    ? `Top 12 by ${_barMi.label} — red = ${allData.find(r => r.geo_id === searchGeoId)?.country_name || searchGeoId}`
+    : `Top 12 by ${_barMi.label} — click for detail`;
 
   const top12 = filtered
     .map(r => ({ row:r, val: parseFloat(r[_barMi.field]) }))
@@ -1099,10 +1140,21 @@ function updateChartsInner() {
     .sort((a,b) => b.val - a.val)
     .slice(0, 12);
 
+  // Append searched country if not already in top 12
+  if (searchGeoId && !top12.find(d => d.row.geo_id === searchGeoId)) {
+    const found = allData.find(r => r.geo_id === searchGeoId);
+    if (found) {
+      const val = parseFloat(found[_barMi.field]);
+      if (!isNaN(val)) top12.push({ row: found, val });
+    }
+  }
+
   _barGeoIds = top12.map(d => d.row.geo_id);
   const bLabels = top12.map(d => (d.row.country_name || d.row.geo_id).replace(/\s*\(.*\)/, '').trim());
   const bVals   = top12.map(d => d.val);
-  const bColors = top12.map(d => incomeColor(d.row.income_group));
+  const bColors = top12.map(d =>
+    (searchGeoId && d.row.geo_id === searchGeoId) ? '#ef4444' : incomeColor(d.row.income_group)
+  );
 
   if (!topBarChart) {
     topBarChart = new Chart(document.getElementById('topBar'), {
@@ -1224,7 +1276,7 @@ Promise.all([
   document.getElementById('loading').style.display = 'none';
   filtered = [...allData];
   applyFilters();
-  document.getElementById('searchInput').addEventListener('input', applyFilters);
+  document.getElementById('searchInput').addEventListener('input', updateCharts);
   document.getElementById('incomeFilter').addEventListener('change', applyFilters);
   document.getElementById('sortSelect').addEventListener('change', applyFilters);
 }).catch(() => {

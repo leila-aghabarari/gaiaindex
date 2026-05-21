@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — GAIA Index</title>
+  <meta name="description" content="Working papers and publications by Leila Aghabarari on AI economics, labor markets, credit markets, and development finance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #f4f7fc;
+      --surface:   #edf2f9;
+      --card:      #ffffff;
+      --border:    #dde6f0;
+      --teal:      #1e88e5;
+      --teal-dim:  #1565c0;
+      --teal-glow: rgba(30,136,229,0.09);
+      --cyan:      #42a5f5;
+      --text:      #1a2635;
+      --muted:     #5b7a96;
+      --faint:     #96b2c8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.2rem; color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-logo-sub { color: var(--faint) !important; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; margin-left: 0.3rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 2rem;
+    }
+    .page-hero-inner { max-width: 900px; margin: 0 auto; }
+    .hero-tag {
+      display: inline-block;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      color: var(--teal); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.28rem 0.75rem; border-radius: 2rem; margin-bottom: 1rem;
+    }
+    .page-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 0.6rem;
+    }
+    .page-hero p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; max-width: 600px; }
+
+    /* CONTAINER */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* SECTIONS */
+    .sec { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .sec:last-child { border-bottom: none; }
+    .sec-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .5rem;
+    }
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1.25rem; color: var(--text);
+    }
+
+    /* PAPERS */
+    .paper {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.25rem; margin-bottom: .85rem;
+    }
+    .paper:last-child { margin-bottom: 0; }
+    .paper-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: .5rem;
+      flex-wrap: wrap; gap: .5rem;
+    }
+    .paper-title { font-size: .95rem; font-weight: 600; line-height: 1.4; color: var(--text); }
+    .paper-badge {
+      font-size: .72rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+    }
+    .paper-authors { font-size: .78rem; color: var(--faint); margin-bottom: .5rem; }
+    .paper-abstract { font-size: .82rem; color: var(--muted); line-height: 1.65; margin-bottom: .65rem; }
+    .paper-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 0; }
+    .paper-tag {
+      font-size: .68rem; padding: 2px 7px; border-radius: 4px;
+      background: var(--surface); border: 1px solid var(--border); color: var(--faint);
+    }
+
+    /* PDF UPLOAD ROW */
+    .paper-file-row {
+      display: flex; align-items: center; gap: .6rem;
+      margin-top: .85rem; padding-top: .85rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .file-name {
+      flex: 1; min-width: 0;
+      font-size: .75rem; color: var(--muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .btn-upload-label {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .32rem .85rem; border-radius: 6px;
+      font-size: .78rem; font-weight: 600;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--muted); cursor: pointer; transition: all .2s;
+      user-select: none;
+    }
+    .btn-upload-label:hover { border-color: var(--teal-dim); color: var(--teal); }
+    .btn-view-pdf {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .32rem .85rem; border-radius: 6px;
+      font-size: .78rem; font-weight: 600;
+      background: var(--teal); color: #fff;
+      border: none; cursor: pointer; transition: background .2s;
+    }
+    .btn-view-pdf:hover { background: var(--teal-dim); }
+    .btn-remove-pdf {
+      display: inline-flex; align-items: center;
+      padding: .28rem .55rem; border-radius: 6px;
+      font-size: .75rem; color: var(--faint);
+      background: none; border: 1px solid var(--border);
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-remove-pdf:hover { color: #ef4444; border-color: #ef4444; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--muted); }
+    .footer-logo span { color: var(--teal); }
+    footer p { color: var(--faint); font-size: .8rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    @media (max-width: 640px) {
+      .paper-file-row { gap: .4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="license.html">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="hero-tag">Working Papers &amp; Publications</span>
+    <h1>Leila's Research</h1>
+    <p>Working papers and publications in AI economics, labor markets, credit markets, and development finance. Use the upload button on each paper to attach a local PDF — stored in your browser for easy access.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="sec">
+    <p class="sec-label">Selected research</p>
+    <h2>Papers</h2>
+
+    <!-- Paper 1: Predicted vs. Realized (GAIA) -->
+    <div class="paper" style="border-left: 3px solid #8b5cf6">
+      <div class="paper-header">
+        <p class="paper-title">Predicted vs. Realized: Do Expert-Based AI Exposure Scores Forecast Actual AI Task Performance? Evidence from the GAIA Index</p>
+        <span class="paper-badge" style="background:rgba(139,92,246,0.1);color:#8b5cf6;border:1px solid #6d28d9">Working Paper 2026</span>
+      </div>
+      <p class="paper-authors">Leila Aghabarari</p>
+      <p class="paper-abstract">Do expert-based predictions of occupational AI exposure accurately forecast actual AI adoption and task performance? Using the GAIA Index — a harmonized dataset of 923 O*NET-SOC occupations linking three independent pre-shock exposure measures to post-shock behavioral outcomes — this paper provides the first large-scale empirical test of the predictive validity of occupational AI exposure scores. The three predictors are the AI-rater and human-rater automation scores from Eloundou et al. (2023) and the Suitability for Machine Learning (SML) score from Brynjolfsson, Mitchell &amp; Rock (2018). The behavioral outcome is the Anthropic Economic Index (AEI, February 2026), which provides actual task success rates, AI autonomy rates, and work-relatedness shares for 628 of the 923 occupations. All three exposure predictors fail to forecast 2026 task success: bivariate correlations range from −0.13 to −0.04, and OLS coefficients with group fixed effects are statistically indistinguishable from zero. Against AI autonomy rates, exposure predictions are negative and significant (AI Alpha: β = −1.03, p &lt; 0.001), revealing a structural inversion — the occupations rated as most susceptible to full automation exhibit the lowest autonomous Claude task completion. Selection-corrected Heckman estimates confirm these patterns after adjusting for non-random AEI adoption. Group-level analysis across 22 occupation categories documents systematic inversions: Food Preparation workers average 6.3% predicted exposure but 89.7% task success (+83 percentage points), while Computer &amp; Mathematical workers average 52.1% predicted exposure but only 69.0% task success. Mechanism tests support complementarity as the primary driver: among physical occupation groups, the negative Alpha–success relationship strengthens (β = −2.18, p = 0.021), consistent with low-exposure workers migrating to adjacent, AI-tractable tasks outside their scored task bundle. These findings imply that exposure scores measure automation potential but not AI usefulness, and that workforce transition programs targeting high-exposure occupations may systematically misallocate resources.</p>
+      <div class="paper-tags">
+        <span class="paper-tag">GAIA Index</span><span class="paper-tag">Predictive Validity</span><span class="paper-tag">AI Exposure</span><span class="paper-tag">Occupational AI</span><span class="paper-tag">Labor Markets</span><span class="paper-tag">Heckman</span>
+      </div>
+      <div class="paper-file-row" id="row_gaia_2026">
+        <span class="file-name" id="fs_gaia_2026"></span>
+        <label class="btn-upload-label" id="ul_gaia_2026">
+          <input type="file" accept=".pdf" style="display:none" onchange="handleUpload('gaia_2026', this)">
+          ↑ Attach PDF
+        </label>
+        <button class="btn-view-pdf" id="vw_gaia_2026" style="display:none" onclick="viewPDF('gaia_2026')">↓ Open PDF</button>
+        <button class="btn-remove-pdf" id="rm_gaia_2026" style="display:none" onclick="removePDF('gaia_2026')" title="Remove">✕</button>
+      </div>
+    </div>
+
+    <!-- Paper 2: Brazil Credit -->
+    <div class="paper" style="border-left: 3px solid var(--teal)">
+      <div class="paper-header">
+        <p class="paper-title">AI Exposure, Credit Markets, and Employment in Brazil</p>
+        <span class="paper-badge" style="background:var(--teal-glow);color:var(--teal);border:1px solid var(--teal-dim)">Working Paper 2026</span>
+      </div>
+      <p class="paper-authors">Leila Aghabarari · Bernardus Van Doornik (Banco Central do Brasil)</p>
+      <p class="paper-abstract">We study how AI exposure affects firm credit outcomes and employment using detailed credit registry data from Brazil. We construct a sector-level AI exposure index from three independent sources and crosswalk it to Brazilian firm sectors. Exploiting the November 2022 generative AI shock in a difference-in-differences framework with 16 years of pre-treatment data, we find that firms in high-AI-exposure sectors face tighter credit conditions post-2022, with effects concentrated in micro and small firms and partially offset by government bank lending. We further trace how credit tightening transmits to employment and wages, documenting a financial accelerator channel for AI-induced labor market adjustment.</p>
+      <div class="paper-tags">
+        <span class="paper-tag">AI Economics</span><span class="paper-tag">Credit Markets</span><span class="paper-tag">Brazil</span><span class="paper-tag">Employment</span><span class="paper-tag">DiD</span>
+      </div>
+      <div class="paper-file-row">
+        <span class="file-name" id="fs_brazil_2026"></span>
+        <label class="btn-upload-label" id="ul_brazil_2026">
+          <input type="file" accept=".pdf" style="display:none" onchange="handleUpload('brazil_2026', this)">
+          ↑ Attach PDF
+        </label>
+        <button class="btn-view-pdf" id="vw_brazil_2026" style="display:none" onclick="viewPDF('brazil_2026')">↓ Open PDF</button>
+        <button class="btn-remove-pdf" id="rm_brazil_2026" style="display:none" onclick="removePDF('brazil_2026')" title="Remove">✕</button>
+      </div>
+    </div>
+
+    <!-- Paper 3: Monetary Policy -->
+    <div class="paper" style="border-left: 3px solid var(--cyan)">
+      <div class="paper-header">
+        <p class="paper-title">The Nuanced Role of Government Credit in Monetary Policy Transmission</p>
+        <span class="paper-badge" style="background:rgba(34,211,238,0.1);color:var(--cyan);border:1px solid #0e7490">BCB WP 636 · 2025</span>
+      </div>
+      <p class="paper-authors">Leila Aghabarari · Sophia Chen (IMF) · Deniz Igan (IMF &amp; CEPR) · Bernardus Van Doornik (BCB)</p>
+      <p class="paper-abstract">We study how fiscally backed credit interventions affect monetary policy transmission using detailed credit registry data from Brazil. Government direct credit weakens pass-through to loan rates and offsets contractions in private credit, especially during tightening, while supporting SMEs. Government-subsidized earmarked credit interacts with lending relationships to shape pass-through, consistent with a relationship-based hold-up channel. These effects are strongest during tightening and largely muted during loosening.</p>
+      <div class="paper-tags">
+        <span class="paper-tag">Monetary Policy</span><span class="paper-tag">Government Banks</span><span class="paper-tag">Brazil</span><span class="paper-tag">SMEs</span>
+      </div>
+      <div class="paper-file-row">
+        <span class="file-name" id="fs_bcb_2025"></span>
+        <label class="btn-upload-label" id="ul_bcb_2025">
+          <input type="file" accept=".pdf" style="display:none" onchange="handleUpload('bcb_2025', this)">
+          ↑ Attach PDF
+        </label>
+        <button class="btn-view-pdf" id="vw_bcb_2025" style="display:none" onclick="viewPDF('bcb_2025')">↓ Open PDF</button>
+        <button class="btn-remove-pdf" id="rm_bcb_2025" style="display:none" onclick="removePDF('bcb_2025')" title="Remove">✕</button>
+      </div>
+    </div>
+
+    <!-- Paper 4: Credit Unions -->
+    <div class="paper" style="border-left: 3px solid #fbbf24">
+      <div class="paper-header">
+        <p class="paper-title">Is There Help Indeed, If There Is Help in Need? Credit Unions During the Global Financial Crisis</p>
+        <span class="paper-badge" style="background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid #713f12">Economic Inquiry · 2021</span>
+      </div>
+      <p class="paper-authors">Leila Aghabarari · Andre Guettler · Mahvish Naeem · Bernardus Van Doornik (BCB)</p>
+      <p class="paper-abstract">We exploit the 2008/09 financial crisis as a shock to Brazilian banks and analyze credit union lending behavior. Credit unions tightened members' credit access less than other bank types (insurance effect). The labor market impact is positive for very small firms — micro firms with higher pre-crisis CU lending increased employment and paid higher wages during the crisis. Published in Economic Inquiry, Vol. 59, pp. 1215–1233.</p>
+      <div class="paper-tags">
+        <span class="paper-tag">Credit Unions</span><span class="paper-tag">Financial Crisis</span><span class="paper-tag">Brazil</span><span class="paper-tag">Labor Markets</span>
+      </div>
+      <div class="paper-file-row">
+        <span class="file-name" id="fs_credit_unions_2021"></span>
+        <label class="btn-upload-label" id="ul_credit_unions_2021">
+          <input type="file" accept=".pdf" style="display:none" onchange="handleUpload('credit_unions_2021', this)">
+          ↑ Attach PDF
+        </label>
+        <button class="btn-view-pdf" id="vw_credit_unions_2021" style="display:none" onclick="viewPDF('credit_unions_2021')">↓ Open PDF</button>
+        <button class="btn-remove-pdf" id="rm_credit_unions_2021" style="display:none" onclick="removePDF('credit_unions_2021')" title="Remove">✕</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a> · <a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a></p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+    <p>© 2026 Leila Aghabarari · gaiaindex.org</p>
+  </div>
+</footer>
+
+<script>
+const DB_NAME = 'gaia_research';
+const STORE   = 'pdfs';
+const KEYS    = ['gaia_2026', 'brazil_2026', 'bcb_2025', 'credit_unions_2021'];
+
+function openDB() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open(DB_NAME, 1);
+    r.onupgradeneeded = e => e.target.result.createObjectStore(STORE);
+    r.onsuccess = e => res(e.target.result);
+    r.onerror = rej;
+  });
+}
+
+async function savePDF(key, file) {
+  const db  = await openDB();
+  const buf = await file.arrayBuffer();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    tx.objectStore(STORE).put({ buf, name: file.name, size: file.size }, key);
+    tx.oncomplete = res;
+    tx.onerror = rej;
+  });
+}
+
+async function loadPDF(key) {
+  const db = await openDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readonly');
+    const r  = tx.objectStore(STORE).get(key);
+    r.onsuccess = e => res(e.target.result || null);
+    r.onerror = rej;
+  });
+}
+
+async function deletePDF(key) {
+  const db = await openDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    tx.objectStore(STORE).delete(key);
+    tx.oncomplete = res;
+    tx.onerror = rej;
+  });
+}
+
+function updateUI(key, record) {
+  const fs = document.getElementById('fs_' + key);
+  const ul = document.getElementById('ul_' + key);
+  const vw = document.getElementById('vw_' + key);
+  const rm = document.getElementById('rm_' + key);
+  if (!fs) return;
+  if (record) {
+    const mb = (record.size / 1048576).toFixed(1);
+    fs.textContent = record.name + ' · ' + mb + ' MB';
+    ul.style.display = 'none';
+    vw.style.display = '';
+    rm.style.display = '';
+  } else {
+    fs.textContent = '';
+    ul.style.display = '';
+    vw.style.display = 'none';
+    rm.style.display = 'none';
+  }
+}
+
+async function handleUpload(key, input) {
+  const file = input.files[0];
+  if (!file) return;
+  await savePDF(key, file);
+  updateUI(key, await loadPDF(key));
+  input.value = '';
+}
+
+async function viewPDF(key) {
+  const record = await loadPDF(key);
+  if (!record) return;
+  const blob = new Blob([record.buf], { type: 'application/pdf' });
+  window.open(URL.createObjectURL(blob), '_blank');
+}
+
+async function removePDF(key) {
+  await deletePDF(key);
+  updateUI(key, null);
+}
+
+async function initPDFs() {
+  for (const key of KEYS) {
+    updateUI(key, await loadPDF(key));
+  }
+}
+
+initPDFs();
+</script>
+</body>
+</html>

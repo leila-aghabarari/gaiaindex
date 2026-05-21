@@ -55,6 +55,7 @@
       letter-spacing: -0.02em;
     }
     .nav-logo span { color: var(--teal); }
+    .nav-logo-sub { color: var(--faint) !important; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; margin-left: 0.3rem; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
@@ -251,13 +252,15 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="occupations.html">Occupations</a></li>
       <li><a href="countries.html">Countries</a></li>
       <li><a href="data.html">Data</a></li>
       <li><a href="about.html" class="active">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="license.html">License</a></li>
     </ul>
   </div>
 </nav>
@@ -339,41 +342,11 @@
   <div class="sec" id="research">
     <p class="sec-label">Publications &amp; working papers</p>
     <h2>Selected research</h2>
-
-    <div class="paper" style="border-left: 3px solid var(--teal)">
-      <div class="paper-header">
-        <p class="paper-title">AI Exposure, Credit Markets, and Employment in Brazil</p>
-        <span class="paper-badge" style="background:var(--teal-glow);color:var(--teal);border:1px solid var(--teal-dim)">Working Paper 2026</span>
-      </div>
-      <p class="paper-authors">Leila Aghabarari · Bernardus Van Doornik (Banco Central do Brasil)</p>
-      <p class="paper-abstract">We study how AI exposure affects firm credit outcomes and employment using detailed credit registry data from Brazil. We construct a sector-level AI exposure index from three independent sources and crosswalk it to Brazilian firm sectors. Exploiting the November 2022 generative AI shock in a difference-in-differences framework with 16 years of pre-treatment data, we find that firms in high-AI-exposure sectors face tighter credit conditions post-2022, with effects concentrated in micro and small firms and partially offset by government bank lending. We further trace how credit tightening transmits to employment and wages, documenting a financial accelerator channel for AI-induced labor market adjustment.</p>
-      <div class="paper-tags">
-        <span class="paper-tag">AI Economics</span><span class="paper-tag">Credit Markets</span><span class="paper-tag">Brazil</span><span class="paper-tag">Employment</span><span class="paper-tag">DiD</span>
-      </div>
+    <div class="bio-text">
+      <p>4 working papers and publications in AI economics, labor markets, credit markets, and development finance. Papers include PDFs and full abstracts.</p>
     </div>
-
-    <div class="paper" style="border-left: 3px solid var(--cyan)">
-      <div class="paper-header">
-        <p class="paper-title">The Nuanced Role of Government Credit in Monetary Policy Transmission</p>
-        <span class="paper-badge" style="background:rgba(34,211,238,0.1);color:var(--cyan);border:1px solid #0e7490">BCB WP 636 · 2025</span>
-      </div>
-      <p class="paper-authors">Leila Aghabarari · Sophia Chen (IMF) · Deniz Igan (IMF &amp; CEPR) · Bernardus Van Doornik (BCB)</p>
-      <p class="paper-abstract">We study how fiscally backed credit interventions affect monetary policy transmission using detailed credit registry data from Brazil. Government direct credit weakens pass-through to loan rates and offsets contractions in private credit, especially during tightening, while supporting SMEs. Government-subsidized earmarked credit interacts with lending relationships to shape pass-through, consistent with a relationship-based hold-up channel. These effects are strongest during tightening and largely muted during loosening.</p>
-      <div class="paper-tags">
-        <span class="paper-tag">Monetary Policy</span><span class="paper-tag">Government Banks</span><span class="paper-tag">Brazil</span><span class="paper-tag">SMEs</span>
-      </div>
-    </div>
-
-    <div class="paper" style="border-left: 3px solid #fbbf24">
-      <div class="paper-header">
-        <p class="paper-title">Is There Help Indeed, If There Is Help in Need? Credit Unions During the Global Financial Crisis</p>
-        <span class="paper-badge" style="background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid #713f12">Economic Inquiry · 2021</span>
-      </div>
-      <p class="paper-authors">Leila Aghabarari · Andre Guettler · Mahvish Naeem · Bernardus Van Doornik (BCB)</p>
-      <p class="paper-abstract">We exploit the 2008/09 financial crisis as a shock to Brazilian banks and analyze credit union lending behavior. Credit unions tightened members' credit access less than other bank types (insurance effect). The labor market impact is positive for very small firms — micro firms with higher pre-crisis CU lending increased employment and paid higher wages during the crisis. Published in Economic Inquiry, Vol. 59, pp. 1215–1233.</p>
-      <div class="paper-tags">
-        <span class="paper-tag">Credit Unions</span><span class="paper-tag">Financial Crisis</span><span class="paper-tag">Brazil</span><span class="paper-tag">Labor Markets</span>
-      </div>
+    <div style="margin-top:1.25rem">
+      <a href="research.html" class="btn btn-teal">View all papers →</a>
     </div>
   </div>
 

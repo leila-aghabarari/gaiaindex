@@ -69,6 +69,7 @@
     }
 
     .nav-logo span { color: var(--teal); }
+    .nav-logo-sub { color: var(--faint) !important; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; margin-left: 0.3rem; }
 
     .nav-links {
       display: flex;
@@ -485,6 +486,32 @@
       font-weight: 600;
     }
 
+    .card-footer {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.65rem;
+      flex-wrap: wrap;
+    }
+    .lic-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+    .lic-badge.green { background: rgba(22,163,74,0.1); border-color: #16a34a; color: #16a34a; }
+    .lic-badge.blue  { background: var(--teal-glow); border-color: var(--teal-dim); color: var(--teal); }
+    .lic-badge.amber { background: rgba(251,191,36,0.1); border-color: #92400e; color: #b45309; }
+    .lic-link {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--faint);
+      transition: color 0.2s;
+    }
+    .lic-link:hover { color: var(--teal); }
+
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -542,7 +569,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><span>GAIA</span> Index</a>
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="occupations.html">Occupations</a></li>
@@ -550,6 +577,8 @@
       <li><a href="trends.html">Trends</a></li>
       <li><a href="data.html">Data</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="license.html">License</a></li>
     </ul>
   </div>
 </nav>
@@ -802,6 +831,10 @@
           <h3>Anthropic Economic Index</h3>
           <p>Behavioral data from Claude.ai across 178 countries, covering task success, collaboration modes, autonomy levels, and use-case classification. Release: Feb 5–12, 2026.</p>
           <span class="tag">1M+ requests analyzed</span>
+          <div class="card-footer">
+            <span class="lic-badge green">CC BY 4.0</span>
+            <a href="license.html#citations" class="lic-link">License &amp; citation →</a>
+          </div>
         </div>
       </div>
       <div class="source-card">
@@ -810,6 +843,10 @@
           <h3>OpenAI Occupational Exposure</h3>
           <p>AI and human expert ratings of occupational task exposure across 923 O*NET-SOC codes, using alpha (high), beta (moderate), and gamma (any) exposure tiers.</p>
           <span class="tag">923 occupations rated</span>
+          <div class="card-footer">
+            <span class="lic-badge blue">Science 2024</span>
+            <a href="license.html#citations" class="lic-link">License &amp; citation →</a>
+          </div>
         </div>
       </div>
       <div class="source-card">
@@ -818,6 +855,10 @@
           <h3>SML — What Can Machines Learn?</h3>
           <p>Crowd-sourced susceptibility to machine learning (SML) scores at the task level, aggregated to 813 occupations via O*NET DWA ratings. Brynjolfsson, Mitchell &amp; Rock (2018).</p>
           <span class="tag">813 occupations scored</span>
+          <div class="card-footer">
+            <span class="lic-badge amber">AEA 2018 · CC BY 4.0</span>
+            <a href="license.html#citations" class="lic-link">License &amp; citation →</a>
+          </div>
         </div>
       </div>
       <div class="source-card">
