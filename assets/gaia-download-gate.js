@@ -2,10 +2,10 @@
   const FORMSPREE = 'https://formspree.io/f/xwvzojrw';
   const SESSION_KEY = 'gaia_dl_registered';
 
-  // EmailJS — fill in your credentials from emailjs.com
-  const EMAILJS_PUBLIC_KEY  = '';   // Account → Public Key
-  const EMAILJS_SERVICE_ID  = '';   // Email Services → Service ID
-  const EMAILJS_TEMPLATE_ID = '';   // Email Templates → Template ID
+  // EmailJS credentials
+  const EMAILJS_PUBLIC_KEY  = '2EuVfRLWTRIrRziMd';
+  const EMAILJS_SERVICE_ID  = 'service_ey533f3';
+  const EMAILJS_TEMPLATE_ID = 'template_e8h3dgu';
 
   /* ── CSS ── */
   const CSS = `
@@ -241,7 +241,7 @@
         if (res.ok) {
           sessionStorage.setItem(SESSION_KEY, '1');
           closeModal();
-          sendConfirmation(name, email, fileUrl);
+          sendConfirmation(name, email);
           triggerDownload(fileUrl);
         } else {
           throw new Error('non-ok');
@@ -271,14 +271,14 @@
     }
   }
 
-  function sendConfirmation(name, email, fileUrl) {
+  function sendConfirmation(name, email) {
     if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) return;
-    const absoluteLink = new URL(fileUrl, window.location.href).href;
+    const base = window.location.origin;
     const params = {
-      to_name: name,
-      to_email: email,
-      download_link: absoluteLink,
-      file_name: fileUrl.split('/').pop()
+      from_name:        name,
+      to_email:         email,
+      occupations_link: base + '/data/gaia_occupations.csv',
+      countries_link:   base + '/data/gaia_countries.csv'
     };
     function doSend() {
       window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params, EMAILJS_PUBLIC_KEY)
