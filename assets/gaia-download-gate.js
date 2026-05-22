@@ -235,9 +235,13 @@
       e.preventDefault();
       e.stopPropagation();
 
+      // GA: track that someone clicked a download button
+      if (typeof gtag === 'function') {
+        gtag('event', 'download_click', { file_name: href.split('/').pop() });
+      }
+
       const savedEmail = sessionStorage.getItem(SESSION_EMAIL_KEY);
       if (sessionStorage.getItem(SESSION_KEY) && savedEmail) {
-        // Already registered — show success state with their email
         openSuccess(savedEmail, href);
       } else {
         openForm(href);
@@ -282,6 +286,13 @@
           sessionStorage.setItem(SESSION_KEY, '1');
           sessionStorage.setItem(SESSION_EMAIL_KEY, email);
           sendConfirmation(name, email);
+          // GA: track completed registration
+          if (typeof gtag === 'function') {
+            gtag('event', 'download_registered', {
+              intended_use: use,
+              file_name: fileField.value.split('/').pop()
+            });
+          }
           showSuccess(email);
         } else {
           throw new Error('non-ok');
