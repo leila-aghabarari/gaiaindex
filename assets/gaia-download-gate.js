@@ -175,6 +175,7 @@
 
     // Intercept all download link clicks
     document.addEventListener('click', function (e) {
+      if (!e.isTrusted) return; // ignore synthetic clicks from triggerDownload itself
       const link = e.target.closest('a[download]');
       if (!link) return;
       const href = link.getAttribute('href');
