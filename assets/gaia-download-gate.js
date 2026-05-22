@@ -124,6 +124,10 @@
       <p class="gate-intro">One quick step before your download — this helps us understand how GAIA is being used.</p>
       <form id="gaia-gate-form" novalidate>
         <div class="gaia-field">
+          <label>Full name <span class="req">*</span></label>
+          <input type="text" name="full_name" required placeholder="Jane Smith" autocomplete="name" />
+        </div>
+        <div class="gaia-field">
           <label>Email address <span class="req">*</span></label>
           <input type="email" name="email" required placeholder="you@example.com" autocomplete="email" />
         </div>
@@ -210,9 +214,10 @@
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
+      const name  = form.querySelector('[name="full_name"]').value.trim();
       const email = form.querySelector('[name="email"]').value.trim();
       const use   = form.querySelector('[name="intended_use"]').value;
-      if (!email || !use) return;
+      if (!name || !email || !use) return;
 
       submitBtn.textContent = 'Sending…';
       submitBtn.disabled = true;
