@@ -59,7 +59,7 @@
     .chart-header p { font-size: .88rem; color: var(--muted); max-width: 640px; line-height: 1.65; }
 
     .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .chart-card canvas { width: 100% !important; }
+    .chart-card canvas { display: block; }
 
     .chart-note { font-size: .72rem; color: var(--faint); margin-top: .85rem; line-height: 1.5; }
 
@@ -125,7 +125,7 @@
       <p>Each country's share of global Claude.ai usage across three observation windows. The US dominates but Europe and Asia have steadily grown.</p>
     </div>
     <div class="chart-card">
-      <canvas id="countryChart" height="420"></canvas>
+      <div style="position:relative;height:360px"><canvas id="countryChart"></canvas></div>
       <p class="chart-note">Source: Anthropic Economic Index releases (Aug 2025, Nov 2025, Feb 2026). Claude.ai platform. Values represent each country's % of global usage.</p>
     </div>
   </div>
@@ -138,7 +138,7 @@
       <p>Distribution of interaction modes across all five releases. Directive use (AI executes user instructions) has grown sharply; task iteration remains the dominant mode overall.</p>
     </div>
     <div class="chart-card">
-      <canvas id="collabChart" height="360"></canvas>
+      <div style="position:relative;height:320px"><canvas id="collabChart"></canvas></div>
       <p class="chart-note">Source: All 5 AEI releases. Global aggregate. "Directive" = user gives instruction, AI executes. "Learning" = user asks AI to explain or teach. "Task iteration" = back-and-forth refinement.</p>
     </div>
   </div>
@@ -152,7 +152,7 @@
         <p>How people categorise their AI requests. Personal use has grown the most.</p>
       </div>
       <div class="chart-card">
-        <canvas id="usecaseChart" height="280"></canvas>
+        <div style="position:relative;height:260px"><canvas id="usecaseChart"></canvas></div>
         <p class="chart-note">Source: AEI Nov 2025 &amp; Feb 2026.</p>
       </div>
     </div>
@@ -162,8 +162,8 @@
         <h2>Mean AI Autonomy Score</h2>
         <p>How much of the work AI handles without human input. Scored 1–5; stable and high.</p>
       </div>
-      <div class="chart-card" style="display:flex;flex-direction:column;justify-content:center;min-height:340px">
-        <canvas id="autonomyChart" height="220"></canvas>
+      <div class="chart-card">
+        <div style="position:relative;height:260px"><canvas id="autonomyChart"></canvas></div>
         <p class="chart-note">Source: AEI Nov 2025 &amp; Feb 2026. Scale 1 (human-led) → 5 (AI-led).</p>
       </div>
     </div>
@@ -177,7 +177,7 @@
       <p>The ten O*NET tasks most frequently addressed through AI, and how their share has shifted. Software development tasks consistently lead; tutoring and legal writing are rising.</p>
     </div>
     <div class="chart-card">
-      <canvas id="taskChart" height="420"></canvas>
+      <div style="position:relative;height:360px"><canvas id="taskChart"></canvas></div>
       <p class="chart-note">Source: AEI releases Aug 2025, Nov 2025, Feb 2026. Values = % of global AI requests matched to each O*NET task. Task labels abbreviated.</p>
     </div>
   </div>
@@ -282,7 +282,7 @@ new Chart(document.getElementById('countryChart'), {
     },
     scales: {
       x: { grid: { color: '#edf2f9' } },
-      y: { grid: { color: '#edf2f9' }, title: { display: true, text: '% of global Claude.ai usage', font: { size: 11 } }, ticks: { callback: v => v + '%' } },
+      y: { grid: { color: '#edf2f9' }, min: 0, max: 30, title: { display: true, text: '% of global Claude.ai usage', font: { size: 11 } }, ticks: { callback: v => v + '%' } },
     },
   },
 });
@@ -308,7 +308,7 @@ new Chart(document.getElementById('collabChart'), {
     ...lineDefaults(),
     scales: {
       x: { grid: { color: '#edf2f9' } },
-      y: { grid: { color: '#edf2f9' }, title: { display: true, text: '% of interactions', font: { size: 11 } }, ticks: { callback: v => v + '%' } },
+      y: { grid: { color: '#edf2f9' }, min: 0, max: 45, title: { display: true, text: '% of interactions', font: { size: 11 } }, ticks: { callback: v => v + '%' } },
     },
   },
 });
@@ -369,7 +369,7 @@ new Chart(document.getElementById('autonomyChart'), {
     },
     scales: {
       x: { grid: { display: false } },
-      y: { grid: { color: '#edf2f9' }, min: 1, max: 5, title: { display: true, text: 'Score (1–5)', font: { size: 11 } } },
+      y: { grid: { color: '#edf2f9' }, min: 3.0, max: 3.6, title: { display: true, text: 'Score (1–5 scale)', font: { size: 11 } }, ticks: { stepSize: 0.1, callback: v => v.toFixed(1) } },
     },
   },
 });
