@@ -2,6 +2,11 @@
   const FORMSPREE = 'https://formspree.io/f/xwvzojrw';
   const SESSION_KEY = 'gaia_dl_registered';
 
+  // EmailJS — fill in your credentials from emailjs.com
+  const EMAILJS_PUBLIC_KEY  = '';   // Account → Public Key
+  const EMAILJS_SERVICE_ID  = '';   // Email Services → Service ID
+  const EMAILJS_TEMPLATE_ID = '';   // Email Templates → Template ID
+
   /* ── CSS ── */
   const CSS = `
 #gaia-gate-modal {
@@ -236,6 +241,7 @@
         if (res.ok) {
           sessionStorage.setItem(SESSION_KEY, '1');
           closeModal();
+          sendConfirmation(name, email, fileUrl);
           triggerDownload(fileUrl);
         } else {
           throw new Error('non-ok');
@@ -262,6 +268,29 @@
     function closeModal() {
       modal.classList.remove('open');
       document.body.style.overflow = '';
+    }
+  }
+
+  function sendConfirmation(name, email, fileUrl) {
+    if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) return;
+    const absoluteLink = new URL(fileUrl, window.location.href).href;
+    const params = {
+      to_name: name,
+      to_email: email,
+      download_link: absoluteLink,
+      file_name: fileUrl.split('/').pop()
+    };
+    function doSend() {
+      window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params, EMAILJS_PUBLIC_KEY)
+        .catch(function() {}); // non-blocking — download proceeds regardless
+    }
+    if (window.emailjs) {
+      doSend();
+    } else {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+      s.onload = doSend;
+      document.head.appendChild(s);
     }
   }
 
