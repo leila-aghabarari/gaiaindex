@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKNG86S6HH"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QKNG86S6HH');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAIA in the Wild — Community &amp; Research</title>
+  <meta name="description" content="Papers, projects, and datasets built with GAIA data. Submit your own work and track dataset downloads." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #f4f7fc;
+      --surface:   #edf2f9;
+      --card:      #ffffff;
+      --border:    #dde6f0;
+      --teal:      #1e88e5;
+      --teal-dim:  #1565c0;
+      --teal-glow: rgba(30,136,229,0.09);
+      --cyan:      #42a5f5;
+      --text:      #1a2635;
+      --muted:     #5b7a96;
+      --faint:     #96b2c8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.2rem; color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-logo-sub { color: var(--faint) !important; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; margin-left: 0.3rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 2rem 2.5rem;
+    }
+    .hero-inner { max-width: 900px; margin: 0 auto; }
+    .hero-tag {
+      display: inline-block;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      color: var(--teal); font-size: .72rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .28rem .75rem; border-radius: 2rem; margin-bottom: 1rem;
+    }
+    .page-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      margin-bottom: .75rem; color: var(--text);
+    }
+    .page-hero p { color: var(--muted); max-width: 580px; font-size: .95rem; line-height: 1.7; }
+
+    /* LAYOUT */
+    .content { max-width: 900px; margin: 0 auto; padding: 0 2rem 5rem; }
+    .sec { padding: 2.75rem 0; border-bottom: 1px solid var(--border); }
+    .sec:last-child { border-bottom: none; }
+    .sec-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: .4rem;
+    }
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: .6rem; color: var(--text);
+    }
+    .sec-desc { color: var(--muted); font-size: .9rem; line-height: 1.7; max-width: 600px; margin-bottom: 1.75rem; }
+
+    /* ZENODO STATS BANNER */
+    .stats-banner {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      position: relative; overflow: hidden;
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: 2rem; justify-content: space-between;
+    }
+    .stats-banner::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--cyan), transparent);
+    }
+    .stats-group { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem; font-weight: 700; color: var(--teal);
+      line-height: 1; display: block;
+    }
+    .stat-num.loading { color: var(--faint); font-size: 1.3rem; }
+    .stat-label { font-size: .72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-top: .2rem; }
+    .zenodo-meta { display: flex; flex-direction: column; gap: .5rem; align-items: flex-end; }
+    .doi-badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .22rem .72rem; border-radius: 2rem;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      color: var(--teal); font-size: .72rem; font-weight: 700;
+      letter-spacing: .04em; white-space: nowrap;
+    }
+    .stats-note { font-size: .72rem; color: var(--faint); }
+    .stats-error { color: var(--faint); font-size: .85rem; font-style: italic; }
+
+    /* PAPER CARDS */
+    .paper-list { display: flex; flex-direction: column; gap: 1.25rem; }
+    .paper-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      position: relative; overflow: hidden;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .paper-card:hover { border-color: var(--teal-dim); box-shadow: 0 4px 20px rgba(30,136,229,0.08); }
+    .paper-card::before {
+      content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+      background: var(--teal);
+      border-radius: 12px 0 0 12px;
+    }
+    .paper-badge {
+      display: inline-block; margin-bottom: .65rem;
+      background: var(--teal-glow); border: 1px solid var(--teal-dim);
+      color: var(--teal); font-size: .68rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      padding: .2rem .6rem; border-radius: 4px;
+    }
+    .paper-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem; font-weight: 700; color: var(--text);
+      line-height: 1.4; margin-bottom: .4rem;
+    }
+    .paper-authors { font-size: .83rem; color: var(--muted); margin-bottom: .75rem; }
+    .paper-abstract {
+      font-size: .85rem; color: var(--muted); line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+    .paper-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
+    .paper-tag {
+      font-size: .68rem; font-weight: 600; padding: .15rem .55rem;
+      border-radius: 4px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--muted);
+    }
+    .paper-links { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .4rem .95rem; border-radius: 7px;
+      font-size: .78rem; font-weight: 600; transition: all .2s; cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--teal); color: #fff; border: 1px solid var(--teal); }
+    .btn-primary:hover { background: var(--teal-dim); color: #fff; border-color: var(--teal-dim); }
+    .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-outline:hover { color: var(--text); border-color: var(--teal-dim); }
+
+    /* PLACEHOLDER CARD */
+    .placeholder-card {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 2rem 1.75rem;
+      text-align: center; color: var(--faint);
+    }
+    .placeholder-card .icon { font-size: 1.75rem; margin-bottom: .5rem; }
+    .placeholder-card p { font-size: .85rem; }
+
+    /* SUBMIT SECTION */
+    .submit-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    .submit-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--cyan), transparent);
+    }
+    .submit-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: .5rem;
+    }
+    .submit-card p { font-size: .88rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; max-width: 520px; }
+    .fields-list {
+      display: flex; flex-wrap: wrap; gap: .4rem;
+      margin-bottom: 1.5rem;
+      list-style: none;
+    }
+    .fields-list li {
+      font-size: .72rem; font-weight: 600; padding: .2rem .6rem;
+      border-radius: 4px; background: var(--surface);
+      border: 1px solid var(--border); color: var(--muted);
+    }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; }
+    .footer-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .95rem; color: var(--muted); }
+    .footer-logo span { color: var(--teal); }
+    footer p { color: var(--faint); font-size: .8rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal); }
+
+    @media (max-width: 640px) {
+      .stats-banner { flex-direction: column; align-items: flex-start; }
+      .zenodo-meta { align-items: flex-start; }
+      .stats-group { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="community.html" class="active">Community</a></li>
+      <li><a href="license.html">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-tag">GAIA in the Wild</div>
+    <h1>Community &amp; Research</h1>
+    <p>Papers, projects, and datasets built with GAIA data. Tracking how the index is being used across research communities and policy institutions worldwide.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ── ZENODO STATS ── -->
+  <div class="sec">
+    <div class="sec-label">Dataset Impact</div>
+    <h2>Download Statistics</h2>
+    <p class="sec-desc">Live usage data for the GAIA dataset on Zenodo. Updated in real time from the Zenodo API.</p>
+
+    <div class="stats-banner" id="statsBanner">
+      <div class="stats-group">
+        <div class="stat-item">
+          <span class="stat-num loading" id="statDownloads">…</span>
+          <div class="stat-label">Total Downloads</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num loading" id="statUniqueDownloads">…</span>
+          <div class="stat-label">Unique Downloaders</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num loading" id="statViews">…</span>
+          <div class="stat-label">Record Views</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num loading" id="statUniqueViews">…</span>
+          <div class="stat-label">Unique Visitors</div>
+        </div>
+      </div>
+      <div class="zenodo-meta">
+        <a href="https://zenodo.org/records/20320112" target="_blank" rel="noopener" class="doi-badge">
+          DOI: 10.5281/zenodo.20320112 ↗
+        </a>
+        <span class="stats-note" id="statsUpdated">Fetching live data…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAPERS & PROJECTS ── -->
+  <div class="sec">
+    <div class="sec-label">Research Using GAIA</div>
+    <h2>Papers &amp; Projects</h2>
+    <p class="sec-desc">Work that cites, builds on, or uses GAIA occupation or country data. <a href="#submit">Submit your work →</a></p>
+
+    <div class="paper-list">
+
+      <!-- Brazil paper -->
+      <div class="paper-card">
+        <div class="paper-badge">Working Paper · 2026</div>
+        <div class="paper-title">AI Exposure, Credit Markets, and Employment in Brazil</div>
+        <div class="paper-authors">Leila Aghabarari &amp; Bas van Doornik &nbsp;·&nbsp; IFC / World Bank</div>
+        <p class="paper-abstract">
+          Uses Brazil's 20-year credit registry linked to matched employer–employee records to trace how AI exposure affects firm financing and labor market outcomes. Exploits the November 2022 generative AI shock in a difference-in-differences design, instrumenting AI exposure via the GAIA-E occupation scores. Finds that firms in high-exposure sectors experienced differential changes in credit access and employment composition following the ChatGPT release.
+        </p>
+        <div class="paper-tags">
+          <span class="paper-tag">Labor Economics</span>
+          <span class="paper-tag">Credit Markets</span>
+          <span class="paper-tag">Brazil</span>
+          <span class="paper-tag">DiD</span>
+          <span class="paper-tag">GAIA-E</span>
+          <span class="paper-tag">Emerging Markets</span>
+        </div>
+        <div class="paper-links">
+          <a href="research.html" class="btn btn-outline">Research page →</a>
+        </div>
+      </div>
+
+      <!-- Placeholder -->
+      <div class="placeholder-card">
+        <div class="icon">📬</div>
+        <p>More papers coming soon. Using GAIA in your research? <a href="#submit">Submit your work below.</a></p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SUBMIT ── -->
+  <div class="sec" id="submit">
+    <div class="sec-label">Contribute</div>
+    <h2>Submit Your Work</h2>
+    <p class="sec-desc">Built something with GAIA data? Fill out a short form and we'll add your paper or project to this page.</p>
+
+    <div class="submit-card">
+      <h3>Research Submission Form</h3>
+      <p>Share your paper, working paper, policy brief, dataset, or tool that uses GAIA occupation or country data. We review submissions and add them to this page within a few days.</p>
+      <ul class="fields-list">
+        <li>Title &amp; authors</li>
+        <li>Link or DOI</li>
+        <li>Which GAIA data was used</li>
+        <li>Abstract (optional)</li>
+        <li>Contact email</li>
+      </ul>
+      <a href="https://forms.gle/REPLACE_WITH_YOUR_FORM_ID" target="_blank" rel="noopener" class="btn btn-primary" id="formLink">
+        Open submission form ↗
+      </a>
+      <p style="margin-top:1rem;margin-bottom:0;font-size:.78rem;color:var(--faint)">
+        Alternatively, email <a href="mailto:aghabarari.leila@gmail.com" style="color:var(--muted)">aghabarari.leila@gmail.com</a> with the subject line "GAIA submission."
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a></p>
+    <p>Data: Anthropic Economic Index · Feb 2026</p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+  </div>
+</footer>
+
+<script>
+// ── Live Zenodo stats ──────────────────────────────────────────────────────────
+(function () {
+  const RECORD = '20320112';
+
+  function setNum(id, n) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = Number.isFinite(n) ? n.toLocaleString() : '—';
+    el.classList.remove('loading');
+  }
+
+  fetch('https://zenodo.org/api/records/' + RECORD)
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(data => {
+      const s = data.stats || {};
+      setNum('statDownloads',       s.version_downloads      ?? s.downloads       ?? 0);
+      setNum('statUniqueDownloads', s.version_unique_downloads ?? s.unique_downloads ?? 0);
+      setNum('statViews',           s.version_views           ?? s.views           ?? 0);
+      setNum('statUniqueViews',     s.version_unique_views    ?? s.unique_views    ?? 0);
+      document.getElementById('statsUpdated').textContent =
+        'Last updated: ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    })
+    .catch(() => {
+      // Fallback to known values if API is unavailable
+      setNum('statDownloads',       21);
+      setNum('statUniqueDownloads', 6);
+      setNum('statViews',           9);
+      setNum('statUniqueViews',     2);
+      document.getElementById('statsUpdated').textContent = 'Stats as of May 2026 (API unavailable)';
+    });
+})();
+</script>
+<script src="assets/gaia-download-gate.js"></script>
+</body>
+</html>
