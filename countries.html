@@ -1004,7 +1004,7 @@ function showDetail(geoId) {
       <div class="metric-box" style="border-color:#0e7490"><p class="metric-label" style="color:var(--cyan)">Personal</p><p class="metric-val" style="color:var(--cyan)">${fmt(row.uc_personal)}</p></div>
       <div class="metric-box" style="border-color:#713f12"><p class="metric-label" style="color:#fbbf24">Coursework</p><p class="metric-val" style="color:#fbbf24">${fmt(row.uc_coursework)}</p></div>
       <div class="metric-box"><p class="metric-label">Task success</p><p class="metric-val">${fmt(row.ts_yes)}</p></div>
-      ${row.aipi_overall ? `<div class="metric-box" style="border-color:#0e7490"><p class="metric-label" style="color:#0e9ab0">IMF AI Preparedness</p><p class="metric-val" style="color:#0e9ab0">${parseFloat(row.aipi_overall).toFixed(2)}</p></div>` : ''}
+      ${row._aipi != null ? `<div class="metric-box" style="border-color:#0e7490"><p class="metric-label" style="color:#0e9ab0">IMF AI Preparedness</p><p class="metric-val" style="color:#0e9ab0">${row._aipi.toFixed(2)}</p></div>` : ''}
       ${row._sentiment != null ? `<div class="metric-box" style="border-color:var(--teal-dim)"><p class="metric-label" style="color:var(--teal)">AI Sentiment</p><p class="metric-val" style="color:var(--teal)">${row._sentiment > 0 ? '+' : ''}${row._sentiment.toFixed(1)} pp</p></div>` : ''}
       ${row._regulation != null ? `<div class="metric-box" style="border-color:#4f46e5"><p class="metric-label" style="color:#818cf8">AI Policies</p><p class="metric-val" style="color:#818cf8">${row._regulation}</p></div>` : ''}
       ${row._oecd_adoption != null ? `<div class="metric-box" style="border-color:#d97706"><p class="metric-label" style="color:#fbbf24">Firm AI Adoption</p><p class="metric-val" style="color:#fbbf24">${row._oecd_adoption.toFixed(1)}%</p></div>` : ''}
@@ -1027,7 +1027,7 @@ function applyFilters() {
     'usage_desc':      ['usage_pct_global', -1],
     'work_desc':       ['uc_work', -1],
     'course_desc':     ['uc_coursework', -1],
-    'aipi_desc':       ['aipi_overall', -1],
+    'aipi_desc':       ['_aipi', -1],
     'sentiment_desc':  ['_sentiment', -1],
     'regulation_desc': ['_regulation', -1],
     'name_asc':        ['country_name', 1]
@@ -1055,7 +1055,7 @@ function applyFilters() {
       <td><span class="income-badge">${row.income_group || '—'}</span></td>
       <td>${miniBar(row.uc_work, 'var(--teal)', 80)}</td>
       <td>${miniBar(row.uc_coursework, '#fbbf24', 50)}</td>
-      <td>${aipiBar(row.aipi_overall)}</td>
+      <td>${aipiBar(row._aipi)}</td>
       <td>${sentCell}</td>
       <td>${regCell}</td>
       <td class="td-global">${fmt(row.usage_pct_global, 2)}</td>
@@ -1104,7 +1104,7 @@ function updateChartsInner() {
   // ── Stats chips (always update, no Chart.js needed) ──
   const works = filtered.map(r => parseFloat(r.uc_work)).filter(v => !isNaN(v));
   const sents = filtered.map(r => r._sentiment).filter(v => v != null && !isNaN(v));
-  const aipis = filtered.map(r => parseFloat(r.aipi_overall)).filter(v => !isNaN(v));
+  const aipis = filtered.map(r => r._aipi).filter(v => v != null && !isNaN(v));
   const avgOf = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
   document.getElementById('cCount').textContent = filtered.length;
   document.getElementById('cWork').textContent  = avgOf(works) != null ? avgOf(works).toFixed(1)+'%' : '—';
@@ -1261,11 +1261,13 @@ Promise.all([
   parseCsv('data/hai_sentiment.csv'),
   parseCsv('data/ai_regulation.csv'),
   parseCsv('data/oecd_adoption.csv'),
-]).then(([main, sentiment, regulation, adoption]) => {
+  parseCsv('data/imf_aipi.csv'),
+]).then(([main, sentiment, regulation, adoption, aipi]) => {
   sentimentMap   = Object.fromEntries(sentiment.map(r  => [r.iso3,  parseFloat(r.ai_net_optimism)]).filter(([,v]) => !isNaN(v)));
   regulationMap  = Object.fromEntries(regulation.map(r => [r.iso3,  parseInt(r.ai_policies)]).filter(([,v]) => !isNaN(v)));
   // oecd_adoption uses ISO2 geo codes matching gaia_countries geo_id
   adoptionMap    = Object.fromEntries(adoption.map(r   => [r.geo,   parseFloat(r.ai_adoption_latest)]).filter(([,v]) => !isNaN(v)));
+  const aipiMap  = Object.fromEntries(aipi.map(r => [r.country_code, parseFloat(r.aipi_score)]).filter(([,v]) => !isNaN(v)));
 
   allData = main.map(r => {
     const iso3 = r.iso3 || '';
@@ -1273,6 +1275,7 @@ Promise.all([
     r._sentiment    = sentimentMap[iso3]   ?? null;
     r._regulation   = regulationMap[iso3]  ?? null;
     r._oecd_adoption= adoptionMap[geo]     ?? null;
+    r._aipi         = aipiMap[geo] ?? (r.aipi_overall ? parseFloat(r.aipi_overall) : null);
     return r;
   });
 
