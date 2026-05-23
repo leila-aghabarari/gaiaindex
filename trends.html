@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <style>
     :root {
       --bg:        #f4f7fc;
@@ -78,9 +79,40 @@
     footer a { color: var(--muted); }
     footer a:hover { color: var(--teal); }
 
+    /* Google Trends section */
+    .section-divider { max-width: 1200px; margin: 2rem auto 3rem; padding: 0 2rem; border-top: 2px solid var(--border); }
+    .gt-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .gt-controls label { font-size: .82rem; color: var(--muted); }
+    .gt-controls select, .gt-controls button {
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-family: 'Inter', sans-serif; font-size: .875rem;
+      padding: .45rem .8rem; outline: none; cursor: pointer; transition: border-color .2s;
+    }
+    .gt-controls select {
+      appearance: none; padding-right: 2rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right .6rem center;
+    }
+    .gt-controls select:focus, .gt-controls button:hover { border-color: var(--teal-dim); color: var(--teal); }
+    .btn-animate { background: var(--teal-glow); border-color: var(--teal-dim) !important; color: var(--teal) !important; font-weight: 600; }
+    .btn-animate:hover { background: rgba(30,136,229,0.14); }
+    .shock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .65rem; margin-top: 1.5rem; }
+    .shock-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .75rem; }
+    .shock-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: .8rem 1rem; cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .shock-card:hover, .shock-card.active { border-color: var(--teal-dim); background: var(--card); }
+    .shock-card .sc-country { font-size: .85rem; font-weight: 600; margin-bottom: .12rem; }
+    .shock-card .sc-week { font-size: .72rem; color: var(--teal); }
+    .shock-card .sc-bar-bg { height: 3px; background: var(--border); border-radius: 2px; margin-top: .4rem; overflow: hidden; }
+    .shock-card .sc-bar-fill { height: 100%; border-radius: 2px; background: var(--teal); }
+    #gt-loading { text-align: center; padding: 3rem; color: var(--muted); font-size: .9rem; }
+
     @media (max-width: 768px) {
       .nav-links { gap: 1.2rem; }
       .two-col { grid-template-columns: 1fr; }
+      .shock-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -103,19 +135,59 @@
 </nav>
 
 <div class="page-hero">
-  <div class="hero-tag">Time Series · 5 Releases · Feb 2025 – Feb 2026</div>
-  <h1>AI Usage <span>Over Time</span></h1>
-  <p>Tracking how artificial intelligence adoption has evolved across countries and occupations, using five successive releases of the Anthropic Economic Index spanning one year.</p>
-  <div class="releases-row">
-    <span class="release-chip"><span class="dot" style="background:#94a3b8"></span>Feb 2025</span>
-    <span class="release-chip"><span class="dot" style="background:#64748b"></span>Mar 2025</span>
-    <span class="release-chip"><span class="dot" style="background:#3b82f6"></span>Aug 2025</span>
-    <span class="release-chip"><span class="dot" style="background:#1e88e5"></span>Nov 2025</span>
-    <span class="release-chip"><span class="dot" style="background:#1565c0"></span>Feb 2026</span>
-  </div>
+  <div class="hero-tag">Google Trends · AEI · 2022 – 2026</div>
+  <h1>AI Adoption <span>Over Time</span></h1>
+  <p>Two lenses on AI's rise: how ChatGPT search interest spread across 20 countries since 2022, and how AI usage patterns have shifted across 5 Anthropic Economic Index releases from 2025 to 2026.</p>
 </div>
 
+<!-- ── Google Trends section ──────────────────────────────────────────────── -->
 <div class="content">
+
+  <div class="chart-section">
+    <div class="chart-header">
+      <div class="section-label">AI awareness · Google Trends · 2022–2026</div>
+      <h2>When AI Awareness Hit Each Country</h2>
+      <p>Weekly Google Search interest for "ChatGPT" across 20 countries, Nov 2022 – Apr 2026. Index 100 = peak week for each country. Reveals the AI awareness shock wave spreading globally after ChatGPT's launch.</p>
+    </div>
+    <div class="chart-card">
+      <div class="gt-controls">
+        <label>View:</label>
+        <select id="viewSelect">
+          <option value="all">All 20 countries</option>
+          <option value="select">Selected countries</option>
+        </select>
+        <select id="smoothSelect">
+          <option value="0">Raw weekly data</option>
+          <option value="4" selected>4-week smoothed</option>
+          <option value="8">8-week smoothed</option>
+        </select>
+        <button class="btn-animate" id="animateBtn">▶ Animate</button>
+        <a href="data/google_trends.csv" download style="font-size:.8rem;color:var(--muted);margin-left:auto">Download CSV →</a>
+      </div>
+      <div id="gt-loading">Loading trend data…</div>
+      <div id="gt-chart-wrap" style="display:none">
+        <div style="position:relative;height:400px"><canvas id="trendsChart"></canvas></div>
+        <p class="chart-note">Source: Google Trends via pytrends. Index 0–100, country-normalised (100 = each country's own peak week). Click a country card below to highlight it.</p>
+        <div class="shock-label" style="margin-top:1.25rem">First AI awareness spike — week search interest first crossed 10</div>
+        <div class="shock-grid" id="shockGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="chart-header" style="margin-bottom:2rem">
+    <div class="section-label">AI usage · Anthropic Economic Index · 2025–2026</div>
+    <h2>How AI Usage Patterns Have Shifted</h2>
+    <p>Five successive AEI releases track how people actually use AI — country shares, interaction modes, use cases, and top occupational tasks.</p>
+    <div class="releases-row" style="margin-top:1rem">
+      <span class="release-chip"><span class="dot" style="background:#94a3b8"></span>Feb 2025</span>
+      <span class="release-chip"><span class="dot" style="background:#64748b"></span>Mar 2025</span>
+      <span class="release-chip"><span class="dot" style="background:#3b82f6"></span>Aug 2025</span>
+      <span class="release-chip"><span class="dot" style="background:#1e88e5"></span>Nov 2025</span>
+      <span class="release-chip"><span class="dot" style="background:#1565c0"></span>Feb 2026</span>
+    </div>
+  </div>
 
   <!-- Chart 1: Country usage over time -->
   <div class="chart-section">
@@ -195,7 +267,104 @@
 
 <script src="assets/gaia-download-gate.js"></script>
 <script>
-// ── Data ─────────────────────────────────────────────────────────────────────
+// ── Google Trends ─────────────────────────────────────────────────────────────
+const GT_COUNTRY_NAMES = {US:'United States',IN:'India',GB:'United Kingdom',FR:'France',DE:'Germany',JP:'Japan',KR:'South Korea',CA:'Canada',BR:'Brazil',IT:'Italy',AU:'Australia',ES:'Spain',ID:'Indonesia',NL:'Netherlands',MX:'Mexico',PL:'Poland',PH:'Philippines',TR:'Turkey',PK:'Pakistan',NG:'Nigeria'};
+const GT_FLAGS = {US:'🇺🇸',IN:'🇮🇳',GB:'🇬🇧',FR:'🇫🇷',DE:'🇩🇪',JP:'🇯🇵',KR:'🇰🇷',CA:'🇨🇦',BR:'🇧🇷',IT:'🇮🇹',AU:'🇦🇺',ES:'🇪🇸',ID:'🇮🇩',NL:'🇳🇱',MX:'🇲🇽',PL:'🇵🇱',PH:'🇵🇭',TR:'🇹🇷',PK:'🇵🇰',NG:'🇳🇬'};
+const GT_PALETTE = ['#00c9a7','#22d3ee','#60a5fa','#a78bfa','#f472b6','#fb923c','#facc15','#4ade80','#f87171','#38bdf8','#c084fc','#86efac','#fda4af','#67e8f9','#fcd34d','#a3e635','#fb7185','#818cf8','#34d399','#e879f9'];
+
+let gtRaw = [], gtLabels = [], gtCountries = [], gtChart = null;
+let gtSelected = new Set(), animFrame = null, animRunning = false;
+
+function gtSmooth(arr, w) {
+  if (!w) return arr;
+  return arr.map((_, i) => { const s = arr.slice(Math.max(0, i-w+1), i+1); return s.reduce((a,v) => a+v, 0)/s.length; });
+}
+
+function gtDatasets(list, sw) {
+  return list.map((c, i) => {
+    const vals = gtRaw.map(r => parseFloat(r[c]) || 0);
+    return { label: `${GT_FLAGS[c]||''} ${GT_COUNTRY_NAMES[c]||c}`, data: gtSmooth(vals, sw), borderColor: GT_PALETTE[i%GT_PALETTE.length], backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.3 };
+  });
+}
+
+function gtBuild() {
+  const sw = parseInt(document.getElementById('smoothSelect').value);
+  const view = document.getElementById('viewSelect').value;
+  const list = view === 'select' && gtSelected.size ? gtCountries.filter(c => gtSelected.has(c)) : gtCountries;
+  const ctx = document.getElementById('trendsChart').getContext('2d');
+  if (gtChart) gtChart.destroy();
+  gtChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: gtLabels, datasets: gtDatasets(list, sw) },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: { duration: 0 },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { color: '#5b7a96', font: { size: 11, family: 'Inter' }, boxWidth: 14, padding: 12, usePointStyle: true, pointStyleWidth: 10 } },
+        tooltip: { backgroundColor:'#fff', borderColor:'#dde6f0', borderWidth:1, titleColor:'#1a2635', bodyColor:'#5b7a96', padding:10, callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)}` } }
+      },
+      scales: {
+        x: { ticks: { color:'#5b7a96', font:{size:10}, maxTicksLimit:16, callback: function(v,i){ const d=gtLabels[i]; return d?d.slice(0,7):''; } }, grid: { color:'#edf2f9' } },
+        y: { min:0, max:100, ticks: { color:'#5b7a96', font:{size:10}, stepSize:25 }, grid: { color:'#edf2f9' }, title: { display:true, text:'Search interest (0–100)', color:'#5b7a96', font:{size:10} } }
+      }
+    }
+  });
+}
+
+function gtAnimate() {
+  if (animRunning) { cancelAnimationFrame(animFrame); animRunning=false; document.getElementById('animateBtn').textContent='▶ Animate'; gtBuild(); return; }
+  animRunning = true;
+  document.getElementById('animateBtn').textContent = '■ Stop';
+  const sw = parseInt(document.getElementById('smoothSelect').value);
+  const view = document.getElementById('viewSelect').value;
+  const list = view==='select'&&gtSelected.size ? gtCountries.filter(c=>gtSelected.has(c)) : gtCountries;
+  const all = gtDatasets(list, sw);
+  let step = 8;
+  function frame() {
+    if (!animRunning||step>gtLabels.length) { animRunning=false; document.getElementById('animateBtn').textContent='▶ Animate'; return; }
+    if (gtChart) { gtChart.data.labels=gtLabels.slice(0,step); gtChart.data.datasets=all.map(d=>({...d,data:d.data.slice(0,step)})); gtChart.update('none'); }
+    step+=2; animFrame=setTimeout(frame,30);
+  }
+  frame();
+}
+
+function gtToggle(c, el) {
+  if (gtSelected.has(c)) gtSelected.delete(c); else gtSelected.add(c);
+  el.classList.toggle('active', gtSelected.has(c));
+  document.getElementById('viewSelect').value = gtSelected.size ? 'select' : 'all';
+  gtBuild();
+}
+
+function gtShockGrid() {
+  const shocks = gtCountries.map(c => {
+    const vals = gtRaw.map(r => parseFloat(r[c])||0);
+    const first = vals.findIndex(v=>v>=10);
+    return { c, first, peak: Math.max(...vals) };
+  }).sort((a,b)=>a.first-b.first);
+  document.getElementById('shockGrid').innerHTML = shocks.map(({c,first,peak}) => {
+    const wk = first>=0 ? gtLabels[first].slice(0,7) : 'No spike';
+    return `<div class="shock-card" onclick="gtToggle('${c}',this)"><div class="sc-country">${GT_FLAGS[c]||''} ${GT_COUNTRY_NAMES[c]||c}</div><div class="sc-week">${wk} · first crossed 10</div><div class="sc-bar-bg"><div class="sc-bar-fill" style="width:${Math.round(peak)}%"></div></div></div>`;
+  }).join('');
+}
+
+Papa.parse('data/google_trends.csv', {
+  download: true, header: true, skipEmptyLines: true,
+  complete: function(res) {
+    gtRaw = res.data;
+    gtLabels = gtRaw.map(r => r.week);
+    gtCountries = Object.keys(gtRaw[0]).filter(k=>k!=='week');
+    document.getElementById('gt-loading').style.display = 'none';
+    document.getElementById('gt-chart-wrap').style.display = 'block';
+    gtBuild();
+    gtShockGrid();
+    document.getElementById('smoothSelect').addEventListener('change', gtBuild);
+    document.getElementById('viewSelect').addEventListener('change', gtBuild);
+    document.getElementById('animateBtn').addEventListener('click', gtAnimate);
+  }
+});
+</script>
+<script>
+// ── AEI Data ──────────────────────────────────────────────────────────────────
 const CHART1 = {"dates": ["Aug 2025", "Nov 2025", "Feb 2026"], "series": [{"id": "US", "name": "United States", "data": [21.59, 21.97, 22.24]}, {"id": "IN", "name": "India", "data": [7.15, 5.81, 6.16]}, {"id": "GB", "name": "United Kingdom", "data": [3.16, 3.07, 3.59]}, {"id": "JP", "name": "Japan", "data": [3.66, 3.12, 2.91]}, {"id": "KR", "name": "South Korea", "data": [3.66, 3.06, 2.91]}, {"id": "BR", "name": "Brazil", "data": [3.68, 2.76, 2.55]}, {"id": "FR", "name": "France", "data": [2.21, 3.02, 3.23]}, {"id": "DE", "name": "Germany", "data": [2.61, 2.54, 3.03]}, {"id": "CA", "name": "Canada", "data": [2.12, 2.29, 2.59]}, {"id": "ID", "name": "Indonesia", "data": [1.87, 2.51, 1.27]}, {"id": "AU", "name": "Australia", "data": [1.94, 1.55, 1.59]}, {"id": "IT", "name": "Italy", "data": [1.49, 1.63, 1.74]}, {"id": "ES", "name": "Spain", "data": [1.1, 1.41, 1.56]}, {"id": "MX", "name": "Mexico", "data": [0.95, 1.03, 0.98]}]};
 const CHART2 = {"dates": ["Feb 2025", "Mar 2025", "Aug 2025", "Nov 2025", "Feb 2026"], "series": [{"name": "directive", "data": [22.56, 29.42, 38.78, 31.73, 32.64]}, {"name": "learning", "data": [18.92, 27.08, 20.34, 19.72, 22.35]}, {"name": "feedback loop", "data": [12.04, 12.25, 10.32, 13.63, 11.52]}, {"name": "task iteration", "data": [25.48, 24.04, 22.22, 27.2, 25.59]}, {"name": "validation", "data": [2.31, 3.97, 4.48, 4.77, 4.86]}, {"name": "none", "data": [2.9, 3.24, 3.86, 2.96, 3.05]}]};
 const CHART3 = {"dates": ["Nov 2025", "Feb 2026"], "series": [{"name": "work", "data": [46.03, 45.23]}, {"name": "personal", "data": [34.68, 42.29]}, {"name": "coursework", "data": [19.27, 12.44]}]};
