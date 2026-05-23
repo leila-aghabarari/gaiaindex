@@ -439,14 +439,14 @@ CTY_VARS = [
 ]
 
 
-def build_var_tab(wb, sheet_name, var_rows, csv_filename):
-    ws = wb.create_sheet(sheet_name)
+def build_var_tab(wb):
+    ws = wb.create_sheet('Variable Descriptions')
     ws.sheet_view.showGridLines = False
     ws.freeze_panes = 'A3'
 
     # Subtitle row
     ws.merge_cells('A1:G1')
-    sub = ws.cell(1, 1, f'Variable reference for {csv_filename}   ·   GAIA Global AI Adoption Index  ·  gaiaindex.org')
+    sub = ws.cell(1, 1, 'Variable reference for gaia_occupations.csv and gaia_countries.csv   ·   GAIA Global AI Adoption Index  ·  gaiaindex.org')
     sub.font = Font(name='Calibri', size=10, italic=True, color='5b7a96')
     sub.fill = PatternFill('solid', fgColor='F0FAF6')
     sub.alignment = Alignment(vertical='center', indent=1)
@@ -460,33 +460,9 @@ def build_var_tab(wb, sheet_name, var_rows, csv_filename):
         c.fill = hdr_fill_obj
         c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
         c.border = thin_border()
-        col_letter = get_column_letter(ci)
-        ws.column_dimensions[col_letter].width = col_w
+        ws.column_dimensions[get_column_letter(ci)].width = col_w
     ws.row_dimensions[2].height = 22
 
-    # Data rows
-    alt_fill = PatternFill('solid', fgColor=TEAL_LIGHT)
-    white_fill = PatternFill('solid', fgColor=WHITE)
-
-    for ri, var in enumerate(var_rows, 1):
-        row_num = ri + 2
-        fill = alt_fill if ri % 2 == 0 else white_fill
-        for ci, val in enumerate(var, 1):
-            c = ws.cell(row_num, ci, val)
-            c.font = Font(name='Calibri', size=10, color=TEXT_DARK,
-                          bold=(ci == 1))  # bold variable name
-            c.fill = fill
-            c.alignment = Alignment(wrap_text=True, vertical='top', indent=1)
-            c.border = thin_border()
-            # Teal color for variable name column
-            if ci == 1:
-                c.font = Font(name='Calibri', size=10, bold=True, color=TEAL_DARK)
-        # Set row height based on description length
-        desc = var[2]
-        approx_lines = max(1, len(desc) // 60)
-        ws.row_dimensions[row_num].height = max(18, approx_lines * 15 + 6)
-
-    # Highlight main-spec and composite rows
     highlight_vars = {
         'dv_rating_beta': '0D9E76',
         'gaia_e': TEAL_DARK,
@@ -494,14 +470,46 @@ def build_var_tab(wb, sheet_name, var_rows, csv_filename):
         'gaia_r': TEAL_DARK,
         'aipi_overall': '1565C0',
     }
-    for ri, var in enumerate(var_rows, 1):
-        row_num = ri + 2
-        if var[0] in highlight_vars:
-            badge_color = highlight_vars[var[0]]
-            for ci in range(1, len(COLS) + 1):
-                ws.cell(row_num, ci).fill = PatternFill('solid', fgColor='EAF6F1')
-            ws.cell(row_num, 1).font = Font(name='Calibri', size=10, bold=True,
-                                             color=badge_color)
+
+    def write_section(section_label, var_rows, start_row):
+        # Section divider row
+        ws.merge_cells(f'A{start_row}:G{start_row}')
+        sc = ws.cell(start_row, 1, section_label)
+        sc.font = Font(name='Calibri', size=11, bold=True, color=WHITE)
+        sc.fill = PatternFill('solid', fgColor=TEAL_MID)
+        sc.alignment = Alignment(vertical='center', indent=1)
+        ws.row_dimensions[start_row].height = 20
+        row_num = start_row + 1
+
+        alt_fill  = PatternFill('solid', fgColor=TEAL_LIGHT)
+        white_fill = PatternFill('solid', fgColor=WHITE)
+
+        for ri, var in enumerate(var_rows, 1):
+            fill = alt_fill if ri % 2 == 0 else white_fill
+            for ci, val in enumerate(var, 1):
+                c = ws.cell(row_num, ci, val)
+                c.font = Font(name='Calibri', size=10, color=TEXT_DARK)
+                c.fill = fill
+                c.alignment = Alignment(wrap_text=True, vertical='top', indent=1)
+                c.border = thin_border()
+                if ci == 1:
+                    c.font = Font(name='Calibri', size=10, bold=True, color=TEAL_DARK)
+            desc = var[2]
+            approx_lines = max(1, len(desc) // 60)
+            ws.row_dimensions[row_num].height = max(18, approx_lines * 15 + 6)
+
+            if var[0] in highlight_vars:
+                badge_color = highlight_vars[var[0]]
+                for ci in range(1, len(COLS) + 1):
+                    ws.cell(row_num, ci).fill = PatternFill('solid', fgColor='EAF6F1')
+                ws.cell(row_num, 1).font = Font(name='Calibri', size=10, bold=True, color=badge_color)
+
+            row_num += 1
+        return row_num
+
+    next_row = write_section('Occupation Variables  (gaia_occupations.csv — 923 occupations)', OCC_VARS, 3)
+    next_row += 1  # blank gap between sections
+    write_section('Country Variables  (gaia_countries.csv — 138 countries)', CTY_VARS, next_row)
 
     return ws
 
@@ -509,12 +517,10 @@ def build_var_tab(wb, sheet_name, var_rows, csv_filename):
 # ── Main ────────────────────────────────────────────────────────────────────────
 def main():
     wb = openpyxl.Workbook()
-    # Remove default sheet
     del wb[wb.sheetnames[0]]
 
     build_readme(wb)
-    build_var_tab(wb, 'Occupation Variables', OCC_VARS, 'gaia_occupations.csv')
-    build_var_tab(wb, 'Country Variables',    CTY_VARS, 'gaia_countries.csv')
+    build_var_tab(wb)
 
     out = os.path.abspath(OUT_PATH)
     os.makedirs(os.path.dirname(out), exist_ok=True)
