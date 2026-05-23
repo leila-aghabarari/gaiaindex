@@ -320,6 +320,51 @@
   </div>
 </div>
 
+<!-- ── SECTION 5: FRED ── -->
+<div class="section" id="fred">
+  <p class="sec-label">Section 5 — FRED · Labor Market by Industry</p>
+  <h2 class="sec-title">Wages, Job Openings &amp; Unemployment — Before and After ChatGPT</h2>
+  <p class="sec-desc">Three labor market dimensions by industry from the St. Louis Fed FRED database, 2020–2026. The vertical line marks November 2022. High-AI-exposure industries (Information, Prof/Business) show distinct earnings and openings trajectories.</p>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchFredTab('earnings')">Avg Hourly Earnings</button>
+    <button class="tab-btn" onclick="switchFredTab('openings')">Job Openings</button>
+    <button class="tab-btn" onclick="switchFredTab('unemployment')">Unemployment Rate</button>
+  </div>
+
+  <div id="fred-earnings" class="tab-panel active">
+    <div class="chart-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+        <h3 style="margin:0">Average Hourly Earnings by Industry ($/hr, monthly 2020–2026)</h3>
+        <a href="data/usa_fred.csv" download class="btn-dl">⬇ Download usa_fred.csv</a>
+      </div>
+      <div class="chart-wrap tall" style="position:relative"><canvas id="fredEarningsChart"></canvas></div>
+      <div class="jolts-note">▲ Nov 2022 = ChatGPT launch. Information sector earns $54.83/hr (Apr 2026) — 47% above the all-industry average. Note the wage growth acceleration post-2022 in high-AI sectors.</div>
+    </div>
+  </div>
+
+  <div id="fred-openings" class="tab-panel">
+    <div class="chart-card">
+      <h3>Job Openings by Industry (thousands, JOLTS monthly 2020–2026)</h3>
+      <div class="chart-wrap tall" style="position:relative"><canvas id="fredOpeningsChart"></canvas></div>
+      <div class="jolts-note">▲ Nov 2022 = ChatGPT launch. Professional &amp; Business Services and Education &amp; Health dominate openings. Note the broad decline in openings post-2022 as hiring slowed across sectors.</div>
+    </div>
+  </div>
+
+  <div id="fred-unemployment" class="tab-panel">
+    <div class="chart-card">
+      <h3>Unemployment Rate by Industry (%, monthly 2020–2026)</h3>
+      <div class="chart-wrap tall" style="position:relative"><canvas id="fredUnempChart"></canvas></div>
+      <div class="jolts-note">▲ Nov 2022 = ChatGPT launch. Construction and Manufacturing show higher structural unemployment; Wholesale &amp; Retail elevated post-2022 as e-commerce AI adoption accelerated.</div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-top:1.5rem">
+    <h3>Pre vs. Post ChatGPT — Average Hourly Earnings by Industry</h3>
+    <div class="chart-wrap"><canvas id="fredEarningsBarChart"></canvas></div>
+  </div>
+</div>
+
 <!-- ── SECTION 6: JOLTS ── -->
 <div class="section" id="jolts">
   <p class="sec-label">Section 6 — BLS JOLTS · Labor Market Trends</p>
@@ -426,6 +471,10 @@
       <div class="source-card">
         <div class="source-title">Google Trends</div>
         <div class="source-meta">pytrends API. "ChatGPT" weekly interest, US and by state. Jan 2022 – May 2026. Index 100 = peak week.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-title">FRED — St. Louis Fed</div>
+        <div class="source-meta">Avg hourly earnings (CES), job openings (JOLTS), unemployment rate (CPS). Monthly 2020–2026. <a href="https://fred.stlouisfed.org" target="_blank">fred.stlouisfed.org ↗</a></div>
       </div>
       <div class="source-card">
         <div class="source-title">BLS OEWS (Pending)</div>
@@ -665,6 +714,160 @@ function switchTab(which) {
       }
     }
   });
+})();
+
+// ── FRED tab switcher ──
+function switchFredTab(which) {
+  ['earnings','openings','unemployment'].forEach(t => {
+    document.getElementById('fred-'+t).classList.toggle('active', t===which);
+  });
+  document.querySelectorAll('#fred .tab-btn').forEach((b,i) => {
+    const tabs = ['earnings','openings','unemployment'];
+    b.classList.toggle('active', tabs[i]===which);
+  });
+  // Trigger chart resize
+  setTimeout(()=>window.dispatchEvent(new Event('resize')), 50);
+}
+
+// ── FRED charts: load from CSV ──
+(async function(){
+  try {
+    const resp = await fetch('data/usa_fred.csv');
+    const text = await resp.text();
+    const rows = text.trim().split('\n').slice(1).map(l => {
+      const p = l.split(',');
+      return { category: p[0], industry: p[1], date: p[3], value: parseFloat(p[4]) };
+    });
+
+    const COLORS = {
+      'Total Private':       '#0D9E76',
+      'Total Nonfarm':       '#0D9E76',
+      'Total':               '#0D9E76',
+      'Information':         '#1e88e5',
+      'Prof & Business Svcs':'#8b5cf6',
+      'Financial Activities':'#f59e0b',
+      'Manufacturing':       '#f43f5e',
+      'Construction':        '#06b6d4',
+      'Education & Health':  '#10b981',
+      'Leisure & Hospitality':'#94a3b8',
+      'Wholesale & Retail':  '#fb923c',
+    };
+
+    function getSeries(category) {
+      const industries = [...new Set(rows.filter(r=>r.category===category).map(r=>r.industry))];
+      const dates = [...new Set(rows.filter(r=>r.category===category).map(r=>r.date))].sort();
+      return { dates, industries, series: industries.map(ind => ({
+        label: ind,
+        data: dates.map(d => { const r=rows.find(x=>x.category===category&&x.industry===ind&&x.date===d); return r?r.value:null; }),
+        borderColor: COLORS[ind] || '#94a3b8',
+        backgroundColor: 'transparent',
+        tension: .3, pointRadius: 0, borderWidth: ind.includes('Total')||ind.includes('Nonfarm') ? 2.5 : 1.5,
+        borderDash: ind.includes('Total')||ind.includes('Nonfarm') ? [] : [],
+      })) };
+    }
+
+    function shockLinePlugin(canvasId, shockIdx) {
+      return {
+        id: 'shock_'+canvasId,
+        afterDraw(chart) {
+          if (chart.canvas.id !== canvasId) return;
+          const meta = chart.getDatasetMeta(0), pt = meta.data[shockIdx];
+          if (!pt) return;
+          const ctx = chart.ctx;
+          ctx.save();
+          ctx.strokeStyle = 'rgba(245,158,11,.65)';
+          ctx.lineWidth = 1.5; ctx.setLineDash([4,3]);
+          ctx.beginPath(); ctx.moveTo(pt.x, chart.chartArea.top); ctx.lineTo(pt.x, chart.chartArea.bottom); ctx.stroke();
+          ctx.fillStyle = 'rgba(245,158,11,.9)';
+          ctx.font = 'bold 9px Inter,sans-serif';
+          ctx.fillText('Nov 2022', pt.x+3, chart.chartArea.top+12);
+          ctx.restore();
+        }
+      };
+    }
+
+    function xLabels(dates) {
+      return dates.map(d => { const [y,m]=d.split('-'); return m==='01'?y:''; });
+    }
+
+    // ── Earnings chart ──
+    const earn = getSeries('avg_hourly_earnings');
+    const earnShock = earn.dates.findIndex(d => d >= '2022-11');
+    Chart.register(shockLinePlugin('fredEarningsChart', earnShock));
+    new Chart(document.getElementById('fredEarningsChart'), {
+      type: 'line',
+      data: { labels: xLabels(earn.dates), datasets: earn.series },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
+          tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${ctx.parsed.y}`, title: ctx => earn.dates[ctx[0].dataIndex] } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 0 } },
+          y: { ticks: { callback: v => '$'+v }, grid: { color: '#e8eef7' } }
+        }
+      }
+    });
+
+    // ── Job openings chart ──
+    const open = getSeries('job_openings');
+    const openShock = open.dates.findIndex(d => d >= '2022-11');
+    Chart.register(shockLinePlugin('fredOpeningsChart', openShock));
+    new Chart(document.getElementById('fredOpeningsChart'), {
+      type: 'line',
+      data: { labels: xLabels(open.dates), datasets: open.series },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
+          tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}K`, title: ctx => open.dates[ctx[0].dataIndex] } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 0 } },
+          y: { ticks: { callback: v => v >= 1000 ? (v/1000).toFixed(0)+'M' : v+'K' }, grid: { color: '#e8eef7' } }
+        }
+      }
+    });
+
+    // ── Unemployment chart ──
+    const unemp = getSeries('unemployment');
+    const unempShock = unemp.dates.findIndex(d => d >= '2022-11');
+    Chart.register(shockLinePlugin('fredUnempChart', unempShock));
+    new Chart(document.getElementById('fredUnempChart'), {
+      type: 'line',
+      data: { labels: xLabels(unemp.dates), datasets: unemp.series },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
+          tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}%`, title: ctx => unemp.dates[ctx[0].dataIndex] } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 0 } },
+          y: { ticks: { callback: v => v+'%' }, grid: { color: '#e8eef7' }, min: 0 }
+        }
+      }
+    });
+
+    // ── Pre/post earnings bar ──
+    const earnInds = earn.industries.filter(i => !i.includes('Total'));
+    const pre  = earnInds.map(ind => { const vals = rows.filter(r=>r.category==='avg_hourly_earnings'&&r.industry===ind&&r.date<'2022-11'); return vals.length?(vals.reduce((a,b)=>a+b.value,0)/vals.length).toFixed(2):0; });
+    const post = earnInds.map(ind => { const vals = rows.filter(r=>r.category==='avg_hourly_earnings'&&r.industry===ind&&r.date>='2022-11'); return vals.length?(vals.reduce((a,b)=>a+b.value,0)/vals.length).toFixed(2):0; });
+    new Chart(document.getElementById('fredEarningsBarChart'), {
+      type: 'bar',
+      data: {
+        labels: earnInds,
+        datasets: [
+          { label: 'Pre-ChatGPT avg (2020–Oct 2022)', data: pre, backgroundColor: 'rgba(30,136,229,.7)', borderRadius: 3 },
+          { label: 'Post-ChatGPT avg (Nov 2022–Apr 2026)', data: post, backgroundColor: 'rgba(13,158,118,.7)', borderRadius: 3 },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${ctx.parsed.y}/hr` } } },
+        scales: {
+          x: { grid: { display: false } },
+          y: { ticks: { callback: v => '$'+v }, grid: { color: '#e8eef7' } }
+        }
+      }
+    });
+
+  } catch(e) { console.warn('FRED load error:', e); }
 })();
 
 // ── JOLTS helper: load from CSV via fetch ──
