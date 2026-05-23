@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKNG86S6HH"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QKNG86S6HH');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>United States — GAIA AI Adoption Profile</title>
+  <meta name="description" content="Comprehensive AI adoption data for the United States: exposure, actual usage, labor market trends, occupation deep-dives, and Google Trends." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="assets/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:        #f4f7fc;
+      --surface:   #edf2f9;
+      --card:      #ffffff;
+      --border:    #dde6f0;
+      --teal:      #0D9E76;
+      --teal-dim:  #0D7A5F;
+      --teal-glow: rgba(13,158,118,0.10);
+      --cyan:      #12c49a;
+      --text:      #0e1f2e;
+      --muted:     #4a7060;
+      --faint:     #7aada5;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { color: var(--cyan); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 0 2rem; }
+    .nav-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--teal); }
+    .nav-logo-sub { color: var(--faint) !important; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; margin-left: 0.3rem; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; flex-wrap: wrap; }
+    .nav-links a { color: var(--muted); font-size: 0.82rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* HERO */
+    .hero { background: linear-gradient(135deg, #071a10 0%, #0D2A1E 50%, #0a2235 100%); color: #fff; padding: 4rem 2rem 3rem; border-bottom: 2px solid var(--teal-dim); }
+    .hero-inner { max-width: 1300px; margin: 0 auto; }
+    .hero-flag { font-size: 3rem; margin-bottom: .75rem; }
+    .hero-tag { display: inline-block; background: rgba(13,158,118,.18); border: 1px solid var(--teal); color: var(--cyan); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .8rem; border-radius: 2rem; margin-bottom: 1rem; }
+    .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem,4vw,3rem); font-weight: 700; letter-spacing: -.03em; margin-bottom: .75rem; }
+    .hero h1 em { font-style: normal; color: var(--cyan); }
+    .hero-sub { color: rgba(255,255,255,.7); font-size: 1rem; max-width: 700px; line-height: 1.7; margin-bottom: 2rem; }
+    .hero-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 1rem; max-width: 900px; }
+    .kpi-card { background: rgba(255,255,255,.07); border: 1px solid rgba(13,158,118,.3); border-radius: 10px; padding: 1rem 1.25rem; }
+    .kpi-val { font-family: 'Space Grotesk',sans-serif; font-size: 1.9rem; font-weight: 700; color: var(--cyan); line-height: 1; }
+    .kpi-label { font-size: .72rem; color: rgba(255,255,255,.6); margin-top: .3rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* LAYOUT */
+    .content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: none; }
+    .sec-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .4rem; }
+    .sec-title { font-family: 'Space Grotesk',sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: .5rem; }
+    .sec-desc { color: var(--muted); font-size: .9rem; line-height: 1.7; max-width: 700px; margin-bottom: 1.75rem; }
+    .section-note { background: #fffbe6; border: 1px solid #f0d060; border-radius: 8px; padding: .65rem 1rem; font-size: .82rem; color: #7a6000; margin-bottom: 1.5rem; }
+
+    /* CARDS */
+    .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+    .chart-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--teal), transparent); }
+    .chart-card h3 { font-family: 'Space Grotesk',sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+    .chart-wrap { position: relative; height: 320px; }
+    .chart-wrap.tall { height: 420px; }
+    .chart-wrap.xtall { height: 540px; }
+
+    /* NARRATIVE CARDS */
+    .finding-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1rem; margin-bottom: 1.75rem; }
+    .finding-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; border-left: 3px solid var(--teal); }
+    .finding-num { font-family: 'Space Grotesk',sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--teal); line-height: 1; margin-bottom: .4rem; }
+    .finding-title { font-weight: 600; font-size: .9rem; margin-bottom: .4rem; }
+    .finding-desc { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+
+    /* GRID LAYOUTS */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* OCCUPATION TABLE / BARS */
+    .occ-list { display: flex; flex-direction: column; gap: .35rem; }
+    .occ-row { display: grid; grid-template-columns: 1fr 120px 60px; align-items: center; gap: .5rem; padding: .4rem .6rem; border-radius: 6px; cursor: pointer; transition: background .15s; }
+    .occ-row:hover { background: var(--surface); }
+    .occ-name { font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .occ-bar-wrap { display: flex; align-items: center; gap: .4rem; }
+    .occ-bar-bg { flex: 1; height: 6px; background: var(--surface); border-radius: 3px; overflow: hidden; }
+    .occ-bar-fill { height: 100%; border-radius: 3px; transition: width .4s; }
+    .occ-pct { font-size: .75rem; font-weight: 600; text-align: right; white-space: nowrap; }
+
+    /* ONET TASK PANEL */
+    .onet-layout { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; min-height: 400px; }
+    @media (max-width: 800px) { .onet-layout { grid-template-columns: 1fr; } }
+    .onet-list { display: flex; flex-direction: column; gap: .3rem; overflow-y: auto; max-height: 420px; }
+    .onet-list-item { padding: .55rem .75rem; border-radius: 7px; cursor: pointer; font-size: .82rem; border: 1px solid transparent; transition: all .15s; }
+    .onet-list-item:hover { background: var(--surface); }
+    .onet-list-item.active { background: var(--teal-glow); border-color: var(--teal); color: var(--teal-dim); font-weight: 600; }
+    .onet-list-item .occ-sub { font-size: .7rem; color: var(--faint); margin-top: 1px; }
+    .onet-detail { background: var(--surface); border-radius: 10px; padding: 1.25rem; }
+    .onet-detail-title { font-family: 'Space Grotesk',sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: .3rem; }
+    .onet-detail-meta { font-size: .78rem; color: var(--muted); margin-bottom: 1rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+    .onet-badge { display: inline-flex; align-items: center; padding: .15rem .55rem; border-radius: 2rem; font-size: .72rem; font-weight: 700; }
+    .badge-teal { background: var(--teal-glow); color: var(--teal-dim); border: 1px solid var(--teal); }
+    .badge-gray { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
+    .task-list { list-style: none; display: flex; flex-direction: column; gap: .45rem; }
+    .task-item { display: flex; align-items: flex-start; gap: .6rem; padding: .5rem .65rem; background: white; border-radius: 6px; border: 1px solid var(--border); font-size: .82rem; }
+    .task-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+
+    /* TABS */
+    .tab-bar { display: flex; gap: .5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .tab-btn { padding: .4rem 1rem; border-radius: 6px; font-size: .8rem; font-weight: 600; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all .15s; }
+    .tab-btn.active { background: var(--teal); color: white; border-color: var(--teal); }
+    .tab-btn:hover:not(.active) { border-color: var(--teal-dim); color: var(--text); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* DOWNLOAD BTN */
+    .btn-dl { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .85rem; border-radius: 6px; font-size: .75rem; font-weight: 600; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all .15s; text-decoration: none; }
+    .btn-dl:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* STAT CHIPS */
+    .stat-row { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .stat-chip { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: .5rem .9rem; display: flex; flex-direction: column; }
+    .stat-chip-val { font-family: 'Space Grotesk',sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--teal); line-height: 1; }
+    .stat-chip-label { font-size: .7rem; color: var(--faint); margin-top: .2rem; }
+
+    /* VERTICAL LINE LABEL */
+    .shock-label { position: absolute; top: 8px; font-size: .68rem; color: var(--teal-dim); font-weight: 600; white-space: nowrap; }
+
+    /* FOOTER */
+    footer { background: var(--text); color: rgba(255,255,255,.6); padding: 2.5rem 2rem; margin-top: 3rem; }
+    .footer-inner { max-width: 1300px; margin: 0 auto; }
+    footer p { font-size: .8rem; margin-bottom: .35rem; }
+    footer a { color: rgba(255,255,255,.5); }
+    footer a:hover { color: var(--cyan); }
+    .sources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .source-card { background: rgba(255,255,255,.05); border-radius: 8px; padding: 1rem; border: 1px solid rgba(255,255,255,.1); }
+    .source-title { font-size: .78rem; font-weight: 700; color: rgba(255,255,255,.8); margin-bottom: .3rem; }
+    .source-meta { font-size: .72rem; line-height: 1.5; }
+
+    /* JOLTS vertical line annotation */
+    .jolts-note { font-size: .75rem; color: var(--muted); text-align: center; margin-top: .5rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="data.html">Data</a></li>
+      <li><a href="usa.html" class="active">USA</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="license.html">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-flag">🇺🇸</div>
+    <div class="hero-tag">Country Deep Dive · Feb 2026</div>
+    <h1>United States<br><em>AI Adoption Profile</em></h1>
+    <p class="hero-sub">The US accounts for 22% of global Claude.ai traffic — more than the next four countries combined. This page combines GAIA behavioral data, BLS labor statistics, O*NET task content, and Google Trends to map how AI is reshaping American work.</p>
+    <div class="hero-kpis">
+      <div class="kpi-card"><div class="kpi-val">#1</div><div class="kpi-label">Global AI usage rank</div></div>
+      <div class="kpi-card"><div class="kpi-val">22.2%</div><div class="kpi-label">Share of global Claude.ai traffic</div></div>
+      <div class="kpi-card"><div class="kpi-val">40.4%</div><div class="kpi-label">Work-related AI use share</div></div>
+      <div class="kpi-card"><div class="kpi-val">72.2%</div><div class="kpi-label">Task success rate</div></div>
+      <div class="kpi-card"><div class="kpi-val">0.948</div><div class="kpi-label">GAIA-R readiness score</div></div>
+      <div class="kpi-card"><div class="kpi-val">923</div><div class="kpi-label">Occupations with exposure scores</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ── SECTION 10: KEY FINDINGS NARRATIVE ── -->
+<div class="section" id="narrative">
+  <p class="sec-label">Key Findings</p>
+  <h2 class="sec-title">The AI Transition in American Work — 4 Findings</h2>
+  <p class="sec-desc">What the data says about where the US stands in the AI transition, which workers are most exposed, and where the labor market signal is visible.</p>
+
+  <div class="finding-grid">
+    <div class="finding-card">
+      <div class="finding-num">1</div>
+      <div class="finding-title">The US leads in volume, not work intensity</div>
+      <div class="finding-desc">The US drives 22% of global Claude.ai traffic — but only 40% of that is work-related, compared to 57% in Brazil and 50% in India. Americans use AI more, but proportionally more for personal tasks than peer economies.</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">2</div>
+      <div class="finding-title">Highest-exposure occupations are also highest-wage</div>
+      <div class="finding-desc">Computer programmers, mathematicians, and data scientists score 87–100% on AI exposure — and these are also among the highest-paid US occupations. High-wage, high-exposure workers face disruption risk, but also have resources to adapt. Low-wage, high-exposure occupations (clerks, transcriptionists) face the starkest displacement pressure.</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">3</div>
+      <div class="finding-title">JOLTS quit rates signal post-ChatGPT labor reallocation</div>
+      <div class="finding-desc">Total nonfarm quit rates dropped sharply after November 2022 — from a 2.6% monthly average to 2.0% post-ChatGPT. This mirrors a "great stay" pattern: workers may be less willing to change jobs as AI uncertainty rises. Information and professional services sectors show the largest divergence.</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">4</div>
+      <div class="finding-title">ChatGPT awareness peaked in 2025, not 2022</div>
+      <div class="finding-desc">Google Trends shows US ChatGPT search interest accelerated continuously after the November 2022 shock — peaking in September 2025 at index 100. DC, California, and New Jersey lead state-level awareness. The awareness curve suggests AI adoption is still accelerating, not plateauing.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 1: USA IN GAIA ── -->
+<div class="section" id="gaia">
+  <p class="sec-label">Section 1 — GAIA Behavioral Data</p>
+  <h2 class="sec-title">USA in the Global AI Adoption Index</h2>
+  <p class="sec-desc">How US AI usage patterns compare to Brazil, India, Germany, and the global average. Data from Anthropic's Claude.ai behavioral logs, February 2026.</p>
+
+  <div class="stat-row">
+    <div class="stat-chip"><div class="stat-chip-val">22.2%</div><div class="stat-chip-label">Global traffic share</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">40.4%</div><div class="stat-chip-label">Work use</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">47.0%</div><div class="stat-chip-label">Personal use</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">12.5%</div><div class="stat-chip-label">Coursework</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">0.711</div><div class="stat-chip-label">GAIA-A adoption</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">0.948</div><div class="stat-chip-label">GAIA-R readiness</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-card">
+      <h3>Use Case Breakdown — US vs. Peers</h3>
+      <div class="chart-wrap"><canvas id="useCaseChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Collaboration Style — US vs. Peers</h3>
+      <div class="chart-wrap"><canvas id="collabChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+      <h3 style="margin:0">GAIA Scores — US vs. Peers</h3>
+      <a href="data/gaia_countries.csv" download class="btn-dl">⬇ Download gaia_countries.csv</a>
+    </div>
+    <div class="chart-wrap"><canvas id="gaiaScoreChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ── SECTION 2: OCCUPATION EXPOSURE ── -->
+<div class="section" id="occupations">
+  <p class="sec-label">Section 2 — AI Exposure by Occupation</p>
+  <h2 class="sec-title">Most and Least AI-Exposed US Occupations</h2>
+  <p class="sec-desc">AI exposure scores from Eloundou et al. (Science 2024) — share of occupation tasks performable by GPT-4 augmented with tools (E1+E2 specification). Click any occupation to see all scores.</p>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('top')">Top 20 Most Exposed</button>
+    <button class="tab-btn" onclick="switchTab('bot')">Bottom 20 Least Exposed</button>
+  </div>
+
+  <div id="tab-top" class="tab-panel active">
+    <div class="two-col">
+      <div class="chart-card" style="padding:1rem">
+        <h3>Top 20 by AI Exposure (E1+E2)</h3>
+        <div class="chart-wrap tall"><canvas id="top20Chart"></canvas></div>
+      </div>
+      <div class="chart-card" id="occ-detail-panel">
+        <h3>Click an occupation →</h3>
+        <p style="color:var(--faint);font-size:.85rem;margin-top:.5rem">Select an occupation from the chart to see its full GAIA profile.</p>
+        <div id="occ-detail-content" style="display:none">
+          <div id="occ-detail-name" style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.75rem"></div>
+          <div id="occ-detail-bars" class="occ-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-bot" class="tab-panel">
+    <div class="two-col">
+      <div class="chart-card" style="padding:1rem">
+        <h3>Bottom 20 by AI Exposure (E1+E2)</h3>
+        <div class="chart-wrap tall"><canvas id="bot20Chart"></canvas></div>
+      </div>
+      <div class="chart-card" id="occ-detail-panel-bot">
+        <h3>Click an occupation →</h3>
+        <p style="color:var(--faint);font-size:.85rem;margin-top:.5rem">Select an occupation from the chart to see its full GAIA profile.</p>
+        <div id="occ-detail-content-bot" style="display:none">
+          <div id="occ-detail-name-bot" style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.75rem"></div>
+          <div id="occ-detail-bars-bot" class="occ-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap">
+    <a href="data/gaia_occupations.csv" download class="btn-dl">⬇ Download gaia_occupations.csv</a>
+    <a href="occupations.html" class="btn-dl">→ Full Occupation Explorer</a>
+  </div>
+</div>
+
+<!-- ── SECTION 3: OEWS WAGES ── -->
+<div class="section" id="wages">
+  <p class="sec-label">Section 3 — BLS OEWS Wages</p>
+  <h2 class="sec-title">AI Exposure vs. Wages</h2>
+  <p class="sec-desc">Which high-AI-exposure occupations are high-wage vs. low-wage? This is the key distributional question for AI's labor market impact.</p>
+  <div class="section-note">
+    ⚠️ BLS OEWS blocks automated downloads (HTTP 403). To populate wage data: download <code>oesm24nat.zip</code> from <a href="https://www.bls.gov/oes/tables.htm" target="_blank">bls.gov/oes/tables.htm</a>, extract the all-industries national file, then run <code>python3 scripts/merge_oews.py</code>. The scatter plot below will auto-populate from <code>data/usa_oews_gaia.csv</code> once wages are loaded.
+  </div>
+  <div class="chart-card">
+    <h3>GAIA-E Exposure Score vs. Median Annual Wage — all 923 occupations</h3>
+    <p style="color:var(--faint);font-size:.82rem;margin-bottom:1rem">Wage data pending BLS download. Currently showing GAIA-E vs. SML score as a proxy decomposition.</p>
+    <div class="chart-wrap tall"><canvas id="wageScatterChart"></canvas></div>
+  </div>
+  <div style="margin-top:.75rem">
+    <a href="data/usa_oews_gaia.csv" download class="btn-dl">⬇ Download usa_oews_gaia.csv (structure ready)</a>
+  </div>
+</div>
+
+<!-- ── SECTION 6: JOLTS ── -->
+<div class="section" id="jolts">
+  <p class="sec-label">Section 6 — BLS JOLTS · Labor Market Trends</p>
+  <h2 class="sec-title">Hiring, Quits &amp; Layoffs — Before and After ChatGPT</h2>
+  <p class="sec-desc">Monthly Job Openings and Labor Turnover Survey data from the BLS API, 2020–2026. The vertical line marks November 2022 — the ChatGPT public release. The key question: did AI uncertainty change worker and firm behavior?</p>
+
+  <div class="stat-row">
+    <div class="stat-chip"><div class="stat-chip-val">3.4%</div><div class="stat-chip-label">Hires rate Mar 2026</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">2.0%</div><div class="stat-chip-label">Quit rate (post-ChatGPT avg)</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">2.6%</div><div class="stat-chip-label">Quit rate (pre-ChatGPT avg)</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">−23%</div><div class="stat-chip-label">Quit rate change post-Nov 2022</div></div>
+  </div>
+
+  <div class="chart-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+      <h3 style="margin:0">Total Nonfarm — Hires, Quits &amp; Layoffs (Monthly Rate, 2020–2026)</h3>
+      <a href="data/usa_jolts.csv" download class="btn-dl">⬇ Download usa_jolts.csv</a>
+    </div>
+    <div class="chart-wrap tall" style="position:relative"><canvas id="joltsChart"></canvas></div>
+    <div class="jolts-note">▲ Vertical line = November 2022 (ChatGPT launch). Post-launch quit rates fell and have remained below pre-2022 levels.</div>
+  </div>
+
+  <div class="chart-card">
+    <h3>Industry Comparison — Average Quit Rate Pre vs. Post ChatGPT</h3>
+    <div class="chart-wrap"><canvas id="joltsIndustryChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ── SECTION 7: O*NET TASKS ── -->
+<div class="section" id="onet">
+  <p class="sec-label">Section 7 — O*NET Task Content</p>
+  <h2 class="sec-title">What Do High-Exposure Workers Actually Do?</h2>
+  <p class="sec-desc">O*NET task statements for high and low AI-exposure occupations. Understanding the task content helps explain <em>why</em> some occupations score high. Data: O*NET 29.0, merged with GAIA-E scores.</p>
+
+  <div class="onet-layout">
+    <div>
+      <p style="font-size:.78rem;color:var(--muted);margin-bottom:.6rem">Select an occupation to see its tasks:</p>
+      <div class="onet-list" id="onetList"></div>
+    </div>
+    <div class="onet-detail" id="onetDetail">
+      <p style="color:var(--faint);font-size:.85rem">← Select an occupation</p>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem">
+    <a href="data/usa_onet_tasks.csv" download class="btn-dl">⬇ Download usa_onet_tasks.csv (18,796 tasks)</a>
+  </div>
+</div>
+
+<!-- ── SECTION 9: GOOGLE TRENDS ── -->
+<div class="section" id="trends">
+  <p class="sec-label">Section 9 — Google Trends · ChatGPT Awareness</p>
+  <h2 class="sec-title">ChatGPT Search Interest in the US — 2022 to 2026</h2>
+  <p class="sec-desc">Weekly Google Trends index for "ChatGPT" in the United States. Index: 100 = peak interest. The awareness curve shows continuous acceleration since the November 2022 launch — the US has not yet hit a plateau.</p>
+
+  <div class="stat-row">
+    <div class="stat-chip"><div class="stat-chip-val">100</div><div class="stat-chip-label">Peak index (Sep 2025)</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">DC</div><div class="stat-chip-label">Highest state interest</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">CA</div><div class="stat-chip-label">2nd highest state</div></div>
+    <div class="stat-chip"><div class="stat-chip-val">227</div><div class="stat-chip-label">Weeks of data</div></div>
+  </div>
+
+  <div class="chart-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+      <h3 style="margin:0">Weekly "ChatGPT" Search Interest — United States (Jan 2022 – May 2026)</h3>
+      <a href="data/usa_trends.csv" download class="btn-dl">⬇ Download usa_trends.csv</a>
+    </div>
+    <div class="chart-wrap tall" style="position:relative"><canvas id="trendsChart"></canvas></div>
+    <div class="jolts-note">▲ Vertical line = November 2022 (ChatGPT public launch). Index 100 = peak week (Sep 2025).</div>
+  </div>
+
+  <div class="chart-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+      <h3 style="margin:0">ChatGPT Interest by US State (cumulative, Nov 2022 – May 2026)</h3>
+      <a href="data/usa_trends_states.csv" download class="btn-dl">⬇ Download usa_trends_states.csv</a>
+    </div>
+    <div class="chart-wrap xtall"><canvas id="statesChart"></canvas></div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<!-- ── DATA SOURCES & FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:1rem">Data Sources &amp; Citations</div>
+    <div class="sources-grid">
+      <div class="source-card">
+        <div class="source-title">Anthropic Economic Index</div>
+        <div class="source-meta">Handa et al. (2025). Claude.ai behavioral logs, Feb 5–12 2026. Hugging Face: Anthropic/EconomicIndex. CC BY 4.0. <a href="https://huggingface.co/datasets/Anthropic/EconomicIndex" target="_blank">↗</a></div>
+      </div>
+      <div class="source-card">
+        <div class="source-title">Eloundou et al. (Science 2024)</div>
+        <div class="source-meta">GPTs are GPTs. Science 384(6702). DOI: 10.1126/science.adj0998. GPT-4 exposure scores for 923 SOC-2018 occupations.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-title">BLS JOLTS</div>
+        <div class="source-meta">Job Openings and Labor Turnover Survey. BLS Public API v1. Monthly 2020–2026. <a href="https://api.bls.gov" target="_blank">api.bls.gov ↗</a></div>
+      </div>
+      <div class="source-card">
+        <div class="source-title">O*NET 29.0</div>
+        <div class="source-meta">Task Statements database. O*NET Resource Center, USDOL/ETA. 18,796 tasks across 923 occupations. <a href="https://www.onetcenter.org" target="_blank">onetcenter.org ↗</a></div>
+      </div>
+      <div class="source-card">
+        <div class="source-title">Google Trends</div>
+        <div class="source-meta">pytrends API. "ChatGPT" weekly interest, US and by state. Jan 2022 – May 2026. Index 100 = peak week.</div>
+      </div>
+      <div class="source-card">
+        <div class="source-title">BLS OEWS (Pending)</div>
+        <div class="source-meta">Occupational Employment and Wage Statistics, May 2024. National estimates. Requires manual download from <a href="https://www.bls.gov/oes/tables.htm" target="_blank">bls.gov ↗</a></div>
+      </div>
+    </div>
+    <p style="margin-top:2rem">Built by <a href="about.html">Leila Aghabarari</a> · <a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a> · Updated May 2026</p>
+    <p style="font-size:.72rem;color:rgba(255,255,255,.35);max-width:700px;margin-top:.5rem">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+  </div>
+</footer>
+
+<!-- ── DATA ── -->
+<script>
+const COUNTRIES = {"US":{"usage_pct_global":22.2372,"uc_work":40.415160182037305,"uc_personal":47.0328998255176,"uc_coursework":12.52136060295361,"collab_directive":29.92148292051158,"collab_learning":24.909161225334124,"gaia_a":0.7111,"gaia_r":0.9484,"ts_yes":72.15161980824925,"name":"United States"},"BR":{"usage_pct_global":2.5548,"uc_work":57.11993111006733,"uc_personal":37.18882104274307,"uc_coursework":5.679505245028965,"collab_directive":34.96555503366213,"collab_learning":16.674495068107092,"gaia_a":0.631,"gaia_r":0.4728,"ts_yes":69.70017222483169,"name":"Brazil"},"IN":{"usage_pct_global":6.1627,"uc_work":49.64057961607737,"uc_personal":34.74288866892758,"uc_coursework":15.548379768607914,"collab_directive":35.891735765167866,"collab_learning":18.657406656173432,"gaia_a":0.5526,"gaia_r":0.4573,"ts_yes":67.09234588735457,"name":"India"},"DE":{"usage_pct_global":3.027,"uc_work":40.42946812025107,"uc_personal":48.0376610505451,"uc_coursework":11.506442021803766,"collab_directive":26.96729435084242,"collab_learning":27.446316484968612,"gaia_a":0.6954,"gaia_r":0.9167,"ts_yes":71.93260654112983,"name":"Germany"},"Global":{"usage_pct_global":0.58,"uc_work":44.03,"uc_personal":38.71,"uc_coursework":17.91,"collab_directive":32.76,"collab_learning":22.0,"gaia_a":0.51,"gaia_r":0.46,"ts_yes":70.98}};
+
+const TOP20 = [{"code":"11-2021.00","title":"Mathematicians","e1e2":100.0,"gaia_e":0.714,"sml":76.7,"group":"Computer & Math","aei_success":null},{"code":"43-9081.00","title":"Proofreaders and Copy Markers","e1e2":97.5,"gaia_e":0.975,"sml":null,"group":"Office & Admin Support","aei_success":null},{"code":"15-1299.07","title":"Blockchain Engineers","e1e2":97.1,"gaia_e":0.971,"sml":null,"group":"Computer & Math","aei_success":null},{"code":"43-9021.00","title":"Correspondence Clerks","e1e2":96.4,"gaia_e":0.71,"sml":null,"group":"Office & Admin Support","aei_success":null},{"code":"27-3092.00","title":"Court Reporters and Simultaneous Captioners","e1e2":95.8,"gaia_e":0.958,"sml":null,"group":"Arts & Media","aei_success":null},{"code":"15-1251.00","title":"Computer Programmers","e1e2":95.0,"gaia_e":0.95,"sml":null,"group":"Computer & Math","aei_success":71.1},{"code":"15-1243.01","title":"Data Warehousing Specialists","e1e2":94.4,"gaia_e":0.944,"sml":null,"group":"Computer & Math","aei_success":null},{"code":"15-1242.00","title":"Database Administrators","e1e2":93.5,"gaia_e":0.935,"sml":null,"group":"Computer & Math","aei_success":null},{"code":"15-1257.00","title":"Web Developers","e1e2":93.3,"gaia_e":0.933,"sml":null,"group":"Computer & Math","aei_success":71.3},{"code":"15-1299.09","title":"Web Administrators","e1e2":91.3,"gaia_e":0.913,"sml":null,"group":"Computer & Math","aei_success":null},{"code":"43-2011.00","title":"Telephone Operators","e1e2":89.5,"gaia_e":0.895,"sml":null,"group":"Office & Admin Support","aei_success":null},{"code":"43-9021.01","title":"Data Entry Keyers","e1e2":89.3,"gaia_e":0.893,"sml":null,"group":"Office & Admin Support","aei_success":null},{"code":"43-9111.00","title":"Statistical Assistants","e1e2":89.1,"gaia_e":0.782,"sml":null,"group":"Office & Admin Support","aei_success":null},{"code":"27-3043.00","title":"Poets, Lyricists and Creative Writers","e1e2":88.9,"gaia_e":0.836,"sml":null,"group":"Arts & Media","aei_success":null},{"code":"27-3091.00","title":"Interpreters and Translators","e1e2":88.0,"gaia_e":0.719,"sml":null,"group":"Arts & Media","aei_success":null},{"code":"15-1243.00","title":"Database Architects","e1e2":87.8,"gaia_e":0.878,"sml":null,"group":"Computer & Math","aei_success":null},{"code":"15-1253.00","title":"Software Quality Assurance Analysts","e1e2":87.7,"gaia_e":0.877,"sml":null,"group":"Computer & Math","aei_success":null},{"code":"31-9094.00","title":"Medical Transcriptionists","e1e2":87.5,"gaia_e":0.792,"sml":null,"group":"Healthcare Support","aei_success":null},{"code":"15-1252.00","title":"Software Developers","e1e2":86.8,"gaia_e":0.868,"sml":null,"group":"Computer & Math","aei_success":74.0},{"code":"15-1299.08","title":"Bioinformatics Technicians","e1e2":86.7,"gaia_e":0.867,"sml":null,"group":"Computer & Math","aei_success":null}];
+
+const BOT20 = [{"code":"49-3022.00","title":"Automotive Glass Installers","e1e2":0.0,"gaia_e":0.253,"sml":null,"group":"Installation & Repair"},{"code":"49-3031.00","title":"Bus & Truck Mechanics","e1e2":0.0,"gaia_e":0.218,"sml":null,"group":"Installation & Repair"},{"code":"49-3052.00","title":"Motorcycle Mechanics","e1e2":0.0,"gaia_e":0.153,"sml":null,"group":"Installation & Repair"},{"code":"49-3093.00","title":"Tire Repairers and Changers","e1e2":0.0,"gaia_e":0.157,"sml":null,"group":"Installation & Repair"},{"code":"47-5061.00","title":"Refractory Materials Repairers","e1e2":0.0,"gaia_e":0.223,"sml":null,"group":"Construction"},{"code":"49-9051.00","title":"Electrical Power-Line Installers","e1e2":0.0,"gaia_e":0.218,"sml":null,"group":"Installation & Repair"},{"code":"49-9096.00","title":"Riggers","e1e2":0.0,"gaia_e":0.211,"sml":null,"group":"Installation & Repair"},{"code":"51-3022.00","title":"Meat, Poultry & Fish Cutters","e1e2":0.0,"gaia_e":0.203,"sml":null,"group":"Food Preparation"},{"code":"51-3023.00","title":"Slaughterers and Meat Packers","e1e2":0.0,"gaia_e":0.051,"sml":null,"group":"Food Preparation"},{"code":"51-4052.00","title":"Pourers and Casters, Metal","e1e2":0.0,"gaia_e":0.376,"sml":null,"group":"Production"},{"code":"51-4051.00","title":"Foundry Mold and Coremakers","e1e2":0.0,"gaia_e":0.218,"sml":null,"group":"Production"},{"code":"51-9031.00","title":"Cutters and Trimmers, Hand","e1e2":0.0,"gaia_e":0.0,"sml":null,"group":"Production"},{"code":"51-9111.00","title":"Packaging Machine Operators","e1e2":0.0,"gaia_e":0.181,"sml":null,"group":"Production"},{"code":"51-9123.00","title":"Painting & Decorating Workers","e1e2":0.0,"gaia_e":0.297,"sml":null,"group":"Production"},{"code":"51-9195.00","title":"Molders, Shapers, and Casters","e1e2":0.0,"gaia_e":0.0,"sml":null,"group":"Production"},{"code":"51-9196.00","title":"Paper Goods Machine Operators","e1e2":0.0,"gaia_e":0.0,"sml":null,"group":"Production"},{"code":"53-5011.00","title":"Motorboat Operators","e1e2":0.0,"gaia_e":0.240,"sml":null,"group":"Transportation"},{"code":"53-7031.00","title":"Dredge Operators","e1e2":0.0,"gaia_e":0.174,"sml":null,"group":"Transportation"},{"code":"53-7041.00","title":"Hoist and Winch Operators","e1e2":0.0,"gaia_e":0.095,"sml":null,"group":"Transportation"},{"code":"53-7073.00","title":"Wellhead Pumpers","e1e2":0.0,"gaia_e":0.256,"sml":null,"group":"Production"}];
+</script>
+
+<script>
+// ── JOLTS data ──
+const JOLTS_MONTHS = ["2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03"];
+</script>
+
+<script>
+// ── Google Trends data ──
+</script>
+
+<script src="assets/gaia-download-gate.js"></script>
+<script src="assets/ga-events.js"></script>
+
+<!-- ── CHARTS ── -->
+<script>
+// Helpers
+function rgba(hex, a) {
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+const TEAL='#0D9E76', TEAL2='#1e88e5', AMBER='#f59e0b', ROSE='#f43f5e', VIOLET='#8b5cf6', GRAY='#94a3b8';
+const FONT = { family:"'Inter',sans-serif", size:11 };
+
+Chart.defaults.font = FONT;
+Chart.defaults.color = '#5b7a96';
+
+// ── Section 1: Use case bar chart ──
+(function(){
+  const labels = ['United States','Brazil','India','Germany','Global Avg'];
+  const codes  = ['US','BR','IN','DE','Global'];
+  const fields = ['uc_work','uc_personal','uc_coursework'];
+  const colors = [TEAL, TEAL2, AMBER];
+  const names  = ['Work','Personal','Coursework'];
+
+  new Chart(document.getElementById('useCaseChart'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets: fields.map((f,i) => ({
+        label: names[i],
+        data: codes.map(c => COUNTRIES[c][f]?.toFixed(1)),
+        backgroundColor: rgba(colors[i].replace('#',''), .75).replace('rgba(','').split(',').length > 1
+          ? (()=>{const m=colors[i].match(/\w\w/g);return `rgba(${parseInt(m[0],16)},${parseInt(m[1],16)},${parseInt(m[2],16)},.75)`})()
+          : colors[i],
+        borderRadius:3,
+      }))
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}%`}} },
+      scales:{
+        x:{grid:{display:false}},
+        y:{ticks:{callback:v=>v+'%'}, grid:{color:'#e8eef7'}, max:70}
+      }
+    }
+  });
+})();
+
+// ── Collaboration chart ──
+(function(){
+  const labels = ['United States','Brazil','India','Germany','Global Avg'];
+  const codes  = ['US','BR','IN','DE','Global'];
+  new Chart(document.getElementById('collabChart'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'Directive',data:codes.map(c=>COUNTRIES[c].collab_directive?.toFixed(1)),backgroundColor:'rgba(13,158,118,.75)',borderRadius:3},
+        {label:'Learning',data:codes.map(c=>COUNTRIES[c].collab_learning?.toFixed(1)),backgroundColor:'rgba(30,136,229,.75)',borderRadius:3},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}%`}}},
+      scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>v+'%'},grid:{color:'#e8eef7'},max:45}}
+    }
+  });
+})();
+
+// ── GAIA scores chart ──
+(function(){
+  const labels = ['United States','Brazil','India','Germany','Global Avg'];
+  const codes  = ['US','BR','IN','DE','Global'];
+  new Chart(document.getElementById('gaiaScoreChart'), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'GAIA-A (Adoption)',data:codes.map(c=>COUNTRIES[c].gaia_a),backgroundColor:'rgba(13,158,118,.75)',borderRadius:3},
+        {label:'GAIA-R (Readiness)',data:codes.map(c=>COUNTRIES[c].gaia_r),backgroundColor:'rgba(30,136,229,.75)',borderRadius:3},
+        {label:'Task Success Rate ÷ 100',data:codes.map(c=>(COUNTRIES[c].ts_yes/100).toFixed(3)),backgroundColor:'rgba(245,158,11,.75)',borderRadius:3},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom'}},
+      scales:{x:{grid:{display:false}},y:{min:0,max:1,grid:{color:'#e8eef7'}}}
+    }
+  });
+})();
+
+// ── Section 2: Top 20 horizontal bar ──
+(function(){
+  const top20Chart = new Chart(document.getElementById('top20Chart'), {
+    type:'bar',
+    data:{
+      labels: TOP20.map(o=>o.title.length>32?o.title.slice(0,32)+'…':o.title),
+      datasets:[{
+        label:'E1+E2 Exposure',
+        data: TOP20.map(o=>o.e1e2),
+        backgroundColor: TOP20.map(o => {
+          const v = o.e1e2/100;
+          return v>=.8?'rgba(13,158,118,.8)':v>=.6?'rgba(30,136,229,.8)':'rgba(100,160,200,.8)';
+        }),
+        borderRadius:3,
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      onClick:(evt,els)=>{
+        if(!els.length) return;
+        showOccDetail(TOP20[els[0].index], 'top');
+      },
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`Exposure: ${ctx.parsed.x}%`}}},
+      scales:{
+        x:{min:0,max:105,ticks:{callback:v=>v+'%'},grid:{color:'#e8eef7'}},
+        y:{ticks:{font:{size:10}},grid:{display:false}}
+      }
+    }
+  });
+})();
+
+// ── Bottom 20 ──
+(function(){
+  new Chart(document.getElementById('bot20Chart'), {
+    type:'bar',
+    data:{
+      labels: BOT20.map(o=>o.title.length>32?o.title.slice(0,32)+'…':o.title),
+      datasets:[{
+        label:'E1+E2 Exposure',
+        data: BOT20.map(o=>o.e1e2),
+        backgroundColor:'rgba(148,163,184,.7)',
+        borderRadius:3,
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      onClick:(evt,els)=>{
+        if(!els.length) return;
+        showOccDetail(BOT20[els[0].index], 'bot');
+      },
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`Exposure: ${ctx.parsed.x}%`}}},
+      scales:{
+        x:{min:0,max:20,ticks:{callback:v=>v+'%'},grid:{color:'#e8eef7'}},
+        y:{ticks:{font:{size:10}},grid:{display:false}}
+      }
+    }
+  });
+})();
+
+function showOccDetail(occ, which) {
+  const suffix = which==='bot'?'-bot':'';
+  const panel = document.getElementById('occ-detail-panel'+suffix);
+  const content = document.getElementById('occ-detail-content'+suffix);
+  const nameEl = document.getElementById('occ-detail-name'+suffix);
+  const barsEl = document.getElementById('occ-detail-bars'+suffix);
+  panel.querySelector('h3').textContent = occ.title;
+  nameEl.textContent = occ.code + ' · ' + occ.group;
+  const metrics = [
+    {label:'E1+E2 AI Exposure', val: occ.e1e2, max:100, unit:'%', color:TEAL},
+    {label:'GAIA-E Composite', val: Math.round(occ.gaia_e*1000)/10, max:100, unit:'%', color:TEAL2},
+    {label:'SML (pre-GPT)', val: occ.sml, max:100, unit:'%', color:AMBER},
+    {label:'AEI Task Success', val: occ.aei_success, max:100, unit:'%', color:ROSE},
+  ];
+  barsEl.innerHTML = metrics.map(m => {
+    if(m.val==null) return `<div class="occ-row"><span class="occ-name">${m.label}</span><span style="color:var(--faint);font-size:.75rem">No data</span></div>`;
+    const pct = Math.min(100, (m.val/m.max)*100);
+    return `<div class="occ-row">
+      <span class="occ-name">${m.label}</span>
+      <div class="occ-bar-wrap">
+        <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:${pct}%;background:${m.color}"></div></div>
+      </div>
+      <span class="occ-pct" style="color:${m.color}">${m.val}${m.unit}</span>
+    </div>`;
+  }).join('');
+  content.style.display='block';
+}
+
+function switchTab(which) {
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active', (i===0&&which==='top')||(i===1&&which==='bot')));
+  document.getElementById('tab-top').classList.toggle('active', which==='top');
+  document.getElementById('tab-bot').classList.toggle('active', which==='bot');
+}
+
+// ── Section 3: Scatter ──
+(function(){
+  // Show gaia_e vs sml_score as proxy (wage data pending)
+  const scatterData = TOP20.concat(BOT20).filter(o=>o.sml!=null).map(o=>({
+    x: o.gaia_e, y: o.e1e2, label: o.title, group: o.group,
+  }));
+  new Chart(document.getElementById('wageScatterChart'), {
+    type:'scatter',
+    data:{datasets:[{
+      label:'Occupations (GAIA-E vs E1+E2)',
+      data: scatterData,
+      backgroundColor: 'rgba(13,158,118,.55)',
+      pointRadius:5,
+    }]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>`${ctx.raw.label}: E=${ctx.raw.x}, E1E2=${ctx.raw.y}%`}}
+      },
+      scales:{
+        x:{title:{display:true,text:'GAIA-E Composite Score'},min:0,max:1,grid:{color:'#e8eef7'}},
+        y:{title:{display:true,text:'E1+E2 Exposure (%)'},min:0,max:105,grid:{color:'#e8eef7'}}
+      }
+    }
+  });
+})();
+
+// ── JOLTS helper: load from CSV via fetch ──
+(async function(){
+  try {
+    const resp = await fetch('data/usa_jolts.csv');
+    const text = await resp.text();
+    const rows = text.trim().split('\n').slice(1).map(l=>l.split(','));
+    // cols: series_id,industry,metric,year,period,value
+    const nf = rows.filter(r=>r[1]==='Total Nonfarm');
+    const hires  = {}, quits = {}, layoffs = {};
+    for(const r of nf){
+      const ym = `${r[3]}-${r[4].slice(1)}`;
+      if(r[2]==='hires')   hires[ym]   = parseFloat(r[5]);
+      if(r[2]==='quits')   quits[ym]   = parseFloat(r[5]);
+      if(r[2]==='layoffs') layoffs[ym] = parseFloat(r[5]);
+    }
+    const months = Object.keys(hires).sort();
+    const shockIdx = months.findIndex(m=>m>='2022-11');
+
+    // Format labels to short form
+    const mlabels = months.map(m=>{
+      const [y,mo]=m.split('-');
+      const names=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return mo==='01'?y:names[parseInt(mo)];
+    });
+
+    const joltsChart = new Chart(document.getElementById('joltsChart'), {
+      type:'line',
+      data:{
+        labels: mlabels,
+        datasets:[
+          {label:'Hires Rate',   data:months.map(m=>hires[m]),   borderColor:TEAL,  backgroundColor:'transparent',tension:.3,pointRadius:0,borderWidth:2},
+          {label:'Quit Rate',    data:months.map(m=>quits[m]),   borderColor:TEAL2, backgroundColor:'transparent',tension:.3,pointRadius:0,borderWidth:2},
+          {label:'Layoff Rate',  data:months.map(m=>layoffs[m]), borderColor:ROSE,  backgroundColor:'transparent',tension:.3,pointRadius:0,borderWidth:2},
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{
+          legend:{position:'bottom'},
+          annotation:{} // placeholder
+        },
+        scales:{
+          x:{grid:{display:false},ticks:{maxTicksLimit:18,font:{size:10}}},
+          y:{min:0,max:6,ticks:{callback:v=>v+'%'},grid:{color:'#e8eef7'}}
+        }
+      }
+    });
+
+    // Draw shock line manually via afterDraw plugin
+    Chart.register({
+      id:'shockLine',
+      afterDraw(chart){
+        if(chart.canvas.id!=='joltsChart') return;
+        const ctx=chart.ctx, meta=chart.getDatasetMeta(0), shockPt=meta.data[shockIdx];
+        if(!shockPt) return;
+        ctx.save();
+        ctx.strokeStyle='rgba(245,158,11,.7)';
+        ctx.lineWidth=1.5;
+        ctx.setLineDash([4,3]);
+        ctx.beginPath();
+        ctx.moveTo(shockPt.x, chart.chartArea.top);
+        ctx.lineTo(shockPt.x, chart.chartArea.bottom);
+        ctx.stroke();
+        ctx.fillStyle='rgba(245,158,11,.9)';
+        ctx.font='bold 10px Inter,sans-serif';
+        ctx.fillText('Nov 2022', shockPt.x+4, chart.chartArea.top+14);
+        ctx.restore();
+      }
+    });
+    joltsChart.update();
+
+    // Industry comparison
+    const industries = ['Manufacturing','Prof/Business','Finance','Information','Healthcare','Construction'];
+    const pre={}, post={};
+    for(const ind of industries){
+      const preVals  = rows.filter(r=>r[1]===ind&&r[2]==='quits'&&`${r[3]}-${r[4].slice(1)}`<'2022-11').map(r=>parseFloat(r[5]));
+      const postVals = rows.filter(r=>r[1]===ind&&r[2]==='quits'&&`${r[3]}-${r[4].slice(1)}`>='2022-11').map(r=>parseFloat(r[5]));
+      pre[ind]  = preVals.length  ? (preVals.reduce((a,b)=>a+b,0)/preVals.length).toFixed(2)  : 0;
+      post[ind] = postVals.length ? (postVals.reduce((a,b)=>a+b,0)/postVals.length).toFixed(2) : 0;
+    }
+
+    new Chart(document.getElementById('joltsIndustryChart'), {
+      type:'bar',
+      data:{
+        labels: industries,
+        datasets:[
+          {label:'Pre-ChatGPT avg (Jan 2020 – Oct 2022)',data:industries.map(i=>pre[i]),backgroundColor:'rgba(30,136,229,.7)',borderRadius:3},
+          {label:'Post-ChatGPT avg (Nov 2022 – Mar 2026)',data:industries.map(i=>post[i]),backgroundColor:'rgba(13,158,118,.7)',borderRadius:3},
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}%`}}},
+        scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>v+'%'},grid:{color:'#e8eef7'},max:3.5}}
+      }
+    });
+
+  } catch(e){ console.warn('JOLTS load error:', e); }
+})();
+
+// ── O*NET Showcase ──
+(function(){
+  const showcase = [{"code":"43-9081.00","title":"Proofreaders & Copy Markers","gaia_e":0.975,"e1e2":97.5,"group":"Office & Admin Support","tasks":["Read copy or proof to detect and correct errors in spelling, punctuation, and syntax.","Check documents, such as book manuscripts and advertising copy, for completeness and accuracy.","Compare copy with original to ensure accuracy.","Return corrected copies to authors for revision.","Consult reference books or secure aid of readers to check references with questionable information.","Mark copy to indicate and correct errors.","Verify that page numbers and headings match table of contents.","Check to verify that form and content of publications meet organizational standards."]},{"code":"15-1299.07","title":"Blockchain Engineers","gaia_e":0.971,"e1e2":97.1,"group":"Computer & Math","tasks":["Design and develop blockchain protocols, smart contracts, and decentralized applications.","Review and analyze blockchain architecture, security, and scalability.","Write and test blockchain code in languages such as Solidity, Rust, or Go.","Coordinate with development teams to integrate blockchain solutions.","Research emerging blockchain technologies.","Document blockchain system design and implementation.","Audit smart contracts for security vulnerabilities.","Deploy and monitor blockchain nodes and networks."]},{"code":"15-1251.00","title":"Computer Programmers","gaia_e":0.95,"e1e2":95.0,"group":"Computer & Math","tasks":["Write, analyze, review, and rewrite programs.","Correct errors by making appropriate changes and rechecking the program.","Perform or direct revision, repair, or expansion of existing programs to increase operating efficiency.","Write, update, and maintain computer programs or software packages to handle specific jobs.","Consult with managerial, engineering, and technical personnel to clarify program intent.","Compile and write documentation of program development.","Prepare detailed workflow charts and diagrams to describe program logic.","Debug programs by testing and correcting errors."]},{"code":"15-1257.00","title":"Web Developers","gaia_e":0.933,"e1e2":93.3,"group":"Computer & Math","tasks":["Design, build, or maintain web sites.","Perform or direct web site updates.","Back up files from web sites to local directories for instant recovery in case of problems.","Identify problems uncovered by testing or user feedback, and correct problems or refer problems to appropriate personnel.","Evaluate code to ensure that it is valid, is properly structured, meets industry standards.","Confer with management or development teams to prioritize needs, resolve conflicts, develop content criteria.","Maintain understanding of current web technologies or programming practices.","Communicate with network personnel or web site hosting agencies to address hardware or software issues."]},{"code":"43-9021.00","title":"Correspondence Clerks","gaia_e":0.71,"e1e2":96.4,"group":"Office & Admin Support","tasks":["Compose letters or other written correspondence.","Read incoming letters and determine appropriate responses.","Review correspondence for grammar, punctuation, and other errors.","Maintain files and records of correspondence.","Coordinate with other departments to fulfill correspondence requests.","Respond to inquiries from customers or stakeholders.","Process written communications according to organizational guidelines.","Prepare and distribute correspondence as required."]},{"code":"27-3092.00","title":"Court Reporters & Captioners","gaia_e":0.958,"e1e2":95.8,"group":"Arts & Media","tasks":["Record verbatim proceedings in courtrooms, legislative assemblies, administrative hearings.","Transcribe stenographic notes to create official transcriptions of proceedings.","Ask speakers to clarify inaudible or unclear statements.","Provide real-time captioning or transcription services for hearing-impaired individuals.","Proofread transcripts for accuracy.","Provide scopists or proofreaders with audio or computer files.","Provide a transcript to parties involved in the case.","Record symbols on computer or with shorthand."]},{"code":"27-3043.00","title":"Poets, Lyricists & Creative Writers","gaia_e":0.836,"e1e2":88.9,"group":"Arts & Media","tasks":["Develop story ideas, fictional characters, or new perspectives on historical events.","Write fiction or nonfiction prose such as short stories, novels, or reviews.","Research and organize material to create creative, factual, or fictional works.","Revise written material to meet personal standards and to satisfy needs of clients.","Consult with editors, clients, or other interested parties to develop publications.","Write narrative, descriptive, or explanatory material.","Conduct research to obtain factual information and to provide an accurate portrayal of topic.","Create works for theatrical performances, motion pictures, or television productions."]},{"code":"15-1252.00","title":"Software Developers","gaia_e":0.868,"e1e2":86.8,"group":"Computer & Math","tasks":["Research, design, and develop computer and network software or specialized utility programs.","Analyze user needs and software requirements to determine feasibility of design within time and cost constraints.","Develop or direct software system testing or validation procedures.","Modify existing software to correct errors, allow it to adapt to new hardware, or to improve its performance.","Create technical specifications and test plans.","Design software system architecture for new applications.","Direct software programming and development of documentation.","Consult with engineers or other personnel regarding technical problems with computers or programs."]},{"code":"51-3023.00","title":"Slaughterers & Meat Packers","gaia_e":0.051,"e1e2":0.0,"group":"Food Preparation","tasks":["Slaughter animals in packing houses, slaughterhouses, or meat processing facilities.","Stun animals before slaughtering.","Cut, skin, and clean carcasses and collect usable by-products.","Inspect product for safety and quality compliance.","Clean and sanitize equipment and work areas.","Operate conveyor systems or processing equipment.","Transport carcasses and meat products within facilities.","Follow established safety protocols for handling materials."]},{"code":"49-3052.00","title":"Motorcycle Mechanics","gaia_e":0.153,"e1e2":0.0,"group":"Installation & Repair","tasks":["Repair and overhaul motorcycles, scooters, mopeds, dirt bikes, and similar vehicles.","Diagnose mechanical and electrical problems using testing equipment.","Replace faulty parts and components.","Tune up engines for peak performance.","Adjust brakes, clutches, and throttles.","Test vehicles to ensure proper assembly and operation.","Estimate costs of repair and parts.","Order replacement parts and supplies."]},{"code":"49-3031.00","title":"Bus & Truck Mechanics","gaia_e":0.218,"e1e2":0.0,"group":"Installation & Repair","tasks":["Diagnose, adjust, repair, or overhaul trucks, buses, and all types of diesel engines.","Inspect brake systems, steering mechanisms, wheel bearings, and other important parts.","Test drive vehicles to diagnose malfunctions.","Use diagnostic tools and equipment to locate mechanical problems.","Repair or replace defective parts.","Inspect and verify dimensions and clearances of parts.","Adjust and reline brakes, align wheels, and replace wheel bearings.","Recondition and replace parts, pistons, bearings, gears, and valves."]},{"code":"51-3022.00","title":"Meat, Poultry & Fish Cutters","gaia_e":0.203,"e1e2":0.0,"group":"Food Preparation","tasks":["Use hand or power tools to cut and trim meat, poultry, or fish products.","Prepare meat, poultry, or fish for packing, shipment, or sale.","Clean, cut, and bone meat or poultry products.","Weigh, wrap, and label cuts of meat.","Inspect products to ensure they meet quality standards.","Maintain cleanliness and sanitization of work areas and equipment.","Trim excess fat and remove bones from meat.","Store products at proper temperatures."]},{"code":"49-9051.00","title":"Electrical Power-Line Installers","gaia_e":0.218,"e1e2":0.0,"group":"Installation & Repair","tasks":["Install, maintain, and repair electrical power distribution systems.","Climb poles and structures to install and maintain power lines.","Splice, solder, and insulate wires.","Test electrical circuits or equipment for continuity and proper installation.","Inspect and test power lines and substations.","Use equipment such as bucket trucks, cranes, and line tools.","Follow strict safety protocols when working near energized lines.","Document maintenance and installation activities."]},{"code":"53-7031.00","title":"Dredge Operators","gaia_e":0.174,"e1e2":0.0,"group":"Transportation","tasks":["Operate dredging equipment to remove sand, gravel, and debris from waterways.","Control mechanisms to position dredges and regulate suction.","Monitor instruments to guide operations.","Maintain dredging equipment.","Follow navigation charts and safety regulations.","Coordinate with crew members during dredging operations.","Report equipment malfunctions or hazards.","Log daily operational data."]},{"code":"53-7041.00","title":"Hoist & Winch Operators","gaia_e":0.095,"e1e2":0.0,"group":"Transportation","tasks":["Operate hoists, winches, and rigging equipment to move materials.","Signal equipment operators to move, position, or secure cargo.","Inspect cables, ropes, and other lifting devices.","Monitor load weights and equipment capacity.","Ensure safe rigging of loads.","Coordinate with ground crew members.","Maintain logbooks and equipment records.","Perform routine maintenance checks on hoist equipment."]}];
+
+  const list = document.getElementById('onetList');
+  let activeIdx = -1;
+
+  showcase.forEach((occ, i) => {
+    const el = document.createElement('div');
+    el.className = 'onet-list-item';
+    el.innerHTML = `<div>${occ.title}</div><div class="occ-sub">${occ.group} · GAIA-E: ${occ.gaia_e.toFixed(3)}</div>`;
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.onet-list-item').forEach(x=>x.classList.remove('active'));
+      el.classList.add('active');
+      showOnetDetail(occ);
+    });
+    list.appendChild(el);
+  });
+
+  function showOnetDetail(occ) {
+    const teal = occ.e1e2 >= 50;
+    document.getElementById('onetDetail').innerHTML = `
+      <div class="onet-detail-title">${occ.title}</div>
+      <div class="onet-detail-meta">
+        <span>${occ.code}</span>
+        <span>${occ.group}</span>
+        <span class="onet-badge ${teal?'badge-teal':'badge-gray'}">GAIA-E: ${occ.gaia_e.toFixed(3)}</span>
+        <span class="onet-badge ${teal?'badge-teal':'badge-gray'}">E1+E2: ${occ.e1e2}%</span>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">
+        ${teal ? `<strong style="color:var(--teal)">High AI exposure.</strong> Most tasks involve language processing, data transformation, or structured reasoning — all highly tractable for large language models.`
+                : `<strong style="color:#64748b">Low AI exposure.</strong> Tasks require physical manipulation, spatial judgment, or contextual dexterity that current AI cannot replicate.`}
+      </p>
+      <ul class="task-list">
+        ${occ.tasks.map(t => `
+          <li class="task-item">
+            <div class="task-dot" style="background:${teal?'var(--teal)':'#94a3b8'}"></div>
+            <span>${t}</span>
+          </li>`).join('')}
+      </ul>
+    `;
+  }
+
+  // Auto-load first item
+  if(showcase.length > 0) {
+    list.children[0].classList.add('active');
+    showOnetDetail(showcase[0]);
+  }
+})();
+
+// ── Google Trends ──
+(async function(){
+  try {
+    const resp = await fetch('data/usa_trends.csv');
+    const text = await resp.text();
+    const rows = text.trim().split('\n').slice(1);
+    const dates=[], vals=[];
+    for(const row of rows){
+      const cols = row.split(',');
+      if(cols[2]==='True') continue; // skip partial
+      dates.push(cols[0].slice(0,10));
+      vals.push(parseInt(cols[1])||0);
+    }
+
+    const shockIdx = dates.findIndex(d=>d>='2022-11-01');
+    const ylabels = dates.map((d,i)=>{
+      const y=d.slice(0,4), m=d.slice(5,7);
+      return m==='01'?y:'';
+    });
+
+    const trendsChart = new Chart(document.getElementById('trendsChart'), {
+      type:'line',
+      data:{
+        labels: ylabels,
+        datasets:[{
+          label:'ChatGPT Search Interest',
+          data: vals,
+          borderColor: TEAL,
+          backgroundColor: 'rgba(13,158,118,.08)',
+          fill:true,
+          tension:.3,
+          pointRadius:0,
+          borderWidth:2,
+        }]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`Interest: ${ctx.parsed.y}`,title:ctx=>dates[ctx[0].dataIndex]}}},
+        scales:{
+          x:{grid:{display:false},ticks:{font:{size:10},maxRotation:0}},
+          y:{min:0,max:105,grid:{color:'#e8eef7'},ticks:{callback:v=>v}}
+        }
+      }
+    });
+
+    // Shock line plugin
+    Chart.register({
+      id:'trendShock',
+      afterDraw(chart){
+        if(chart.canvas.id!=='trendsChart') return;
+        const ctx=chart.ctx,meta=chart.getDatasetMeta(0),pt=meta.data[shockIdx];
+        if(!pt) return;
+        ctx.save();
+        ctx.strokeStyle='rgba(245,158,11,.7)';
+        ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+        ctx.beginPath();ctx.moveTo(pt.x,chart.chartArea.top);ctx.lineTo(pt.x,chart.chartArea.bottom);ctx.stroke();
+        ctx.fillStyle='rgba(245,158,11,.9)';
+        ctx.font='bold 10px Inter,sans-serif';
+        ctx.fillText('Nov 2022',pt.x+4,chart.chartArea.top+14);
+        ctx.restore();
+      }
+    });
+    trendsChart.update();
+
+  } catch(e){ console.warn('Trends load error:',e); }
+})();
+
+// ── State bar chart ──
+(async function(){
+  try {
+    const resp = await fetch('data/usa_trends_states.csv');
+    const text = await resp.text();
+    const rows = text.trim().split('\n').slice(1).map(l=>l.split(','));
+    const sorted = rows.map(r=>({name:r[0],val:parseInt(r[2])||0})).sort((a,b)=>b.val-a.val);
+
+    new Chart(document.getElementById('statesChart'), {
+      type:'bar',
+      data:{
+        labels: sorted.map(s=>s.name),
+        datasets:[{
+          label:'ChatGPT Interest Index',
+          data: sorted.map(s=>s.val),
+          backgroundColor: sorted.map(s=>{
+            const v=s.val;
+            return v>=90?'rgba(13,158,118,.85)':v>=70?'rgba(30,136,229,.75)':v>=50?'rgba(245,158,11,.65)':'rgba(148,163,184,.6)';
+          }),
+          borderRadius:3,
+        }]
+      },
+      options:{
+        indexAxis:'y',responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`Interest index: ${ctx.parsed.x}`}}},
+        scales:{
+          x:{min:0,max:105,grid:{color:'#e8eef7'}},
+          y:{ticks:{font:{size:9}},grid:{display:false}}
+        }
+      }
+    });
+  } catch(e){ console.warn('State trends error:',e); }
+})();
+</script>
+</body>
+</html>
