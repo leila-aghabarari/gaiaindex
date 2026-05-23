@@ -272,39 +272,7 @@
 
 <div class="content">
 
-  <!-- ── ZENODO STATS ── -->
-  <div class="sec">
-    <div class="sec-label">Dataset Impact</div>
-    <h2>Download Statistics</h2>
-    <p class="sec-desc">Live usage data for the GAIA dataset on Zenodo. Updated in real time from the Zenodo API.</p>
-
-    <div class="stats-banner" id="statsBanner">
-      <div class="stats-group">
-        <div class="stat-item">
-          <span class="stat-num loading" id="statDownloads">…</span>
-          <div class="stat-label">Total Downloads</div>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num loading" id="statUniqueDownloads">…</span>
-          <div class="stat-label">Unique Downloaders</div>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num loading" id="statViews">…</span>
-          <div class="stat-label">Record Views</div>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num loading" id="statUniqueViews">…</span>
-          <div class="stat-label">Unique Visitors</div>
-        </div>
-      </div>
-      <div class="zenodo-meta">
-        <a href="https://zenodo.org/records/20320112" target="_blank" rel="noopener" class="doi-badge">
-          DOI: 10.5281/zenodo.20320112 ↗
-        </a>
-        <span class="stats-note" id="statsUpdated">Fetching live data…</span>
-      </div>
-    </div>
-  </div>
+  <!-- ── ZENODO STATS (hidden) ── -->
 
   <!-- ── PAPERS & PROJECTS ── -->
   <div class="sec">
@@ -348,24 +316,122 @@
   <div class="sec" id="submit">
     <div class="sec-label">Contribute</div>
     <h2>Submit Your Work</h2>
-    <p class="sec-desc">Built something with GAIA data? Fill out a short form and we'll add your paper or project to this page.</p>
+    <p class="sec-desc">Built something with GAIA data? Share it and we'll add your paper or project to this page.</p>
 
     <div class="submit-card">
-      <h3>Research Submission Form</h3>
-      <p>Share your paper, working paper, policy brief, dataset, or tool that uses GAIA occupation or country data. We review submissions and add them to this page within a few days.</p>
-      <ul class="fields-list">
-        <li>Title &amp; authors</li>
-        <li>Link or DOI</li>
-        <li>Which GAIA data was used</li>
-        <li>Abstract (optional)</li>
-        <li>Contact email</li>
-      </ul>
-      <a href="https://forms.gle/REPLACE_WITH_YOUR_FORM_ID" target="_blank" rel="noopener" class="btn btn-primary" id="formLink">
-        Open submission form ↗
-      </a>
-      <p style="margin-top:1rem;margin-bottom:0;font-size:.78rem;color:var(--faint)">
-        Alternatively, email <a href="mailto:aghabarari.leila@gmail.com" style="color:var(--muted)">aghabarari.leila@gmail.com</a> with the subject line "GAIA submission."
+      <h3>Research Submission</h3>
+      <p>Share a paper, working paper, policy brief, dataset, or tool that uses GAIA occupation or country data. We review submissions and add them within a few days.</p>
+      <button class="btn btn-primary" id="gaia-submit-trigger" style="margin-top:1.1rem">
+        Submit your work →
+      </button>
+      <p style="margin-top:.85rem;margin-bottom:0;font-size:.78rem;color:var(--faint)">
+        Or email <a href="mailto:aghabarari.leila@gmail.com" style="color:var(--muted)">aghabarari.leila@gmail.com</a> with the subject "GAIA submission."
       </p>
+    </div>
+  </div>
+
+  <!-- ── SUBMIT MODAL ── -->
+  <div id="gaia-submit-modal" role="dialog" aria-modal="true" aria-labelledby="gaia-sub-title">
+    <div id="gaia-submit-box">
+      <div id="gaia-sub-header">
+        <div>
+          <div id="gaia-sub-title">Submit Your Work</div>
+          <div id="gaia-sub-subtitle">GAIA in the Wild · Research Submission</div>
+        </div>
+        <button id="gaia-sub-close" aria-label="Close">✕</button>
+      </div>
+      <div id="gaia-sub-body">
+
+        <div id="gaia-sub-form-wrap">
+          <p class="sub-intro">Tell us about your paper, dataset, or tool that uses GAIA data. We'll review and add it to the community page.</p>
+          <form id="gaia-sub-form" novalidate>
+
+            <div class="gaia-sub-row">
+              <div class="gaia-sub-field">
+                <label>Full name <span class="sub-req">*</span></label>
+                <input type="text" name="full_name" required placeholder="Jane Smith" autocomplete="name" />
+              </div>
+              <div class="gaia-sub-field">
+                <label>Email address <span class="sub-req">*</span></label>
+                <input type="email" name="email" required placeholder="you@example.com" autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="gaia-sub-field">
+              <label>Paper / project title <span class="sub-req">*</span></label>
+              <input type="text" name="title" required placeholder="AI and Labor Markets in Emerging Economies" />
+            </div>
+
+            <div class="gaia-sub-row">
+              <div class="gaia-sub-field">
+                <label>Link or DOI <span class="sub-req">*</span></label>
+                <input type="url" name="link" required placeholder="https://doi.org/10.xxx or SSRN link" />
+              </div>
+              <div class="gaia-sub-field">
+                <label>Institution / affiliation <span class="sub-req">*</span></label>
+                <input type="text" name="institution" required placeholder="World Bank, MIT, etc." autocomplete="organization" />
+              </div>
+            </div>
+
+            <div class="gaia-sub-field">
+              <label>Other data sources used alongside GAIA <span class="sub-req">*</span></label>
+              <input type="text" name="other_data" required placeholder="e.g. O*NET, Census microdata, Eurostat LFS" />
+            </div>
+
+            <div class="gaia-sub-row">
+              <div class="gaia-sub-field">
+                <label>Type of work <span class="sub-opt">(optional)</span></label>
+                <select name="work_type">
+                  <option value="">Select…</option>
+                  <option>Academic paper</option>
+                  <option>Policy brief</option>
+                  <option>Working paper</option>
+                  <option>Dataset</option>
+                  <option>Tool / application</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="gaia-sub-field">
+                <label>Which GAIA data was used <span class="sub-opt">(optional)</span></label>
+                <select name="gaia_data">
+                  <option value="">Select…</option>
+                  <option>Occupation data (GAIA-E)</option>
+                  <option>Country data (GAIA-A / GAIA-R)</option>
+                  <option>Both occupation and country data</option>
+                  <option>Codebook / methodology only</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="gaia-sub-field">
+              <label>Short description <span class="sub-opt">(optional)</span></label>
+              <textarea name="description" rows="3" placeholder="2–3 sentences summarizing the paper, dataset, or tool and its main finding or contribution."></textarea>
+            </div>
+
+            <div class="gaia-sub-field">
+              <label>Keywords / tags <span class="sub-opt">(optional)</span></label>
+              <input type="text" name="keywords" placeholder="e.g. Labor Economics, Brazil, DiD, AI exposure" />
+            </div>
+
+            <input type="hidden" name="_subject" value="GAIA Research Submission" />
+
+            <div class="sub-note">
+              Submissions are reviewed manually. We'll reach out via email if we need more information before listing your work.
+            </div>
+
+            <button type="submit" id="gaia-sub-submit">Submit →</button>
+            <div class="sub-error" id="gaia-sub-error">Something went wrong — please try again or email us directly.</div>
+          </form>
+        </div>
+
+        <div id="gaia-sub-success">
+          <div class="sub-success-icon">✓</div>
+          <div class="sub-success-title">Submission received!</div>
+          <p class="sub-success-sub">Thanks for sharing your work. We'll review it and be in touch at <span class="sub-success-email" id="gaia-sub-success-email"></span> within a few days.</p>
+          <button id="gaia-sub-success-close">Close</button>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -381,37 +447,151 @@
   <p><a href="data/gaia_codebook.xlsx" download>Download Codebook (Excel)</a></p>
 </footer>
 
+<style>
+/* ── Submit modal ── */
+#gaia-submit-modal {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  align-items: center; justify-content: center;
+  background: rgba(10,22,40,.72); backdrop-filter: blur(4px); padding: 1rem;
+  overflow-y: auto;
+}
+#gaia-submit-modal.open { display: flex; }
+#gaia-submit-box {
+  background: #0A1628; border: 1px solid #1a3050; border-radius: 14px;
+  width: 100%; max-width: 560px; overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,.5);
+  font-family: 'Inter', sans-serif; margin: auto;
+}
+#gaia-sub-header {
+  background: #0D9E76; padding: 1rem 1.25rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+#gaia-sub-title {
+  font-family: 'Space Grotesk','Inter',sans-serif;
+  font-size: .95rem; font-weight: 700; color: #fff; letter-spacing: -.01em;
+}
+#gaia-sub-subtitle { font-size: .72rem; opacity: .8; color: #e0f7f0; margin-top: 1px; }
+#gaia-sub-close {
+  background: none; border: none; cursor: pointer;
+  color: rgba(255,255,255,.7); font-size: 1.1rem; line-height: 1;
+  padding: .2rem .35rem; border-radius: 4px; transition: color .15s;
+}
+#gaia-sub-close:hover { color: #fff; }
+#gaia-sub-body { padding: 1.25rem; }
+p.sub-intro { font-size: .82rem; color: #7aada5; line-height: 1.6; margin-bottom: 1rem; }
+.gaia-sub-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+@media (max-width: 520px) { .gaia-sub-row { grid-template-columns: 1fr; } }
+.gaia-sub-field { margin-bottom: .8rem; }
+.gaia-sub-field label {
+  display: block; font-size: .72rem; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase;
+  color: #5b8a80; margin-bottom: .3rem;
+}
+.sub-req { color: #0D9E76; margin-left: 2px; }
+.sub-opt { color: #3a5a52; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.gaia-sub-field input,
+.gaia-sub-field select,
+.gaia-sub-field textarea {
+  width: 100%; padding: .5rem .75rem;
+  background: #0e2038; border: 1px solid #1e3c58;
+  border-radius: 7px; color: #c8dde8;
+  font-family: 'Inter',sans-serif; font-size: .85rem;
+  outline: none; transition: border-color .2s; appearance: none; resize: vertical;
+}
+.gaia-sub-field input::placeholder,
+.gaia-sub-field textarea::placeholder { color: #3a5a6a; }
+.gaia-sub-field input:focus,
+.gaia-sub-field select:focus,
+.gaia-sub-field textarea:focus { border-color: #0D9E76; }
+.gaia-sub-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235b8a80' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .75rem center;
+  padding-right: 2.2rem; cursor: pointer;
+}
+.gaia-sub-field select option { background: #0e2038; }
+.sub-note {
+  font-size: .72rem; color: #3a5a6a; line-height: 1.5;
+  margin: .75rem 0 1rem; padding: .55rem .75rem;
+  background: #0e2038; border-radius: 6px; border-left: 2px solid #0D9E76;
+}
+#gaia-sub-submit {
+  width: 100%; padding: .62rem;
+  background: #0D9E76; color: #fff; border: none; border-radius: 8px;
+  font-family: 'Space Grotesk','Inter',sans-serif;
+  font-size: .9rem; font-weight: 700; cursor: pointer;
+  transition: background .2s, opacity .2s; letter-spacing: .01em;
+}
+#gaia-sub-submit:hover:not(:disabled) { background: #0ab882; }
+#gaia-sub-submit:disabled { opacity: .55; cursor: not-allowed; }
+.sub-error {
+  font-size: .75rem; color: #f87171;
+  margin-top: .6rem; text-align: center; display: none;
+}
+#gaia-sub-success { display: none; text-align: center; padding: .5rem 0 .4rem; }
+.sub-success-icon { font-size: 2.2rem; line-height: 1; margin-bottom: .6rem; color: #0D9E76; }
+.sub-success-title {
+  font-family: 'Space Grotesk','Inter',sans-serif;
+  font-size: 1rem; font-weight: 700; color: #c8dde8; margin-bottom: .4rem;
+}
+.sub-success-sub { font-size: .82rem; color: #7aada5; line-height: 1.6; margin-bottom: 1rem; }
+.sub-success-email { color: #0D9E76; font-weight: 600; }
+#gaia-sub-success-close {
+  width: 100%; padding: .58rem;
+  background: #0e2038; color: #7aada5;
+  border: 1px solid #1e3c58; border-radius: 8px;
+  font-family: 'Inter',sans-serif; font-size: .875rem;
+  cursor: pointer; transition: border-color .2s, color .2s;
+}
+#gaia-sub-success-close:hover { border-color: #0D9E76; color: #c8dde8; }
+</style>
+
 <script>
-// ── Live Zenodo stats ──────────────────────────────────────────────────────────
 (function () {
-  const RECORD = '20320112';
+  const FORMSPREE = 'https://formspree.io/f/REPLACE_SUBMIT_ENDPOINT';
 
-  function setNum(id, n) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.textContent = Number.isFinite(n) ? n.toLocaleString() : '—';
-    el.classList.remove('loading');
-  }
+  const modal   = document.getElementById('gaia-submit-modal');
+  const form    = document.getElementById('gaia-sub-form');
+  const formWrap = document.getElementById('gaia-sub-form-wrap');
+  const success  = document.getElementById('gaia-sub-success');
+  const errEl    = document.getElementById('gaia-sub-error');
+  const submitBtn = document.getElementById('gaia-sub-submit');
+  const trigger  = document.getElementById('gaia-submit-trigger');
 
-  fetch('https://zenodo.org/api/records/' + RECORD)
-    .then(r => r.ok ? r.json() : Promise.reject(r.status))
-    .then(data => {
-      const s = data.stats || {};
-      setNum('statDownloads',       s.version_downloads      ?? s.downloads       ?? 0);
-      setNum('statUniqueDownloads', s.version_unique_downloads ?? s.unique_downloads ?? 0);
-      setNum('statViews',           s.version_views           ?? s.views           ?? 0);
-      setNum('statUniqueViews',     s.version_unique_views    ?? s.unique_views    ?? 0);
-      document.getElementById('statsUpdated').textContent =
-        'Last updated: ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+
+  trigger.addEventListener('click', openModal);
+  document.getElementById('gaia-sub-close').addEventListener('click', closeModal);
+  document.getElementById('gaia-sub-success-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errEl.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    const email = form.querySelector('[name="email"]').value.trim();
+
+    fetch(FORMSPREE, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form),
     })
-    .catch(() => {
-      // Fallback to known values if API is unavailable
-      setNum('statDownloads',       21);
-      setNum('statUniqueDownloads', 6);
-      setNum('statViews',           9);
-      setNum('statUniqueViews',     2);
-      document.getElementById('statsUpdated').textContent = 'Stats as of May 2026 (API unavailable)';
+    .then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      formWrap.style.display = 'none';
+      document.getElementById('gaia-sub-success-email').textContent = email;
+      success.style.display = 'block';
+      if (typeof gtag === 'function') gtag('event', 'research_submission', { form_name: 'gaia_community_submission' });
+    })
+    .catch(function () {
+      errEl.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit →';
     });
+  });
 })();
 </script>
 <script src="assets/gaia-download-gate.js"></script>
