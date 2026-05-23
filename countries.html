@@ -859,6 +859,8 @@
     <option value="work_desc">Sort: Work use % (high→low)</option>
     <option value="course_desc">Sort: Coursework % (high→low)</option>
     <option value="aipi_desc">Sort: IMF AIPI (high→low)</option>
+    <option value="gaia_a_desc">Sort: GAIA-A (high→low)</option>
+    <option value="gaia_r_desc">Sort: GAIA-R (high→low)</option>
     <option value="sentiment_desc">Sort: AI sentiment (high→low)</option>
     <option value="regulation_desc">Sort: AI policies (high→low)</option>
     <option value="name_asc">Sort: A→Z</option>
@@ -881,7 +883,7 @@
   </div>
   <div class="stat-chip">
     <div class="stat-val" id="cAipi">—</div>
-    <div class="stat-lbl">Avg IMF AIPI</div>
+    <div class="stat-lbl">Avg GAIA-A</div>
   </div>
 </div>
 
@@ -925,6 +927,8 @@
         <th onclick="setSort('work_desc')">Work use %</th>
         <th onclick="setSort('course_desc')">Coursework %</th>
         <th onclick="setSort('aipi_desc')" title="IMF AI Preparedness Index (0–1)">IMF AIPI</th>
+        <th onclick="setSort('gaia_a_desc')" title="GAIA Adoption Score: composite of work use &amp; IMF AIPI (0–1)">GAIA-A</th>
+        <th onclick="setSort('gaia_r_desc')" title="GAIA Readiness Score: IMF AIPI normalized (0–1)">GAIA-R</th>
         <th onclick="setSort('sentiment_desc')" title="Gallup 2021: % AI mostly helpful minus % mostly harmful">AI Sentiment</th>
         <th onclick="setSort('regulation_desc')" title="Total AI policy initiatives (OECD.AI Observatory 2024)">AI Policies</th>
         <th onclick="setSort('usage_desc')" class="sorted">Global share</th>
@@ -957,6 +961,16 @@ let allData = [], filtered = [], sentimentMap = {}, regulationMap = {}, adoption
 function fmt(v, d = 1) {
   const n = parseFloat(v);
   return isNaN(n) ? '—' : n.toFixed(d) + '%';
+}
+
+function gaiaBar(val) {
+  const n = parseFloat(val);
+  if (isNaN(n) || n <= 0) return '<span style="color:var(--faint);font-size:.78rem">—</span>';
+  const color = n >= 0.65 ? '#0d7a5f' : n >= 0.45 ? '#0f9b78' : n >= 0.25 ? '#12c49a' : 'var(--faint)';
+  return `<div class="pct-bar">
+    <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${(n*100).toFixed(0)}%;background:${color}"></div></div>
+    <span class="pct-val" style="color:${color}">${n.toFixed(3)}</span>
+  </div>`;
 }
 
 function aipiBar(val) {
@@ -1005,6 +1019,8 @@ function showDetail(geoId) {
       <div class="metric-box" style="border-color:#713f12"><p class="metric-label" style="color:#fbbf24">Coursework</p><p class="metric-val" style="color:#fbbf24">${fmt(row.uc_coursework)}</p></div>
       <div class="metric-box"><p class="metric-label">Task success</p><p class="metric-val">${fmt(row.ts_yes)}</p></div>
       ${row._aipi != null ? `<div class="metric-box" style="border-color:#0e7490"><p class="metric-label" style="color:#0e9ab0">IMF AI Preparedness</p><p class="metric-val" style="color:#0e9ab0">${row._aipi.toFixed(2)}</p></div>` : ''}
+      ${(parseFloat(row.gaia_a) > 0) ? `<div class="metric-box" style="border-color:#0d7a5f"><p class="metric-label" style="color:#0d7a5f">GAIA-A</p><p class="metric-val" style="color:#0d7a5f">${parseFloat(row.gaia_a).toFixed(3)}</p></div>` : ''}
+      ${(parseFloat(row.gaia_r) > 0) ? `<div class="metric-box" style="border-color:#0f9b78"><p class="metric-label" style="color:#0f9b78">GAIA-R</p><p class="metric-val" style="color:#0f9b78">${parseFloat(row.gaia_r).toFixed(3)}</p></div>` : ''}
       ${row._sentiment != null ? `<div class="metric-box" style="border-color:var(--teal-dim)"><p class="metric-label" style="color:var(--teal)">AI Sentiment</p><p class="metric-val" style="color:var(--teal)">${row._sentiment > 0 ? '+' : ''}${row._sentiment.toFixed(1)} pp</p></div>` : ''}
       ${row._regulation != null ? `<div class="metric-box" style="border-color:#4f46e5"><p class="metric-label" style="color:#818cf8">AI Policies</p><p class="metric-val" style="color:#818cf8">${row._regulation}</p></div>` : ''}
       ${row._oecd_adoption != null ? `<div class="metric-box" style="border-color:#d97706"><p class="metric-label" style="color:#fbbf24">Firm AI Adoption</p><p class="metric-val" style="color:#fbbf24">${row._oecd_adoption.toFixed(1)}%</p></div>` : ''}
@@ -1028,6 +1044,8 @@ function applyFilters() {
     'work_desc':       ['uc_work', -1],
     'course_desc':     ['uc_coursework', -1],
     'aipi_desc':       ['_aipi', -1],
+    'gaia_a_desc':     ['gaia_a', -1],
+    'gaia_r_desc':     ['gaia_r', -1],
     'sentiment_desc':  ['_sentiment', -1],
     'regulation_desc': ['_regulation', -1],
     'name_asc':        ['country_name', 1]
@@ -1056,6 +1074,8 @@ function applyFilters() {
       <td>${miniBar(row.uc_work, 'var(--teal)', 80)}</td>
       <td>${miniBar(row.uc_coursework, '#fbbf24', 50)}</td>
       <td>${aipiBar(row._aipi)}</td>
+      <td>${gaiaBar(row.gaia_a)}</td>
+      <td>${gaiaBar(row.gaia_r)}</td>
       <td>${sentCell}</td>
       <td>${regCell}</td>
       <td class="td-global">${fmt(row.usage_pct_global, 2)}</td>
@@ -1090,6 +1110,8 @@ const METRIC_INFO = {
   'work_desc':       { field:'uc_work',          label:'Work Use %',             fmt: v => v.toFixed(1)+'%' },
   'course_desc':     { field:'uc_coursework',    label:'Coursework %',           fmt: v => v.toFixed(1)+'%' },
   'aipi_desc':       { field:'aipi_overall',     label:'IMF AIPI Score',         fmt: v => v.toFixed(2) },
+  'gaia_a_desc':     { field:'gaia_a',           label:'GAIA-A Score',           fmt: v => v.toFixed(3) },
+  'gaia_r_desc':     { field:'gaia_r',           label:'GAIA-R Score',           fmt: v => v.toFixed(3) },
   'sentiment_desc':  { field:'_sentiment',       label:'AI Net Optimism (pp)',   fmt: v => (v>=0?'+':'')+v.toFixed(1) },
   'regulation_desc': { field:'_regulation',      label:'AI Policy Initiatives',  fmt: v => String(Math.round(v)) },
   'name_asc':        { field:'usage_pct_global', label:'Global Claude Usage %',  fmt: v => v.toFixed(2)+'%' },
@@ -1102,15 +1124,15 @@ function updateCharts() {
 
 function updateChartsInner() {
   // ── Stats chips (always update, no Chart.js needed) ──
-  const works = filtered.map(r => parseFloat(r.uc_work)).filter(v => !isNaN(v));
-  const sents = filtered.map(r => r._sentiment).filter(v => v != null && !isNaN(v));
-  const aipis = filtered.map(r => r._aipi).filter(v => v != null && !isNaN(v));
-  const avgOf = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
+  const works  = filtered.map(r => parseFloat(r.uc_work)).filter(v => !isNaN(v));
+  const sents  = filtered.map(r => r._sentiment).filter(v => v != null && !isNaN(v));
+  const gaiaAs = filtered.map(r => parseFloat(r.gaia_a)).filter(v => !isNaN(v) && v > 0);
+  const avgOf  = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
   document.getElementById('cCount').textContent = filtered.length;
   document.getElementById('cWork').textContent  = avgOf(works) != null ? avgOf(works).toFixed(1)+'%' : '—';
   const avgSent = avgOf(sents);
   document.getElementById('cSent').textContent  = avgSent != null ? (avgSent>=0?'+':'')+avgSent.toFixed(1) : '—';
-  document.getElementById('cAipi').textContent  = avgOf(aipis) != null ? avgOf(aipis).toFixed(2) : '—';
+  document.getElementById('cAipi').textContent  = avgOf(gaiaAs) != null ? avgOf(gaiaAs).toFixed(3) : '—';
 
   if (typeof Chart === 'undefined') return;
   Chart.defaults.color = '#5b7a96';

@@ -362,8 +362,8 @@
     <option value="aei">AEI — Anthropic (behavioral)</option>
   </select>
 
-  <button class="sort-btn active" id="sortBeta" title="Sort by beta exposure">
-    Sort: Beta ↓
+  <button class="sort-btn active" id="sortBeta" title="Sort by GAIA-E score">
+    Sort: GAIA-E ↓
   </button>
 
   <span class="result-count" id="resultCount"></span>
@@ -382,7 +382,7 @@
   </div>
   <div class="stat-chip hi-border">
     <div class="stat-val teal" id="sAvg">—</div>
-    <div class="stat-lbl" id="sAvgLbl">Avg Score</div>
+    <div class="stat-lbl" id="sAvgLbl">Avg GAIA-E</div>
   </div>
   <div class="stat-chip">
     <div class="stat-val" id="sHigh">—</div>
@@ -417,7 +417,8 @@
         <th data-col="code">SOC Code <span class="sort-arrow">↕</span></th>
         <th data-col="title">Occupation <span class="sort-arrow">↕</span></th>
         <th data-col="group">Sector <span class="sort-arrow">↕</span></th>
-        <th data-col="alpha" id="thAlpha" class="sorted">Alpha <span class="sort-arrow">↓</span></th>
+        <th data-col="gaia_e" id="thGaiaE" class="sorted">GAIA-E <span class="sort-arrow">↓</span></th>
+        <th data-col="alpha" id="thAlpha">Alpha <span class="sort-arrow">↕</span></th>
         <th data-col="beta" id="thBeta">Beta <span class="sort-arrow">↕</span></th>
         <th data-col="gamma" id="thGamma">Gamma <span class="sort-arrow">↕</span></th>
       </tr>
@@ -437,8 +438,8 @@
 
 <script src="assets/occs_data.js"></script>
 <script>
-// OCCS = [code, title, dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma, sml, aei_alpha, aei_beta, aei_gamma, group]
-const IDX = { code:0, title:1, dv_alpha:2, dv_beta:3, dv_gamma:4, h_alpha:5, h_beta:6, h_gamma:7, sml:8, aei_alpha:9, aei_beta:10, aei_gamma:11, group:12 };
+// OCCS = [code, title, dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma, sml, aei_alpha, aei_beta, aei_gamma, group, gaia_e]
+const IDX = { code:0, title:1, dv_alpha:2, dv_beta:3, dv_gamma:4, h_alpha:5, h_beta:6, h_gamma:7, sml:8, aei_alpha:9, aei_beta:10, aei_gamma:11, group:12, gaia_e:13 };
 
 let sortCol   = 'beta';
 let sortDir   = -1;
@@ -461,6 +462,17 @@ function expColor(v) {
   return '#3a6068';
 }
 
+function gaiaECell(val) {
+  if (val === null || val === undefined || isNaN(val)) return '<span style="color:var(--faint)">—</span>';
+  const color = val >= 0.66 ? '#00c9a7' : val >= 0.33 ? '#22d3ee' : '#3a6068';
+  return `<div class="exp-cell">
+    <div class="exp-bar-bg">
+      <div class="exp-bar-fill" style="width:${(val*100).toFixed(0)}%;background:${color}"></div>
+    </div>
+    <span class="exp-val" style="color:${color}">${val.toFixed(3)}</span>
+  </div>`;
+}
+
 function barCell(val) {
   if (val === null || val === undefined) return '<span style="color:var(--faint)">—</span>';
   const color = expColor(val);
@@ -473,6 +485,7 @@ function barCell(val) {
 }
 
 function getVal(row, col) {
+  if (col === 'gaia_e') return row[IDX.gaia_e];
   if (rater === 'sml') {
     if (col === 'beta')  return row[IDX.sml];
     if (col === 'alpha' || col === 'gamma') return null;
@@ -540,6 +553,7 @@ function render() {
       <td class="td-code">${r[IDX.code]}</td>
       <td class="td-title">${r[IDX.title]}</td>
       <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
+      <td class="td-gaia-e">${gaiaECell(r[IDX.gaia_e])}</td>
       <td class="td-alpha"></td>
       <td class="td-beta">${barCell(r[IDX.sml])}</td>
       <td class="td-gamma"></td>
@@ -554,6 +568,7 @@ function render() {
         <td class="td-code">${r[IDX.code]}</td>
         <td class="td-title">${r[IDX.title]}</td>
         <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
+        <td class="td-gaia-e">${gaiaECell(r[IDX.gaia_e])}</td>
         <td class="td-alpha">${barCell(alpha)}</td>
         <td class="td-beta">${barCell(beta)}</td>
         <td class="td-gamma">${barCell(gamma)}</td>
@@ -608,11 +623,13 @@ function updateChartsInner(rows) {
   // Stats (always update, no Chart.js needed)
   const vals = rows.map(r => score(r)).filter(v => v != null);
   const avg  = vals.length ? vals.reduce((a,b) => a+b, 0) / vals.length : null;
+  const gaiaEVals = rows.map(r => r[IDX.gaia_e]).filter(v => v != null && !isNaN(v));
+  const gaiaEAvg  = gaiaEVals.length ? gaiaEVals.reduce((a,b) => a+b, 0) / gaiaEVals.length : null;
   document.getElementById('sCount').textContent = rows.length.toLocaleString();
-  document.getElementById('sAvg').textContent   = avg != null ? avg.toFixed(1) + '%' : '—';
+  document.getElementById('sAvg').textContent   = gaiaEAvg != null ? gaiaEAvg.toFixed(3) : '—';
   document.getElementById('sHigh').textContent  = vals.length ? (vals.filter(v => v >= 66).length / vals.length * 100).toFixed(0) + '%' : '—';
   document.getElementById('sLow').textContent   = vals.length ? (vals.filter(v => v <  33).length / vals.length * 100).toFixed(0) + '%' : '—';
-  document.getElementById('sAvgLbl').textContent = 'Avg ' + (colHeaders[rater][1] || 'Score');
+  document.getElementById('sAvgLbl').textContent = 'Avg GAIA-E';
 
   if (typeof Chart === 'undefined') return;
   Chart.defaults.color = '#5b7a96';
@@ -702,7 +719,7 @@ function updateChartsInner(rows) {
   }
 }
 
-sortCol = 'beta'; sortDir = -1;
+sortCol = 'gaia_e'; sortDir = -1;
 render();
 </script>
 <script src="assets/gaia-download-gate.js"></script>
