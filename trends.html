@@ -6,113 +6,102 @@
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QKNG86S6HH');</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Usage Trends — GAIA: Global AI Adoption Index</title>
-  <meta name="description" content="How AI usage has evolved across countries and occupations — GAIA time series from 5 Anthropic Economic Index releases (Feb 2025 – Feb 2026)." />
+  <title>AI Adoption Trends — GAIA: Global AI Adoption Index</title>
+  <meta name="description" content="Animated charts of AI adoption trends by country and collaboration style, from 5 Anthropic Economic Index releases (Feb 2025–Feb 2026)." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <style>
     :root {
-      --bg:        #f4f7fc;
-      --surface:   #edf2f9;
+      --bg:        #f0f4fa;
+      --surface:   #e8eef7;
       --card:      #ffffff;
-      --border:    #dde6f0;
-      --teal:      #1e88e5;
-      --teal-dim:  #1565c0;
-      --teal-glow: rgba(30,136,229,0.09);
-      --cyan:      #42a5f5;
-      --text:      #1a2635;
-      --muted:     #5b7a96;
-      --faint:     #96b2c8;
+      --border:    #d0dcea;
+      --teal:      #0d7a5f;
+      --teal-mid:  #0f9b78;
+      --teal-bright:#12c49a;
+      --teal-glow: rgba(13,122,95,0.08);
+      --teal-glow2:rgba(13,122,95,0.15);
+      --text:      #0e1f2e;
+      --muted:     #4a6580;
+      --faint:     #8aacbf;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    a { color: var(--teal); text-decoration: none; }
-    a:hover { color: var(--cyan); }
+    a { color: var(--teal-mid); text-decoration: none; }
+    a:hover { color: var(--teal-bright); }
 
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 0 2rem; }
+    /* Nav */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 0 2rem; }
     .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
     .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); letter-spacing: -0.02em; }
-    .nav-logo span { color: var(--teal); }
+    .nav-logo span { color: var(--teal-mid); }
     .nav-logo-sub { color: var(--faint) !important; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; margin-left: 0.3rem; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
-    .page-hero { max-width: 1200px; margin: 0 auto; padding: 72px 2rem 48px; }
-    .hero-tag { display: inline-block; background: var(--teal-glow); border: 1px solid var(--teal-dim); color: var(--teal); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.28rem 0.75rem; border-radius: 2rem; margin-bottom: 1rem; }
-    .page-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
-    .page-hero h1 span { color: var(--teal); }
+    /* Hero */
+    .page-hero { max-width: 1200px; margin: 0 auto; padding: 64px 2rem 40px; }
+    .hero-tag { display: inline-block; background: var(--teal-glow); border: 1px solid var(--teal); color: var(--teal); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.28rem 0.75rem; border-radius: 2rem; margin-bottom: 1rem; }
+    .page-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; line-height: 1.15; }
+    .page-hero h1 span { color: var(--teal-mid); }
     .page-hero p { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 680px; }
+    .release-chips { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1.25rem; }
+    .chip { display: inline-flex; align-items: center; gap: .35rem; padding: .22rem .65rem; border-radius: 2rem; background: var(--surface); border: 1px solid var(--border); font-size: .72rem; font-weight: 600; color: var(--muted); }
+    .chip-dot { width: 6px; height: 6px; border-radius: 50%; }
 
-    .releases-row { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
-    .release-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .28rem .75rem; border-radius: 2rem; background: var(--surface); border: 1px solid var(--border); font-size: .75rem; font-weight: 600; color: var(--muted); }
-    .release-chip .dot { width: 7px; height: 7px; border-radius: 50%; }
-
+    /* Layout */
     .content { max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; }
+    .section { margin-bottom: 4.5rem; }
+    .section-head { margin-bottom: 1.5rem; }
+    .section-tag { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .35rem; }
+    .section-head h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: .4rem; }
+    .section-head p { font-size: .88rem; color: var(--muted); max-width: 640px; line-height: 1.65; }
 
-    .chart-section { margin-bottom: 4rem; }
-    .chart-header { margin-bottom: 1.5rem; }
-    .section-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .4rem; }
-    .chart-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: .4rem; }
-    .chart-header p { font-size: .88rem; color: var(--muted); max-width: 640px; line-height: 1.65; }
-
-    .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .chart-card canvas { display: block; }
-
+    /* Card */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+    .card canvas { display: block; }
     .chart-note { font-size: .72rem; color: var(--faint); margin-top: .85rem; line-height: 1.5; }
 
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 4rem; }
+    /* Toggle buttons */
+    .toggle-row { display: flex; gap: .5rem; margin-bottom: 1.25rem; }
+    .tog { padding: .35rem .85rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .2s; }
+    .tog.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .tog:hover:not(.active) { border-color: var(--teal); color: var(--teal); }
 
-    .stat-inline { display: flex; gap: 2rem; margin-top: 1rem; }
-    .stat-inline .si { text-align: center; }
-    .stat-inline .si .val { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--teal); line-height: 1; }
-    .stat-inline .si .lbl { font-size: .72rem; color: var(--muted); margin-top: .25rem; }
-
-    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--faint); font-size: 0.85rem; }
-    footer .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; }
-    .footer-logo span { color: var(--teal); }
-    footer p { color: var(--muted); font-size: 0.82rem; }
-    footer a { color: var(--muted); }
-    footer a:hover { color: var(--teal); }
-
-    /* Google Trends section */
-    .section-divider { max-width: 1200px; margin: 2rem auto 3rem; padding: 0 2rem; border-top: 2px solid var(--border); }
-    .gt-controls { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
-    .gt-controls label { font-size: .82rem; color: var(--muted); }
-    .gt-controls select, .gt-controls button {
+    /* Country selector */
+    .selector-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .selector-row label { font-size: .85rem; font-weight: 600; color: var(--muted); }
+    #countrySelect {
       background: var(--card); border: 1px solid var(--border); border-radius: 8px;
       color: var(--text); font-family: 'Inter', sans-serif; font-size: .875rem;
-      padding: .45rem .8rem; outline: none; cursor: pointer; transition: border-color .2s;
+      padding: .45rem 2.2rem .45rem .85rem; outline: none; cursor: pointer; transition: border-color .2s;
+      appearance: none; min-width: 220px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234a6580' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right .7rem center;
     }
-    .gt-controls select {
-      appearance: none; padding-right: 2rem;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right .6rem center;
-    }
-    .gt-controls select:focus, .gt-controls button:hover { border-color: var(--teal-dim); color: var(--teal); }
-    .btn-animate { background: var(--teal-glow); border-color: var(--teal-dim) !important; color: var(--teal) !important; font-weight: 600; }
-    .btn-animate:hover { background: rgba(30,136,229,0.14); }
-    .shock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .65rem; margin-top: 1.5rem; }
-    .shock-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .75rem; }
-    .shock-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-      padding: .8rem 1rem; cursor: pointer; transition: border-color .2s, background .2s;
-    }
-    .shock-card:hover, .shock-card.active { border-color: var(--teal-dim); background: var(--card); }
-    .shock-card .sc-country { font-size: .85rem; font-weight: 600; margin-bottom: .12rem; }
-    .shock-card .sc-week { font-size: .72rem; color: var(--teal); }
-    .shock-card .sc-bar-bg { height: 3px; background: var(--border); border-radius: 2px; margin-top: .4rem; overflow: hidden; }
-    .shock-card .sc-bar-fill { height: 100%; border-radius: 2px; background: var(--teal); }
-    #gt-loading { text-align: center; padding: 3rem; color: var(--muted); font-size: .9rem; }
+    #countrySelect:focus { border-color: var(--teal); }
+    .country-stat-row { display: flex; gap: 2rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .cstat { text-align: center; }
+    .cstat-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--teal-mid); line-height: 1; }
+    .cstat-lbl { font-size: .72rem; color: var(--muted); margin-top: .2rem; }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0 0 4rem; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem; }
+    footer .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--muted); }
+    .footer-logo span { color: var(--teal-mid); }
+    footer p { color: var(--faint); font-size: .82rem; }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--teal-mid); }
 
     @media (max-width: 768px) {
-      .nav-links { gap: 1.2rem; }
-      .two-col { grid-template-columns: 1fr; }
-      .shock-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { gap: 1.1rem; }
+      .nav-links a { font-size: .8rem; }
     }
   </style>
 </head>
@@ -135,122 +124,69 @@
 </nav>
 
 <div class="page-hero">
-  <div class="hero-tag">Google Trends · AEI · 2022 – 2026</div>
-  <h1>AI Adoption <span>Over Time</span></h1>
-  <p>Two lenses on AI's rise: how ChatGPT search interest spread across 20 countries since 2022, and how AI usage patterns have shifted across 5 Anthropic Economic Index releases from 2025 to 2026.</p>
+  <div class="hero-tag">5 Releases &middot; Feb 2025 &ndash; Feb 2026</div>
+  <h1>AI Adoption <span>Trends</span></h1>
+  <p>Animated charts tracking how people use AI across countries and interaction styles, built from five successive releases of the Anthropic Economic Index.</p>
+  <div class="release-chips">
+    <span class="chip"><span class="chip-dot" style="background:#94a3b8"></span>Feb 2025</span>
+    <span class="chip"><span class="chip-dot" style="background:#64748b"></span>Mar 2025</span>
+    <span class="chip"><span class="chip-dot" style="background:#38a886"></span>Aug 2025</span>
+    <span class="chip"><span class="chip-dot" style="background:#0f9b78"></span>Nov 2025</span>
+    <span class="chip"><span class="chip-dot" style="background:#0d7a5f"></span>Feb 2026</span>
+  </div>
 </div>
 
-<!-- ── Google Trends section ──────────────────────────────────────────────── -->
 <div class="content">
 
-  <div class="chart-section">
-    <div class="chart-header">
-      <div class="section-label">AI awareness · Google Trends · 2022–2026</div>
-      <h2>When AI Awareness Hit Each Country</h2>
-      <p>Weekly Google Search interest for "ChatGPT" across 20 countries, Nov 2022 – Apr 2026. Index 100 = peak week for each country. Reveals the AI awareness shock wave spreading globally after ChatGPT's launch.</p>
+  <!-- ── Chart 1: Use case by country ──────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-tag">Use case &middot; Top 10 countries</div>
+      <h2>Work, Personal &amp; Coursework Use by Country</h2>
+      <p>How the top 10 countries split their AI requests between work, personal, and coursework — and how that mix shifted between Nov 2025 and Feb 2026.</p>
     </div>
-    <div class="chart-card">
-      <div class="gt-controls">
-        <label>View:</label>
-        <select id="viewSelect">
-          <option value="all">All 20 countries</option>
-          <option value="select">Selected countries</option>
-        </select>
-        <select id="smoothSelect">
-          <option value="0">Raw weekly data</option>
-          <option value="4" selected>4-week smoothed</option>
-          <option value="8">8-week smoothed</option>
-        </select>
-        <button class="btn-animate" id="animateBtn">▶ Animate</button>
-        <a href="data/google_trends.csv" download style="font-size:.8rem;color:var(--muted);margin-left:auto">Download CSV →</a>
+    <div class="card">
+      <div class="toggle-row">
+        <button class="tog active" id="uc-t0" onclick="setUCTime(0)">Nov 2025</button>
+        <button class="tog" id="uc-t1" onclick="setUCTime(1)">Feb 2026</button>
       </div>
-      <div id="gt-loading">Loading trend data…</div>
-      <div id="gt-chart-wrap" style="display:none">
-        <div style="position:relative;height:400px"><canvas id="trendsChart"></canvas></div>
-        <p class="chart-note">Source: Google Trends via pytrends. Index 0–100, country-normalised (100 = each country's own peak week). Click a country card below to highlight it.</p>
-        <div class="shock-label" style="margin-top:1.25rem">First AI awareness spike — week search interest first crossed 10</div>
-        <div class="shock-grid" id="shockGrid"></div>
-      </div>
+      <div style="position:relative;height:340px"><canvas id="ucChart"></canvas></div>
+      <p class="chart-note">Source: Anthropic Economic Index releases Nov 2025 &amp; Feb 2026. Country-level use-case breakdown. Top 10 countries by average Claude.ai usage share.</p>
     </div>
   </div>
 
-  <div class="section-divider"></div>
+  <hr class="divider" />
 
-  <div class="chart-header" style="margin-bottom:2rem">
-    <div class="section-label">AI usage · Anthropic Economic Index · 2025–2026</div>
-    <h2>How AI Usage Patterns Have Shifted</h2>
-    <p>Five successive AEI releases track how people actually use AI — country shares, interaction modes, use cases, and top occupational tasks.</p>
-    <div class="releases-row" style="margin-top:1rem">
-      <span class="release-chip"><span class="dot" style="background:#94a3b8"></span>Feb 2025</span>
-      <span class="release-chip"><span class="dot" style="background:#64748b"></span>Mar 2025</span>
-      <span class="release-chip"><span class="dot" style="background:#3b82f6"></span>Aug 2025</span>
-      <span class="release-chip"><span class="dot" style="background:#1e88e5"></span>Nov 2025</span>
-      <span class="release-chip"><span class="dot" style="background:#1565c0"></span>Feb 2026</span>
+  <!-- ── Chart 2: Collaboration styles global ───────────────────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-tag">Collaboration styles &middot; Global &middot; All 5 releases</div>
+      <h2>Directive vs. Learning: How AI Collaboration Has Shifted</h2>
+      <p>Global share of each interaction mode across all five releases. Directive use surged through Aug 2025 then stabilised; learning has grown steadily since.</p>
+    </div>
+    <div class="card">
+      <div style="position:relative;height:340px"><canvas id="collabChart"></canvas></div>
+      <p class="chart-note">Source: All 5 AEI releases. Global aggregate. Directive = AI executes user instructions. Learning = user asks AI to explain or teach. Task iteration = back-and-forth refinement.</p>
     </div>
   </div>
 
-  <!-- Chart 1: Country usage over time -->
-  <div class="chart-section">
-    <div class="chart-header">
-      <div class="section-label">Country adoption</div>
-      <h2>Share of Global AI Usage by Country</h2>
-      <p>Each country's share of global Claude.ai usage across three observation windows. The US dominates but Europe and Asia have steadily grown.</p>
-    </div>
-    <div class="chart-card">
-      <div style="position:relative;height:360px"><canvas id="countryChart"></canvas></div>
-      <p class="chart-note">Source: Anthropic Economic Index releases (Aug 2025, Nov 2025, Feb 2026). Claude.ai platform. Values represent each country's % of global usage.</p>
-    </div>
-  </div>
+  <hr class="divider" />
 
-  <!-- Chart 2: Collaboration modes -->
-  <div class="chart-section">
-    <div class="chart-header">
-      <div class="section-label">Interaction modes</div>
-      <h2>How People Collaborate with AI</h2>
-      <p>Distribution of interaction modes across all five releases. Directive use (AI executes user instructions) has grown sharply; task iteration remains the dominant mode overall.</p>
+  <!-- ── Chart 3: Country selector ─────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-tag">Country explorer &middot; 156 countries &middot; 3 time points</div>
+      <h2>Country Trends Explorer</h2>
+      <p>Select any country to see how its directive and learning collaboration styles evolved across three observation windows (Aug 2025, Nov 2025, Feb 2026). The dashed lines show the global average.</p>
     </div>
-    <div class="chart-card">
-      <div style="position:relative;height:320px"><canvas id="collabChart"></canvas></div>
-      <p class="chart-note">Source: All 5 AEI releases. Global aggregate. "Directive" = user gives instruction, AI executes. "Learning" = user asks AI to explain or teach. "Task iteration" = back-and-forth refinement.</p>
-    </div>
-  </div>
-
-  <!-- Chart 3 + 4 side by side -->
-  <div class="two-col">
-    <div class="chart-section" style="margin-bottom:0">
-      <div class="chart-header">
-        <div class="section-label">Use case</div>
-        <h2>Work vs. Personal vs. Coursework</h2>
-        <p>How people categorise their AI requests. Personal use has grown the most.</p>
+    <div class="card">
+      <div class="selector-row">
+        <label for="countrySelect">Country:</label>
+        <select id="countrySelect"></select>
       </div>
-      <div class="chart-card">
-        <div style="position:relative;height:260px"><canvas id="usecaseChart"></canvas></div>
-        <p class="chart-note">Source: AEI Nov 2025 &amp; Feb 2026.</p>
-      </div>
-    </div>
-    <div class="chart-section" style="margin-bottom:0">
-      <div class="chart-header">
-        <div class="section-label">AI autonomy</div>
-        <h2>Mean AI Autonomy Score</h2>
-        <p>How much of the work AI handles without human input. Scored 1–5; stable and high.</p>
-      </div>
-      <div class="chart-card">
-        <div style="position:relative;height:260px"><canvas id="autonomyChart"></canvas></div>
-        <p class="chart-note">Source: AEI Nov 2025 &amp; Feb 2026. Scale 1 (human-led) → 5 (AI-led).</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Chart 5: Top tasks -->
-  <div class="chart-section">
-    <div class="chart-header">
-      <div class="section-label">Occupational tasks</div>
-      <h2>Top AI-Used O*NET Tasks Over Time</h2>
-      <p>The ten O*NET tasks most frequently addressed through AI, and how their share has shifted. Software development tasks consistently lead; tutoring and legal writing are rising.</p>
-    </div>
-    <div class="chart-card">
-      <div style="position:relative;height:360px"><canvas id="taskChart"></canvas></div>
-      <p class="chart-note">Source: AEI releases Aug 2025, Nov 2025, Feb 2026. Values = % of global AI requests matched to each O*NET task. Task labels abbreviated.</p>
+      <div class="country-stat-row" id="cstatRow"></div>
+      <div style="position:relative;height:320px"><canvas id="countryChart"></canvas></div>
+      <p class="chart-note">Source: AEI releases Aug 2025, Nov 2025, Feb 2026. Country-level collaboration mode breakdown. Dashed = global average for that release.</p>
     </div>
   </div>
 
@@ -260,328 +196,196 @@
   <div class="footer-inner">
     <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
     <p>Built by <a href="about.html">Leila Aghabarari</a></p>
-    <p>Data: Anthropic Economic Index · 5 releases · Feb 2025 – Feb 2026</p>
-    <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+    <p>Data: Anthropic Economic Index &middot; 5 releases &middot; Feb 2025&ndash;Feb 2026</p>
+    <p style="font-size:.72rem;color:var(--faint);max-width:560px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
   </div>
 </footer>
 
 <script src="assets/gaia-download-gate.js"></script>
 <script>
-// ── Google Trends ─────────────────────────────────────────────────────────────
-const GT_COUNTRY_NAMES = {US:'United States',IN:'India',GB:'United Kingdom',FR:'France',DE:'Germany',JP:'Japan',KR:'South Korea',CA:'Canada',BR:'Brazil',IT:'Italy',AU:'Australia',ES:'Spain',ID:'Indonesia',NL:'Netherlands',MX:'Mexico',PL:'Poland',PH:'Philippines',TR:'Turkey',PK:'Pakistan',NG:'Nigeria'};
-const GT_FLAGS = {US:'🇺🇸',IN:'🇮🇳',GB:'🇬🇧',FR:'🇫🇷',DE:'🇩🇪',JP:'🇯🇵',KR:'🇰🇷',CA:'🇨🇦',BR:'🇧🇷',IT:'🇮🇹',AU:'🇦🇺',ES:'🇪🇸',ID:'🇮🇩',NL:'🇳🇱',MX:'🇲🇽',PL:'🇵🇱',PH:'🇵🇭',TR:'🇹🇷',PK:'🇵🇰',NG:'🇳🇬'};
-const GT_PALETTE = ['#00c9a7','#22d3ee','#60a5fa','#a78bfa','#f472b6','#fb923c','#facc15','#4ade80','#f87171','#38bdf8','#c084fc','#86efac','#fda4af','#67e8f9','#fcd34d','#a3e635','#fb7185','#818cf8','#34d399','#e879f9'];
+// ── Embedded data ─────────────────────────────────────────────────────────────
+const UC_LABELS   = ["Nov 2025", "Feb 2026"];
+const UC_TOP10    = {"US":{"name":"United States","work":[41.9,40.4],"personal":[40.4,47.0],"coursework":[17.6,12.5]},"IN":{"name":"India","work":[51.3,49.6],"personal":[27.8,34.7],"coursework":[20.9,15.5]},"GB":{"name":"United Kingdom","work":[44.2,44.9],"personal":[42.0,45.4],"coursework":[13.8,9.7]},"JP":{"name":"Japan","work":[44.6,43.9],"personal":[43.1,49.5],"coursework":[12.3,6.5]},"KR":{"name":"South Korea","work":[51.1,50.2],"personal":[33.3,43.2],"coursework":[15.6,6.5]},"BR":{"name":"Brazil","work":[55.2,57.1],"personal":[33.0,37.2],"coursework":[11.8,5.7]},"FR":{"name":"France","work":[41.7,42.3],"personal":[40.2,43.0],"coursework":[18.1,14.7]},"DE":{"name":"Germany","work":[41.5,40.4],"personal":[44.7,48.0],"coursework":[13.8,11.5]},"CA":{"name":"Canada","work":[38.4,39.6],"personal":[41.8,45.6],"coursework":[19.8,14.7]},"ID":{"name":"Indonesia","work":[22.2,29.4],"personal":[19.0,32.3],"coursework":[58.8,38.2]}};
+const TOP10_ORDER = ["US", "IN", "GB", "JP", "KR", "BR", "FR", "DE", "CA", "ID"];
+const COLL_LABELS = ["Feb 2025", "Mar 2025", "Aug 2025", "Nov 2025", "Feb 2026"];
+const COLL_GLOBAL = {"directive":[22.56,29.42,38.78,31.73,32.64],"learning":[18.92,27.08,20.34,19.72,22.35],"task iteration":[25.48,24.04,22.22,27.2,25.59],"feedback loop":[12.04,12.25,10.32,13.63,11.52]};
+const SEL_LABELS  = ["Aug 2025", "Nov 2025", "Feb 2026"];
+const SEL = {"AL":{"name":"Albania","d":[40.0,26.7,31.0],"l":[15.9,19.8,20.7]},"DZ":{"name":"Algeria","d":[41.5,34.0,33.0],"l":[18.4,21.1,22.0]},"AD":{"name":"Andorra","d":[null,21.4,20.3],"l":[null,null,27.0]},"AO":{"name":"Angola","d":[47.5,44.5,34.7],"l":[18.5,15.1,20.8]},"AR":{"name":"Argentina","d":[40.8,29.7,28.5],"l":[20.0,21.6,22.2]},"AM":{"name":"Armenia","d":[38.5,34.0,25.3],"l":[13.3,19.5,26.0]},"AU":{"name":"Australia","d":[35.9,28.2,28.5],"l":[22.7,22.8,24.2]},"AT":{"name":"Austria","d":[32.9,26.4,26.7],"l":[26.0,25.5,26.2]},"AZ":{"name":"Azerbaijan","d":[35.1,29.0,31.2],"l":[20.9,19.7,23.0]},"BS":{"name":"Bahamas","d":[43.5,29.6,24.4],"l":[null,null,20.9]},"BH":{"name":"Bahrain","d":[41.2,36.3,30.2],"l":[18.4,13.5,19.8]},"BD":{"name":"Bangladesh","d":[43.7,35.5,36.1],"l":[16.0,18.9,20.0]},"BB":{"name":"Barbados","d":[52.4,45.7,25.0],"l":[null,null,28.7]},"BE":{"name":"Belgium","d":[35.4,26.7,27.6],"l":[24.5,23.0,23.7]},"BZ":{"name":"Belize","d":[42.1,null,37.7],"l":[null,null,null]},"BJ":{"name":"Benin","d":[46.5,35.6,36.0],"l":[12.3,16.8,18.5]},"BT":{"name":"Bhutan","d":[40.0,43.8,36.6],"l":[31.7,null,null]},"BO":{"name":"Bolivia","d":[41.5,34.6,34.8],"l":[17.4,18.5,21.8]},"BA":{"name":"Bosnia and Herzegovina","d":[35.6,29.6,28.2],"l":[23.3,21.9,22.8]},"BW":{"name":"Botswana","d":[48.1,28.4,35.8],"l":[17.3,24.3,20.3]},"BR":{"name":"Brazil","d":[54.1,35.6,35.0],"l":[12.2,14.4,16.7]},"BN":{"name":"Brunei","d":[31.1,34.1,26.4],"l":[null,null,null]},"BG":{"name":"Bulgaria","d":[35.4,28.5,27.9],"l":[22.0,23.5,24.4]},"BF":{"name":"Burkina Faso","d":[50.5,33.4,42.8],"l":[18.7,22.7,20.7]},"BI":{"name":"Burundi","d":[47.5,null,47.7],"l":[null,null,null]},"CV":{"name":"Cabo Verde","d":[45.0,33.3,null],"l":[null,null,null]},"KH":{"name":"Cambodia","d":[46.7,33.8,33.8],"l":[16.8,19.3,18.4]},"CM":{"name":"Cameroon","d":[48.6,41.7,41.1],"l":[14.0,19.3,21.5]},"CA":{"name":"Canada","d":[34.5,26.9,27.6],"l":[24.0,23.8,25.4]},"KY":{"name":"Cayman Islands","d":[48.6,46.8,40.3],"l":[null,null,null]},"TD":{"name":"Chad","d":[59.7,48.5,54.4],"l":[null,null,null]},"CL":{"name":"Chile","d":[38.3,31.2,29.7],"l":[19.1,19.6,23.2]},"CO":{"name":"Colombia","d":[41.7,34.3,33.4],"l":[18.7,15.9,18.7]},"CR":{"name":"Costa Rica","d":[39.7,31.0,31.0],"l":[16.9,18.7,25.0]},"HR":{"name":"Croatia","d":[36.1,29.5,27.1],"l":[25.1,22.9,26.1]},"CW":{"name":"Curacao","d":[58.6,null,38.5],"l":[null,null,null]},"CY":{"name":"Cyprus","d":[34.2,32.2,30.4],"l":[20.1,20.1,25.8]},"CZ":{"name":"Czechia","d":[33.6,27.6,25.8],"l":[28.3,24.9,29.2]},"DK":{"name":"Denmark","d":[31.6,23.5,24.6],"l":[26.6,28.4,28.1]},"DJ":{"name":"Djibouti","d":[null,46.0,39.5],"l":[null,null,null]},"DO":{"name":"Dominican Republic","d":[43.9,39.2,38.3],"l":[16.9,15.9,15.8]},"EC":{"name":"Ecuador","d":[47.0,36.6,39.8],"l":[14.8,16.1,14.4]},"EG":{"name":"Egypt","d":[44.1,31.9,32.4],"l":[15.5,18.9,19.1]},"SV":{"name":"El Salvador","d":[46.7,29.9,34.9],"l":[15.8,19.0,21.1]},"EE":{"name":"Estonia","d":[35.2,25.2,27.3],"l":[23.8,29.2,26.2]},"SZ":{"name":"Eswatini","d":[37.5,52.5,40.5],"l":[null,null,null]},"FJ":{"name":"Fiji","d":[40.7,47.5,38.8],"l":[null,null,null]},"FI":{"name":"Finland","d":[31.3,24.7,24.1],"l":[27.6,27.6,27.9]},"FR":{"name":"France","d":[35.9,28.4,29.3],"l":[22.5,21.7,22.8]},"PF":{"name":"French Polynesia","d":[35.0,31.2,22.9],"l":[null,null,21.7]},"GA":{"name":"Gabon","d":[47.8,44.4,38.7],"l":[13.0,17.2,17.8]},"GM":{"name":"Gambia","d":[43.8,44.4,null],"l":[null,null,null]},"GE":{"name":"Georgia","d":[35.6,27.4,30.1],"l":[22.1,24.0,23.6]},"DE":{"name":"Germany","d":[33.0,26.6,27.0],"l":[26.4,25.9,27.4]},"GH":{"name":"Ghana","d":[49.2,37.7,38.6],"l":[16.9,17.1,21.8]},"GR":{"name":"Greece","d":[35.6,28.6,28.0],"l":[24.5,23.6,23.0]},"GP":{"name":"Guadeloupe","d":[null,37.7,36.4],"l":[null,22.1,20.8]},"GT":{"name":"Guatemala","d":[41.1,30.8,35.4],"l":[20.3,18.7,18.9]},"GN":{"name":"Guinea","d":[54.5,41.4,38.2],"l":[null,21.8,25.5]},"GY":{"name":"Guyana","d":[54.8,46.5,37.8],"l":[null,null,null]},"HT":{"name":"Haiti","d":[48.1,32.8,37.1],"l":[16.3,27.0,22.8]},"HN":{"name":"Honduras","d":[43.0,33.6,38.1],"l":[15.2,16.8,21.0]},"HU":{"name":"Hungary","d":[32.7,28.8,28.6],"l":[25.1,24.6,25.0]},"IS":{"name":"Iceland","d":[32.7,32.1,30.3],"l":[24.1,25.1,28.8]},"IN":{"name":"India","d":[43.9,35.2,35.9],"l":[14.2,16.0,18.7]},"ID":{"name":"Indonesia","d":[45.6,39.8,36.8],"l":[16.9,15.4,18.2]},"IQ":{"name":"Iraq","d":[37.2,34.2,32.9],"l":[33.0,33.3,30.9]},"IE":{"name":"Ireland","d":[36.7,29.1,27.7],"l":[25.2,24.1,26.8]},"IL":{"name":"Israel","d":[34.7,28.0,28.3],"l":[23.5,24.1,23.9]},"IT":{"name":"Italy","d":[35.9,29.3,29.1],"l":[23.6,22.0,23.5]},"CI":{"name":"Ivory Coast","d":[47.6,43.1,42.6],"l":[15.3,17.6,17.5]},"JM":{"name":"Jamaica","d":[46.1,38.9,37.0],"l":[15.2,15.0,19.0]},"JP":{"name":"Japan","d":[35.0,27.8,26.9],"l":[27.8,24.3,26.9]},"JO":{"name":"Jordan","d":[40.1,33.6,31.7],"l":[17.7,18.2,19.6]},"KZ":{"name":"Kazakhstan","d":[35.4,32.7,32.6],"l":[24.2,21.7,23.7]},"KE":{"name":"Kenya","d":[45.3,37.0,37.4],"l":[13.7,15.4,17.7]},"XK":{"name":"Kosovo","d":[47.5,25.0,30.6],"l":[14.4,27.8,20.4]},"KW":{"name":"Kuwait","d":[40.7,28.4,30.3],"l":[18.0,17.8,22.4]},"KG":{"name":"Kyrgyzstan","d":[39.5,30.8,26.7],"l":[18.1,23.1,32.0]},"LA":{"name":"Laos","d":[48.8,41.5,39.3],"l":[19.2,18.4,23.2]},"LV":{"name":"Latvia","d":[33.5,28.9,28.3],"l":[24.7,23.1,26.8]},"LB":{"name":"Lebanon","d":[37.2,31.6,27.5],"l":[16.3,17.8,21.1]},"LS":{"name":"Lesotho","d":[45.5,37.5,null],"l":[null,null,null]},"LR":{"name":"Liberia","d":[55.6,43.8,41.0],"l":[null,null,null]},"LT":{"name":"Lithuania","d":[32.4,24.3,27.0],"l":[28.4,23.9,26.4]},"LU":{"name":"Luxembourg","d":[36.0,31.6,30.6],"l":[21.0,23.8,22.9]},"MG":{"name":"Madagascar","d":[38.6,34.9,30.5],"l":[13.6,15.0,17.9]},"MW":{"name":"Malawi","d":[49.0,39.2,37.1],"l":[12.4,10.8,13.7]},"MY":{"name":"Malaysia","d":[37.6,30.9,30.4],"l":[19.2,20.0,21.6]},"MV":{"name":"Maldives","d":[42.8,38.0,32.1],"l":[15.7,15.8,17.9]},"MT":{"name":"Malta","d":[38.5,28.3,27.4],"l":[19.1,21.7,23.2]},"MQ":{"name":"Martinique","d":[46.4,31.6,41.7],"l":[null,19.3,14.6]},"MR":{"name":"Mauritania","d":[43.3,40.9,26.0],"l":[null,null,26.0]},"MU":{"name":"Mauritius","d":[42.9,33.8,37.9],"l":[19.2,22.2,17.9]},"MX":{"name":"Mexico","d":[41.4,33.1,33.3],"l":[20.2,18.8,20.5]},"MD":{"name":"Moldova","d":[35.5,31.4,32.5],"l":[20.3,21.8,23.9]},"MN":{"name":"Mongolia","d":[44.4,33.8,33.3],"l":[19.7,17.3,22.2]},"ME":{"name":"Montenegro","d":[33.3,21.7,29.8],"l":[21.2,31.9,20.8]},"MA":{"name":"Morocco","d":[41.4,32.1,33.4],"l":[15.5,18.6,20.5]},"MZ":{"name":"Mozambique","d":[55.8,41.3,41.3],"l":[16.8,17.2,16.9]},"NP":{"name":"Nepal","d":[42.5,33.2,34.7],"l":[15.5,16.9,18.5]},"NC":{"name":"New Caledonia","d":[46.8,null,34.0],"l":[null,null,null]},"NZ":{"name":"New Zealand","d":[35.9,26.7,28.1],"l":[21.7,22.5,25.4]},"NE":{"name":"Niger","d":[46.5,42.9,47.5],"l":[null,null,17.8]},"NG":{"name":"Nigeria","d":[46.4,37.3,38.3],"l":[13.0,14.7,16.6]},"MK":{"name":"North Macedonia","d":[35.5,32.4,26.5],"l":[20.0,18.0,20.8]},"NO":{"name":"Norway","d":[31.5,25.0,26.2],"l":[28.2,25.6,28.3]},"OM":{"name":"Oman","d":[41.4,34.4,38.2],"l":[21.2,20.9,15.9]},"PK":{"name":"Pakistan","d":[48.5,40.5,39.3],"l":[10.8,12.2,14.6]},"PS":{"name":"Palestinian Territory","d":[38.4,27.9,29.0],"l":[16.0,16.0,22.4]},"PA":{"name":"Panama","d":[42.4,36.6,35.4],"l":[17.8,17.5,17.2]},"PG":{"name":"Papua New Guinea","d":[42.6,33.3,44.2],"l":[null,null,null]},"PY":{"name":"Paraguay","d":[50.5,32.6,33.0],"l":[14.9,19.4,22.3]},"PE":{"name":"Peru","d":[42.2,36.0,32.7],"l":[18.4,15.8,19.3]},"PH":{"name":"Philippines","d":[41.5,34.7,34.2],"l":[15.1,13.3,16.1]},"PL":{"name":"Poland","d":[33.6,28.7,27.8],"l":[22.5,23.6,26.6]},"PT":{"name":"Portugal","d":[35.6,27.7,29.1],"l":[21.8,22.7,23.4]},"PR":{"name":"Puerto Rico","d":[39.2,31.7,33.6],"l":[21.8,22.4,22.3]},"QA":{"name":"Qatar","d":[40.1,32.6,35.2],"l":[14.7,18.4,18.0]},"CG":{"name":"Republic of the Congo","d":[50.8,41.9,33.8],"l":[15.0,14.2,19.3]},"RE":{"name":"Reunion","d":[34.4,26.7,33.5],"l":[18.1,21.2,17.6]},"RO":{"name":"Romania","d":[35.4,27.5,29.3],"l":[23.5,23.3,25.9]},"RW":{"name":"Rwanda","d":[46.1,39.3,43.3],"l":[12.1,13.6,14.9]},"SA":{"name":"Saudi Arabia","d":[39.9,33.1,32.7],"l":[17.8,17.7,19.6]},"SN":{"name":"Senegal","d":[44.6,34.3,37.9],"l":[14.7,18.9,18.5]},"RS":{"name":"Serbia","d":[34.5,26.5,25.5],"l":[24.4,25.2,26.7]},"SL":{"name":"Sierra Leone","d":[59.3,61.0,30.5],"l":[null,null,25.4]},"SG":{"name":"Singapore","d":[35.2,28.2,29.0],"l":[24.1,25.6,26.5]},"SK":{"name":"Slovakia","d":[36.9,27.5,27.2],"l":[23.8,26.8,24.5]},"SI":{"name":"Slovenia","d":[37.4,26.4,28.9],"l":[24.4,25.0,26.2]},"ZA":{"name":"South Africa","d":[41.8,35.0,35.8],"l":[17.9,18.5,19.1]},"KR":{"name":"South Korea","d":[34.7,28.0,30.1],"l":[22.4,19.1,23.4]},"ES":{"name":"Spain","d":[35.8,29.2,28.9],"l":[21.9,20.8,22.0]},"LK":{"name":"Sri Lanka","d":[47.5,40.2,37.4],"l":[14.8,16.0,17.8]},"SE":{"name":"Sweden","d":[32.5,22.9,24.7],"l":[27.1,27.5,27.6]},"CH":{"name":"Switzerland","d":[34.4,27.7,27.7],"l":[25.2,24.3,25.8]},"TW":{"name":"Taiwan","d":[36.0,27.9,27.3],"l":[27.1,25.3,26.5]},"TJ":{"name":"Tajikistan","d":[40.8,32.1,36.0],"l":[23.5,29.2,21.3]},"TZ":{"name":"Tanzania","d":[45.9,34.9,39.2],"l":[16.5,18.7,22.8]},"TH":{"name":"Thailand","d":[44.0,34.8,33.7],"l":[18.8,17.7,19.9]},"NL":{"name":"The Netherlands","d":[32.7,25.6,25.5],"l":[26.6,25.1,26.6]},"TL":{"name":"Timor Leste","d":[47.1,54.3,null],"l":[null,null,null]},"TG":{"name":"Togo","d":[42.8,45.2,45.6],"l":[12.6,13.7,16.6]},"TT":{"name":"Trinidad and Tobago","d":[46.6,37.2,33.7],"l":[24.4,17.2,14.1]},"TN":{"name":"Tunisia","d":[41.5,31.1,30.6],"l":[12.2,15.3,17.2]},"TR":{"name":"Turkey","d":[35.6,27.3,28.8],"l":[19.4,21.4,21.6]},"UG":{"name":"Uganda","d":[43.9,37.4,39.2],"l":[16.6,20.7,21.9]},"UA":{"name":"Ukraine","d":[38.6,34.6,31.1],"l":[21.8,19.1,22.8]},"AE":{"name":"United Arab Emirates","d":[39.9,32.4,32.6],"l":[16.7,16.7,19.2]},"GB":{"name":"United Kingdom","d":[34.8,27.4,27.9],"l":[23.1,22.7,24.4]},"US":{"name":"United States","d":[37.0,31.9,29.9],"l":[21.3,21.0,24.9]},"UY":{"name":"Uruguay","d":[44.1,27.7,25.8],"l":[21.5,20.7,26.5]},"UZ":{"name":"Uzbekistan","d":[40.3,34.6,34.0],"l":[21.9,19.8,22.5]},"VN":{"name":"Vietnam","d":[40.3,32.5,33.0],"l":[18.9,17.2,19.3]},"ZM":{"name":"Zambia","d":[51.3,38.5,42.8],"l":[13.6,17.1,25.9]},"ZW":{"name":"Zimbabwe","d":[48.1,44.1,40.3],"l":[12.2,17.8,16.3]}};
 
-let gtRaw = [], gtLabels = [], gtCountries = [], gtChart = null;
-let gtSelected = new Set(), animFrame = null, animRunning = false;
+// Global averages for reference lines on country chart
+const GLOBAL_D = COLL_GLOBAL.directive.slice(2);  // Aug/Nov/Feb
+const GLOBAL_L = COLL_GLOBAL.learning.slice(2);
 
-function gtSmooth(arr, w) {
-  if (!w) return arr;
-  return arr.map((_, i) => { const s = arr.slice(Math.max(0, i-w+1), i+1); return s.reduce((a,v) => a+v, 0)/s.length; });
-}
-
-function gtDatasets(list, sw) {
-  return list.map((c, i) => {
-    const vals = gtRaw.map(r => parseFloat(r[c]) || 0);
-    return { label: `${GT_FLAGS[c]||''} ${GT_COUNTRY_NAMES[c]||c}`, data: gtSmooth(vals, sw), borderColor: GT_PALETTE[i%GT_PALETTE.length], backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.3 };
-  });
-}
-
-function gtBuild() {
-  const sw = parseInt(document.getElementById('smoothSelect').value);
-  const view = document.getElementById('viewSelect').value;
-  const list = view === 'select' && gtSelected.size ? gtCountries.filter(c => gtSelected.has(c)) : gtCountries;
-  const ctx = document.getElementById('trendsChart').getContext('2d');
-  if (gtChart) gtChart.destroy();
-  gtChart = new Chart(ctx, {
-    type: 'line',
-    data: { labels: gtLabels, datasets: gtDatasets(list, sw) },
-    options: {
-      responsive: true, maintainAspectRatio: false, animation: { duration: 0 },
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: true, position: 'bottom', labels: { color: '#5b7a96', font: { size: 11, family: 'Inter' }, boxWidth: 14, padding: 12, usePointStyle: true, pointStyleWidth: 10 } },
-        tooltip: { backgroundColor:'#fff', borderColor:'#dde6f0', borderWidth:1, titleColor:'#1a2635', bodyColor:'#5b7a96', padding:10, callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)}` } }
-      },
-      scales: {
-        x: { ticks: { color:'#5b7a96', font:{size:10}, maxTicksLimit:16, callback: function(v,i){ const d=gtLabels[i]; return d?d.slice(0,7):''; } }, grid: { color:'#edf2f9' } },
-        y: { min:0, max:100, ticks: { color:'#5b7a96', font:{size:10}, stepSize:25 }, grid: { color:'#edf2f9' }, title: { display:true, text:'Search interest (0–100)', color:'#5b7a96', font:{size:10} } }
-      }
-    }
-  });
-}
-
-function gtAnimate() {
-  if (animRunning) { cancelAnimationFrame(animFrame); animRunning=false; document.getElementById('animateBtn').textContent='▶ Animate'; gtBuild(); return; }
-  animRunning = true;
-  document.getElementById('animateBtn').textContent = '■ Stop';
-  const sw = parseInt(document.getElementById('smoothSelect').value);
-  const view = document.getElementById('viewSelect').value;
-  const list = view==='select'&&gtSelected.size ? gtCountries.filter(c=>gtSelected.has(c)) : gtCountries;
-  const all = gtDatasets(list, sw);
-  let step = 8;
-  function frame() {
-    if (!animRunning||step>gtLabels.length) { animRunning=false; document.getElementById('animateBtn').textContent='▶ Animate'; return; }
-    if (gtChart) { gtChart.data.labels=gtLabels.slice(0,step); gtChart.data.datasets=all.map(d=>({...d,data:d.data.slice(0,step)})); gtChart.update('none'); }
-    step+=2; animFrame=setTimeout(frame,30);
-  }
-  frame();
-}
-
-function gtToggle(c, el) {
-  if (gtSelected.has(c)) gtSelected.delete(c); else gtSelected.add(c);
-  el.classList.toggle('active', gtSelected.has(c));
-  document.getElementById('viewSelect').value = gtSelected.size ? 'select' : 'all';
-  gtBuild();
-}
-
-function gtShockGrid() {
-  const shocks = gtCountries.map(c => {
-    const vals = gtRaw.map(r => parseFloat(r[c])||0);
-    const first = vals.findIndex(v=>v>=10);
-    return { c, first, peak: Math.max(...vals) };
-  }).sort((a,b)=>a.first-b.first);
-  document.getElementById('shockGrid').innerHTML = shocks.map(({c,first,peak}) => {
-    const wk = first>=0 ? gtLabels[first].slice(0,7) : 'No spike';
-    return `<div class="shock-card" onclick="gtToggle('${c}',this)"><div class="sc-country">${GT_FLAGS[c]||''} ${GT_COUNTRY_NAMES[c]||c}</div><div class="sc-week">${wk} · first crossed 10</div><div class="sc-bar-bg"><div class="sc-bar-fill" style="width:${Math.round(peak)}%"></div></div></div>`;
-  }).join('');
-}
-
-Papa.parse('data/google_trends.csv', {
-  download: true, header: true, skipEmptyLines: true,
-  complete: function(res) {
-    gtRaw = res.data;
-    gtLabels = gtRaw.map(r => r.week);
-    gtCountries = Object.keys(gtRaw[0]).filter(k=>k!=='week');
-    document.getElementById('gt-loading').style.display = 'none';
-    document.getElementById('gt-chart-wrap').style.display = 'block';
-    gtBuild();
-    gtShockGrid();
-    document.getElementById('smoothSelect').addEventListener('change', gtBuild);
-    document.getElementById('viewSelect').addEventListener('change', gtBuild);
-    document.getElementById('animateBtn').addEventListener('click', gtAnimate);
-  }
-});
-</script>
-<script>
-// ── AEI Data ──────────────────────────────────────────────────────────────────
-const CHART1 = {"dates": ["Aug 2025", "Nov 2025", "Feb 2026"], "series": [{"id": "US", "name": "United States", "data": [21.59, 21.97, 22.24]}, {"id": "IN", "name": "India", "data": [7.15, 5.81, 6.16]}, {"id": "GB", "name": "United Kingdom", "data": [3.16, 3.07, 3.59]}, {"id": "JP", "name": "Japan", "data": [3.66, 3.12, 2.91]}, {"id": "KR", "name": "South Korea", "data": [3.66, 3.06, 2.91]}, {"id": "BR", "name": "Brazil", "data": [3.68, 2.76, 2.55]}, {"id": "FR", "name": "France", "data": [2.21, 3.02, 3.23]}, {"id": "DE", "name": "Germany", "data": [2.61, 2.54, 3.03]}, {"id": "CA", "name": "Canada", "data": [2.12, 2.29, 2.59]}, {"id": "ID", "name": "Indonesia", "data": [1.87, 2.51, 1.27]}, {"id": "AU", "name": "Australia", "data": [1.94, 1.55, 1.59]}, {"id": "IT", "name": "Italy", "data": [1.49, 1.63, 1.74]}, {"id": "ES", "name": "Spain", "data": [1.1, 1.41, 1.56]}, {"id": "MX", "name": "Mexico", "data": [0.95, 1.03, 0.98]}]};
-const CHART2 = {"dates": ["Feb 2025", "Mar 2025", "Aug 2025", "Nov 2025", "Feb 2026"], "series": [{"name": "directive", "data": [22.56, 29.42, 38.78, 31.73, 32.64]}, {"name": "learning", "data": [18.92, 27.08, 20.34, 19.72, 22.35]}, {"name": "feedback loop", "data": [12.04, 12.25, 10.32, 13.63, 11.52]}, {"name": "task iteration", "data": [25.48, 24.04, 22.22, 27.2, 25.59]}, {"name": "validation", "data": [2.31, 3.97, 4.48, 4.77, 4.86]}, {"name": "none", "data": [2.9, 3.24, 3.86, 2.96, 3.05]}]};
-const CHART3 = {"dates": ["Nov 2025", "Feb 2026"], "series": [{"name": "work", "data": [46.03, 45.23]}, {"name": "personal", "data": [34.68, 42.29]}, {"name": "coursework", "data": [19.27, 12.44]}]};
-const CHART4 = {"dates": ["Nov 2025", "Feb 2026"], "data": [3.38, 3.41]};
-const CHART5_RAW = {"dates": ["Aug 2025", "Nov 2025", "Feb 2026"], "series": [{"name": "modify existing software to correct errors, allow it to adapt to new hardware, or to improve its performance.", "data": [3.82, 5.97, 4.16]}, {"name": "write new programs or modify existing programs to meet customer requirements, using current programming languages and technologies.", "data": [4.87, 3.67, 2.85]}, {"name": "modify existing software to correct errors, to adapt it to new hardware, or to upgrade interfaces and improve performance.", "data": [2.71, 2.57, 1.82]}, {"name": "diagnose, troubleshoot, and resolve hardware, software, or other network and system problems, and replace defective components when necessary.", "data": [2.45, 1.78, 1.7]}, {"name": "assist students who need extra help with their coursework outside of class.", "data": [1.2, 2.73, 1.97]}, {"name": "design, build, or maintain web sites, using authoring or scripting languages, content creation tools, management tools, and digital media.", "data": [1.98, 1.92, 1.59]}, {"name": "correct errors by making appropriate changes and rechecking the program to ensure that the desired results are produced.", "data": [2.13, 1.36, 0.89]}, {"name": "perform routine system administrative functions such as troubleshooting, back-ups, and upgrades.", "data": [1.64, 1.27, 1.45]}, {"name": "prepare, rewrite and edit copy to improve readability, or supervise others who do this work.", "data": [1.0, 1.35, 1.41]}, {"name": "write, update, and maintain computer programs or software packages to handle specific jobs such as tracking inventory, storing or retrieving data, or controlling other equipment.", "data": [1.07, 1.41, 1.17]}]};
-
-// Shorten task labels
-const TASK_LABELS = [
-  'Fix/adapt existing software',
-  'Write/modify programs to spec',
-  'Update software performance',
-  'Diagnose hardware/network issues',
-  'Tutor students after class',
-  'Build/maintain websites',
-  'Debug programs',
-  'System administration',
-  'Edit & proofread copy',
-  'Maintain software systems',
-];
-const CHART5 = { dates: CHART5_RAW.dates, series: CHART5_RAW.series.map((s,i) => ({ ...s, label: TASK_LABELS[i] })) };
-
-// ── Colour palettes ───────────────────────────────────────────────────────────
-const COUNTRY_COLORS = [
-  '#1e88e5','#e53935','#43a047','#fb8c00','#8e24aa',
-  '#00acc1','#6d4c41','#f06292','#546e7a','#c0ca33',
-  '#ff7043','#26a69a','#7e57c2','#ef5350',
-];
-const COLLAB_COLORS = {
-  directive:       '#1e88e5',
-  learning:        '#43a047',
-  'feedback loop': '#fb8c00',
-  'task iteration':'#8e24aa',
-  validation:      '#00acc1',
-  none:            '#b0bec5',
-};
-const USE_COLORS = { work: '#1e88e5', personal: '#43a047', coursework: '#fb8c00' };
-
-// ── Chart defaults ────────────────────────────────────────────────────────────
+// ── Chart defaults ─────────────────────────────────────────────────────────────
 Chart.defaults.font.family = "'Inter', sans-serif";
 Chart.defaults.font.size   = 12;
-Chart.defaults.color       = '#5b7a96';
+Chart.defaults.color       = '#4a6580';
 
-function lineDefaults(extra) {
-  return {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: { duration: 1400, easing: 'easeInOutCubic' },
+// ── Chart 1: Use case by country ──────────────────────────────────────────────
+const UC_WORK_COLOR  = '#0d7a5f';
+const UC_PERS_COLOR  = '#0f9b78';
+const UC_COUR_COLOR  = '#38a886';
+let ucTimeIdx = 0, ucChart;
+
+function buildUCChart(animated) {
+  const labels = TOP10_ORDER.map(id => UC_TOP10[id].name);
+  const work   = TOP10_ORDER.map(id => UC_TOP10[id].work[ucTimeIdx]);
+  const pers   = TOP10_ORDER.map(id => UC_TOP10[id].personal[ucTimeIdx]);
+  const course = TOP10_ORDER.map(id => UC_TOP10[id].coursework[ucTimeIdx]);
+
+  if (ucChart) { ucChart.destroy(); }
+  ucChart = new Chart(document.getElementById('ucChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Work',       data: work,   backgroundColor: UC_WORK_COLOR  + 'dd', borderColor: UC_WORK_COLOR,  borderWidth: 1, borderRadius: 4 },
+        { label: 'Personal',   data: pers,   backgroundColor: UC_PERS_COLOR  + 'dd', borderColor: UC_PERS_COLOR,  borderWidth: 1, borderRadius: 4 },
+        { label: 'Coursework', data: course, backgroundColor: UC_COUR_COLOR  + 'dd', borderColor: UC_COUR_COLOR,  borderWidth: 1, borderRadius: 4 },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: animated ? 600 : 0, easing: 'easeOutCubic' },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16, font: { size: 11 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y != null ? ctx.parsed.y.toFixed(1) : '—'}%` } },
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: '#e8eef7' }, min: 0, max: 80, ticks: { callback: v => v + '%', font: { size: 11 } }, title: { display: true, text: '% of AI requests', font: { size: 11 } } },
+      },
+    },
+  });
+}
+
+function setUCTime(idx) {
+  ucTimeIdx = idx;
+  document.getElementById('uc-t0').classList.toggle('active', idx === 0);
+  document.getElementById('uc-t1').classList.toggle('active', idx === 1);
+  buildUCChart(true);
+}
+
+buildUCChart(true);
+
+// ── Chart 2: Collaboration styles global ──────────────────────────────────────
+const MODE_COLORS = {
+  'directive':      '#0d7a5f',
+  'learning':       '#3b82f6',
+  'task iteration': '#f59e0b',
+  'feedback loop':  '#ef4444',
+};
+
+new Chart(document.getElementById('collabChart'), {
+  type: 'line',
+  data: {
+    labels: COLL_LABELS,
+    datasets: Object.entries(COLL_GLOBAL).map(([mode, vals]) => ({
+      label: mode.charAt(0).toUpperCase() + mode.slice(1),
+      data: vals,
+      borderColor: MODE_COLORS[mode],
+      backgroundColor: MODE_COLORS[mode] + '18',
+      borderWidth: mode === 'directive' || mode === 'learning' ? 3 : 2,
+      pointRadius: 5, pointHoverRadius: 7,
+      tension: 0.35, fill: false,
+    })),
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    animation: { duration: 1200, easing: 'easeInOutCubic' },
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16, font: { size: 11 } } },
       tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y != null ? ctx.parsed.y.toFixed(2) : '—'}%` } },
-      ...extra,
     },
     scales: {
-      x: { grid: { color: '#edf2f9' }, ticks: { font: { size: 11 } } },
-      y: { grid: { color: '#edf2f9' }, ticks: { font: { size: 11 } } },
-    },
-  };
-}
-
-// ── Chart 1: Country usage ────────────────────────────────────────────────────
-new Chart(document.getElementById('countryChart'), {
-  type: 'line',
-  data: {
-    labels: CHART1.dates,
-    datasets: CHART1.series.map((s, i) => ({
-      label: s.name,
-      data: s.data,
-      borderColor: COUNTRY_COLORS[i % COUNTRY_COLORS.length],
-      backgroundColor: COUNTRY_COLORS[i % COUNTRY_COLORS.length] + '18',
-      borderWidth: s.id === 'US' ? 3 : 2,
-      pointRadius: 5,
-      pointHoverRadius: 7,
-      tension: 0.35,
-      fill: false,
-      spanGaps: true,
-    })),
-  },
-  options: {
-    ...lineDefaults(),
-    plugins: {
-      ...lineDefaults().plugins,
-      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y != null ? ctx.parsed.y.toFixed(2) : '—'}% of global` } },
-    },
-    scales: {
-      x: { grid: { color: '#edf2f9' } },
-      y: { grid: { color: '#edf2f9' }, min: 0, max: 30, title: { display: true, text: '% of global Claude.ai usage', font: { size: 11 } }, ticks: { callback: v => v + '%' } },
+      x: { grid: { color: '#e8eef7' }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: '#e8eef7' }, min: 0, max: 45, ticks: { callback: v => v + '%', font: { size: 11 } }, title: { display: true, text: '% of interactions', font: { size: 11 } } },
     },
   },
 });
 
-// ── Chart 2: Collaboration modes ──────────────────────────────────────────────
-new Chart(document.getElementById('collabChart'), {
-  type: 'line',
-  data: {
-    labels: CHART2.dates,
-    datasets: CHART2.series.map(s => ({
-      label: s.name,
-      data: s.data,
-      borderColor: COLLAB_COLORS[s.name] || '#90a4ae',
-      backgroundColor: (COLLAB_COLORS[s.name] || '#90a4ae') + '18',
-      borderWidth: 2.5,
-      pointRadius: 5,
-      pointHoverRadius: 7,
-      tension: 0.35,
-      fill: false,
-    })),
-  },
-  options: {
-    ...lineDefaults(),
-    scales: {
-      x: { grid: { color: '#edf2f9' } },
-      y: { grid: { color: '#edf2f9' }, min: 0, max: 45, title: { display: true, text: '% of interactions', font: { size: 11 } }, ticks: { callback: v => v + '%' } },
-    },
-  },
-});
+// ── Chart 3: Country selector ─────────────────────────────────────────────────
+let countryChart;
 
-// ── Chart 3: Use case ─────────────────────────────────────────────────────────
-new Chart(document.getElementById('usecaseChart'), {
-  type: 'bar',
-  data: {
-    labels: CHART3.dates,
-    datasets: CHART3.series.map(s => ({
-      label: s.name,
-      data: s.data,
-      backgroundColor: USE_COLORS[s.name] + 'cc',
-      borderColor: USE_COLORS[s.name],
-      borderWidth: 1.5,
-      borderRadius: 4,
-    })),
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: { duration: 1200 },
-    plugins: {
-      legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14, font: { size: 11 } } },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%` } },
-    },
-    scales: {
-      x: { grid: { display: false } },
-      y: { grid: { color: '#edf2f9' }, ticks: { callback: v => v + '%' }, max: 60 },
-    },
-  },
+// Populate dropdown
+const sel = document.getElementById('countrySelect');
+Object.entries(SEL).forEach(([code, c]) => {
+  const opt = document.createElement('option');
+  opt.value = code;
+  opt.textContent = c.name;
+  sel.appendChild(opt);
 });
+// Default to United States
+if (SEL['US']) sel.value = 'US';
 
-// ── Chart 4: AI Autonomy ──────────────────────────────────────────────────────
-new Chart(document.getElementById('autonomyChart'), {
-  type: 'line',
-  data: {
-    labels: CHART4.dates,
-    datasets: [{
-      label: 'Mean AI autonomy score',
-      data: CHART4.data,
-      borderColor: '#1e88e5',
-      backgroundColor: 'rgba(30,136,229,0.1)',
-      borderWidth: 3,
-      pointRadius: 8,
-      pointHoverRadius: 10,
-      tension: 0.3,
-      fill: true,
-    }],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: { duration: 1200 },
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => ` Autonomy: ${ctx.parsed.y.toFixed(3)} / 5` } },
-    },
-    scales: {
-      x: { grid: { display: false } },
-      y: { grid: { color: '#edf2f9' }, min: 3.0, max: 3.6, title: { display: true, text: 'Score (1–5 scale)', font: { size: 11 } }, ticks: { stepSize: 0.1, callback: v => v.toFixed(1) } },
-    },
-  },
-});
+function buildCountryChart(code, animated) {
+  const c = SEL[code];
+  if (!c) return;
 
-// ── Chart 5: Top tasks (grouped bar) ─────────────────────────────────────────
-const TASK_DATE_COLORS = ['#93c5fd', '#3b82f6', '#1e40af'];
-new Chart(document.getElementById('taskChart'), {
-  type: 'bar',
-  data: {
-    labels: CHART5.series.map(s => s.label),
-    datasets: CHART5.dates.map((d, i) => ({
-      label: d,
-      data: CHART5.series.map(s => s.data[i]),
-      backgroundColor: TASK_DATE_COLORS[i] + 'cc',
-      borderColor: TASK_DATE_COLORS[i],
-      borderWidth: 1,
-      borderRadius: 3,
-    })),
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: { duration: 1400 },
-    plugins: {
-      legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16, font: { size: 11 } } },
-      tooltip: {
-        callbacks: {
-          title: ctx => CHART5_RAW.series[ctx[0].dataIndex].name,
-          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.x.toFixed(2)}% of requests`,
+  // Update stat chips
+  const latestD = c.d[c.d.length-1];
+  const latestL = c.l[c.l.length-1];
+  document.getElementById('cstatRow').innerHTML = `
+    <div class="cstat"><div class="cstat-val">${latestD != null ? latestD.toFixed(1)+'%' : '—'}</div><div class="cstat-lbl">Directive (Feb 2026)</div></div>
+    <div class="cstat"><div class="cstat-val">${latestL != null ? latestL.toFixed(1)+'%' : '—'}</div><div class="cstat-lbl">Learning (Feb 2026)</div></div>
+  `;
+
+  if (countryChart) { countryChart.destroy(); }
+  countryChart = new Chart(document.getElementById('countryChart'), {
+    type: 'line',
+    data: {
+      labels: SEL_LABELS,
+      datasets: [
+        {
+          label: c.name + ' — Directive',
+          data: c.d,
+          borderColor: '#0d7a5f', backgroundColor: 'rgba(13,122,95,0.12)',
+          borderWidth: 3, pointRadius: 6, pointHoverRadius: 8,
+          tension: 0.3, fill: false, spanGaps: true,
         },
+        {
+          label: c.name + ' — Learning',
+          data: c.l,
+          borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.10)',
+          borderWidth: 3, pointRadius: 6, pointHoverRadius: 8,
+          tension: 0.3, fill: false, spanGaps: true,
+        },
+        {
+          label: 'Global avg — Directive',
+          data: GLOBAL_D,
+          borderColor: '#0d7a5f', backgroundColor: 'transparent',
+          borderWidth: 1.5, borderDash: [5,4], pointRadius: 3,
+          tension: 0.3, fill: false,
+        },
+        {
+          label: 'Global avg — Learning',
+          data: GLOBAL_L,
+          borderColor: '#3b82f6', backgroundColor: 'transparent',
+          borderWidth: 1.5, borderDash: [5,4], pointRadius: 3,
+          tension: 0.3, fill: false,
+        },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: animated ? 700 : 0, easing: 'easeOutCubic' },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14, font: { size: 11 }, filter: item => !item.text.includes('Global') || true } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y != null ? ctx.parsed.y.toFixed(1) : '—'}%` } },
+      },
+      scales: {
+        x: { grid: { color: '#e8eef7' }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: '#e8eef7' }, min: 0, max: 70, ticks: { callback: v => v + '%', font: { size: 11 } }, title: { display: true, text: '% of interactions', font: { size: 11 } } },
       },
     },
-    scales: {
-      x: { grid: { color: '#edf2f9' }, title: { display: true, text: '% of global requests', font: { size: 11 } }, ticks: { callback: v => v + '%' } },
-      y: { grid: { display: false }, ticks: { font: { size: 11 } } },
-    },
-  },
-});
+  });
+}
 
-// ── Animate on scroll ─────────────────────────────────────────────────────────
-// Charts are already animated by Chart.js; IntersectionObserver just ensures
-// animation fires when the section scrolls into view.
+buildCountryChart(sel.value, true);
+sel.addEventListener('change', () => buildCountryChart(sel.value, true));
 </script>
 </body>
 </html>
