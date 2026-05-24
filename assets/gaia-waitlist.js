@@ -172,8 +172,8 @@
   <div id="gaia-waitlist-box">
     <div id="gaia-waitlist-header">
       <div id="gaia-waitlist-header-inner">
-        <div class="wl-title" id="gaia-waitlist-title">Join the GAIA Data Waitlist</div>
-        <div class="wl-sub">Be the first to know when public downloads open.</div>
+        <div class="wl-title" id="gaia-waitlist-title">Thank you for your interest in GAIA data</div>
+        <div class="wl-sub">Please join the waitlist — we'll notify you when downloads open.</div>
       </div>
       <button id="gaia-waitlist-close" aria-label="Close">✕</button>
     </div>
@@ -201,15 +201,15 @@
             </select>
           </div>
           <input type="hidden" name="_subject" value="GAIA Waitlist Signup" />
-          <p class="wl-note">We'll email you when GAIA data becomes available for download. We won't share your information.</p>
+          <p class="wl-note">We appreciate your interest in the GAIA dataset. We'll email you as soon as public downloads become available. Your information will not be shared.</p>
           <button type="submit" id="gaia-waitlist-submit">Join the Waitlist →</button>
           <p class="wl-error" id="gaia-waitlist-error">Something went wrong — please try again.</p>
         </form>
       </div>
       <div id="gaia-waitlist-success">
         <div class="wl-success-icon">✓</div>
-        <div class="wl-success-title">You're on the list!</div>
-        <p class="wl-success-sub">We'll email <span class="wl-success-email" id="gaia-wl-sent-to"></span> as soon as GAIA data downloads open.</p>
+        <div class="wl-success-title">Thank you for your interest!</div>
+        <p class="wl-success-sub">We've added <span class="wl-success-email" id="gaia-wl-sent-to"></span> to the waitlist.<br>We'll be in touch as soon as GAIA data becomes available.</p>
         <button id="gaia-waitlist-success-close">Close</button>
       </div>
     </div>
