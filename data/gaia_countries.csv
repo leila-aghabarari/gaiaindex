@@ -1,3 +1,37 @@
+# File: gaia_countries.csv
+# Description: GAIA adoption and readiness scores for 138 countries.
+#   Columns: geo_id, usage metrics, use-case shares, collaboration style,
+#   task success rates, country metadata, AIPI sub-scores, gaia_a, gaia_r
+# Updated: May 2026
+#
+# GAIA — Global AI Adoption Index
+# © 2026 Leila Aghabarari. Licensed under CC BY 4.0.
+# https://creativecommons.org/licenses/by/4.0/
+#
+# Citation (APA):
+#   Aghabarari, L. (2026). GAIA — Global AI Adoption Index (Version 1.0).
+#   Zenodo. https://doi.org/10.5281/zenodo.20320112
+#
+# Citation (BibTeX):
+#   @misc{{aghabarari2026gaia,
+#     author    = {{Aghabarari, Leila}},
+#     title     = {{{{GAIA}}: {{G}}lobal {{AI}} {{A}}doption {{I}}ndex}},
+#     year      = {{2026}},
+#     version   = {{1.0}},
+#     publisher = {{Zenodo}},
+#     doi       = {{10.5281/zenodo.20320112}},
+#     url       = {{https://doi.org/10.5281/zenodo.20320112}}
+#   }}
+#
+# Underlying sources (must also be cited when used):
+#   Anthropic Economic Index — Anthropic (2025), CC BY 4.0
+#     https://huggingface.co/datasets/Anthropic/EconomicIndex
+#   Eloundou et al. (2024) — Science 384(6702), DOI 10.1126/science.adj0998
+#   Brynjolfsson, Mitchell & Rock (2018) — NBER WP 24196, CC BY 4.0
+#     https://doi.org/10.3386/w24196
+#
+# Website: https://gaiaindex.org   |   Contact: aghabarari.leila@gmail.com
+# Disclaimer: Views are the author's own and do not represent the IFC/World Bank.
 geo_id,usage_pct_global,uc_coursework,uc_none,uc_not_classified,uc_personal,uc_work,collab_directive,collab_feedback_loop,collab_learning,collab_none,collab_not_classified,collab_task_iteration,collab_validation,ts_no,ts_not_classified,ts_yes,country_name,income_group,iso3,aipi_overall,aipi_digital_infra,aipi_innovation,aipi_human_capital,aipi_regulation,gaia_a,gaia_r
 AE,0.4704,8.482142857142858,,0.0212585034013605,36.054421768707485,55.44217687074829,32.589285714285715,9.31122448979592,19.217687074829932,3.082482993197279,,31.61139455782313,4.187925170068027,32.079081632653065,,67.92091836734694,United Arab Emirates,High,ARE,0.6282,0.1519,0.1509,0.1544,0.171,0.7269,0.6963
 AL,0.0381,15.748031496062993,,,38.320209973753286,45.93175853018373,30.971128608923888,16.535433070866144,20.73490813648294,3.937007874015748,,22.83464566929134,4.986876640419948,32.020997375328086,,67.97900262467192,Albania,Upper-middle,ALB,0.5268,0.1144,0.1258,0.1412,0.1454,0.5478,0.5177

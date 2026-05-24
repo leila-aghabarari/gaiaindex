@@ -942,7 +942,8 @@
 
 <div class="source-note">
   Sources: Anthropic Economic Index (Feb 2026) · IMF AIPI (2023) · Gallup World Poll via OWID (2021) · OECD.AI Observatory (2024) · Eurostat ICT survey (2024).
-  <a href="data/gaia_countries.csv" download>Download CSV →</a>
+  <button onclick="showWaitlistModal()" style="background:none;border:none;color:var(--teal);cursor:pointer;padding:0;font:inherit;text-decoration:underline">Join the Waitlist →</button>
+  <span style="display:block;font-size:.72rem;margin-top:.25rem;color:inherit">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</span>
 </div>
 
 <footer>
@@ -951,8 +952,9 @@
     <p>Built by <a href="about.html">Leila Aghabarari</a></p>
     <p>Data: Anthropic Economic Index · Feb 2026</p>
     <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+      <p>© 2026 Leila Aghabarari · GAIA — Global AI Adoption Index · <a href="license.html">CC BY 4.0</a> · DOI: 10.5281/zenodo.20320112</p>
   </div>
-  <p><a href="data/gaia_codebook.xlsx" download>Download Codebook (Excel)</a> · <a href="usa.html">USA Deep Dive</a></p>
+  <p><button onclick="showWaitlistModal()" style="background:none;border:none;color:var(--muted);cursor:pointer;padding:0;font:inherit;font-size:.8rem">Join the Waitlist →</button> · <a href="usa.html">USA Deep Dive</a></p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -1314,7 +1316,7 @@ Promise.all([
   document.getElementById('loading').textContent = 'Error loading data.';
 });
 </script>
-<script src="assets/gaia-download-gate.js"></script>
+<script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
 </body>
 </html>

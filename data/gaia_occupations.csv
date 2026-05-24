@@ -1,3 +1,38 @@
+# File: gaia_occupations.csv
+# Description: GAIA scores for 923 US occupations (O*NET-SOC 2018 codes).
+#   Columns: O*NET-SOC Code, Title, dv_rating_alpha/beta/gamma,
+#   human_rating_alpha/beta/gamma, sml_score, group,
+#   aei_task_success, aei_autonomy_pct, aei_work_pct, gaia_e
+# Updated: May 2026
+#
+# GAIA — Global AI Adoption Index
+# © 2026 Leila Aghabarari. Licensed under CC BY 4.0.
+# https://creativecommons.org/licenses/by/4.0/
+#
+# Citation (APA):
+#   Aghabarari, L. (2026). GAIA — Global AI Adoption Index (Version 1.0).
+#   Zenodo. https://doi.org/10.5281/zenodo.20320112
+#
+# Citation (BibTeX):
+#   @misc{{aghabarari2026gaia,
+#     author    = {{Aghabarari, Leila}},
+#     title     = {{{{GAIA}}: {{G}}lobal {{AI}} {{A}}doption {{I}}ndex}},
+#     year      = {{2026}},
+#     version   = {{1.0}},
+#     publisher = {{Zenodo}},
+#     doi       = {{10.5281/zenodo.20320112}},
+#     url       = {{https://doi.org/10.5281/zenodo.20320112}}
+#   }}
+#
+# Underlying sources (must also be cited when used):
+#   Anthropic Economic Index — Anthropic (2025), CC BY 4.0
+#     https://huggingface.co/datasets/Anthropic/EconomicIndex
+#   Eloundou et al. (2024) — Science 384(6702), DOI 10.1126/science.adj0998
+#   Brynjolfsson, Mitchell & Rock (2018) — NBER WP 24196, CC BY 4.0
+#     https://doi.org/10.3386/w24196
+#
+# Website: https://gaiaindex.org   |   Contact: aghabarari.leila@gmail.com
+# Disclaimer: Views are the author's own and do not represent the IFC/World Bank.
 O*NET-SOC Code,Title,dv_rating_alpha,dv_rating_beta,dv_rating_gamma,human_rating_alpha,human_rating_beta,human_rating_gamma,sml_score,group,aei_task_success,aei_autonomy_pct,aei_work_pct,gaia_e
 11-1011.00,Chief Executives,10.0,46.0,82.0,18.0,35.0,52.0,66.7,Management,73.2,58.2,80.0,0.5321
 11-1011.03,Chief Sustainability Officers,16.7,55.6,94.4,5.6,38.9,72.2,62.4,Management,66.8,58.5,82.8,0.5303

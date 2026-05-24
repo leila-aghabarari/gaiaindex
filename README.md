@@ -1,6 +1,11 @@
 # GAIA — Global AI Adoption Index
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20320112.svg)](https://doi.org/10.5281/zenodo.20320112)
+[![CC BY 4.0](https://licensebuttons.net/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
+
+**© 2026 Leila Aghabarari** · Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) · DOI: [10.5281/zenodo.20320112](https://doi.org/10.5281/zenodo.20320112)
+
+---
 
 **GAIA** tracks AI adoption across 178 countries and 923 occupations using behavioral data from Anthropic's Economic Index, occupational exposure ratings from Eloundou et al. (Science 2024), and machine-learning suitability scores from Brynjolfsson, Mitchell & Rock (2018).
 
@@ -42,4 +47,8 @@ If you use GAIA data in published work, please cite:
 
 ## License
 
-© 2026 Leila Aghabarari. Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+**© 2026 Leila Aghabarari.** The GAIA dataset, composite scores, country panel, and associated documentation are licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+
+You are free to **share** and **adapt** this material for any purpose, including commercially, provided you give appropriate credit, link to the license, and indicate if changes were made.
+
+For commercial licensing or collaboration inquiries, contact [aghabarari.leila@gmail.com](mailto:aghabarari.leila@gmail.com). Full terms at [gaiaindex.org/license.html](https://gaiaindex.org/license.html).

@@ -236,7 +236,7 @@
 <div class="page-hero">
   <span class="page-tag">Open Data</span>
   <h1>All Data <span>Sources</span></h1>
-  <p class="hero-sub">Every dataset used in GAIA is available for download. Click any row to download the CSV directly. All data is derived from public research and official government sources.</p>
+  <p class="hero-sub">All GAIA data is available by request. Join the waitlist to be notified when public downloads open. All data is derived from public research and official government sources.</p>
 </div>
 
 <div class="content">
@@ -261,7 +261,8 @@
         <td><span class="tag-pill">923 occupations</span></td>
         <td>Alpha/Beta/Gamma exposure · SML score · AEI task success</td>
         <td>2023–2026</td>
-        <td><a class="dl-btn" href="data/gaia_occupations.csv" download>↓ gaia_occupations.csv</a></td>
+        <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
+        <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
       <tr>
         <td>
@@ -316,7 +317,8 @@
         <td><span class="tag-pill">138 countries</span></td>
         <td>usage_pct_global, uc_work, ts_yes, aipi_overall</td>
         <td>2023–2026</td>
-        <td><a class="dl-btn" href="data/gaia_countries.csv" download>↓ gaia_countries.csv</a></td>
+        <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
+        <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
       <tr>
         <td>
@@ -326,7 +328,8 @@
         <td><span class="tag-pill">174 countries</span></td>
         <td>aipi_overall, aipi_digital_infra, aipi_innovation, aipi_human_capital, aipi_regulation</td>
         <td>2023</td>
-        <td><a class="dl-btn" href="data/imf_aipi.csv" download>↓ imf_aipi.csv</a></td>
+        <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
+        <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
       <tr>
         <td>
@@ -336,7 +339,8 @@
         <td><span class="tag-pill">119 countries</span></td>
         <td>ai_mostly_help, ai_mostly_harm, ai_net_optimism</td>
         <td>2021</td>
-        <td><a class="dl-btn" href="data/hai_sentiment.csv" download>↓ hai_sentiment.csv</a></td>
+        <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
+        <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
       <tr>
         <td>
@@ -346,7 +350,8 @@
         <td><span class="tag-pill">138 countries</span></td>
         <td>ai_policies, has_strategy (0/1), has_law (0/1)</td>
         <td>2024</td>
-        <td><a class="dl-btn" href="data/ai_regulation.csv" download>↓ ai_regulation.csv</a></td>
+        <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
+        <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
       <tr>
         <td>
@@ -356,7 +361,8 @@
         <td><span class="tag-pill">33 European countries</span></td>
         <td>ai_adoption_latest, ai_adoption_2024, ai_adoption_2023, ai_adoption_2021</td>
         <td>2024</td>
-        <td><a class="dl-btn" href="data/oecd_adoption.csv" download>↓ oecd_adoption.csv</a></td>
+        <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
+        <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
     </tbody>
   </table>
@@ -381,7 +387,8 @@
         <td><span class="tag-pill">5 releases · 79k rows</span></td>
         <td>usage_pct, collaboration_pct, ai_autonomy_mean, use_case_pct, onet_task_pct</td>
         <td>Feb 2025 – Feb 2026</td>
-        <td><a class="dl-btn" href="data/gaia_timeseries.csv" download>↓ gaia_timeseries.csv</a></td>
+        <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
+        <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
       <tr>
         <td>
@@ -391,7 +398,8 @@
         <td><span class="tag-pill">20 countries · 183 weeks</span></td>
         <td>Weekly search interest index per country</td>
         <td>Nov 2022 – Apr 2026</td>
-        <td><a class="dl-btn" href="data/google_trends.csv" download>↓ google_trends.csv</a></td>
+        <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
+        <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
     </tbody>
   </table>
@@ -444,11 +452,12 @@
     <p>Built by <a href="about.html">Leila Aghabarari</a></p>
     <p>Data: Anthropic · OpenAI · Brynjolfsson et al. · IMF · Gallup/OWID · OECD.AI · Eurostat · Feb 2026</p>
     <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+      <p>© 2026 Leila Aghabarari · GAIA — Global AI Adoption Index · <a href="license.html">CC BY 4.0</a> · DOI: 10.5281/zenodo.20320112</p>
   </div>
-  <p><a href="data/gaia_codebook.xlsx" download>Download Codebook (Excel)</a> · <a href="usa.html">USA Deep Dive</a></p>
+  <p><button onclick="showWaitlistModal()" style="background:none;border:none;color:var(--muted);cursor:pointer;padding:0;font:inherit;font-size:.8rem">Join the Waitlist →</button> · <a href="usa.html">USA Deep Dive</a></p>
 </footer>
 
-<script src="assets/gaia-download-gate.js"></script>
+<script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
 </body>
 </html>

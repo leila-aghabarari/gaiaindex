@@ -245,7 +245,8 @@
   <div class="chart-card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
       <h3 style="margin:0">GAIA Scores — US vs. Peers</h3>
-      <a href="data/gaia_countries.csv" download class="btn-dl">⬇ Download gaia_countries.csv</a>
+      <button onclick="showWaitlistModal()" class="btn-dl">Join the Waitlist →</button>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.35rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
     </div>
     <div class="chart-wrap"><canvas id="gaiaScoreChart"></canvas></div>
   </div>
@@ -297,26 +298,27 @@
   </div>
 
   <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap">
-    <a href="data/gaia_occupations.csv" download class="btn-dl">⬇ Download gaia_occupations.csv</a>
+    <button onclick="showWaitlistModal()" class="btn-dl">Join the Waitlist →</button>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.35rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
     <a href="occupations.html" class="btn-dl">→ Full Occupation Explorer</a>
   </div>
 </div>
 
-<!-- ── SECTION 3: OEWS WAGES ── -->
+<!-- ── SECTION 3: WAGES ── -->
 <div class="section" id="wages">
-  <p class="sec-label">Section 3 — BLS OEWS Wages</p>
-  <h2 class="sec-title">AI Exposure vs. Wages</h2>
-  <p class="sec-desc">Which high-AI-exposure occupations are high-wage vs. low-wage? This is the key distributional question for AI's labor market impact.</p>
-  <div class="section-note">
-    ⚠️ BLS OEWS blocks automated downloads (HTTP 403). To populate wage data: download <code>oesm24nat.zip</code> from <a href="https://www.bls.gov/oes/tables.htm" target="_blank">bls.gov/oes/tables.htm</a>, extract the all-industries national file, then run <code>python3 scripts/merge_oews.py</code>. The scatter plot below will auto-populate from <code>data/usa_oews_gaia.csv</code> once wages are loaded.
-  </div>
+  <p class="sec-label">Section 3 — AI Exposure &amp; Wages</p>
+  <h2 class="sec-title">AI Exposure vs. Wages: Who Is Most at Risk?</h2>
+  <p class="sec-desc">Across all 923 US occupations, higher AI exposure is concentrated in higher-wage jobs — but a pocket of high-exposure, low-wage roles faces the starkest displacement risk. Wages shown are FRED industry-level averages (Apr 2026) mapped to each occupation's sector.</p>
   <div class="chart-card">
-    <h3>GAIA-E Exposure Score vs. Median Annual Wage — all 923 occupations</h3>
-    <p style="color:var(--faint);font-size:.82rem;margin-bottom:1rem">Wage data pending BLS download. Currently showing GAIA-E vs. SML score as a proxy decomposition.</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+      <h3 style="margin:0">GAIA-E Exposure Score vs. Industry Wage — all 923 occupations</h3>
+      <button onclick="showWaitlistModal()" class="btn-dl">Join the Waitlist →</button>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.35rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
+    </div>
+    <p style="color:var(--faint);font-size:.82rem;margin-bottom:1rem">Each dot is one occupation. Wages are FRED sector averages (Apr 2026) assigned by occupational group — a proxy for within-occupation wage variation. Hover for details.</p>
+    <div id="wage-scatter-legend" style="margin-bottom:.75rem"></div>
     <div class="chart-wrap tall"><canvas id="wageScatterChart"></canvas></div>
-  </div>
-  <div style="margin-top:.75rem">
-    <a href="data/usa_oews_gaia.csv" download class="btn-dl">⬇ Download usa_oews_gaia.csv (structure ready)</a>
+    <div class="jolts-note">▲ Upper-right quadrant (high exposure, high wage): Computer &amp; Math, Management, Business &amp; Financial. Lower-right (high exposure, low wage): Office &amp; Admin, Sales, Food Preparation — displacement pressure greatest here. Wages = FRED industry averages (Apr 2026), annualized at 2,080 hrs/yr.</div>
   </div>
 </div>
 
@@ -336,7 +338,7 @@
     <div class="chart-card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
         <h3 style="margin:0">Average Hourly Earnings by Industry ($/hr, monthly 2020–2026)</h3>
-        <a href="data/usa_fred.csv" download class="btn-dl">⬇ Download usa_fred.csv</a>
+        <button onclick="showWaitlistModal()" class="btn-dl">Join the Waitlist →</button>
       </div>
       <div class="chart-wrap tall" style="position:relative"><canvas id="fredEarningsChart"></canvas></div>
       <div class="jolts-note">▲ Nov 2022 = ChatGPT launch. Information sector earns $54.83/hr (Apr 2026) — 47% above the all-industry average. Note the wage growth acceleration post-2022 in high-AI sectors.</div>
@@ -381,7 +383,8 @@
   <div class="chart-card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
       <h3 style="margin:0">Total Nonfarm — Hires, Quits &amp; Layoffs (Monthly Rate, 2020–2026)</h3>
-      <a href="data/usa_jolts.csv" download class="btn-dl">⬇ Download usa_jolts.csv</a>
+      <button onclick="showWaitlistModal()" class="btn-dl">Join the Waitlist →</button>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.35rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
     </div>
     <div class="chart-wrap tall" style="position:relative"><canvas id="joltsChart"></canvas></div>
     <div class="jolts-note">▲ Vertical line = November 2022 (ChatGPT launch). Post-launch quit rates fell and have remained below pre-2022 levels.</div>
@@ -410,7 +413,8 @@
   </div>
 
   <div style="margin-top:1rem">
-    <a href="data/usa_onet_tasks.csv" download class="btn-dl">⬇ Download usa_onet_tasks.csv (18,796 tasks)</a>
+    <button onclick="showWaitlistModal()" class="btn-dl">Join the Waitlist →</button>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.35rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
   </div>
 </div>
 
@@ -430,7 +434,8 @@
   <div class="chart-card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
       <h3 style="margin:0">Weekly "ChatGPT" Search Interest — United States (Jan 2022 – May 2026)</h3>
-      <a href="data/usa_trends.csv" download class="btn-dl">⬇ Download usa_trends.csv</a>
+      <button onclick="showWaitlistModal()" class="btn-dl">Join the Waitlist →</button>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.35rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
     </div>
     <div class="chart-wrap tall" style="position:relative"><canvas id="trendsChart"></canvas></div>
     <div class="jolts-note">▲ Vertical line = November 2022 (ChatGPT public launch). Index 100 = peak week (Sep 2025).</div>
@@ -439,7 +444,8 @@
   <div class="chart-card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
       <h3 style="margin:0">ChatGPT Interest by US State (cumulative, Nov 2022 – May 2026)</h3>
-      <a href="data/usa_trends_states.csv" download class="btn-dl">⬇ Download usa_trends_states.csv</a>
+      <button onclick="showWaitlistModal()" class="btn-dl">Join the Waitlist →</button>
+      <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.35rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
     </div>
     <div class="chart-wrap xtall"><canvas id="statesChart"></canvas></div>
   </div>
@@ -477,12 +483,13 @@
         <div class="source-meta">Avg hourly earnings (CES), job openings (JOLTS), unemployment rate (CPS). Monthly 2020–2026. <a href="https://fred.stlouisfed.org" target="_blank">fred.stlouisfed.org ↗</a></div>
       </div>
       <div class="source-card">
-        <div class="source-title">BLS OEWS (Pending)</div>
-        <div class="source-meta">Occupational Employment and Wage Statistics, May 2024. National estimates. Requires manual download from <a href="https://www.bls.gov/oes/tables.htm" target="_blank">bls.gov ↗</a></div>
+        <div class="source-title">FRED — Wages Proxy</div>
+        <div class="source-meta">Average Hourly Earnings (CES) by industry, Apr 2026, annualized at 2,080 hrs/yr. Used as sector-level wage proxy for occupation scatter. Source: <a href="https://fred.stlouisfed.org" target="_blank">fred.stlouisfed.org ↗</a></div>
       </div>
     </div>
     <p style="margin-top:2rem">Built by <a href="about.html">Leila Aghabarari</a> · <a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a> · Updated May 2026</p>
     <p style="font-size:.72rem;color:rgba(255,255,255,.35);max-width:700px;margin-top:.5rem">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+    <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin-top:1rem">© 2026 Leila Aghabarari · GAIA — Global AI Adoption Index · <a href="license.html" style="color:rgba(255,255,255,.65)">CC BY 4.0</a> · <a href="https://doi.org/10.5281/zenodo.20320112" target="_blank" rel="noopener" style="color:rgba(255,255,255,.65)">DOI: 10.5281/zenodo.20320112</a></p>
   </div>
 </footer>
 
@@ -504,7 +511,7 @@ const JOLTS_MONTHS = ["2020-01","2020-02","2020-03","2020-04","2020-05","2020-06
 // ── Google Trends data ──
 </script>
 
-<script src="assets/gaia-download-gate.js"></script>
+<script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
 
 <!-- ── CHARTS ── -->
@@ -688,32 +695,108 @@ function switchTab(which) {
   document.getElementById('tab-bot').classList.toggle('active', which==='bot');
 }
 
-// ── Section 3: Scatter ──
-(function(){
-  // Show gaia_e vs sml_score as proxy (wage data pending)
-  const scatterData = TOP20.concat(BOT20).filter(o=>o.sml!=null).map(o=>({
-    x: o.gaia_e, y: o.e1e2, label: o.title, group: o.group,
-  }));
+// ── Section 3: Wage Scatter ──
+(async function(){
+  // FRED Apr 2026 average hourly earnings × 2080 → proxy annual wage by sector
+  const PROXY_WAGES = {
+    'Computer & Math': 114046,
+    'Arts & Media': 114046,
+    'Business & Financial': 101899,
+    'Legal': 101899,
+    'Management': 94578,
+    'Architecture & Engineering': 94578,
+    'Life & Physical Sciences': 94578,
+    'Building & Grounds': 94578,
+    'Construction & Extraction': 85218,
+    'Education & Library': 75358,
+    'Community & Social Service': 75358,
+    'Healthcare Practitioners': 75358,
+    'Healthcare Support': 75358,
+    'Installation & Repair': 76294,
+    'Production': 76294,
+    'Sales & Related': 77813,
+    'Office & Admin Support': 77813,
+    'Farming, Fishing & Forestry': 77813,
+    'Transportation': 77813,
+    'Protective Service': 77813,
+    'Personal Care & Service': 49005,
+    'Food Preparation': 49005,
+  };
+  // Color by wage tier
+  function wageColor(w) {
+    if (w >= 100000) return 'rgba(13,158,118,.65)';    // teal — high wage
+    if (w >= 80000)  return 'rgba(30,136,229,.60)';    // blue — upper-mid
+    if (w >= 65000)  return 'rgba(245,158,11,.60)';    // amber — mid
+    return 'rgba(239,68,68,.60)';                       // red — low wage
+  }
+
+  let rows = [];
+  try {
+    const txt = await fetch('data/usa_oews_gaia.csv').then(r=>r.text());
+    const lines = txt.trim().split('\n');
+    const hdr = lines[0].split(',');
+    const gi = hdr.indexOf('gaia_e'), ti = hdr.indexOf('title'),
+          si = hdr.indexOf('soc_code'), gi2 = hdr.indexOf('group'),
+          ei = hdr.indexOf('aei_task_success');
+    for (let i=1; i<lines.length; i++) {
+      const c = lines[i].split(',');
+      const ge = parseFloat(c[gi]);
+      const grp = c[gi2] || '';
+      const wage = PROXY_WAGES[grp] || 77813;
+      if (!isNaN(ge)) rows.push({
+        x: ge,
+        y: Math.round(wage/1000),
+        label: c[ti],
+        code: c[si],
+        group: grp,
+        wage: wage,
+        aei: parseFloat(c[ei]) || null,
+      });
+    }
+  } catch(e) { console.warn('wage scatter load failed', e); }
+
+  if (!rows.length) return;
+
   new Chart(document.getElementById('wageScatterChart'), {
     type:'scatter',
     data:{datasets:[{
-      label:'Occupations (GAIA-E vs E1+E2)',
-      data: scatterData,
-      backgroundColor: 'rgba(13,158,118,.55)',
-      pointRadius:5,
+      label:'Occupations',
+      data: rows,
+      backgroundColor: rows.map(r=>wageColor(r.wage)),
+      pointRadius: 4,
+      pointHoverRadius: 7,
     }]},
     options:{
-      responsive:true,maintainAspectRatio:false,
+      responsive:true, maintainAspectRatio:false,
       plugins:{
         legend:{display:false},
-        tooltip:{callbacks:{label:ctx=>`${ctx.raw.label}: E=${ctx.raw.x}, E1E2=${ctx.raw.y}%`}}
+        tooltip:{callbacks:{
+          label: ctx => {
+            const r = ctx.raw;
+            return [`${r.label}`, `GAIA-E: ${(r.x*100).toFixed(1)}%`, `Wage: $${(r.wage/1000).toFixed(0)}K/yr (${r.group})`];
+          }
+        }}
       },
       scales:{
-        x:{title:{display:true,text:'GAIA-E Composite Score'},min:0,max:1,grid:{color:'#e8eef7'}},
-        y:{title:{display:true,text:'E1+E2 Exposure (%)'},min:0,max:105,grid:{color:'#e8eef7'}}
+        x:{title:{display:true,text:'GAIA-E Composite Score (0–1)'},min:0,max:1,grid:{color:'#e8eef7'},
+           ticks:{callback:v=>(v*100).toFixed(0)+'%'}},
+        y:{title:{display:true,text:'Industry Proxy Wage ($K/yr)'},min:0,max:130,grid:{color:'#e8eef7'},
+           ticks:{callback:v=>'$'+v+'K'}}
       }
     }
   });
+
+  // Build legend
+  const legendEl = document.getElementById('wage-scatter-legend');
+  if (legendEl) {
+    const tiers = [
+      {color:'rgba(13,158,118,.8)',label:'≥$100K (e.g. Computer & Math, Legal)'},
+      {color:'rgba(30,136,229,.8)',label:'$80K–$99K (e.g. Construction, Prof Svcs)'},
+      {color:'rgba(245,158,11,.8)',label:'$65K–$79K (e.g. Healthcare, Manufacturing)'},
+      {color:'rgba(239,68,68,.8)',label:'<$65K (e.g. Food Prep, Personal Care)'},
+    ];
+    legendEl.innerHTML = tiers.map(t=>`<span style="display:inline-flex;align-items:center;gap:.3rem;margin-right:1.2rem;font-size:.78rem;color:var(--text)"><span style="width:10px;height:10px;border-radius:50%;background:${t.color};display:inline-block"></span>${t.label}</span>`).join('');
+  }
 })();
 
 // ── FRED tab switcher ──

@@ -296,7 +296,7 @@
       <div class="profile-links">
         <a href="mailto:aghabarari.leila@gmail.com" class="profile-link">✉ Email</a>
         <a href="https://linkedin.com/in/leila-aghabarari" class="profile-link" target="_blank">LinkedIn</a>
-        <a href="data/gaia_occupations.csv" download class="profile-link">⬇ GAIA Data</a>
+        <button onclick="showWaitlistModal()" class="profile-link">⬇ GAIA Data</button>
       </div>
     </div>
   </div>
@@ -345,14 +345,14 @@
   <div class="sec">
     <p class="sec-label">GAIA Dataset</p>
     <h2>Global AI Adoption Index</h2>
-    <a href="https://doi.org/10.5281/zenodo.20320112" class="doi-badge" target="_blank" rel="noopener">DOI: 10.5281/zenodo.20320112</a>
+    <span class="doi-badge">DOI: 10.5281/zenodo.20320112</span>
     <div class="gaia-box">
       <h3>What GAIA measures</h3>
       <p>GAIA combines three independent sources — Anthropic's observed Claude.ai usage data, OpenAI's GPT-4 task annotation (Eloundou et al., Science 2024), and the pre-GPT Suitability for Machine Learning baseline (Brynjolfsson et al., AEA 2018) — into a composite AI exposure index at the occupation level, plus a country-level behavioral panel covering 178 countries.</p>
       <a href="occupations.html" class="btn btn-teal">Occupation Explorer →</a>
       <a href="countries.html" class="btn btn-outline">Country Explorer →</a>
-      <a href="data/gaia_occupations.csv" download class="btn btn-outline">Download CSV →</a>
-      <a href="data/gaia_codebook.xlsx" download class="btn btn-outline">Download Codebook (Excel) →</a>
+      <button onclick="showWaitlistModal()" class="btn btn-outline">Join the Waitlist →</button>
+      <p style="font-size:.72rem;color:var(--muted);margin-top:.5rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
     </div>
   </div>
 
@@ -417,7 +417,7 @@
       <div class="contact-card">
         <div class="contact-icon">📄</div>
         <p class="contact-label">Citation</p>
-        <p class="contact-val" style="font-size:.72rem;color:var(--muted)">Aghabarari, L. (2026). GAIA — Global AI Adoption Index (Version 1.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.20320112" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.20320112</a></p>
+        <p class="contact-val" style="font-size:.72rem;color:var(--muted)">Aghabarari, L. (2026). GAIA — Global AI Adoption Index (Version 1.0). Zenodo. https://doi.org/10.5281/zenodo.20320112</p>
       </div>
     </div>
   </div>
@@ -429,12 +429,12 @@
     <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
     <p>Built by <a href="about.html">Leila Aghabarari</a> · <a href="mailto:aghabarari.leila@gmail.com">aghabarari.leila@gmail.com</a></p>
     <p style="font-size:.72rem;color:var(--faint);max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
-    <p>© 2026 Leila Aghabarari · gaiaindex.org</p>
+    <p>© 2026 Leila Aghabarari · GAIA — Global AI Adoption Index · <a href="license.html">CC BY 4.0</a> · DOI: 10.5281/zenodo.20320112</p>
   </div>
-  <p><a href="data/gaia_codebook.xlsx" download>Download Codebook (Excel)</a> · <a href="usa.html">USA Deep Dive</a></p>
+  <p><button onclick="showWaitlistModal()" style="background:none;border:none;color:var(--muted);cursor:pointer;padding:0;font:inherit;font-size:.8rem">Join the Waitlist →</button> · <a href="usa.html">USA Deep Dive</a></p>
 </footer>
 
-<script src="assets/gaia-download-gate.js"></script>
+<script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
 </body>
 </html>
