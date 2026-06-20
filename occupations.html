@@ -180,6 +180,15 @@
 
     .td-title { color: var(--text); font-weight: 500; min-width: 220px; }
 
+    .td-wage {
+      font-family: 'Space Grotesk', sans-serif;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap; text-align: right;
+      color: var(--text);
+    }
+    .td-wage .wage-na { color: var(--faint); }
+    thead th[data-col="wage"] { text-align: right; }
+
     .td-group {
       white-space: nowrap;
     }
@@ -363,7 +372,7 @@
     <option value="aei">AEI — Anthropic (behavioral)</option>
   </select>
 
-  <button class="sort-btn active" id="sortBeta" title="Sort by GAIA-E score">
+  <button class="sort-btn active" id="sortBeta" title="Sort by GAIA-E (Eloundou 2024) score">
     Sort: GAIA-E ↓
   </button>
 
@@ -412,6 +421,30 @@
   </div>
 </div>
 
+<!-- Wage Charts (BLS OEWS May 2024) -->
+<div class="viz-panel" style="grid-template-columns: 1fr;">
+  <div class="viz-card">
+    <div class="viz-card-title">Median Annual Wage vs AI Exposure (GAIA-E) — each dot is an occupation, colored by sector</div>
+    <div class="chart-area" style="height:440px">
+      <canvas id="wageScatterChart"></canvas>
+    </div>
+  </div>
+</div>
+<div class="viz-panel">
+  <div class="viz-card">
+    <div class="viz-card-title">Median Wage by Sector — click bar to filter ↓</div>
+    <div class="chart-area" style="height:380px">
+      <canvas id="wageSectorChart"></canvas>
+    </div>
+  </div>
+  <div class="viz-card">
+    <div class="viz-card-title">Wage Distribution — all vs filtered</div>
+    <div class="chart-area" style="height:380px">
+      <canvas id="wageDistChart"></canvas>
+    </div>
+  </div>
+</div>
+
 <div class="table-wrap">
   <table id="occTable">
     <thead>
@@ -420,9 +453,11 @@
         <th data-col="title">Occupation <span class="sort-arrow">↕</span></th>
         <th data-col="group">Sector <span class="sort-arrow">↕</span></th>
         <th data-col="gaia_e" id="thGaiaE" class="sorted">GAIA-E <span class="sort-arrow">↓</span></th>
+        <th data-col="gaia_b" id="thGaiaB">GAIA-B <span class="sort-arrow">↕</span></th>
         <th data-col="alpha" id="thAlpha">Alpha <span class="sort-arrow">↕</span></th>
         <th data-col="beta" id="thBeta">Beta <span class="sort-arrow">↕</span></th>
         <th data-col="gamma" id="thGamma">Gamma <span class="sort-arrow">↕</span></th>
+        <th data-col="wage" id="thWage">Median Wage <span class="sort-arrow">↕</span></th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>
@@ -442,8 +477,8 @@
 
 <script src="assets/occs_data.js"></script>
 <script>
-// OCCS = [code, title, dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma, sml, aei_alpha, aei_beta, aei_gamma, group, gaia_e]
-const IDX = { code:0, title:1, dv_alpha:2, dv_beta:3, dv_gamma:4, h_alpha:5, h_beta:6, h_gamma:7, sml:8, aei_alpha:9, aei_beta:10, aei_gamma:11, group:12, gaia_e:13 };
+// OCCS = [code, title, dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma, sml, aei_alpha, aei_beta, aei_gamma, group, gaia_e, gaia_b, a_median]
+const IDX = { code:0, title:1, dv_alpha:2, dv_beta:3, dv_gamma:4, h_alpha:5, h_beta:6, h_gamma:7, sml:8, aei_alpha:9, aei_beta:10, aei_gamma:11, group:12, gaia_e:13, gaia_b:14, a_median:15 };
 
 let sortCol   = 'beta';
 let sortDir   = -1;
@@ -477,6 +512,17 @@ function gaiaECell(val) {
   </div>`;
 }
 
+function gaiaBCell(val) {
+  if (val === null || val === undefined || isNaN(val)) return '<span style="color:var(--faint)">—</span>';
+  const color = val >= 0.66 ? '#f59e0b' : val >= 0.33 ? '#fbbf24' : '#94a3b8';
+  return `<div class="exp-cell">
+    <div class="exp-bar-bg">
+      <div class="exp-bar-fill" style="width:${(val*100).toFixed(0)}%;background:${color}"></div>
+    </div>
+    <span class="exp-val" style="color:${color}">${val.toFixed(3)}</span>
+  </div>`;
+}
+
 function barCell(val) {
   if (val === null || val === undefined) return '<span style="color:var(--faint)">—</span>';
   const color = expColor(val);
@@ -490,6 +536,7 @@ function barCell(val) {
 
 function getVal(row, col) {
   if (col === 'gaia_e') return row[IDX.gaia_e];
+  if (col === 'gaia_b') return row[IDX.gaia_b];
   if (rater === 'sml') {
     if (col === 'beta')  return row[IDX.sml];
     if (col === 'alpha' || col === 'gamma') return null;
@@ -499,10 +546,16 @@ function getVal(row, col) {
     if (col === 'beta')  return row[IDX[prefix + 'beta']];
     if (col === 'gamma') return row[IDX[prefix + 'gamma']];
   }
+  if (col === 'wage')  return row[IDX.a_median];
   if (col === 'code')  return row[IDX.code];
   if (col === 'title') return row[IDX.title];
   if (col === 'group') return row[IDX.group];
   return '';
+}
+
+function wageCell(v) {
+  if (v === null || v === undefined || isNaN(v)) return '<span class="wage-na">—</span>';
+  return `$${Number(v).toLocaleString('en-US')}`;
 }
 
 function updateHeaders() {
@@ -558,9 +611,11 @@ function render() {
       <td class="td-title">${r[IDX.title]}</td>
       <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
       <td class="td-gaia-e">${gaiaECell(r[IDX.gaia_e])}</td>
+      <td class="td-gaia-b">${gaiaBCell(r[IDX.gaia_b])}</td>
       <td class="td-alpha"></td>
       <td class="td-beta">${barCell(r[IDX.sml])}</td>
       <td class="td-gamma"></td>
+      <td class="td-wage">${wageCell(r[IDX.a_median])}</td>
     </tr>`).join('');
   } else {
     const prefix = rater + '_';
@@ -573,9 +628,11 @@ function render() {
         <td class="td-title">${r[IDX.title]}</td>
         <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
         <td class="td-gaia-e">${gaiaECell(r[IDX.gaia_e])}</td>
+        <td class="td-gaia-b">${gaiaBCell(r[IDX.gaia_b])}</td>
         <td class="td-alpha">${barCell(alpha)}</td>
         <td class="td-beta">${barCell(beta)}</td>
         <td class="td-gamma">${barCell(gamma)}</td>
+        <td class="td-wage">${wageCell(r[IDX.a_median])}</td>
       </tr>`;
     }).join('');
   }
@@ -616,6 +673,13 @@ document.querySelectorAll('thead th[data-col]').forEach(th => {
 
 // ── CHARTS ──
 let gChart = null, dChart = null;
+let wsChart = null, wgChart = null, wdChart = null;
+
+// Stable per-sector color palette (indexed by the sorted `groups` list)
+const SECTOR_PALETTE = ['#00c9a7','#2563eb','#f59e0b','#ef4444','#8b5cf6','#ec4899','#10b981','#f97316','#06b6d4','#84cc16','#a855f7','#14b8a6','#eab308','#3b82f6','#f43f5e','#22c55e','#6366f1','#d946ef','#0ea5e9','#fb923c','#4ade80','#c084fc'];
+const sectorColor = g => SECTOR_PALETTE[Math.max(0, groups.indexOf(g)) % SECTOR_PALETTE.length];
+const fmtWage = v => '$' + Number(v).toLocaleString('en-US');
+const fmtWageK = v => '$' + Math.round(v/1000) + 'k';
 
 function updateCharts(rows) {
   updateChartsInner(rows);
@@ -633,7 +697,7 @@ function updateChartsInner(rows) {
   document.getElementById('sAvg').textContent   = gaiaEAvg != null ? gaiaEAvg.toFixed(3) : '—';
   document.getElementById('sHigh').textContent  = vals.length ? (vals.filter(v => v >= 66).length / vals.length * 100).toFixed(0) + '%' : '—';
   document.getElementById('sLow').textContent   = vals.length ? (vals.filter(v => v <  33).length / vals.length * 100).toFixed(0) + '%' : '—';
-  document.getElementById('sAvgLbl').textContent = 'Avg GAIA-E';
+  document.getElementById('sAvgLbl').textContent = 'Avg GAIA-E (Eloundou)';
 
   if (typeof Chart === 'undefined') return;
   Chart.defaults.color = '#5b7a96';
@@ -720,6 +784,114 @@ function updateChartsInner(rows) {
     dChart.data.datasets[0].data = allB;
     dChart.data.datasets[1].data = filtB;
     dChart.update('none');
+  }
+
+  // ---- Wage vs AI exposure scatter (responds to filters) ----
+  const scatterPts = rows
+    .filter(r => r[IDX.a_median] != null && !isNaN(r[IDX.a_median]) && r[IDX.gaia_e] != null && !isNaN(r[IDX.gaia_e]))
+    .map(r => ({ x: r[IDX.gaia_e], y: r[IDX.a_median], t: r[IDX.title], g: r[IDX.group] }));
+  const scatterColors = scatterPts.map(p => sectorColor(p.g));
+
+  if (!wsChart) {
+    wsChart = new Chart(document.getElementById('wageScatterChart'), {
+      type: 'scatter',
+      data: { datasets: [{ data: scatterPts, backgroundColor: scatterColors, pointRadius: 3, pointHoverRadius: 6 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: {
+            title: () => '',
+            label: c => { const p = c.raw; return ` ${p.t}`; },
+            afterLabel: c => { const p = c.raw; return `${p.g} · ${fmtWage(p.y)} · GAIA-E ${p.x.toFixed(2)}`; }
+          } }
+        },
+        scales: {
+          x: { title: { display: true, text: 'AI exposure (GAIA-E →)' }, min: 0, grid: { color: '#dde6f0' } },
+          y: { title: { display: true, text: 'Median annual wage' }, grid: { color: '#dde6f0' }, ticks: { callback: fmtWageK } }
+        }
+      }
+    });
+  } else {
+    wsChart.data.datasets[0].data = scatterPts;
+    wsChart.data.datasets[0].backgroundColor = scatterColors;
+    wsChart.update('none');
+  }
+
+  // ---- Median wage by sector (computed from ALL occupations for stable bars) ----
+  const wmap = {};
+  OCCS.forEach(r => {
+    const g = r[IDX.group], v = r[IDX.a_median];
+    if (v != null && !isNaN(v)) { if (!wmap[g]) wmap[g] = { s:0, n:0 }; wmap[g].s += v; wmap[g].n++; }
+  });
+  const wData   = Object.entries(wmap).map(([g,{s,n}]) => ({ g, avg: s/n })).sort((a,b) => b.avg - a.avg);
+  const wLabels = wData.map(d => d.g);
+  const wVals   = wData.map(d => d.avg);
+  const wColors = wLabels.map(g => groupSel ? (g === groupSel ? '#00c9a7' : 'rgba(30,64,76,0.9)') : '#00c9a7');
+
+  if (!wgChart) {
+    wgChart = new Chart(document.getElementById('wageSectorChart'), {
+      type: 'bar',
+      data: { labels: wLabels, datasets: [{ data: wVals, backgroundColor: wColors, borderRadius: 3, barThickness: 14 }] },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ` ${fmtWage(Math.round(c.parsed.x))} avg median wage` } }
+        },
+        scales: {
+          x: { min: 0, grid: { color: '#dde6f0' }, ticks: { callback: fmtWageK } },
+          y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+        },
+        onClick: (evt, els) => {
+          if (!els.length) return;
+          const g = wgChart.data.labels[els[0].index];
+          const next = groupSel === g ? '' : g;
+          document.getElementById('groupFilter').value = next;
+          document.getElementById('groupFilter').dispatchEvent(new Event('change'));
+        },
+        onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }
+      }
+    });
+  } else {
+    wgChart.data.labels = wLabels;
+    wgChart.data.datasets[0].data = wVals;
+    wgChart.data.datasets[0].backgroundColor = wColors;
+    wgChart.update('none');
+  }
+
+  // ---- Wage distribution histogram ($25k bins, all vs filtered) ----
+  const wbLbls = ['<$25k','$25–50k','$50–75k','$75–100k','$100–125k','$125–150k','$150–175k','$175–200k','$200k+'];
+  const allW = Array(9).fill(0), filtW = Array(9).fill(0);
+  OCCS.forEach(r => { const v = r[IDX.a_median]; if (v != null && !isNaN(v)) allW[Math.min(8, Math.floor(v/25000))]++; });
+  rows.forEach(r => { const v = r[IDX.a_median]; if (v != null && !isNaN(v)) filtW[Math.min(8, Math.floor(v/25000))]++; });
+
+  if (!wdChart) {
+    wdChart = new Chart(document.getElementById('wageDistChart'), {
+      type: 'bar',
+      data: {
+        labels: wbLbls,
+        datasets: [
+          { label: 'All occupations', data: allW, backgroundColor: 'rgba(30,64,76,0.65)', borderRadius: 2 },
+          { label: 'Filtered', data: filtW, backgroundColor: 'rgba(0,201,167,0.8)', borderRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'rect', boxWidth: 8, font: { size: 10 } } },
+          tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y}` } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0 } },
+          y: { grid: { color: '#dde6f0' }, ticks: { precision: 0 } }
+        }
+      }
+    });
+  } else {
+    wdChart.data.datasets[0].data = allW;
+    wdChart.data.datasets[1].data = filtW;
+    wdChart.update('none');
   }
 }
 
