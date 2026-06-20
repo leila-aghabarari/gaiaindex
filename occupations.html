@@ -681,6 +681,14 @@ const sectorColor = g => SECTOR_PALETTE[Math.max(0, groups.indexOf(g)) % SECTOR_
 const fmtWage = v => '$' + Number(v).toLocaleString('en-US');
 const fmtWageK = v => '$' + Math.round(v/1000) + 'k';
 
+// Label for the highlighted "filtered" series: the actual selection name
+function filterLabel() {
+  const parts = [];
+  if (groupSel) parts.push(groupSel);
+  if (query)    parts.push(`"${query}"`);
+  return parts.length ? parts.join(' · ') : 'Selected';
+}
+
 function updateCharts(rows) {
   updateChartsInner(rows);
 }
@@ -765,7 +773,7 @@ function updateChartsInner(rows) {
         labels: binLbls,
         datasets: [
           { label:'All occupations', data: allB, backgroundColor:'rgba(30,64,76,0.65)', borderRadius:2 },
-          { label:'Filtered', data: filtB, backgroundColor:'rgba(0,201,167,0.8)', borderRadius:2 }
+          { label: filterLabel(), data: filtB, backgroundColor:'rgba(0,201,167,0.8)', borderRadius:2 }
         ]
       },
       options: {
@@ -783,6 +791,7 @@ function updateChartsInner(rows) {
   } else {
     dChart.data.datasets[0].data = allB;
     dChart.data.datasets[1].data = filtB;
+    dChart.data.datasets[1].label = filterLabel();
     dChart.update('none');
   }
 
@@ -873,7 +882,7 @@ function updateChartsInner(rows) {
         labels: wbLbls,
         datasets: [
           { label: 'All occupations', data: allW, backgroundColor: 'rgba(30,64,76,0.65)', borderRadius: 2 },
-          { label: 'Filtered', data: filtW, backgroundColor: 'rgba(0,201,167,0.8)', borderRadius: 2 }
+          { label: filterLabel(), data: filtW, backgroundColor: 'rgba(0,201,167,0.8)', borderRadius: 2 }
         ]
       },
       options: {
@@ -891,6 +900,7 @@ function updateChartsInner(rows) {
   } else {
     wdChart.data.datasets[0].data = allW;
     wdChart.data.datasets[1].data = filtW;
+    wdChart.data.datasets[1].label = filterLabel();
     wdChart.update('none');
   }
 }
