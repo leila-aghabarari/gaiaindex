@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKNG86S6HH"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QKNG86S6HH');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exposure Without Performance — GAIA Research</title>
+  <meta name="description" content="Does theoretical AI exposure predict actual AI capability? Evidence from the United States. A GAIA working paper by Leila Aghabarari." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/research.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="usa.html">USA</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="license.html">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span>›</span><a href="research.html">Research</a><span>›</span><span class="current">Exposure Without Performance</span>
+</div>
+
+<div class="paper-layout">
+  <article>
+    <header class="paper-head section" id="top" style="margin-top:1rem">
+      <div class="eyebrow">Working Paper · Preliminary</div>
+      <h1>Exposure Without Performance: Does Theoretical AI Exposure Predict Actual AI Capability? Evidence from the United States</h1>
+      <div class="authors">Leila Aghabarari</div>
+      <div class="affil">International Finance Corporation, World Bank Group</div>
+      <div class="meta-row">
+        <span class="badge badge-preliminary">Preliminary — do not cite without permission</span>
+        <span class="pc-date" style="color:var(--faint);font-size:.8rem">May 2026</span>
+      </div>
+      <div class="abstract">
+        <strong>Abstract.</strong> Theoretical AI-exposure scores — built from expert or model ratings of how amenable an occupation's tasks are to automation — are now ubiquitous in labor-market research, where they stand in for where AI will actually have an impact. Yet these scores are rarely validated against <em>measured</em> AI capability. This paper asks whether theoretical exposure predicts actual AI performance across U.S. occupations, using observed AI task-success rates as the outcome. I find that higher theoretical exposure predicts <strong>lower</strong> measured performance: a one-unit increase in GAIA-E is associated with a 17.47-point decline in task success (p&nbsp;&lt;&nbsp;0.001). In a horse race against the Suitability-for-Machine-Learning (SML) measure, GAIA-E remains strongly negative while SML is insignificant (p&nbsp;=&nbsp;0.467). The exposure–performance gap is concentrated in occupations whose tasks are nominally "exposed" to generative AI but where current systems do not yet perform, suggesting exposure indices capture <em>theoretical surface area</em> rather than realized capability — with direct implications for any study using exposure as a treatment.
+      </div>
+      <div class="head-actions">
+        <button class="btn" id="citeBtn">❝ Cite</button>
+        <button class="btn" onclick="GAIA.sharePage()">↗ Share</button>
+        <button class="btn" onclick="window.location='mailto:?subject=Request for paper: Exposure Without Performance'">✉ Request copy</button>
+      </div>
+    </header>
+
+    <!-- Figure 1 -->
+    <section class="figure" id="fig1">
+      <div class="fig-head">
+        <div class="fig-title">Figure 1 · GAIA-E vs. AEI task success</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart1','exp_fig1_scatter.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub" id="fig1sub">Each dot is an occupation. Regression line overlaid.</div>
+      <div class="chart-box" style="height:420px"><canvas id="chart1"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_occupations.csv · GAIA-E (gaia_e ×100) vs. AEI task success (aei_task_success)</span></div>
+    </section>
+
+    <!-- Figure 2 -->
+    <section class="figure" id="fig2">
+      <div class="fig-head">
+        <div class="fig-title">Figure 2 · Horse race — exposure vs. SML</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart2','exp_fig2_horserace.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Regression coefficients on AEI task success. Teal = significant, gray = not significant. Bars show 95% confidence intervals.</div>
+      <div class="chart-box" style="height:380px"><canvas id="chart2"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Coefficients from paper regressions. Joint-specification values approximate (preliminary).</span></div>
+    </section>
+
+    <!-- Figure 3 -->
+    <section class="figure" id="fig3">
+      <div class="fig-head">
+        <div class="fig-title">Figure 3 · The exposure–performance gap by occupation group</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart3','exp_fig3_gap_group.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Mean GAIA-E vs. mean AEI task success within each major group. The wider the gap, the more theory overpredicts.</div>
+      <div class="chart-box" style="height:560px"><canvas id="chart3"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_occupations.csv · group means of gaia_e (×100) and aei_task_success</span></div>
+    </section>
+
+    <!-- Figure 4 -->
+    <section class="figure" id="fig4">
+      <div class="fig-head">
+        <div class="fig-title">Figure 4 · Distribution of the exposure–performance gap</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart4','exp_fig4_gap_hist.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Histogram of (GAIA-E − AEI task success) by occupation. The right tail = occupations where theory overpredicts performance.</div>
+      <div class="chart-box" style="height:360px"><canvas id="chart4"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_occupations.csv · gaia_e (×100) − aei_task_success</span></div>
+    </section>
+
+    <!-- Findings -->
+    <section class="section" id="findings">
+      <h2>Key findings</h2>
+      <div class="finding">
+        <div class="f-num">Finding 1</div>
+        <div class="f-stat">β = −17.47 &nbsp;<span style="font-size:.9rem;color:var(--muted)">(p &lt; 0.001)</span></div>
+        <div class="f-text">Higher theoretical AI exposure (GAIA-E) predicts <strong>lower</strong> measured AI task success. Exposure and capability move in opposite directions.</div>
+      </div>
+      <div class="finding">
+        <div class="f-num">Finding 2</div>
+        <div class="f-stat">SML: p = 0.467</div>
+        <div class="f-text">The Suitability-for-Machine-Learning measure does not significantly predict task success. In the joint specification its coefficient collapses toward zero while GAIA-E stays negative.</div>
+      </div>
+      <div class="finding">
+        <div class="f-num">Finding 3</div>
+        <div class="f-stat">Gap is generative-AI specific</div>
+        <div class="f-text">The exposure–performance gap concentrates in occupations rated exposed to <em>generative</em> AI, where today's systems do not yet deliver — exposure captures theoretical surface area, not realized capability.</div>
+      </div>
+    </section>
+
+    <!-- Implications -->
+    <section class="section" id="implications">
+      <h2>Implications</h2>
+      <p>A large and growing literature uses theoretical AI-exposure scores as the treatment variable when estimating AI's effect on wages, employment, and productivity. If exposure is negatively — or simply not — related to what AI can currently do, then exposure-based designs may be mismeasuring the shock, attenuating or even sign-flipping estimated effects. The results argue for validating exposure measures against observed capability before treating them as proxies for impact, and for pairing exposure with usage- and performance-based measures (as GAIA does) rather than relying on any single lens.</p>
+    </section>
+
+    <!-- Related -->
+    <section class="section" id="related">
+      <h2>Related papers</h2>
+      <div class="card-grid" style="padding:0;max-width:none">
+        <a class="paper-card" href="paper_gaia_descriptor.html" style="text-decoration:none">
+          <div class="pc-meta"><span class="badge badge-working">Working Paper</span><span class="pc-date">2026</span></div>
+          <h3 style="color:#fff">GAIA: A Global AI Adoption Index</h3>
+          <p class="pc-abstract">The data descriptor for the index used here — usage, exposure, and baselines across 923 occupations and 138 countries.</p>
+        </a>
+        <a class="paper-card" href="paper_brazil.html" style="text-decoration:none">
+          <div class="pc-meta"><span class="badge badge-forthcoming">Forthcoming</span><span class="pc-date">2026</span></div>
+          <h3 style="color:#fff">AI Exposure, Credit Markets, and Employment in Brazil</h3>
+          <p class="pc-abstract">Applies GAIA exposure as a treatment in a credit-and-employment design — exactly the setting these validation results speak to.</p>
+        </a>
+      </div>
+    </section>
+  </article>
+
+  <aside class="sidebar">
+    <h4>Paper</h4>
+    <div class="s-title">Exposure Without Performance</div>
+    <div class="s-authors">Leila Aghabarari · IFC, WBG · May 2026</div>
+    <h4>Figures</h4>
+    <nav class="fig-nav">
+      <a href="#fig1">Fig 1 · Exposure vs. performance</a>
+      <a href="#fig2">Fig 2 · Horse race</a>
+      <a href="#fig3">Fig 3 · Gap by group</a>
+      <a href="#fig4">Fig 4 · Gap distribution</a>
+      <a href="#findings">Key findings</a>
+      <a href="#implications">Implications</a>
+      <a href="#related">Related papers</a>
+    </nav>
+    <div class="s-actions">
+      <button class="btn btn-block" id="citeBtn2">❝ Cite (BibTeX)</button>
+      <button class="btn btn-block" onclick="GAIA.sharePage()">↗ Share</button>
+      <button class="btn btn-block" onclick="window.location='mailto:?subject=Request for paper: Exposure Without Performance'">✉ Request copy</button>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a></p>
+    <p style="max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+    <p>© 2026 Leila Aghabarari · GAIA — Global AI Adoption Index · <a href="license.html">CC BY 4.0</a></p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="assets/research.js"></script>
+<script src="assets/gaia-waitlist.js"></script>
+<script>
+const BIBTEX = `@misc{aghabarari2026exposure,
+  author = {Aghabarari, Leila},
+  title  = {Exposure Without Performance: Does Theoretical {AI} Exposure Predict Actual {AI} Capability? Evidence from the United States},
+  year   = {2026},
+  note   = {Preliminary working paper}
+}`;
+document.getElementById('citeBtn').onclick = () => GAIA.copyCite(BIBTEX);
+document.getElementById('citeBtn2').onclick = () => GAIA.copyCite(BIBTEX);
+
+// Regression-line overlay text (β, R²) drawn top-left of the plot
+function statBox(getText) {
+  return { id: 'statBox', afterDraw(chart) {
+    const t = getText(); if (!t) return;
+    const { left, top } = chart.chartArea; const ctx = chart.ctx;
+    ctx.save(); ctx.font = '600 12px "Space Grotesk", Inter'; ctx.fillStyle = '#18c994';
+    ctx.fillText(t, left + 12, top + 18); ctx.restore();
+  }};
+}
+
+// Horizontal-bar 95% CI whiskers (chart.$ci aligned to bar indices)
+const ciBars = { id: 'ciBars', afterDatasetsDraw(chart) {
+  const ci = chart.$ci; if (!ci) return;
+  const xa = chart.scales.x, ya = chart.scales.y, ctx = chart.ctx;
+  ctx.save(); ctx.strokeStyle = '#cfe0ee'; ctx.lineWidth = 1.5;
+  ci.forEach((c, i) => {
+    if (!c) return;
+    const y = ya.getPixelForValue(i);
+    const xlo = xa.getPixelForValue(c[0]), xhi = xa.getPixelForValue(c[1]);
+    ctx.beginPath(); ctx.moveTo(xlo, y); ctx.lineTo(xhi, y);
+    ctx.moveTo(xlo, y-5); ctx.lineTo(xlo, y+5);
+    ctx.moveTo(xhi, y-5); ctx.lineTo(xhi, y+5); ctx.stroke();
+  });
+  ctx.restore();
+}};
+
+async function init() {
+  GAIA.applyChartDefaults();
+  const occ = await GAIA.loadCSV('data/gaia_occupations.csv');
+
+  // ---- Figure 1: GAIA-E (×100) vs AEI task success + regression ----
+  const pts = occ.filter(r => GAIA.num(r.gaia_e) != null && GAIA.num(r.aei_task_success) != null)
+                 .map(r => ({ x: GAIA.num(r.gaia_e) * 100, y: GAIA.num(r.aei_task_success), t: r.Title }));
+  const reg = GAIA.regression(pts);
+  const line = reg ? [{ x: reg.xmin, y: reg.a + reg.b*reg.xmin }, { x: reg.xmax, y: reg.a + reg.b*reg.xmax }] : [];
+  document.getElementById('fig1sub').innerHTML =
+    'Each dot is an occupation. OLS fit: β = ' + reg.b.toFixed(2) + ', R² = ' + reg.r2.toFixed(3) + ' (n = ' + reg.n + ').';
+  new Chart(document.getElementById('chart1'), {
+    type: 'scatter',
+    data: { datasets: [
+      { label: 'Occupations', data: pts, backgroundColor: 'rgba(13,158,118,0.55)', pointRadius: 3, pointHoverRadius: 6 },
+      { label: 'OLS fit', type: 'line', data: line, borderColor: '#e0a83b', borderWidth: 2, pointRadius: 0, fill: false }
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { filter: i => i.datasetIndex === 0, callbacks: { title: () => '', label: c => c.raw.t, afterLabel: c => 'GAIA-E ' + c.parsed.x.toFixed(0) + ' · task success ' + c.parsed.y.toFixed(0) } }
+      },
+      scales: {
+        x: { title: { display: true, text: 'GAIA-E (0–100 scale)' }, grid: { color: GAIA.GRID } },
+        y: { title: { display: true, text: 'AEI task success' }, grid: { color: GAIA.GRID } }
+      }
+    },
+    plugins: [statBox(() => 'β = ' + reg.b.toFixed(2) + '   R² = ' + reg.r2.toFixed(3))]
+  });
+
+  // ---- Figure 2: horse race (paper coefficients) ----
+  const hr = [
+    { label: 'GAIA-E (alone)',  b: -17.47, ci: [-23.0, -11.9], sig: true },
+    { label: 'SML (alone)',     b: -6.54,  ci: [-15.2, 2.10],  sig: false },
+    { label: 'GAIA-E (joint)',  b: -15.80, ci: [-22.0, -9.60], sig: true },
+    { label: 'SML (joint)',     b: -0.30,  ci: [-8.00, 7.40],  sig: false }
+  ];
+  const c2 = new Chart(document.getElementById('chart2'), {
+    type: 'bar',
+    data: { labels: hr.map(d => d.label), datasets: [{
+      data: hr.map(d => d.b),
+      backgroundColor: hr.map(d => d.sig ? GAIA.TEAL : '#5d748c'),
+      borderRadius: 3, barThickness: 26
+    }]},
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => 'β = ' + c.parsed.x.toFixed(2) + (hr[c.dataIndex].sig ? ' (significant)' : ' (n.s.)') } } },
+      scales: {
+        x: { title: { display: true, text: 'Coefficient on AEI task success' }, grid: { color: GAIA.GRID }, suggestedMin: -25, suggestedMax: 10 },
+        y: { grid: { display: false } }
+      }
+    },
+    plugins: [ciBars, { id: 'zero', afterDraw(ch){ const x=ch.scales.x.getPixelForValue(0), {top,bottom}=ch.chartArea, c=ch.ctx; c.save(); c.strokeStyle='rgba(255,255,255,0.35)'; c.setLineDash([4,3]); c.beginPath(); c.moveTo(x,top); c.lineTo(x,bottom); c.stroke(); c.restore(); } }]
+  });
+  c2.$ci = hr.map(d => d.ci); c2.update();
+
+  // ---- Figure 3: gap by group (grouped bar) ----
+  const gmap = {};
+  occ.forEach(r => {
+    const e = GAIA.num(r.gaia_e), a = GAIA.num(r.aei_task_success);
+    if (r.group && e != null && a != null) { (gmap[r.group] = gmap[r.group] || { e:[], a:[] }); gmap[r.group].e.push(e*100); gmap[r.group].a.push(a); }
+  });
+  const gd = Object.entries(gmap).map(([g, o]) => ({ g, e: GAIA.mean(o.e), a: GAIA.mean(o.a) }))
+                   .map(d => ({ ...d, gap: d.e - d.a })).sort((x,y) => y.gap - x.gap);
+  new Chart(document.getElementById('chart3'), {
+    type: 'bar',
+    data: { labels: gd.map(d => d.g), datasets: [
+      { label: 'Mean GAIA-E', data: gd.map(d => d.e), backgroundColor: GAIA.TEAL, borderRadius: 3 },
+      { label: 'Mean AEI task success', data: gd.map(d => d.a), backgroundColor: '#e0a83b', borderRadius: 3 }
+    ]},
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { boxWidth: 10, color: GAIA.TICK } }, tooltip: { callbacks: { label: c => c.dataset.label + ' ' + c.parsed.x.toFixed(1) } } },
+      scales: { x: { min: 0, title: { display: true, text: 'Score (0–100)' }, grid: { color: GAIA.GRID } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } }
+    }
+  });
+
+  // ---- Figure 4: gap histogram ----
+  const gaps = occ.filter(r => GAIA.num(r.gaia_e) != null && GAIA.num(r.aei_task_success) != null)
+                  .map(r => GAIA.num(r.gaia_e)*100 - GAIA.num(r.aei_task_success));
+  const hh = GAIA.histogram(gaps, 24, null, null);
+  new Chart(document.getElementById('chart4'), {
+    type: 'bar',
+    data: { labels: hh.labels.map(v => v.toFixed(0)), datasets: [{
+      data: hh.counts,
+      backgroundColor: hh.labels.map(v => v >= 0 ? GAIA.TEAL : '#5d748c'),
+      borderRadius: 2
+    }]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { title: i => 'gap ≈ ' + i[0].label, label: i => i.parsed.y + ' occupations' } } },
+      scales: { x: { title: { display: true, text: 'GAIA-E − AEI task success  (→ theory overpredicts)' }, grid: { display: false } }, y: { title: { display: true, text: 'Occupations' }, grid: { color: GAIA.GRID } } }
+    }
+  });
+}
+init().catch(e => { console.error(e); GAIA.toast('Failed to load data'); });
+</script>
+</body>
+</html>

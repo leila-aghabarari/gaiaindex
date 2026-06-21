@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKNG86S6HH"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QKNG86S6HH');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Exposure, Credit Markets, and Employment in Brazil — GAIA Research</title>
+  <meta name="description" content="How occupational AI exposure transmits through bank credit into employment and wages in Brazil. A GAIA working paper (forthcoming) by Aghabarari & Van Doornik." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/research.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="usa.html">USA</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="license.html">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span>›</span><a href="research.html">Research</a><span>›</span><span class="current">AI Exposure, Credit &amp; Employment in Brazil</span>
+</div>
+
+<div class="paper-layout">
+  <article>
+    <header class="paper-head section" id="top" style="margin-top:1rem">
+      <div class="eyebrow">Working Paper · Forthcoming</div>
+      <h1>AI Exposure, Credit Markets, and Employment in Brazil</h1>
+      <div class="authors">Leila Aghabarari &nbsp;·&nbsp; Bernardus Van Doornik</div>
+      <div class="affil">Leila Aghabarari — International Finance Corporation, World Bank Group · Bernardus Van Doornik — Banco Central do Brasil</div>
+      <div class="meta-row">
+        <span class="badge badge-forthcoming">Forthcoming</span>
+        <span class="pc-date" style="color:var(--faint);font-size:.8rem">2026</span>
+      </div>
+      <div class="abstract">
+        <strong>Abstract.</strong> Does AI reshape labor markets not only directly, but through the financial system? We study Brazil, linking occupational AI exposure (GAIA-E) to the Central Bank's credit registry and matched employer–employee records (RAIS). The hypothesis is a transmission chain: as generative AI raises the perceived riskiness or revised prospects of AI-exposed activities, banks adjust credit, and firms in turn adjust employment and wages. Using a difference-in-differences design around the late-2022 generative-AI shock, with rich firm and bank fixed effects, we trace how exposure propagates from technology to credit to jobs. <em>Results forthcoming.</em>
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-primary" onclick="window.location='mailto:aghabarari.leila@gmail.com?subject=Request%20for%20paper%3A%20AI%20Exposure%2C%20Credit%20Markets%2C%20and%20Employment%20in%20Brazil'">✉ Request copy</button>
+        <button class="btn" id="citeBtn">❝ Cite</button>
+        <button class="btn" onclick="GAIA.sharePage()">↗ Share</button>
+      </div>
+    </header>
+
+    <!-- Figure 1: transmission chain (CSS/SVG) -->
+    <section class="figure" id="fig1">
+      <div class="fig-head"><div class="fig-title">Figure 1 · Transmission chain</div></div>
+      <div class="fig-sub">How a technology shock reaches local labor markets through the banking system.</div>
+      <div class="chain">
+        <div class="chain-node"><div class="cn-icon">🤖</div><div class="cn-title">AI Exposure</div><div class="cn-sub">GAIA-E by occupation, aggregated to firms &amp; sectors</div></div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node"><div class="cn-icon">🏦</div><div class="cn-title">Credit Tightening</div><div class="cn-sub">Banks re-price / ration lending to exposed borrowers</div></div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node"><div class="cn-icon">👥</div><div class="cn-title">Employment &amp; Wages</div><div class="cn-sub">Firms adjust hiring, separations, and pay</div></div>
+      </div>
+      <div class="fig-foot"><span class="fig-source">Conceptual framework · GAIA-E → BCB credit registry → RAIS employment</span></div>
+    </section>
+
+    <!-- Figure 2: Brazil vs peers (from CSV) -->
+    <section class="figure" id="fig2">
+      <div class="fig-head">
+        <div class="fig-title">Figure 2 · Brazil in GAIA — use-case mix vs. peers</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart2','brazil_fig2_usecases.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Share of AI conversations by use case, Brazil vs. United States, India, and Germany.</div>
+      <div class="chart-box" style="height:380px"><canvas id="chart2"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_countries.csv · uc_work, uc_personal, uc_coursework</span></div>
+    </section>
+
+    <!-- Figure 3: GAIA-E by group (from CSV) -->
+    <section class="figure" id="fig3">
+      <div class="fig-head">
+        <div class="fig-title">Figure 3 · AI exposure by major occupation group</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart3','brazil_fig3_bygroup.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Mean GAIA-E by group. Highlighted groups are heavily represented in Brazilian formal employment (RAIS).</div>
+      <div class="chart-box" style="height:560px"><canvas id="chart3"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_occupations.csv · GAIA-E by group · RAIS-weight highlighting illustrative</span></div>
+    </section>
+
+    <!-- Figure 4: identification timeline (SVG) -->
+    <section class="figure" id="fig4">
+      <div class="fig-head"><div class="fig-title">Figure 4 · Identification strategy timeline</div></div>
+      <div class="fig-sub">Pre-period, the generative-AI shock, and the estimated bank response. Treatment intensity = GAIA-E.</div>
+      <div style="overflow-x:auto">
+        <svg viewBox="0 0 1000 230" width="100%" style="min-width:680px" role="img" aria-label="Identification timeline 2006 to 2024">
+          <!-- pre-period shading -->
+          <rect x="60" y="70" width="660" height="44" fill="rgba(13,158,118,0.12)" stroke="rgba(13,158,118,0.4)" />
+          <text x="390" y="60" fill="#9bb1c6" font-size="13" text-anchor="middle" font-family="Inter">Pre-period (2006–2022)</text>
+          <!-- main axis -->
+          <line x1="60" y1="114" x2="940" y2="114" stroke="#647d96" stroke-width="2" />
+          <!-- year ticks -->
+          <g fill="#9bb1c6" font-size="12" font-family="Inter" text-anchor="middle">
+            <line x1="60"  y1="108" x2="60"  y2="120" stroke="#647d96"/><text x="60"  y="140">2006</text>
+            <line x1="280" y1="108" x2="280" y2="120" stroke="#647d96"/><text x="280" y="140">2012</text>
+            <line x1="500" y1="108" x2="500" y2="120" stroke="#647d96"/><text x="500" y="140">2018</text>
+            <line x1="720" y1="108" x2="720" y2="120" stroke="#647d96"/><text x="720" y="140">2022</text>
+            <line x1="940" y1="108" x2="940" y2="120" stroke="#647d96"/><text x="940" y="140">2024</text>
+          </g>
+          <!-- ChatGPT launch marker (Nov 2022 ≈ x=720) -->
+          <line x1="720" y1="40" x2="720" y2="180" stroke="#18c994" stroke-width="2" stroke-dasharray="5,4"/>
+          <circle cx="720" cy="114" r="6" fill="#18c994"/>
+          <text x="720" y="32" fill="#18c994" font-size="13" font-weight="600" text-anchor="middle" font-family="Inter">ChatGPT launch · Nov 2022</text>
+          <!-- bank response marker (2024 ≈ x=940) -->
+          <circle cx="940" cy="114" r="6" fill="#e0a83b"/>
+          <text x="900" y="200" fill="#e0a83b" font-size="13" font-weight="600" text-anchor="middle" font-family="Inter">Estimated bank response (2024)</text>
+          <!-- treatment label -->
+          <text x="500" y="214" fill="#647d96" font-size="12" text-anchor="middle" font-family="Inter">Treatment variable: occupational AI exposure (GAIA-E)</text>
+        </svg>
+      </div>
+      <div class="fig-foot"><span class="fig-source">Design schematic · difference-in-differences around the late-2022 shock</span></div>
+    </section>
+
+    <!-- Figure 5: DiD placeholder -->
+    <section class="figure" id="fig5">
+      <div class="fig-head">
+        <div class="fig-title">Figure 5 · Expected results preview (event study)</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart5','brazil_fig5_did.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Stylized DiD event-study: coefficient on GAIA-E × post by year, with a vertical line at the 2022 shock. <strong style="color:var(--amber)">Illustrative — results forthcoming.</strong></div>
+      <div class="chart-box" style="height:380px"><canvas id="chart5"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Placeholder figure · not estimated · shows the expected shape of treatment effects</span></div>
+    </section>
+
+    <!-- Data -->
+    <section class="section" id="data">
+      <h2>Data</h2>
+      <p><strong>BCB credit registry (SCR).</strong> Loan-level records from the Central Bank of Brazil's credit information system, providing borrower–bank exposures, volumes, rates, and risk classifications at high frequency.</p>
+      <p><strong>RAIS.</strong> The annual matched employer–employee census of Brazil's formal labor market, with occupation (CBO), wages, hires, and separations at the worker–firm level.</p>
+      <p><strong>GAIA crosswalk.</strong> A pipeline mapping GAIA-E from O*NET-SOC occupations to Brazil's CBO occupational classification, then aggregating to the firm and sector level to construct AI-exposure intensity for each borrower.</p>
+    </section>
+
+    <!-- Methodology -->
+    <section class="section" id="methodology">
+      <h2>Methodology</h2>
+      <p><strong>Difference-in-differences.</strong> We compare more- vs. less-AI-exposed firms (by GAIA-E intensity) before and after the late-2022 generative-AI shock, in both credit and employment outcomes.</p>
+      <p><strong>Fixed effects.</strong> Bank, firm, sector × time, and region × time fixed effects absorb confounders, isolating differential responses along the exposure gradient. A bank-firm relationship structure lets us separate credit-supply from credit-demand shifts.</p>
+      <p><strong>Falsification.</strong> Placebo event dates in the pre-period and pre-trend tests check that exposed and non-exposed firms moved in parallel before the shock, supporting a causal reading.</p>
+    </section>
+
+    <!-- Related -->
+    <section class="section" id="related">
+      <h2>Related papers</h2>
+      <div class="card-grid" style="padding:0;max-width:none">
+        <a class="paper-card" href="paper_gaia_descriptor.html" style="text-decoration:none">
+          <div class="pc-meta"><span class="badge badge-working">Working Paper</span><span class="pc-date">2026</span></div>
+          <h3 style="color:#fff">GAIA: A Global AI Adoption Index</h3>
+          <p class="pc-abstract">The index and crosswalk used to build GAIA-E exposure for Brazilian firms.</p>
+        </a>
+        <a class="paper-card" href="paper_exposure_performance.html" style="text-decoration:none">
+          <div class="pc-meta"><span class="badge badge-preliminary">Preliminary</span><span class="pc-date">May 2026</span></div>
+          <h3 style="color:#fff">Exposure Without Performance</h3>
+          <p class="pc-abstract">Validates GAIA-E against measured AI capability — context for interpreting the exposure treatment used here.</p>
+        </a>
+      </div>
+    </section>
+  </article>
+
+  <aside class="sidebar">
+    <h4>Paper</h4>
+    <div class="s-title">AI Exposure, Credit Markets, and Employment in Brazil</div>
+    <div class="s-authors">Aghabarari · Van Doornik · 2026</div>
+    <h4>Figures</h4>
+    <nav class="fig-nav">
+      <a href="#fig1">Fig 1 · Transmission chain</a>
+      <a href="#fig2">Fig 2 · Brazil vs. peers</a>
+      <a href="#fig3">Fig 3 · Exposure by group</a>
+      <a href="#fig4">Fig 4 · Identification timeline</a>
+      <a href="#fig5">Fig 5 · Expected results</a>
+      <a href="#data">Data</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#related">Related papers</a>
+    </nav>
+    <div class="s-actions">
+      <button class="btn btn-block btn-primary" onclick="window.location='mailto:aghabarari.leila@gmail.com?subject=Request%20for%20paper%3A%20Brazil'">✉ Request copy</button>
+      <button class="btn btn-block" id="citeBtn2">❝ Cite (BibTeX)</button>
+      <button class="btn btn-block" onclick="GAIA.sharePage()">↗ Share</button>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a></p>
+    <p style="max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, the Banco Central do Brasil, or any affiliated organization.</p>
+    <p>© 2026 Leila Aghabarari · GAIA — Global AI Adoption Index · <a href="license.html">CC BY 4.0</a></p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="assets/research.js"></script>
+<script src="assets/gaia-waitlist.js"></script>
+<script>
+const BIBTEX = `@misc{aghabarari2026brazil,
+  author = {Aghabarari, Leila and Van Doornik, Bernardus},
+  title  = {{AI} Exposure, Credit Markets, and Employment in Brazil},
+  year   = {2026},
+  note   = {Working paper, forthcoming}
+}`;
+document.getElementById('citeBtn').onclick = () => GAIA.copyCite(BIBTEX);
+document.getElementById('citeBtn2').onclick = () => GAIA.copyCite(BIBTEX);
+
+// vertical-line plugin for the event study (line charts, category x)
+function vLine(labelMatch, text) {
+  return { id: 'vline'+Math.random(), afterDraw(chart) {
+    const labels = chart.data.labels; const idx = labels.indexOf(labelMatch); if (idx < 0) return;
+    const x = chart.scales.x.getPixelForValue(idx), { top, bottom } = chart.chartArea, ctx = chart.ctx;
+    ctx.save(); ctx.strokeStyle = '#e0a83b'; ctx.lineWidth = 2; ctx.setLineDash([5,4]);
+    ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke();
+    ctx.setLineDash([]); ctx.fillStyle = '#e0a83b'; ctx.font = '600 11px Inter';
+    ctx.fillText(text, x + 6, top + 13); ctx.restore();
+  }};
+}
+
+async function init() {
+  GAIA.applyChartDefaults();
+  const [cty, occ] = await Promise.all([
+    GAIA.loadCSV('data/gaia_countries.csv'),
+    GAIA.loadCSV('data/gaia_occupations.csv')
+  ]);
+
+  // ---- Figure 2: Brazil vs peers use-case mix ----
+  const want = ['Brazil', 'United States', 'India', 'Germany'];
+  const byName = {}; cty.forEach(r => { if (r.country_name) byName[r.country_name] = r; });
+  const peers = want.filter(n => byName[n]);
+  const peerColors = { 'Brazil': GAIA.TEAL, 'United States': '#4f9dff', 'India': '#e0a83b', 'Germany': '#e0607a' };
+  new Chart(document.getElementById('chart2'), {
+    type: 'bar',
+    data: {
+      labels: ['Work', 'Personal', 'Coursework'],
+      datasets: peers.map(n => ({
+        label: n,
+        data: [GAIA.num(byName[n].uc_work), GAIA.num(byName[n].uc_personal), GAIA.num(byName[n].uc_coursework)],
+        backgroundColor: peerColors[n] || GAIA.colorFor(n), borderRadius: 3
+      }))
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { boxWidth: 12, color: GAIA.TICK } }, tooltip: { callbacks: { label: c => c.dataset.label + ': ' + c.parsed.y.toFixed(1) + '%' } } },
+      scales: { x: { grid: { display: false } }, y: { title: { display: true, text: 'Share of conversations (%)' }, grid: { color: GAIA.GRID } } }
+    }
+  });
+
+  // ---- Figure 3: mean GAIA-E by group, highlight RAIS-heavy groups ----
+  const RAIS_HEAVY = ['Sales & Related', 'Office & Admin Support', 'Production', 'Transportation', 'Food Preparation'];
+  const gmap = {};
+  occ.forEach(r => { const v = GAIA.num(r.gaia_e); if (r.group && v != null) (gmap[r.group] = gmap[r.group] || []).push(v); });
+  const gd = Object.entries(gmap).map(([g, a]) => ({ g, m: GAIA.mean(a) })).sort((a,b) => b.m - a.m);
+  new Chart(document.getElementById('chart3'), {
+    type: 'bar',
+    data: { labels: gd.map(d => d.g), datasets: [{
+      data: gd.map(d => d.m),
+      backgroundColor: gd.map(d => RAIS_HEAVY.includes(d.g) ? GAIA.TEAL : 'rgba(95,116,150,0.65)'),
+      borderColor: gd.map(d => RAIS_HEAVY.includes(d.g) ? GAIA.TEAL_BR : 'transparent'),
+      borderWidth: 1, borderRadius: 3, barThickness: 16
+    }]},
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => 'Mean GAIA-E ' + c.parsed.x.toFixed(3) + (RAIS_HEAVY.includes(gd[c.dataIndex].g) ? ' · RAIS-heavy' : '') } } },
+      scales: { x: { min: 0, title: { display: true, text: 'Mean GAIA-E (teal = heavily represented in Brazilian formal employment)' }, grid: { color: GAIA.GRID } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } }
+    }
+  });
+
+  // ---- Figure 5: stylized DiD event study (placeholder) ----
+  const years = ['2018','2019','2020','2021','2022','2023','2024'];
+  const coef  = [0.3, -0.2, 0.1, 0.0, 0.0, -2.4, -4.1];   // stylized: ~0 pre, drop post-2022
+  const lo    = coef.map((c,i) => c - (i <= 4 ? 1.1 : 1.6));
+  const hi    = coef.map((c,i) => c + (i <= 4 ? 1.1 : 1.6));
+  new Chart(document.getElementById('chart5'), {
+    type: 'line',
+    data: { labels: years, datasets: [
+      { label: 'Upper 95%', data: hi, borderColor: 'transparent', backgroundColor: 'rgba(13,158,118,0.15)', pointRadius: 0, fill: '+1' },
+      { label: 'Lower 95%', data: lo, borderColor: 'transparent', backgroundColor: 'rgba(13,158,118,0.15)', pointRadius: 0, fill: false },
+      { label: 'Coefficient (GAIA-E × post)', data: coef, borderColor: GAIA.TEAL_BR, backgroundColor: GAIA.TEAL_BR, borderWidth: 2, pointRadius: 3, tension: 0.2, fill: false }
+    ]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { filter: l => l.text.indexOf('95%') < 0, color: GAIA.TICK } },
+        tooltip: { filter: i => i.dataset.label.indexOf('95%') < 0, callbacks: { label: c => 'β ≈ ' + c.parsed.y.toFixed(1) + ' (illustrative)' } }
+      },
+      scales: { x: { grid: { display: false } }, y: { title: { display: true, text: 'Coefficient estimate (illustrative)' }, grid: { color: GAIA.GRID } } }
+    },
+    plugins: [vLine('2022', '2022 shock'), { id: 'zeroh', afterDraw(ch){ const y=ch.scales.y.getPixelForValue(0), {left,right}=ch.chartArea, c=ch.ctx; c.save(); c.strokeStyle='rgba(255,255,255,0.25)'; c.beginPath(); c.moveTo(left,y); c.lineTo(right,y); c.stroke(); c.restore(); } }]
+  });
+}
+init().catch(e => { console.error(e); GAIA.toast('Failed to load data'); });
+</script>
+</body>
+</html>

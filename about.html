@@ -269,9 +269,9 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="occupations.html">Occupations</a></li>
       <li><a href="countries.html">Countries</a></li>
+      <li><a href="research.html">Research</a></li>
       <li><a href="trends.html">Trends</a></li>
       <li><a href="about.html" class="active">About</a></li>
-      <li><a href="research.html">Research</a></li>
       <li><a href="usa.html">USA</a></li>
       <li><a href="community.html">Community</a></li>
       <li><a href="license.html">License</a></li>
@@ -347,7 +347,7 @@
     <span class="doi-badge">DOI: 10.5281/zenodo.20320112</span>
     <div class="gaia-box">
       <h3>What GAIA measures</h3>
-      <p>GAIA combines three independent sources — Anthropic's observed Claude.ai usage data, OpenAI's GPT-4 task annotation (Eloundou et al., Science 2024), and the pre-GPT Suitability for Machine Learning baseline (Brynjolfsson et al., AEA 2018) — into a composite AI exposure index at the occupation level, plus a country-level behavioral panel covering 178 countries.</p>
+      <p>GAIA provides two distinct occupation-level AI exposure scores — <strong>GAIA-E</strong> (generative-AI era, Eloundou et al., Science 2024) and <strong>GAIA-B</strong> (pre-generative-AI / supervised-ML era, Brynjolfsson et al., AEA 2018) — plus Anthropic's observed Claude.ai behavioral data and a country-level panel covering 178 countries. The two exposure scores are kept separate because they correlate at only 0.19, capturing distinct technology paradigms.</p>
       <a href="occupations.html" class="btn btn-teal">Occupation Explorer →</a>
       <a href="countries.html" class="btn btn-outline">Country Explorer →</a>
       <button onclick="showWaitlistModal()" class="btn btn-outline">Join the Waitlist →</button>
@@ -359,10 +359,27 @@
     <p class="sec-label">Publications &amp; working papers</p>
     <h2>Selected research</h2>
     <div class="bio-text">
-      <p>4 working papers and publications in AI economics, labor markets, credit markets, and development finance. Papers include PDFs and full abstracts.</p>
+      <p>Working papers in AI economics, labor markets, credit markets, and measurement. Each paper has its own page with figures, abstract, and citation.</p>
+    </div>
+    <div style="margin-top:1.25rem;display:flex;flex-direction:column;gap:.85rem">
+      <a href="paper_gaia_descriptor.html" style="display:block;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:1rem 1.2rem;text-decoration:none">
+        <div style="font-size:.72rem;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Working Paper · 2026</div>
+        <div style="font-family:'Space Grotesk',sans-serif;color:var(--text);font-weight:600;margin:.2rem 0">GAIA: A Global AI Adoption Index</div>
+        <div style="font-size:.85rem;color:var(--muted)">Combining observed usage, theoretical exposure, and pre-GPT baselines across 923 occupations and 138 countries. →</div>
+      </a>
+      <a href="paper_exposure_performance.html" style="display:block;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:1rem 1.2rem;text-decoration:none">
+        <div style="font-size:.72rem;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Preliminary · May 2026</div>
+        <div style="font-family:'Space Grotesk',sans-serif;color:var(--text);font-weight:600;margin:.2rem 0">Exposure Without Performance</div>
+        <div style="font-size:.85rem;color:var(--muted)">Does theoretical AI exposure predict actual AI capability? Evidence from the United States. →</div>
+      </a>
+      <a href="paper_brazil.html" style="display:block;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:1rem 1.2rem;text-decoration:none">
+        <div style="font-size:.72rem;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Forthcoming · 2026</div>
+        <div style="font-family:'Space Grotesk',sans-serif;color:var(--text);font-weight:600;margin:.2rem 0">AI Exposure, Credit Markets, and Employment in Brazil</div>
+        <div style="font-size:.85rem;color:var(--muted)">With Bernardus Van Doornik (Banco Central do Brasil). How AI exposure transmits through bank credit into jobs. →</div>
+      </a>
     </div>
     <div style="margin-top:1.25rem">
-      <a href="research.html" class="btn btn-teal">View all papers →</a>
+      <a href="research.html" class="btn btn-teal">View all research →</a>
     </div>
   </div>
 
@@ -393,8 +410,15 @@
     <div class="method-step">
       <div class="step-num">4</div>
       <div>
-        <p class="step-title">Composite index</p>
-        <p class="step-desc">All measures normalized to 0–1. Composite = mean of OpenAI E1+E2 and SML (full 923-occupation coverage). Three-source composite via PCA available for 177 occupations where Anthropic data matches.</p>
+        <p class="step-title">GAIA-E — Generative-AI Era Exposure</p>
+        <p class="step-desc">Min-max normalization of OpenAI E1+E2 (dv_rating_beta) to [0, 1] across all 923 occupations. Captures how exposed an occupation is to large language models with software tools. Source: Eloundou et al. (Science 2024).</p>
+      </div>
+    </div>
+    <div class="method-step">
+      <div class="step-num">5</div>
+      <div>
+        <p class="step-title">GAIA-B — Pre-GenAI Era Exposure (Supervised ML)</p>
+        <p class="step-desc">Min-max normalization of the SML score to [0, 1] across 605 occupations with non-missing data. Captures suitability for pre-GPT machine learning as of 2018 — a conceptually distinct baseline that correlates only 0.19 with GAIA-E. Source: Brynjolfsson, Mitchell &amp; Rock (AEA 2018).</p>
       </div>
     </div>
   </div>

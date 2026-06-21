@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKNG86S6HH"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QKNG86S6HH');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAIA: A Global AI Adoption Index — Data Descriptor</title>
+  <meta name="description" content="Data descriptor for GAIA: a Global AI Adoption Index combining observed usage, theoretical exposure, and pre-GPT baselines across 923 occupations and 138 countries." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/research.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="occupations.html">Occupations</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="trends.html">Trends</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="usa.html">USA</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="license.html">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span>›</span><a href="research.html">Research</a><span>›</span><span class="current">GAIA Data Descriptor</span>
+</div>
+
+<div class="paper-layout">
+  <article>
+    <!-- Header -->
+    <header class="paper-head section" id="top" style="margin-top:1rem">
+      <div class="eyebrow">Data Descriptor</div>
+      <h1>GAIA: A Global AI Adoption Index Combining Observed Usage, Theoretical Exposure, and Pre-GPT Baselines Across 923 Occupations and 138 Countries</h1>
+      <div class="authors">Leila Aghabarari</div>
+      <div class="affil">International Finance Corporation, World Bank Group</div>
+      <div class="meta-row">
+        <span class="badge badge-working">Working Paper</span>
+        <span class="pc-date" style="color:var(--faint);font-size:.8rem">2026</span>
+        <span class="badge badge-doi">DOI: 10.5281/zenodo.20320112</span>
+      </div>
+      <div class="abstract">
+        <strong>Abstract.</strong> Research on AI and work has fragmented into three measurement traditions that rarely speak to each other: <strong>observed usage</strong> from AI platform logs, <strong>theoretical exposure</strong> from task-level ratings, and <strong>pre-GPT baselines</strong> capturing prior automation and digital adoption. GAIA — the Global AI Adoption Index — harmonizes all three onto a single crosswalk, covering 923 O*NET occupations and 138 countries. This descriptor documents the index construction, variables, and coverage, and shows that observed usage and theoretical exposure diverge substantially, implying that the choice of measure materially changes conclusions about who is exposed to AI.
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-primary" onclick="showWaitlistModal()">⤓ Download PDF</button>
+        <button class="btn" id="citeBtn">❝ Cite</button>
+        <button class="btn" onclick="GAIA.sharePage()">↗ Share</button>
+      </div>
+    </header>
+
+    <!-- Figure 1 -->
+    <section class="figure" id="fig1">
+      <div class="fig-head">
+        <div class="fig-title">Figure 1 · Distribution of GAIA-E across 923 occupations</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart1','gaia_fig1_distribution.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Histogram of the GAIA-E exposure score (0–1). Dashed line marks the mean.</div>
+      <div class="chart-box" style="height:340px"><canvas id="chart1"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_occupations.csv · GAIA-E (gaia_e)</span></div>
+    </section>
+
+    <!-- Figure 2 -->
+    <section class="figure" id="fig2">
+      <div class="fig-head">
+        <div class="fig-title">Figure 2 · OpenAI exposure vs. SML score</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart2','gaia_fig2_scatter.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Each dot is an occupation, colored by major occupation group. Two theoretical measures, weakly aligned.</div>
+      <div class="chart-box" style="height:460px"><canvas id="chart2"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_occupations.csv · OpenAI Eloundou β (dv_rating_beta) vs. SML (sml_score)</span></div>
+    </section>
+
+    <!-- Figure 3 -->
+    <section class="figure" id="fig3">
+      <div class="fig-head">
+        <div class="fig-title">Figure 3 · Top 20 and bottom 20 occupations by GAIA-E</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart3','gaia_fig3_topbottom.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Most-exposed (teal) and least-exposed (rose) occupations by GAIA-E.</div>
+      <div class="chart-box" style="height:880px"><canvas id="chart3"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_occupations.csv · GAIA-E (gaia_e)</span></div>
+    </section>
+
+    <!-- Figure 4 -->
+    <section class="figure" id="fig4">
+      <div class="fig-head">
+        <div class="fig-title">Figure 4 · Country panel — usage vs. work-use, sized by GAIA-A</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart4','gaia_fig4_countries.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Bubble = country. x: global usage share · y: work use-case share · size: GAIA-A adoption score · color: income group.</div>
+      <div class="chart-box" style="height:460px"><canvas id="chart4"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_countries.csv · usage_pct_global, uc_work, gaia_a, income_group</span></div>
+    </section>
+
+    <!-- Figure 5 -->
+    <section class="figure" id="fig5">
+      <div class="fig-head">
+        <div class="fig-title">Figure 5 · Mean GAIA-E by major occupation group</div>
+        <button class="btn btn-sm" onclick="GAIA.downloadPNG('chart5','gaia_fig5_bygroup.png')">⤓ PNG</button>
+      </div>
+      <div class="fig-sub">Average GAIA-E exposure within each major occupation group, ranked highest to lowest.</div>
+      <div class="chart-box" style="height:560px"><canvas id="chart5"></canvas></div>
+      <div class="fig-foot"><span class="fig-source">Source: data/gaia_occupations.csv · GAIA-E (gaia_e) by group</span></div>
+    </section>
+
+    <!-- Key findings -->
+    <section class="section" id="findings">
+      <h2>Key findings</h2>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-val" id="statOcc">—</div><div class="stat-lbl">Occupations scored on a common O*NET crosswalk</div></div>
+        <div class="stat-box"><div class="stat-val" id="statCty">—</div><div class="stat-lbl">Countries with harmonized usage &amp; adoption measures</div></div>
+        <div class="stat-box"><div class="stat-val" id="statMean">—</div><div class="stat-lbl">Mean GAIA-E across occupations (0–1 scale)</div></div>
+      </div>
+    </section>
+
+    <!-- Data access -->
+    <section class="section" id="data">
+      <h2>Data access</h2>
+      <p>GAIA data is currently available by request. The full occupation- and country-level datasets, the Zenodo deposit, and the variable codebook are released to approved users via the waitlist.</p>
+      <div class="head-actions">
+        <button class="btn btn-primary" onclick="showWaitlistModal()">⤓ Download CSV</button>
+        <button class="btn" onclick="showWaitlistModal()">Zenodo DOI: 10.5281/zenodo.20320112</button>
+        <button class="btn" onclick="showWaitlistModal()">Codebook</button>
+      </div>
+    </section>
+  </article>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h4>Paper</h4>
+    <div class="s-title">GAIA: A Global AI Adoption Index</div>
+    <div class="s-authors">Leila Aghabarari · IFC, WBG · 2026</div>
+    <h4>Figures</h4>
+    <nav class="fig-nav">
+      <a href="#fig1">Fig 1 · GAIA-E distribution</a>
+      <a href="#fig2">Fig 2 · Exposure vs. SML</a>
+      <a href="#fig3">Fig 3 · Top / bottom 20</a>
+      <a href="#fig4">Fig 4 · Country panel</a>
+      <a href="#fig5">Fig 5 · GAIA-E by group</a>
+      <a href="#findings">Key findings</a>
+      <a href="#data">Data access</a>
+    </nav>
+    <div class="s-actions">
+      <button class="btn btn-block btn-primary" onclick="showWaitlistModal()">⤓ Download PDF</button>
+      <button class="btn btn-block" id="citeBtn2">❝ Cite (BibTeX)</button>
+      <button class="btn btn-block" onclick="GAIA.sharePage()">↗ Share</button>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
+    <p>Built by <a href="about.html">Leila Aghabarari</a></p>
+    <p style="max-width:600px">The views, analysis, and content on this site are entirely my own and do not represent the views of the International Finance Corporation, the World Bank Group, or any affiliated organization.</p>
+    <p>© 2026 Leila Aghabarari · GAIA — Global AI Adoption Index · <a href="license.html">CC BY 4.0</a> · DOI: 10.5281/zenodo.20320112</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="assets/research.js"></script>
+<script src="assets/gaia-waitlist.js"></script>
+<script>
+const BIBTEX = `@misc{aghabarari2026gaia,
+  author = {Aghabarari, Leila},
+  title  = {{GAIA}: A Global {AI} Adoption Index Combining Observed Usage, Theoretical Exposure, and Pre-GPT Baselines Across 923 Occupations and 138 Countries},
+  year   = {2026},
+  note   = {Working paper},
+  doi    = {10.5281/zenodo.20320112}
+}`;
+document.getElementById('citeBtn').onclick = () => GAIA.copyCite(BIBTEX);
+document.getElementById('citeBtn2').onclick = () => GAIA.copyCite(BIBTEX);
+
+// Vertical mean line for a category-axis histogram
+const meanLine = {
+  id: 'meanLine',
+  afterDraw(chart) {
+    const mi = chart.$meanInfo; if (!mi) return;
+    const xa = chart.scales.x, { top, bottom } = chart.chartArea;
+    const idx = (mi.value - (mi.min + mi.w/2)) / mi.w;
+    const lo = Math.max(0, Math.min(mi.n-1, Math.floor(idx)));
+    const hi = Math.min(mi.n-1, lo+1), frac = Math.max(0, Math.min(1, idx-lo));
+    const x = xa.getPixelForValue(lo) + frac * (xa.getPixelForValue(hi) - xa.getPixelForValue(lo));
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.strokeStyle = '#e0a83b'; ctx.lineWidth = 2; ctx.setLineDash([5,4]);
+    ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke();
+    ctx.setLineDash([]); ctx.fillStyle = '#e0a83b'; ctx.font = '600 11px Inter';
+    ctx.fillText('mean ' + mi.value.toFixed(2), x + 6, top + 13);
+    ctx.restore();
+  }
+};
+
+async function init() {
+  GAIA.applyChartDefaults();
+  const [occ, cty] = await Promise.all([
+    GAIA.loadCSV('data/gaia_occupations.csv'),
+    GAIA.loadCSV('data/gaia_countries.csv')
+  ]);
+
+  // ---- Key-finding stat boxes (computed from data) ----
+  const gaiaE = occ.map(r => GAIA.num(r.gaia_e)).filter(v => v != null);
+  document.getElementById('statOcc').textContent = occ.length.toLocaleString();
+  document.getElementById('statCty').textContent = cty.length.toLocaleString();
+  document.getElementById('statMean').textContent = GAIA.mean(gaiaE).toFixed(3);
+
+  // ---- Figure 1: GAIA-E histogram ----
+  const maxE = Math.ceil(Math.max(...gaiaE) * 10) / 10;
+  const h = GAIA.histogram(gaiaE, 20, 0, maxE);
+  const c1 = new Chart(document.getElementById('chart1'), {
+    type: 'bar',
+    data: { labels: h.labels.map(v => v.toFixed(2)), datasets: [{ data: h.counts, backgroundColor: GAIA.TEAL, borderColor: GAIA.TEAL_BR, borderWidth: 1, borderRadius: 2 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { title: i => 'GAIA-E ≈ ' + i[0].label, label: i => i.parsed.y + ' occupations' } } },
+      scales: { x: { title: { display: true, text: 'GAIA-E (0–1)' }, grid: { display: false } }, y: { title: { display: true, text: 'Occupations' }, grid: { color: GAIA.GRID } } }
+    },
+    plugins: [meanLine]
+  });
+  c1.$meanInfo = { value: GAIA.mean(gaiaE), min: 0, w: h.w, n: 20 }; c1.update();
+
+  // ---- Figure 2: OpenAI exposure (dv_rating_beta) vs SML, colored by group ----
+  const groups = [...new Set(occ.map(r => r.group).filter(Boolean))].sort();
+  const ds2 = groups.map(g => ({
+    label: g,
+    data: occ.filter(r => r.group === g && GAIA.num(r.dv_rating_beta) != null && GAIA.num(r.sml_score) != null)
+              .map(r => ({ x: GAIA.num(r.dv_rating_beta), y: GAIA.num(r.sml_score), t: r.Title })),
+    backgroundColor: GAIA.colorFor(g, groups), pointRadius: 3, pointHoverRadius: 6
+  }));
+  new Chart(document.getElementById('chart2'), {
+    type: 'scatter',
+    data: { datasets: ds2 },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9 }, color: GAIA.TICK } },
+        tooltip: { callbacks: { title: () => '', label: c => c.raw.t, afterLabel: c => c.dataset.label + ' · β ' + c.parsed.x.toFixed(0) + ' · SML ' + c.parsed.y.toFixed(0) } }
+      },
+      scales: {
+        x: { title: { display: true, text: 'OpenAI exposure (Eloundou β)' }, grid: { color: GAIA.GRID } },
+        y: { title: { display: true, text: 'SML score' }, grid: { color: GAIA.GRID } }
+      }
+    }
+  });
+
+  // ---- Figure 3: top 20 / bottom 20 by GAIA-E ----
+  const sorted = occ.filter(r => GAIA.num(r.gaia_e) != null).sort((a,b) => GAIA.num(b.gaia_e) - GAIA.num(a.gaia_e));
+  const top20 = sorted.slice(0, 20), bot20 = sorted.slice(-20);
+  const tb = [...top20, ...bot20];
+  new Chart(document.getElementById('chart3'), {
+    type: 'bar',
+    data: {
+      labels: tb.map(r => r.Title),
+      datasets: [{
+        data: tb.map(r => GAIA.num(r.gaia_e)),
+        backgroundColor: tb.map((_, i) => i < 20 ? GAIA.TEAL : '#e0607a'),
+        borderRadius: 2, barThickness: 12
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => 'GAIA-E ' + c.parsed.x.toFixed(3) } } },
+      scales: { x: { min: 0, max: 1, title: { display: true, text: 'GAIA-E' }, grid: { color: GAIA.GRID } }, y: { grid: { display: false }, ticks: { font: { size: 9 } } } }
+    }
+  });
+
+  // ---- Figure 4: country bubble ----
+  const incGroups = [...new Set(cty.map(r => r.income_group).filter(Boolean))];
+  const ds4 = incGroups.map(ig => ({
+    label: ig,
+    data: cty.filter(r => r.income_group === ig && GAIA.num(r.usage_pct_global) != null && GAIA.num(r.uc_work) != null)
+             .map(r => ({ x: GAIA.num(r.usage_pct_global), y: GAIA.num(r.uc_work), r: 4 + (GAIA.num(r.gaia_a) || 0) * 22, t: r.country_name, a: GAIA.num(r.gaia_a) })),
+    backgroundColor: GAIA.colorFor('inc_' + ig, incGroups.map(x => 'inc_' + x)) + 'cc',
+    borderColor: '#0A1628', borderWidth: 1
+  }));
+  new Chart(document.getElementById('chart4'), {
+    type: 'bubble',
+    data: { datasets: ds4 },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 }, color: GAIA.TICK } },
+        tooltip: { callbacks: { title: () => '', label: c => c.raw.t, afterLabel: c => c.dataset.label + ' · usage ' + c.parsed.x.toFixed(1) + '% · work ' + c.parsed.y.toFixed(1) + '% · GAIA-A ' + (c.raw.a != null ? c.raw.a.toFixed(2) : '—') } }
+      },
+      scales: {
+        x: { title: { display: true, text: 'Global usage share (%)' }, type: 'logarithmic', grid: { color: GAIA.GRID } },
+        y: { title: { display: true, text: 'Work use-case share (%)' }, grid: { color: GAIA.GRID } }
+      }
+    }
+  });
+
+  // ---- Figure 5: mean GAIA-E by group ----
+  const gmap = {};
+  occ.forEach(r => { const v = GAIA.num(r.gaia_e); if (r.group && v != null) { (gmap[r.group] = gmap[r.group] || []).push(v); } });
+  const gd = Object.entries(gmap).map(([g, a]) => ({ g, m: GAIA.mean(a) })).sort((a,b) => b.m - a.m);
+  new Chart(document.getElementById('chart5'), {
+    type: 'bar',
+    data: { labels: gd.map(d => d.g), datasets: [{ data: gd.map(d => d.m), backgroundColor: gd.map(d => GAIA.colorFor(d.g, groups)), borderRadius: 3, barThickness: 16 }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => 'Mean GAIA-E ' + c.parsed.x.toFixed(3) } } },
+      scales: { x: { min: 0, title: { display: true, text: 'Mean GAIA-E' }, grid: { color: GAIA.GRID } }, y: { grid: { display: false }, ticks: { font: { size: 10 } } } }
+    }
+  });
+}
+init().catch(e => { console.error(e); GAIA.toast('Failed to load data'); });
+</script>
+</body>
+</html>

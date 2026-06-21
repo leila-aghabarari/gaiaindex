@@ -587,9 +587,9 @@
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="occupations.html">Occupations</a></li>
       <li><a href="countries.html">Countries</a></li>
+      <li><a href="research.html">Research</a></li>
       <li><a href="trends.html">Trends</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="research.html">Research</a></li>
       <li><a href="usa.html">USA</a></li>
       <li><a href="community.html">Community</a></li>
       <li><a href="license.html">License</a></li>
@@ -609,7 +609,7 @@
       </a>
     </div>
     <p class="hero-sub">
-      GAIA combines observed AI usage data, theoretical exposure measures, and pre-generative AI baselines into a unified index tracking how artificial intelligence is reshaping work across occupations and economies worldwide.
+      GAIA provides two distinct occupation-level AI exposure scores — <strong>GAIA-E</strong> (generative-AI era, Eloundou et al. 2024) and <strong>GAIA-B</strong> (supervised-ML era, Brynjolfsson et al. 2018) — plus Anthropic's observed Claude.ai behavioral data across 178 countries. The two scores capture different technology paradigms and are kept separate by design.
     </p>
     <div class="hero-actions">
       <a href="occupations.html" class="btn btn-primary">Explore Occupations ↗</a>
@@ -694,7 +694,7 @@
     <div class="section-label">Occupation exposure</div>
     <h2 class="section-title">Which jobs are most — and least — exposed to AI?</h2>
     <p class="section-desc">
-      AI-rated exposure (beta) estimates the share of tasks within an occupation that AI can meaningfully assist with. Knowledge-intensive roles lead; physical and service roles trail.
+      <strong>GAIA-E</strong> (Eloundou et al. 2024) estimates the share of tasks performable by GPT-4 with software tools — the generative-AI era measure. Knowledge-intensive roles lead; physical and service roles trail. See also <a href="occupations.html"><strong>GAIA-B</strong></a> (Brynjolfsson et al. 2018) for the pre-generative-AI supervised-ML baseline.
     </p>
 
     <div class="occ-grid">
@@ -831,6 +831,46 @@
         <div class="name">None / Other</div>
         <div class="desc">Unclassified or minimal interaction patterns</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- RESEARCH PREVIEW -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Research</div>
+    <h2 class="section-title">Papers behind the index</h2>
+    <p class="section-desc">
+      Working papers on measuring AI exposure, testing whether theoretical exposure predicts real capability, and tracing AI's effects through credit markets and employment.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-top:1.5rem">
+
+      <a href="paper_gaia_descriptor.html" style="display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;text-decoration:none;transition:transform .15s,border-color .15s" onmouseover="this.style.transform='translateY(-3px)';this.style.borderColor='var(--teal)'" onmouseout="this.style.transform='';this.style.borderColor='var(--border)'">
+        <span class="tag" style="align-self:flex-start;margin-top:0">Working Paper · 2026</span>
+        <h3 style="font-family:'Space Grotesk',sans-serif;color:var(--text);font-size:1.05rem;line-height:1.3;margin:.7rem 0 .45rem">GAIA: A Global AI Adoption Index</h3>
+        <p style="color:var(--muted);font-size:.88rem;flex:1;margin:0">Observed usage, theoretical exposure, and pre-GPT baselines across 923 occupations and 138 countries.</p>
+        <span style="color:var(--teal);font-weight:600;font-size:.85rem;margin-top:.9rem">Read paper →</span>
+      </a>
+
+      <a href="paper_exposure_performance.html" style="display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;text-decoration:none;transition:transform .15s,border-color .15s" onmouseover="this.style.transform='translateY(-3px)';this.style.borderColor='var(--teal)'" onmouseout="this.style.transform='';this.style.borderColor='var(--border)'">
+        <span class="tag" style="align-self:flex-start;margin-top:0">Preliminary · May 2026</span>
+        <h3 style="font-family:'Space Grotesk',sans-serif;color:var(--text);font-size:1.05rem;line-height:1.3;margin:.7rem 0 .45rem">Exposure Without Performance</h3>
+        <p style="color:var(--muted);font-size:.88rem;flex:1;margin:0">Does theoretical AI exposure predict actual AI capability? Evidence from the United States — and a surprising negative result.</p>
+        <span style="color:var(--teal);font-weight:600;font-size:.85rem;margin-top:.9rem">Read paper →</span>
+      </a>
+
+      <a href="paper_brazil.html" style="display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;text-decoration:none;transition:transform .15s,border-color .15s" onmouseover="this.style.transform='translateY(-3px)';this.style.borderColor='var(--teal)'" onmouseout="this.style.transform='';this.style.borderColor='var(--border)'">
+        <span class="tag" style="align-self:flex-start;margin-top:0">Forthcoming · 2026</span>
+        <h3 style="font-family:'Space Grotesk',sans-serif;color:var(--text);font-size:1.05rem;line-height:1.3;margin:.7rem 0 .45rem">AI Exposure, Credit Markets &amp; Employment in Brazil</h3>
+        <p style="color:var(--muted);font-size:.88rem;flex:1;margin:0">How occupational AI exposure transmits through bank credit into employment and wages, with Banco Central do Brasil.</p>
+        <span style="color:var(--teal);font-weight:600;font-size:.85rem;margin-top:.9rem">Read paper →</span>
+      </a>
+
+    </div>
+    <div style="margin-top:1.5rem">
+      <a href="research.html" class="btn btn-ghost">View all research →</a>
     </div>
   </div>
 </section>
