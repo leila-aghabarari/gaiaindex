@@ -1,0 +1,175 @@
+/* ============================================================================
+   GAIA shared UI layer — clarity components
+   Built on the light-theme design tokens shared by all data pages:
+   --teal --card --border --muted --faint --bg --surface --teal-glow --text
+   (Avoid --teal-dim / --cyan: not present on trends.html.)
+   Drop-in: link this AFTER a page's inline <style> so tokens resolve.
+   ============================================================================ */
+
+/* ---- Shared layout helper: keep new bands aligned with page content -------
+   Bands align to the page's content width via --gaia-maxw. Default 1200px;
+   pages whose content is wider (e.g. 1300px viz-panels) set
+   :root { --gaia-maxw: 1300px } in their inline <style>. */
+.gaia-wrap {
+  max-width: var(--gaia-maxw, 1200px);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ---- 1. Key findings band ------------------------------------------------- */
+/* Orients the reader before any chart: 3–4 plain-language takeaways. */
+.gaia-keyfindings {
+  max-width: var(--gaia-maxw, 1200px);
+  margin: 1.5rem auto 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem 1.4rem;
+}
+
+.gaia-kf-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+.gaia-kf-label::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+
+.gaia-kf-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem 2rem;
+  margin: 0; padding: 0;
+}
+
+.gaia-kf-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+.gaia-kf-list li strong { color: var(--teal); font-weight: 600; }
+
+.gaia-kf-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0; top: 0;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+/* ---- 2. "What this means" chart caption ----------------------------------- */
+/* Sits directly under a chart and states the takeaway in plain language. */
+.gaia-take {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--border);
+}
+.gaia-take b, .gaia-take strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.gaia-take::before {
+  content: "What this means";
+  display: block;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.3rem;
+}
+
+/* ---- 3. Progressive disclosure: collapsible secondary charts -------------- */
+/* Native <details> — no JS. Keeps headline charts visible, folds the rest. */
+.gaia-collapse {
+  max-width: var(--gaia-maxw, 1200px);
+  margin: 1.25rem auto 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.gaia-collapse > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+  user-select: none;
+  transition: background 0.15s;
+}
+.gaia-collapse > summary:hover { background: var(--surface); }
+.gaia-collapse > summary::-webkit-details-marker { display: none; }
+.gaia-collapse > summary::before {
+  content: "▸";
+  color: var(--teal);
+  font-size: 0.85rem;
+  transition: transform 0.2s;
+}
+.gaia-collapse[open] > summary::before { transform: rotate(90deg); }
+.gaia-collapse > summary .gaia-sum-sub {
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--faint);
+  margin-left: auto;
+}
+.gaia-collapse > .gaia-collapse-body {
+  padding: 0.5rem 1.4rem 1.4rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ---- 4. Small chart head: title + units chip ------------------------------ */
+.gaia-chart-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.gaia-chart-head .gaia-chart-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+.gaia-units-chip {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--teal);
+  background: var(--teal-glow);
+  border: 1px solid var(--teal);
+  border-radius: 2rem;
+  padding: 0.12rem 0.6rem;
+  white-space: nowrap;
+}
+
+/* ---- Responsive ----------------------------------------------------------- */
+@media (max-width: 768px) {
+  .gaia-wrap { padding: 0 1.25rem; }
+  .gaia-keyfindings { margin: 1.25rem 1.25rem 0.5rem; }
+  .gaia-kf-list { grid-template-columns: 1fr; gap: 0.6rem; }
+  .gaia-collapse { margin: 1rem 1.25rem 0; }
+}

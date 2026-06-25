@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
+  <script src="assets/gaia-charts.js"></script>
+  <link rel="stylesheet" href="assets/gaia-ui.css" />
   <style>
     :root {
       --bg:        #f4f7fc;
@@ -24,6 +26,7 @@
       --text:      #0e1f2e;
       --muted:     #4a7060;
       --faint:     #7aada5;
+      --gaia-maxw: 1300px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -235,10 +238,12 @@
     <div class="chart-card">
       <h3>Use Case Breakdown — US vs. Peers</h3>
       <div class="chart-wrap"><canvas id="useCaseChart"></canvas></div>
+      <p class="gaia-take">The US tilts more toward <b>personal</b> use than peers like Brazil and India, where AI is used more heavily for work. High volume, but proportionally less of it is professional.</p>
     </div>
     <div class="chart-card">
       <h3>Collaboration Style — US vs. Peers</h3>
       <div class="chart-wrap"><canvas id="collabChart"></canvas></div>
+      <p class="gaia-take">Shows <b>how</b> Americans work with AI — giving directions, iterating, or learning — compared to other countries. Differences here hint at how mature each market's AI use is.</p>
     </div>
   </div>
 
@@ -249,6 +254,7 @@
       <p style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:.35rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
     </div>
     <div class="chart-wrap"><canvas id="gaiaScoreChart"></canvas></div>
+    <p class="gaia-take">Two scores side by side: <b>GAIA-A</b> (how much a country actually adopts AI) and <b>GAIA-R</b> (how ready/exposed it is). The US scores high on both — near the top globally.</p>
   </div>
 </div>
 
@@ -328,6 +334,9 @@
   <h2 class="sec-title">Wages, Job Openings &amp; Unemployment — Before and After ChatGPT</h2>
   <p class="sec-desc">Three labor market dimensions by industry from the St. Louis Fed FRED database, 2020–2026. The vertical line marks November 2022. High-AI-exposure industries (Information, Prof/Business) show distinct earnings and openings trajectories.</p>
 
+  <details class="gaia-collapse">
+   <summary>Industry labor-market charts <span class="gaia-sum-sub">earnings · openings · unemployment, 2020–2026 — click to expand</span></summary>
+   <div class="gaia-collapse-body">
   <div class="tab-bar">
     <button class="tab-btn active" onclick="switchFredTab('earnings')">Avg Hourly Earnings</button>
     <button class="tab-btn" onclick="switchFredTab('openings')">Job Openings</button>
@@ -365,6 +374,8 @@
     <h3>Pre vs. Post ChatGPT — Average Hourly Earnings by Industry</h3>
     <div class="chart-wrap"><canvas id="fredEarningsBarChart"></canvas></div>
   </div>
+   </div>
+  </details>
 </div>
 
 <!-- ── SECTION 6: JOLTS ── -->
@@ -380,6 +391,9 @@
     <div class="stat-chip"><div class="stat-chip-val">−23%</div><div class="stat-chip-label">Quit rate change post-Nov 2022</div></div>
   </div>
 
+  <details class="gaia-collapse">
+   <summary>Hiring, quits &amp; layoffs charts <span class="gaia-sum-sub">JOLTS monthly series, 2020–2026 — click to expand</span></summary>
+   <div class="gaia-collapse-body">
   <div class="chart-card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
       <h3 style="margin:0">Total Nonfarm — Hires, Quits &amp; Layoffs (Monthly Rate, 2020–2026)</h3>
@@ -394,6 +408,8 @@
     <h3>Industry Comparison — Average Quit Rate Pre vs. Post ChatGPT</h3>
     <div class="chart-wrap"><canvas id="joltsIndustryChart"></canvas></div>
   </div>
+   </div>
+  </details>
 </div>
 
 <!-- ── SECTION 7: O*NET TASKS ── -->
@@ -431,6 +447,9 @@
     <div class="stat-chip"><div class="stat-chip-val">227</div><div class="stat-chip-label">Weeks of data</div></div>
   </div>
 
+  <details class="gaia-collapse">
+   <summary>Search-interest charts <span class="gaia-sum-sub">national trend + by-state breakdown — click to expand</span></summary>
+   <div class="gaia-collapse-body">
   <div class="chart-card">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
       <h3 style="margin:0">Weekly "ChatGPT" Search Interest — United States (Jan 2022 – May 2026)</h3>
@@ -449,6 +468,8 @@
     </div>
     <div class="chart-wrap xtall"><canvas id="statesChart"></canvas></div>
   </div>
+   </div>
+  </details>
 </div>
 
 </div><!-- /content -->

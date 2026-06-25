@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
+  <script src="assets/gaia-charts.js"></script>
+  <link rel="stylesheet" href="assets/gaia-ui.css" />
   <style>
     :root {
       --bg:        #f0f4fa;
@@ -137,6 +139,17 @@
   </div>
 </div>
 
+<!-- KEY FINDINGS — orients the reader before the charts -->
+<aside class="gaia-keyfindings" aria-label="Key findings">
+  <div class="gaia-kf-label">Key findings</div>
+  <ul class="gaia-kf-list">
+    <li><strong>Awareness spread in waves.</strong> ChatGPT search interest hit the US and West Africa first, then diffused to Southeast Asia over the following year.</li>
+    <li><strong>Work use is rising.</strong> Across releases, the work share of AI requests has grown — AI is moving from novelty into routine professional use.</li>
+    <li><strong>Directive use leads, learning is catching up.</strong> Giving the AI instructions dominates, but using AI to learn has grown steadily since early 2025.</li>
+    <li><strong>Explore any country.</strong> The explorer at the bottom lets you track one country's collaboration mix against the global average.</li>
+  </ul>
+</aside>
+
 <div class="content">
 
   <!-- ── Google Trends: ChatGPT Shock Wave ─────────────────────────────────── -->
@@ -155,17 +168,19 @@
         <button class="tog"        onclick="gtSetSmooth(8,this)">8-week</button>
       </div>
       <div style="position:relative;height:360px"><canvas id="gtLineChart"></canvas></div>
+      <p class="gaia-take">Each line is one country's search interest in &ldquo;ChatGPT,&rdquo; scaled to its own peak. The near-vertical jump after Nov&nbsp;2022 shows how fast awareness arrived — but it didn't arrive everywhere at once.</p>
       <p class="chart-note">Source: Google Trends via pytrends. Index 0&ndash;100, each country normalised to its own peak week (100 = maximum interest ever recorded in that country). Click legend labels to toggle countries.</p>
     </div>
 
-    <div class="card">
-      <div style="margin-bottom:1rem">
-        <div class="section-tag" style="margin-bottom:.25rem">Shock diffusion timeline</div>
-        <p style="font-size:.85rem;color:var(--muted)">Each bar spans from first notable awareness (index &ge;&thinsp;10) to peak interest. Sorted by earliest awareness. <strong style="color:var(--teal)">&bull;</strong> first awareness &nbsp;&nbsp; <strong style="color:#ef4444">&bull;</strong> peak</p>
+    <details class="gaia-collapse">
+      <summary>Shock diffusion timeline <span class="gaia-sum-sub">when each country woke up to ChatGPT — click to expand</span></summary>
+      <div class="gaia-collapse-body">
+        <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Each bar spans from first notable awareness (index &ge;&thinsp;10) to peak interest. Sorted by earliest awareness. <strong style="color:var(--teal)">&bull;</strong> first awareness &nbsp;&nbsp; <strong style="color:#ef4444">&bull;</strong> peak</p>
+        <div style="position:relative;height:380px"><canvas id="gtShockChart"></canvas></div>
+        <p class="gaia-take">The gap between the two dots is how long a country took to go from first noticing ChatGPT to peak interest. The US and Nigeria moved within weeks; others took the better part of a year.</p>
+        <p class="chart-note">Source: Google Trends via pytrends. US and Nigeria were first (Dec 2022, within weeks of ChatGPT&rsquo;s launch); Indonesia last of this group (Sep 2023). All 13 countries peaked in 2025 following subsequent AI product cycles.</p>
       </div>
-      <div style="position:relative;height:380px"><canvas id="gtShockChart"></canvas></div>
-      <p class="chart-note">Source: Google Trends via pytrends. US and Nigeria were first (Dec 2022, within weeks of ChatGPT&rsquo;s launch); Indonesia last of this group (Sep 2023). All 13 countries peaked in 2025 following subsequent AI product cycles.</p>
-    </div>
+    </details>
   </div>
 
   <hr class="divider" />
@@ -183,6 +198,7 @@
         <button class="tog" id="uc-t1" onclick="setUCTime(1)">Feb 2026</button>
       </div>
       <div style="position:relative;height:340px"><canvas id="ucChart"></canvas></div>
+      <p class="gaia-take">Each bar splits a country's AI requests into work, personal and coursework. Toggle the dates to see the mix shift — work's slice grows in most countries between Nov&nbsp;2025 and Feb&nbsp;2026.</p>
       <p class="chart-note">Source: Anthropic Economic Index releases Nov 2025 &amp; Feb 2026. Country-level use-case breakdown. Top 10 countries by average Claude.ai usage share.</p>
     </div>
   </div>
@@ -198,6 +214,7 @@
     </div>
     <div class="card">
       <div style="position:relative;height:340px"><canvas id="collabChart"></canvas></div>
+      <p class="gaia-take">Tracks <b>how</b> people work with AI over five releases. Directive use (telling AI what to do) leads, but the steady climb in learning suggests people increasingly use AI to understand, not just to execute.</p>
       <p class="chart-note">Source: All 5 AEI releases. Global aggregate. Directive = AI executes user instructions. Learning = user asks AI to explain or teach. Task iteration = back-and-forth refinement.</p>
     </div>
   </div>
@@ -218,6 +235,7 @@
       </div>
       <div class="country-stat-row" id="cstatRow"></div>
       <div style="position:relative;height:320px"><canvas id="countryChart"></canvas></div>
+      <p class="gaia-take">Pick a country to see whether its people lean more on AI to <b>do</b> (directive) or to <b>learn</b>, and how that's changed. The dashed lines are the global average for comparison.</p>
       <p class="chart-note">Source: AEI releases Aug 2025, Nov 2025, Feb 2026. Country-level collaboration mode breakdown. Dashed = global average for that release.</p>
     </div>
   </div>

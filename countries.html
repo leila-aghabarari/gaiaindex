@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
+  <script src="assets/gaia-charts.js"></script>
+  <link rel="stylesheet" href="assets/gaia-ui.css" />
   <style>
     :root {
       --bg:        #f4f7fc;
@@ -847,6 +849,17 @@
   <p>How countries use Claude.ai — work vs personal, collaboration style, task success. Week of Feb 5–12, 2026.</p>
 </div>
 
+<!-- KEY FINDINGS — orients the reader before the charts -->
+<aside class="gaia-keyfindings" aria-label="Key findings">
+  <div class="gaia-kf-label">Key findings</div>
+  <ul class="gaia-kf-list">
+    <li><strong>Usage is concentrated.</strong> A handful of high-income countries account for most Claude.ai traffic — adoption is far from evenly spread across the 178 tracked.</li>
+    <li><strong>Richer countries lean more on AI for work.</strong> Work-use share rises with income; lower-income countries skew toward personal and learning use.</li>
+    <li><strong>Enthusiasm ≠ adoption.</strong> In the bubble chart, some countries show high AI sentiment but modest actual work use — and vice versa.</li>
+    <li><strong>Two country lenses.</strong> GAIA-A captures observed adoption; GAIA-R captures readiness/exposure. Use the sort menu to compare them.</li>
+  </ul>
+</aside>
+
 <div class="controls">
   <select id="incomeFilter">
     <option value="">All income groups</option>
@@ -891,16 +904,18 @@
 <!-- Charts -->
 <div class="viz-panel">
   <div class="viz-card">
-    <div class="viz-card-title" id="barChartTitle">Top Countries — click bar for detail</div>
+    <div class="viz-card-title" id="barChartTitle">Top countries — click a bar for detail</div>
     <div class="chart-area" style="height:300px">
       <canvas id="topBar"></canvas>
     </div>
+    <p class="gaia-take">Ranks countries by the metric in the sort menu (default: share of global Claude.ai usage). Click any bar to load that country's full profile below.</p>
   </div>
   <div class="viz-card">
-    <div class="viz-card-title">Work Use % vs AI Sentiment — bubble size = Claude traffic share</div>
+    <div class="viz-card-title">Work use (%) vs AI sentiment — bubble size = share of Claude traffic</div>
     <div class="chart-area" style="height:300px">
       <canvas id="scatterChart"></canvas>
     </div>
+    <p class="gaia-take">Each bubble is a country: how much it uses AI <b>for work</b> (x) against how <b>positive</b> people feel about AI (y). Big bubbles are heavy users. Enthusiasm and actual work use don't always line up.</p>
   </div>
 </div>
 

@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
+  <script src="assets/gaia-charts.js"></script>
+  <link rel="stylesheet" href="assets/gaia-ui.css" />
   <style>
     :root {
       --bg:        #f4f7fc;
@@ -24,6 +26,7 @@
       --text:      #1a2635;
       --muted:     #5b7a96;
       --faint:     #96b2c8;
+      --gaia-maxw: 1300px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -203,6 +206,42 @@
       color: var(--muted);
     }
 
+    /* Expandable ACS demographic detail row */
+    tbody tr.occ-row { cursor: pointer; }
+    .td-title .exp {
+      display: inline-block; width: .85em; margin-right: .25rem;
+      color: var(--faint); font-size: .7rem;
+      transition: transform .15s ease, color .15s ease;
+    }
+    tbody tr.occ-row.open .exp { transform: rotate(90deg); color: var(--teal); }
+    tr.detail-row { display: none; }
+    tr.detail-row.show { display: table-row; }
+    tr.detail-row:hover { background: transparent; }
+    tr.detail-row > td { padding: 0 1rem 1rem; }
+    .acs-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+    .acs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: .85rem 1.5rem;
+    }
+    .acs-metric .acs-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-variant-numeric: tabular-nums;
+      font-size: 1.15rem; font-weight: 600; color: var(--text);
+    }
+    .acs-metric .acs-val .unit { font-size: .7rem; font-weight: 500; color: var(--muted); }
+    .acs-metric .acs-val.na { color: var(--faint); font-weight: 500; }
+    .acs-metric .acs-lbl {
+      font-size: .68rem; text-transform: uppercase; letter-spacing: .05em;
+      color: var(--muted); margin-top: .1rem;
+    }
+    .acs-src { margin-top: .85rem; font-size: .7rem; color: var(--faint); }
+
     /* Exposure cell */
     .exp-cell {
       display: flex; align-items: center; gap: .6rem;
@@ -348,6 +387,17 @@
   <p>Browse exposure scores from four sources: OpenAI AI-rated &amp; human-rated tiers, Brynjolfsson et al. SML scores, and Anthropic behavioral data (task success, AI autonomy, work use). Switch sources using the dropdown.</p>
 </div>
 
+<!-- KEY FINDINGS — orients the reader before the charts -->
+<aside class="gaia-keyfindings" aria-label="Key findings">
+  <div class="gaia-kf-label">Key findings</div>
+  <ul class="gaia-kf-list">
+    <li><strong>Knowledge work scores highest.</strong> Roles built on writing, math and analysis lead AI exposure; physical, manual and in-person service roles trail near zero.</li>
+    <li><strong>Average exposure is ~34%.</strong> Across all 923 occupations, about a third of tasks are theoretically AI-performable (GAIA-E, Eloundou et al. 2024).</li>
+    <li><strong>Higher exposure ≠ lower pay.</strong> In the wage chart below, the most-exposed jobs are often the higher-paid ones — exposure tracks cognitive work, not low wages.</li>
+    <li><strong>Four lenses, kept separate.</strong> Switch sources to compare AI-rated, human-rated, the pre-GPT SML baseline (GAIA-B), and Anthropic's observed usage.</li>
+  </ul>
+</aside>
+
 <div class="tier-legend">
   <div class="tier-item"><div class="tier-dot" style="background:#00c9a7"></div> High exposure ≥ 66%</div>
   <div class="tier-item"><div class="tier-dot" style="background:#22d3ee"></div> Medium exposure 33–65%</div>
@@ -405,45 +455,55 @@
   </div>
 </div>
 
-<!-- Charts -->
+<!-- Charts — headline view stays open -->
 <div class="viz-panel">
   <div class="viz-card">
-    <div class="viz-card-title">Sector Rankings — click bar to filter ↓</div>
+    <div class="viz-card-title">Avg AI exposure by sector (%) — click a bar to filter ↓</div>
     <div class="chart-area" style="height:380px">
       <canvas id="groupChart"></canvas>
     </div>
+    <p class="gaia-take">Each bar is a sector's <b>average exposure score</b>. Sectors at the top have the most AI-performable tasks today. Click any bar to filter the whole page to that sector.</p>
   </div>
   <div class="viz-card">
-    <div class="viz-card-title">Score Distribution — all vs filtered</div>
+    <div class="viz-card-title">How exposure is distributed (% of occupations)</div>
     <div class="chart-area" style="height:380px">
       <canvas id="distChart"></canvas>
     </div>
+    <p class="gaia-take">Counts how many occupations fall in each exposure band. The shaded overlay is your current filter, so you can see where a sector or search result sits versus all 923 jobs.</p>
   </div>
 </div>
 
-<!-- Wage Charts (BLS OEWS May 2024) -->
-<div class="viz-panel" style="grid-template-columns: 1fr;">
-  <div class="viz-card">
-    <div class="viz-card-title">Median Annual Wage vs AI Exposure (GAIA-E) — each dot is an occupation, colored by sector</div>
-    <div class="chart-area" style="height:440px">
-      <canvas id="wageScatterChart"></canvas>
+<!-- Wage Charts (BLS OEWS May 2024) — secondary, collapsed by default -->
+<details class="gaia-collapse">
+  <summary>Wages &amp; AI exposure <span class="gaia-sum-sub">3 charts · BLS OEWS, May 2024 — click to expand</span></summary>
+  <div class="gaia-collapse-body">
+    <div class="viz-panel" style="grid-template-columns: 1fr; max-width:none; padding:0 0 1.5rem;">
+      <div class="viz-card">
+        <div class="viz-card-title">Median annual wage (USD) vs AI exposure (%, GAIA-E) — each dot is an occupation, colored by sector</div>
+        <div class="chart-area" style="height:440px">
+          <canvas id="wageScatterChart"></canvas>
+        </div>
+        <p class="gaia-take">Tests the "will AI replace high-paid work?" question. The cloud tilts slightly <b>upward</b> — higher-exposure jobs tend to pay <b>more</b>, because exposure tracks cognitive, knowledge-based tasks rather than low-wage manual ones.</p>
+      </div>
+    </div>
+    <div class="viz-panel" style="max-width:none; padding:0;">
+      <div class="viz-card">
+        <div class="viz-card-title">Median wage by sector (USD) — click a bar to filter ↓</div>
+        <div class="chart-area" style="height:380px">
+          <canvas id="wageSectorChart"></canvas>
+        </div>
+        <p class="gaia-take">Typical pay in each sector, so you can read exposure and wages side by side. Click a bar to filter the page to that sector.</p>
+      </div>
+      <div class="viz-card">
+        <div class="viz-card-title">Wage distribution (count of occupations)</div>
+        <div class="chart-area" style="height:380px">
+          <canvas id="wageDistChart"></canvas>
+        </div>
+        <p class="gaia-take">How occupations spread across wage bands. The overlay reflects your current filter, so a sector's pay profile stands out against the full set.</p>
+      </div>
     </div>
   </div>
-</div>
-<div class="viz-panel">
-  <div class="viz-card">
-    <div class="viz-card-title">Median Wage by Sector — click bar to filter ↓</div>
-    <div class="chart-area" style="height:380px">
-      <canvas id="wageSectorChart"></canvas>
-    </div>
-  </div>
-  <div class="viz-card">
-    <div class="viz-card-title">Wage Distribution — all vs filtered</div>
-    <div class="chart-area" style="height:380px">
-      <canvas id="wageDistChart"></canvas>
-    </div>
-  </div>
-</div>
+</details>
 
 <div class="table-wrap">
   <table id="occTable">
@@ -477,8 +537,10 @@
 
 <script src="assets/occs_data.js"></script>
 <script>
-// OCCS = [code, title, dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma, sml, aei_alpha, aei_beta, aei_gamma, group, gaia_e, gaia_b, a_median]
-const IDX = { code:0, title:1, dv_alpha:2, dv_beta:3, dv_gamma:4, h_alpha:5, h_beta:6, h_gamma:7, sml:8, aei_alpha:9, aei_beta:10, aei_gamma:11, group:12, gaia_e:13, gaia_b:14, a_median:15 };
+// OCCS = [code, title, dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma, sml, aei_alpha, aei_beta, aei_gamma, group, gaia_e, gaia_b, a_median,
+//         pct_female, pct_college, median_age, median_wage_acs, pct_minority, pct_remote_eligible]  (last 6: U.S. Census ACS 2023 1-yr PUMS)
+const IDX = { code:0, title:1, dv_alpha:2, dv_beta:3, dv_gamma:4, h_alpha:5, h_beta:6, h_gamma:7, sml:8, aei_alpha:9, aei_beta:10, aei_gamma:11, group:12, gaia_e:13, gaia_b:14, a_median:15,
+              pct_female:16, pct_college:17, median_age:18, median_wage_acs:19, pct_minority:20, pct_remote_eligible:21 };
 
 let sortCol   = 'beta';
 let sortDir   = -1;
@@ -558,6 +620,33 @@ function wageCell(v) {
   return `$${Number(v).toLocaleString('en-US')}`;
 }
 
+// ---- ACS demographic detail row (Census ACS 2023 1-yr PUMS) ----
+const ACS_FIELDS = ['pct_female','pct_college','median_age','median_wage_acs','pct_minority','pct_remote_eligible'];
+function acsVal(v, kind) {
+  if (v === null || v === undefined || isNaN(v)) return '<span class="acs-val na">—</span>';
+  if (kind === 'pct')  return `<span class="acs-val">${v}<span class="unit">%</span></span>`;
+  if (kind === 'age')  return `<span class="acs-val">${v}<span class="unit"> yrs</span></span>`;
+  if (kind === 'wage') return `<span class="acs-val">$${Number(v).toLocaleString('en-US')}</span>`;
+  return `<span class="acs-val">${v}</span>`;
+}
+function acsDetailRow(r) {
+  const metrics = [
+    ['% Female',            acsVal(r[IDX.pct_female], 'pct')],
+    ["% Bachelor's+",       acsVal(r[IDX.pct_college], 'pct')],
+    ['Median Age',          acsVal(r[IDX.median_age], 'age')],
+    ['Median Wage (ACS)',   acsVal(r[IDX.median_wage_acs], 'wage')],
+    ['% Minority',          acsVal(r[IDX.pct_minority], 'pct')],
+    ['% Remote-Eligible',   acsVal(r[IDX.pct_remote_eligible], 'pct')],
+  ];
+  const allNa = ACS_FIELDS.every(f => r[IDX[f]] === null || r[IDX[f]] === undefined);
+  const cells = metrics.map(([lbl, val]) =>
+    `<div class="acs-metric">${val}<div class="acs-lbl">${lbl}</div></div>`).join('');
+  const note = allNa
+    ? 'No ACS 2023 PUMS estimate available for this occupation.'
+    : 'Workforce demographics — U.S. Census ACS 2023 1-year PUMS';
+  return `<tr class="detail-row"><td colspan="9"><div class="acs-panel"><div class="acs-grid">${cells}</div><div class="acs-src">${note}</div></div></td></tr>`;
+}
+
 function updateHeaders() {
   const [a, b, g] = colHeaders[rater] || ['Alpha','Beta','Gamma'];
   document.getElementById('thAlpha').childNodes[0].textContent = a + ' ';
@@ -606,9 +695,9 @@ function render() {
 
   const tbody = document.getElementById('tbody');
   if (isSML) {
-    tbody.innerHTML = rows.map(r => `<tr>
+    tbody.innerHTML = rows.map(r => `<tr class="occ-row">
       <td class="td-code">${r[IDX.code]}</td>
-      <td class="td-title">${r[IDX.title]}</td>
+      <td class="td-title"><span class="exp">▶</span>${r[IDX.title]}</td>
       <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
       <td class="td-gaia-e">${gaiaECell(r[IDX.gaia_e])}</td>
       <td class="td-gaia-b">${gaiaBCell(r[IDX.gaia_b])}</td>
@@ -616,16 +705,16 @@ function render() {
       <td class="td-beta">${barCell(r[IDX.sml])}</td>
       <td class="td-gamma"></td>
       <td class="td-wage">${wageCell(r[IDX.a_median])}</td>
-    </tr>`).join('');
+    </tr>${acsDetailRow(r)}`).join('');
   } else {
     const prefix = rater + '_';
     tbody.innerHTML = rows.map(r => {
       const alpha = r[IDX[prefix+'alpha']];
       const beta  = r[IDX[prefix+'beta']];
       const gamma = r[IDX[prefix+'gamma']];
-      return `<tr>
+      return `<tr class="occ-row">
         <td class="td-code">${r[IDX.code]}</td>
-        <td class="td-title">${r[IDX.title]}</td>
+        <td class="td-title"><span class="exp">▶</span>${r[IDX.title]}</td>
         <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
         <td class="td-gaia-e">${gaiaECell(r[IDX.gaia_e])}</td>
         <td class="td-gaia-b">${gaiaBCell(r[IDX.gaia_b])}</td>
@@ -633,7 +722,7 @@ function render() {
         <td class="td-beta">${barCell(beta)}</td>
         <td class="td-gamma">${barCell(gamma)}</td>
         <td class="td-wage">${wageCell(r[IDX.a_median])}</td>
-      </tr>`;
+      </tr>${acsDetailRow(r)}`;
     }).join('');
   }
 
@@ -647,6 +736,17 @@ function render() {
 
   updateCharts(rows);
 }
+
+// Toggle the ACS demographic detail row when an occupation row is clicked
+document.getElementById('tbody').addEventListener('click', e => {
+  const row = e.target.closest('tr.occ-row');
+  if (!row) return;
+  const detail = row.nextElementSibling;
+  if (detail && detail.classList.contains('detail-row')) {
+    row.classList.toggle('open');
+    detail.classList.toggle('show');
+  }
+});
 
 document.getElementById('search').addEventListener('input', e => {
   query = e.target.value; render();
