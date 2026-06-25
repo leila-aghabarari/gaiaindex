@@ -1291,7 +1291,7 @@ function updateChartsInner() {
 
 function parseCsv(url) {
   return new Promise((res, rej) => Papa.parse(url, {
-    download: true, header: true, skipEmptyLines: true,
+    download: true, header: true, skipEmptyLines: true, comments: '#',
     complete: r => res(r.data),
     error: () => res([])
   }));
