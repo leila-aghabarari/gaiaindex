@@ -38,3 +38,19 @@ html.js .fade-up.in { opacity: 1; transform: none; }
 .occ-detail-grid { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 1.25rem; align-items: start; padding-top: .4rem; }
 .occ-radar-card { padding: 1.1rem; }
 @media (max-width: 760px) { .occ-detail-grid { grid-template-columns: 1fr; } }
+
+/* Compare mode (Task 11) */
+.cmp-check { margin-right: .55rem; accent-color: #0D9E76; cursor: pointer; vertical-align: middle; width: 15px; height: 15px; }
+.cmp-fab {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+  background: #0D9E76; color: #fff; border: 0; border-radius: 999px;
+  padding: .8rem 1.5rem; font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer;
+  box-shadow: 0 10px 30px -8px rgba(13,158,118,.6); transition: transform .15s;
+}
+.cmp-fab:hover { transform: scale(1.04); }
+.cmp-fab[hidden] { display: none; }
+.cmp-modal { position: fixed; inset: 0; z-index: 300; background: rgba(3,10,16,.72); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+.cmp-modal[hidden] { display: none; }
+.cmp-modal-inner { position: relative; background: #0A1628; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 1.5rem; width: min(780px, 94vw); box-shadow: 0 30px 90px -30px #000; }
+.cmp-close { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); color: #C7D3E0; border-radius: 8px; width: 30px; height: 30px; cursor: pointer; line-height: 1; }
+.cmp-close:hover { background: rgba(13,158,118,.22); color: #fff; }

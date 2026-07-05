@@ -753,7 +753,7 @@ function render() {
   if (isSML) {
     tbody.innerHTML = rows.map(r => `<tr class="occ-row">
       <td class="td-code">${r[IDX.code]}</td>
-      <td class="td-title"><span class="exp">▶</span>${r[IDX.title]}</td>
+      <td class="td-title"><input type="checkbox" class="cmp-check" data-code="${r[IDX.code]}" onclick="event.stopPropagation()" title="Add to compare" /><span class="exp">▶</span>${r[IDX.title]}</td>
       <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
       <td class="td-gaia-e">${gaiaECell(r[IDX.gaia_e])}</td>
       <td class="td-gaia-b">${gaiaBCell(r[IDX.gaia_b])}</td>
@@ -770,7 +770,7 @@ function render() {
       const gamma = r[IDX[prefix+'gamma']];
       return `<tr class="occ-row">
         <td class="td-code">${r[IDX.code]}</td>
-        <td class="td-title"><span class="exp">▶</span>${r[IDX.title]}</td>
+        <td class="td-title"><input type="checkbox" class="cmp-check" data-code="${r[IDX.code]}" onclick="event.stopPropagation()" title="Add to compare" /><span class="exp">▶</span>${r[IDX.title]}</td>
         <td class="td-group"><span class="group-badge">${r[IDX.group]}</span></td>
         <td class="td-gaia-e">${gaiaECell(r[IDX.gaia_e])}</td>
         <td class="td-gaia-b">${gaiaBCell(r[IDX.gaia_b])}</td>
@@ -1066,9 +1066,22 @@ render();
 </script>
 <script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
+<!-- Compare mode (Task 11) -->
+<button id="cmpBtn" class="cmp-fab" hidden>Compare</button>
+<div id="cmpModal" class="cmp-modal" hidden>
+  <div class="cmp-modal-inner">
+    <button class="cmp-close" id="cmpClose" aria-label="Close">✕</button>
+    <p class="gaia-chart-title">Compare occupations</p>
+    <p class="gaia-chart-sub" id="cmpSub">All measures side by side</p>
+    <div class="gaia-chart-wrap" style="height:420px"><canvas id="cmpChart"></canvas></div>
+    <p class="gaia-chart-src">E1 / E1+E2 = % (Eloundou 2024) · GAIA-B = SML score (Brynjolfsson 2018) · GAIA-E = index points · Anthropic observed = AI autonomy (Claude.ai)</p>
+  </div>
+</div>
+
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script defer src="assets/gaia-chart-kit.js"></script>
 <script defer src="assets/gaia-occ-radar.js"></script>
+<script defer src="assets/gaia-occ-compare.js"></script>
 <script defer src="assets/gaia-occ-landscape.js"></script>
 <script defer src="assets/gaia-enhance.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
