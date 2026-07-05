@@ -97,6 +97,18 @@ html.no-globe .globe-fallback { display: block; }
 nav { transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease; }
 nav.scrolled { background: rgba(244,247,252,0.72); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(0,0,0,0.05); }
 
+/* occupation-exposure toggle (Task 1) */
+.occ-toggle { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--border); border-radius: 999px; background: var(--card); }
+.occ-toggle-btn {
+  font: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: 0; background: none;
+  color: var(--muted); padding: 0.45rem 1rem; border-radius: 999px; transition: background 0.18s, color 0.18s;
+}
+.occ-toggle-btn:hover { color: var(--text); }
+.occ-toggle-btn.active { background: #0D9E76; color: #fff; }
+.occ-loading { color: var(--faint); font-size: 0.85rem; padding: 0.5rem 0; }
+/* animate exposure bars in */
+#occ-extremes .occ-bar-fill, #occ-familiar .occ-bar-fill { transition: width 0.9s cubic-bezier(0.16,1,0.3,1); }
+
 /* reveals */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
 .reveal.in { opacity: 1; transform: none; }

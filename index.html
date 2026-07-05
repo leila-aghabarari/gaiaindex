@@ -715,99 +715,49 @@
 <!-- OCCUPATION PREVIEW -->
 <section>
   <div class="section-inner">
-    <div class="section-label">Occupation exposure</div>
-    <h2 class="section-title">Which jobs are most — and least — exposed to AI?</h2>
+    <div class="section-label">Occupation exposure · Eloundou et al. 2024</div>
+    <h2 class="section-title">Theoretical AI Exposure (E1+E2)</h2>
     <p class="section-desc">
-      <strong>GAIA-E</strong> (Eloundou et al. 2024) estimates the share of tasks performable by GPT-4 with software tools — the generative-AI era measure. Knowledge-intensive roles lead; physical and service roles trail. See also <a href="occupations.html"><strong>GAIA-B</strong></a> (Brynjolfsson et al. 2018) for the pre-generative-AI supervised-ML baseline.
+      Share of tasks where AI could reduce completion time by 50%+, as measured by Eloundou et al. (Science, 2024).
     </p>
 
-    <div class="occ-grid">
-      <div class="occ-panel">
-        <div class="occ-panel-header">
-          <div class="dot" style="background:var(--teal)"></div>
-          <div class="title">Highest AI exposure</div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Mathematicians</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:100%;background:var(--teal)"></div></div>
-            <div class="occ-pct" style="color:var(--teal)">100%</div>
-          </div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Proofreaders &amp; Copy Markers</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:98%;background:var(--teal)"></div></div>
-            <div class="occ-pct" style="color:var(--teal)">98%</div>
-          </div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Blockchain Engineers</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:97%;background:var(--teal)"></div></div>
-            <div class="occ-pct" style="color:var(--teal)">97%</div>
-          </div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Correspondence Clerks</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:96%;background:var(--teal)"></div></div>
-            <div class="occ-pct" style="color:var(--teal)">96%</div>
-          </div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Court Reporters</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:96%;background:var(--teal)"></div></div>
-            <div class="occ-pct" style="color:var(--teal)">96%</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="occ-panel">
-        <div class="occ-panel-header">
-          <div class="dot" style="background:var(--faint)"></div>
-          <div class="title">Lowest AI exposure</div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Athletes &amp; Sports Competitors</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
-            <div class="occ-pct" style="color:var(--faint)">0%</div>
-          </div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Orderlies</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
-            <div class="occ-pct" style="color:var(--faint)">0%</div>
-          </div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Cooks, Fast Food</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
-            <div class="occ-pct" style="color:var(--faint)">0%</div>
-          </div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Cooks, Short Order</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
-            <div class="occ-pct" style="color:var(--faint)">0%</div>
-          </div>
-        </div>
-        <div class="occ-row">
-          <div class="occ-name">Dining Room Attendants</div>
-          <div class="occ-bar-wrap">
-            <div class="occ-bar-bg"><div class="occ-bar-fill" style="width:1%;background:var(--faint)"></div></div>
-            <div class="occ-pct" style="color:var(--faint)">0%</div>
-          </div>
-        </div>
+    <div style="display:flex;justify-content:center;margin:-0.25rem 0 1.4rem">
+      <div class="occ-toggle" role="tablist" aria-label="Occupation view">
+        <button id="occ-tab-extremes" class="occ-toggle-btn active" role="tab" aria-selected="true">Top &amp; bottom 5</button>
+        <button id="occ-tab-familiar" class="occ-toggle-btn" role="tab" aria-selected="false">See familiar occupations</button>
       </div>
     </div>
 
-    <div style="margin-top:1.5rem; text-align:center;">
+    <div class="occ-grid" id="occ-extremes">
+      <div class="occ-panel">
+        <div class="occ-panel-header">
+          <div class="dot" style="background:#0D9E76"></div>
+          <div class="title">Highest E1+E2 exposure</div>
+        </div>
+        <div id="occ-top"><div class="occ-loading">Loading…</div></div>
+      </div>
+      <div class="occ-panel">
+        <div class="occ-panel-header">
+          <div class="dot" style="background:var(--faint)"></div>
+          <div class="title">Lowest E1+E2 exposure</div>
+        </div>
+        <div id="occ-bottom"></div>
+      </div>
+    </div>
+
+    <div class="occ-panel" id="occ-familiar" style="display:none;max-width:640px;margin:0 auto">
+      <div class="occ-panel-header">
+        <div class="dot" style="background:#3B82F6"></div>
+        <div class="title">Familiar occupations · published E1+E2</div>
+      </div>
+      <div id="occ-familiar-rows"></div>
+    </div>
+
+    <p style="font-size:.75rem;color:var(--faint);margin-top:1.1rem;max-width:760px">
+      Source: Eloundou, Manning, Mishkin &amp; Rock (2024), <em>Science</em> 384(6702). Displayed values are the original published β scores.
+    </p>
+
+    <div style="margin-top:1.25rem; text-align:center;">
       <a href="occupations.html" class="btn btn-ghost">Browse all 923 occupations →</a>
     </div>
   </div>
@@ -954,6 +904,10 @@
 </script>
 <script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
+
+<!-- Task 1: data-driven occupation-exposure section (PapaParse) -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script defer src="assets/gaia-occ-preview.js"></script>
 
 <!-- Cinematic layer: Three.js globe + Lenis + GSAP ScrollTrigger (homepage only) -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
