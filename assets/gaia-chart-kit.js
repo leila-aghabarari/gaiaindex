@@ -12,7 +12,7 @@
       ".gaia-landscape{max-width:1300px;margin:2.5rem auto;padding:0 2rem;}",
       ".gaia-landscape>h2{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:-.02em;margin:0 0 1rem;color:var(--text,#1a2635);}",
       ".gaia-panel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.25rem;}",
-      ".gaia-chart-card{position:relative;background:#0A1628;border-radius:16px;padding:1.3rem;box-shadow:0 16px 44px -22px rgba(10,22,40,.55);}",
+      ".gaia-chart-card{position:relative;background:#0A1628;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:1.3rem;box-shadow:0 16px 44px -22px rgba(0,0,0,.5);}",
       ".gaia-chart-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;color:#eaf2f8;margin:0 0 .15rem;}",
       ".gaia-chart-sub{font-size:.8rem;color:#8AA0B6;margin:0 0 .7rem;}",
       ".gaia-chart-wrap{position:relative;height:340px;}",

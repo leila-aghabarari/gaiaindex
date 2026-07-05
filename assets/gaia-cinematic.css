@@ -95,7 +95,7 @@ html.no-globe .globe-fallback { display: block; }
   box-shadow: 0 0 0 1px rgba(13,158,118,0.55), 0 10px 34px -10px rgba(13,158,118,0.6);
 }
 nav { transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease; }
-nav.scrolled { background: rgba(244,247,252,0.72); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(0,0,0,0.05); }
+nav.scrolled { background: rgba(6,19,26,0.85); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(0,0,0,0.05); }
 
 /* occupation-exposure toggle (Task 1) */
 .occ-toggle { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--border); border-radius: 999px; background: var(--card); }

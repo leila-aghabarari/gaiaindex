@@ -15,17 +15,17 @@
   <link rel="stylesheet" href="assets/gaia-ui.css" />
   <style>
     :root {
-      --bg:        #f4f7fc;
-      --surface:   #edf2f9;
-      --card:      #ffffff;
-      --border:    #dde6f0;
+      --bg:        #06131a;
+      --surface:   #0d1c26;
+      --card:      #10212e;
+      --border:    #24333f;
       --teal:      #0D9E76;
-      --teal-dim:  #0D7A5F;
-      --teal-glow: rgba(13,158,118,0.10);
-      --cyan:      #12c49a;
-      --text:      #0e1f2e;
-      --muted:     #4a7060;
-      --faint:     #7aada5;
+      --teal-dim:  #0b7d5c;
+      --teal-glow: rgba(13,158,118,0.14);
+      --cyan:      #3fd0b0;
+      --text:      #e6f2ee;
+      --muted:     #9fb3c2;
+      --faint:     #6f8698;
       --gaia-maxw: 1300px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,7 +35,7 @@
     a:hover { color: var(--cyan); }
 
     /* NAV */
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 0 2rem; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(6,19,26,0.82); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 0 2rem; }
     .nav-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
     .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); letter-spacing: -0.02em; }
     .nav-logo span { color: var(--teal); }
@@ -64,7 +64,7 @@
     .sec-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: .4rem; }
     .sec-title { font-family: 'Space Grotesk',sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: .5rem; }
     .sec-desc { color: var(--muted); font-size: .9rem; line-height: 1.7; max-width: 700px; margin-bottom: 1.75rem; }
-    .section-note { background: #fffbe6; border: 1px solid #f0d060; border-radius: 8px; padding: .65rem 1rem; font-size: .82rem; color: #7a6000; margin-bottom: 1.5rem; }
+    .section-note { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.35); border-radius: 8px; padding: .65rem 1rem; font-size: .82rem; color: #F59E0B; margin-bottom: 1.5rem; }
 
     /* CARDS */
     .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
@@ -111,7 +111,7 @@
     .badge-gray { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
     .badge-amber { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
     .task-list { list-style: none; display: flex; flex-direction: column; gap: .45rem; }
-    .task-item { display: flex; align-items: flex-start; gap: .6rem; padding: .5rem .65rem; background: white; border-radius: 6px; border: 1px solid var(--border); font-size: .82rem; }
+    .task-item { display: flex; align-items: flex-start; gap: .6rem; padding: .5rem .65rem; background: var(--surface); border-radius: 6px; border: 1px solid var(--border); font-size: .82rem; }
     .task-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
 
     /* TABS */
