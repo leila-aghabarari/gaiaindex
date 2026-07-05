@@ -173,3 +173,21 @@
   .gaia-kf-list { grid-template-columns: 1fr; gap: 0.6rem; }
   .gaia-collapse { margin: 1rem 1.25rem 0; }
 }
+
+/* ---- Consolidated dropdown nav (Task 2) ---- */
+.nav-dd { position: relative; }
+.nav-dd-btn { font: inherit; font-size: .9rem; font-weight: 500; cursor: pointer; background: none; border: 0; color: var(--muted); padding: 0; display: inline-flex; align-items: center; gap: .25rem; }
+.nav-dd-btn:hover, .nav-dd-btn.active { color: var(--text); }
+.nav-caret { font-size: .7em; opacity: .8; transition: transform .15s; }
+.nav-dd:hover .nav-caret, .nav-dd.open .nav-caret { transform: rotate(180deg); }
+.nav-dd-menu { position: absolute; top: calc(100% + .5rem); left: 0; min-width: 180px; list-style: none; margin: 0; padding: .4rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 14px 34px -12px rgba(20,30,45,.28); opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .16s, transform .16s, visibility .16s; z-index: 60; }
+.nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu, .nav-dd.open .nav-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-dd-menu li { margin: 0; }
+.nav-dd-menu a { display: block; padding: .5rem .7rem; border-radius: 8px; color: var(--muted); font-size: .88rem; white-space: nowrap; }
+.nav-dd-menu a:hover, .nav-dd-menu a.active { background: var(--surface); color: var(--text); }
+@media (max-width: 820px) {
+  .nav-dd-menu { position: static; min-width: 0; padding: .15rem 0 .3rem .9rem; background: transparent; border: 0; box-shadow: none; opacity: 1; visibility: visible; transform: none; display: none; }
+  .nav-dd.open .nav-dd-menu { display: block; }
+  .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { display: none; }
+  .nav-dd.open .nav-dd-menu { display: block; }
+}

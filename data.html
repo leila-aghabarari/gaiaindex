@@ -219,16 +219,24 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="occupations.html">Occupations</a></li>
-      <li><a href="countries.html">Countries</a></li>
-      <li><a href="trends.html">Trends</a></li>
-      <li><a href="data.html" class="active">Data</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="research.html">Research</a></li>
-      <li><a href="usa.html">USA</a></li>
-      <li><a href="community.html">Community</a></li>
-      <li><a href="license.html">License</a></li>
+      <li><a href="index.html" data-nav="index.html">Home</a></li>
+      <li class="nav-dd">
+        <button class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Data <span class="nav-caret">&#9662;</span></button>
+        <ul class="nav-dd-menu">
+          <li><a href="occupations.html" data-nav="occupations.html">Occupations</a></li>
+          <li><a href="countries.html" data-nav="countries.html">Countries</a></li>
+          <li><a href="trends.html" data-nav="trends.html">Trends</a></li>
+        </ul>
+      </li>
+      <li class="nav-dd">
+        <button class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Country Deep Dives <span class="nav-caret">&#9662;</span></button>
+        <ul class="nav-dd-menu">
+          <li><a href="usa.html" data-nav="usa.html">USA</a></li>
+          <li><a href="paper_brazil.html" data-nav="paper_brazil.html">Brazil</a></li>
+        </ul>
+      </li>
+      <li><a href="research.html" data-nav="research.html">Research</a></li>
+      <li><a href="about.html" data-nav="about.html">About</a></li>
     </ul>
   </div>
 </nav>
@@ -255,34 +263,34 @@
     <tbody>
       <tr>
         <td>
-          <div class="source-name">GAIA Occupations (composite)</div>
-          <div class="source-desc">Merged dataset combining OpenAI exposure ratings, Brynjolfsson SML scores, and Anthropic AEI behavioral data across 923 O*NET-SOC occupations.</div>
+          <div class="source-name">GAIA Occupations</div>
+          <div class="source-desc">Merged dataset combining OpenAI exposure ratings, Brynjolfsson SML scores, and Anthropic AEI behavioral data across 923 O*NET-SOC occupations. Includes GAIA-E (generative-AI exposure, n=923) and GAIA-B (supervised-ML exposure, n=605) as separate normalized scores.</div>
         </td>
         <td><span class="tag-pill">923 occupations</span></td>
-        <td>Alpha/Beta/Gamma exposure · SML score · AEI task success</td>
+        <td>GAIA-E · GAIA-B · Alpha/Beta/Gamma · SML score · AEI task success</td>
         <td>2023–2026</td>
         <td><button onclick="showWaitlistModal()" class="dl-btn">Join the Waitlist →</button>
         <p style="font-size:.68rem;color:var(--faint);margin-top:.25rem">Data access by request. Cite: Aghabarari (2026)</p></td>
       </tr>
       <tr>
         <td>
-          <div class="source-name">OpenAI Occupational Exposure</div>
-          <div class="source-desc">AI and human expert ratings of task-level AI exposure. Alpha = fully automatable, Beta = partially, Gamma = any exposure. Based on O*NET task structure.</div>
+          <div class="source-name">OpenAI Occupational Exposure → <strong>GAIA-E</strong></div>
+          <div class="source-desc">AI and human expert ratings of task-level AI exposure (Eloundou et al., Science 2024). Alpha = fully automatable, Beta = partially (with tools), Gamma = any exposure. Normalized to [0,1] as <strong>GAIA-E</strong> in the occupations file.</div>
         </td>
         <td><span class="tag-pill">923 occupations</span></td>
-        <td>dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma</td>
+        <td>dv_alpha, dv_beta, dv_gamma, h_alpha, h_beta, h_gamma · gaia_e (0–1)</td>
         <td>2023</td>
-        <td><span style="color:var(--faint);font-size:.82rem">Included in composite CSV</span></td>
+        <td><span style="color:var(--faint);font-size:.82rem">Included in occupations CSV</span></td>
       </tr>
       <tr>
         <td>
-          <div class="source-name">SML — What Can Machines Learn?</div>
-          <div class="source-desc">Crowd-sourced susceptibility-to-machine-learning scores at the DWA task level, aggregated to occupations. Brynjolfsson, Mitchell &amp; Rock (2018), NBER Working Paper 24196.</div>
+          <div class="source-name">SML — What Can Machines Learn? → <strong>GAIA-B</strong></div>
+          <div class="source-desc">Crowd-sourced susceptibility-to-machine-learning scores at the DWA task level, aggregated to occupations. Brynjolfsson, Mitchell &amp; Rock (2018), NBER Working Paper 24196. Normalized to [0,1] as <strong>GAIA-B</strong> in the occupations file.</div>
         </td>
-        <td><span class="tag-pill">813 occupations</span></td>
-        <td>sml_score (0–100%)</td>
+        <td><span class="tag-pill">605 occupations</span></td>
+        <td>sml_score (0–100%) · gaia_b (0–1)</td>
         <td>2018</td>
-        <td><span style="color:var(--faint);font-size:.82rem">Included in composite CSV</span></td>
+        <td><span style="color:var(--faint);font-size:.82rem">Included in occupations CSV</span></td>
       </tr>
       <tr>
         <td>
@@ -292,7 +300,7 @@
         <td><span class="tag-pill">628 occupations</span></td>
         <td>aei_task_success, aei_autonomy_pct, aei_work_pct</td>
         <td>Feb 2026</td>
-        <td><span style="color:var(--faint);font-size:.82rem">Included in composite CSV</span></td>
+        <td><span style="color:var(--faint);font-size:.82rem">Included in occupations CSV</span></td>
       </tr>
     </tbody>
   </table>
@@ -459,5 +467,6 @@
 
 <script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
+<script defer src="assets/gaia-nav.js"></script>
 </body>
 </html>

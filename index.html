@@ -589,15 +589,24 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="occupations.html">Occupations</a></li>
-      <li><a href="countries.html">Countries</a></li>
-      <li><a href="research.html">Research</a></li>
-      <li><a href="trends.html">Trends</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="usa.html">USA</a></li>
-      <li><a href="community.html">Community</a></li>
-      <li><a href="license.html">License</a></li>
+      <li><a href="index.html" data-nav="index.html">Home</a></li>
+      <li class="nav-dd">
+        <button class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Data <span class="nav-caret">&#9662;</span></button>
+        <ul class="nav-dd-menu">
+          <li><a href="occupations.html" data-nav="occupations.html">Occupations</a></li>
+          <li><a href="countries.html" data-nav="countries.html">Countries</a></li>
+          <li><a href="trends.html" data-nav="trends.html">Trends</a></li>
+        </ul>
+      </li>
+      <li class="nav-dd">
+        <button class="nav-dd-btn" aria-haspopup="true" aria-expanded="false">Country Deep Dives <span class="nav-caret">&#9662;</span></button>
+        <ul class="nav-dd-menu">
+          <li><a href="usa.html" data-nav="usa.html">USA</a></li>
+          <li><a href="paper_brazil.html" data-nav="paper_brazil.html">Brazil</a></li>
+        </ul>
+      </li>
+      <li><a href="research.html" data-nav="research.html">Research</a></li>
+      <li><a href="about.html" data-nav="about.html">About</a></li>
     </ul>
   </div>
 </nav>
@@ -916,5 +925,6 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="assets/gaia-globe.js"></script>
 <script defer src="assets/gaia-story.js"></script>
+<script defer src="assets/gaia-nav.js"></script>
 </body>
 </html>
