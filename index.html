@@ -13,6 +13,7 @@
   <script src="assets/chart.umd.min.js"></script>
   <script src="assets/gaia-charts.js"></script>
   <link rel="stylesheet" href="assets/gaia-ui.css" />
+  <link rel="stylesheet" href="assets/gaia-cinematic.css" />
   <style>
     :root {
       --bg:        #f4f7fc;
@@ -581,6 +582,8 @@
 </head>
 <body>
 
+<div class="grain" aria-hidden="true"></div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
@@ -599,51 +602,69 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">Feb 2026 · 178 Countries · 923 Occupations</div>
-    <h1>Mapping <em>AI adoption</em> across the global economy</h1>
-    <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem">
-      <span class="doi-badge">DOI: 10.5281/zenodo.20320112</span>
-      <a href="license.html" title="Creative Commons Attribution 4.0 International" style="line-height:0;display:inline-block;border-radius:4px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.12)">
-        <img src="https://licensebuttons.net/l/by/4.0/88x31.png" alt="CC BY 4.0" style="width:88px;height:31px;display:block;border:0">
-      </a>
-    </div>
-    <p class="hero-sub">
-      GAIA provides two distinct occupation-level AI exposure scores — <strong>GAIA-E</strong> (generative-AI era, Eloundou et al. 2024) and <strong>GAIA-B</strong> (supervised-ML era, Brynjolfsson et al. 2018) — plus Anthropic's observed Claude.ai behavioral data across 178 countries. The two scores capture different technology paradigms and are kept separate by design.
-    </p>
-    <div class="hero-actions">
-      <a href="occupations.html" class="btn btn-primary">Explore Occupations ↗</a>
-      <a href="countries.html" class="btn btn-ghost">Country Data →</a>
-      <button onclick="showWaitlistModal()" class="btn btn-ghost">Join the Waitlist →</button>
-    </div>
-    <p style="font-size:.72rem;color:rgba(255,255,255,.55);margin-top:.5rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
+<!-- CINEMATIC STORY -->
+<div id="cine">
+  <div id="cine-bg">
+    <canvas id="globe-canvas"></canvas>
+    <div class="globe-fallback" aria-hidden="true"></div>
   </div>
+  <div id="cine-panels">
 
-  <div class="hero-stats">
-    <div class="stat-card">
-      <div class="val">178</div>
-      <div class="label">Countries tracked</div>
-      <div class="sub">via Claude.ai behavioral data</div>
-    </div>
-    <div class="stat-card">
-      <div class="val">923</div>
-      <div class="label">Occupations rated</div>
-      <div class="sub">O*NET-SOC standard codes</div>
-    </div>
-    <div class="stat-card">
-      <div class="val">70%</div>
-      <div class="label">Global task-success rate</div>
-      <div class="sub">across all Claude.ai requests</div>
-    </div>
-    <div class="stat-card">
-      <div class="val">34.5%</div>
-      <div class="label">Avg AI exposure</div>
-      <div class="sub">across all occupations (beta)</div>
-    </div>
+    <!-- hero -->
+    <section class="cine-panel" id="ch-hero">
+      <h1 class="cine-title">
+        <span class="cine-line"><span>Measuring the AI transition.</span></span>
+        <span class="cine-line"><span>Everywhere.</span></span>
+      </h1>
+      <p class="cine-hero-sub">GAIA maps observed AI adoption, theoretical exposure, and real task performance across 178 countries and 923 occupations.</p>
+      <div class="hero-actions" style="margin-top:1.8rem;display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center">
+        <a href="occupations.html" class="btn btn-primary">Explore Occupations ↗</a>
+        <a href="countries.html" class="btn btn-ghost">Country Data →</a>
+        <button onclick="showWaitlistModal()" class="btn btn-ghost">Join the Waitlist →</button>
+      </div>
+      <div style="margin-top:1.1rem"><span class="doi-badge">DOI: 10.5281/zenodo.20320112</span></div>
+      <div class="cine-scroll-hint">Scroll to explore ↓</div>
+    </section>
+
+    <!-- chapter 1 -->
+    <section class="cine-panel" id="ch1">
+      <div class="ch-kicker">The coverage</div>
+      <div class="ch-stat" id="ch1-stat">0</div>
+      <div class="ch-label">countries tracked via Claude.ai behavioral data</div>
+    </section>
+
+    <!-- chapter 2 -->
+    <section class="cine-panel" id="ch2">
+      <div class="ch-kicker">The granularity</div>
+      <div class="ch-stat" id="ch2-stat">0</div>
+      <div class="ch-label">occupations rated on O*NET-SOC standard codes</div>
+    </section>
+
+    <!-- chapter 3 -->
+    <section class="cine-panel" id="ch3">
+      <div class="ch-kicker">The surprise</div>
+      <div class="ch-label" style="font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);color:#eafaf4">Exposure ≠ performance</div>
+      <canvas id="ch3-scatter" width="560" height="360"></canvas>
+      <div class="ch3-axis"><span>GAIA-E exposure →</span><span>task success ↑</span></div>
+      <div class="ch-stat" id="ch3-beta" style="font-size:clamp(2rem,6vw,4rem);margin-top:.6rem">β = 0.00</div>
+      <div class="ch-note">Higher theoretical AI exposure does not predict higher real task-success. Illustrative scatter; coefficient from the Exposure-Without-Performance analysis.</div>
+    </section>
+
+    <!-- chapter 4 -->
+    <section class="cine-panel" id="ch4">
+      <div class="ch-kicker">The divide</div>
+      <div class="ch-label" style="font-family:'Space Grotesk',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);color:#eafaf4">Coursework use, by income</div>
+      <div class="divide-bars">
+        <div class="divide-col"><div class="cap">31%</div><div class="track"><div class="fill" id="bar-low"></div></div><div class="who">Low-income</div></div>
+        <div class="divide-col"><div class="cap">10%</div><div class="track"><div class="fill" id="bar-high"></div></div><div class="who">High-income</div></div>
+      </div>
+    </section>
+
   </div>
 </div>
+
+<!-- POST-STORY (normal scrolling resumes) -->
+<div id="post-story">
 
 <hr class="divider" />
 
@@ -882,6 +903,8 @@
 
 <!-- DATA SOURCES -->
 
+</div><!-- /post-story -->
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -931,5 +954,13 @@
 </script>
 <script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
+
+<!-- Cinematic layer: Three.js globe + Lenis + GSAP ScrollTrigger (homepage only) -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="assets/gaia-globe.js"></script>
+<script defer src="assets/gaia-story.js"></script>
 </body>
 </html>

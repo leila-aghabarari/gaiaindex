@@ -1,0 +1,109 @@
+/* GAIA cinematic homepage layer. Loaded on index.html only. */
+
+/* ---------- film grain (3%) ---------- */
+.grain {
+  position: fixed; inset: 0; z-index: 9998; pointer-events: none; opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+}
+
+/* ---------- cinematic story ---------- */
+#cine {
+  position: relative;
+  background: #06131a;
+  color: #e6f2ee;
+}
+#cine-bg {
+  position: sticky; top: 0; height: 100vh; width: 100%; z-index: 0; overflow: hidden;
+}
+#globe-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.globe-fallback {
+  position: absolute; inset: 0; display: none;
+  background:
+    radial-gradient(42% 44% at 50% 46%, rgba(13,158,118,0.35), rgba(13,158,118,0) 70%),
+    radial-gradient(70% 70% at 50% 50%, rgba(9,40,45,0.6), #06131a 75%);
+}
+.globe-fallback::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(13,158,118,0.5) 1px, transparent 1.4px);
+  background-size: 14px 14px; opacity: 0.18;
+  -webkit-mask-image: radial-gradient(42% 44% at 50% 46%, #000 40%, transparent 72%);
+          mask-image: radial-gradient(42% 44% at 50% 46%, #000 40%, transparent 72%);
+}
+html.no-globe #globe-canvas { display: none; }
+html.no-globe .globe-fallback { display: block; }
+
+#cine-panels { position: relative; z-index: 1; margin-top: -100vh; }
+.cine-panel {
+  min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 6vh 6vw; position: relative;
+}
+
+/* headline with per-line mask reveal */
+.cine-title {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+  font-size: clamp(2.4rem, 9vw, 8rem); line-height: 0.98; letter-spacing: -0.025em;
+  color: #eafaf4; margin: 0; text-shadow: 0 2px 60px rgba(13,158,118,0.25);
+}
+.cine-line { display: block; overflow: hidden; }
+.cine-line span { display: block; will-change: transform; }
+.cine-hero-sub {
+  margin-top: 1.6rem; max-width: 640px; font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: rgba(230,242,238,0.72); line-height: 1.6;
+}
+.cine-scroll-hint {
+  position: absolute; bottom: 2.2rem; left: 50%; transform: translateX(-50%);
+  font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 0.3em;
+  font-size: 0.66rem; color: rgba(230,242,238,0.5);
+}
+
+/* chapter blocks */
+.ch-kicker {
+  font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 0.28em;
+  font-size: 0.72rem; color: #6fd4be; margin-bottom: 1rem;
+}
+.ch-stat {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 600; line-height: 0.9;
+  font-size: clamp(3.4rem, 13vw, 11rem); color: #0D9E76;
+  text-shadow: 0 4px 80px rgba(13,158,118,0.4);
+}
+.ch-label { margin-top: 0.6rem; font-size: clamp(1.1rem, 2vw, 1.6rem); color: #d7ede7; }
+.ch-note { margin-top: 0.8rem; max-width: 520px; color: rgba(230,242,238,0.6); font-size: 0.95rem; line-height: 1.6; }
+
+/* chapter c — scatter */
+#ch3-scatter { width: min(560px, 84vw); height: min(360px, 52vh); margin-top: 1.4rem; }
+.ch3-axis { display: flex; justify-content: space-between; width: min(560px, 84vw); margin-top: 0.4rem;
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; color: rgba(230,242,238,0.5); }
+
+/* chapter d — bars */
+.divide-bars { display: flex; gap: clamp(1.5rem, 6vw, 4rem); align-items: flex-end; margin-top: 1.6rem; }
+.divide-col { display: flex; flex-direction: column; align-items: center; }
+.divide-col .cap { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(1.3rem, 3vw, 1.8rem); color: #eafaf4; margin-bottom: 0.5rem; }
+.divide-col .track { width: clamp(72px, 12vw, 130px); height: min(240px, 38vh); display: flex; align-items: flex-end; }
+.divide-col .fill {
+  width: 100%; height: 0%; border-radius: 10px 10px 0 0;
+  background: linear-gradient(180deg, #14c795, #0D9E76);
+  box-shadow: 0 0 40px -6px rgba(13,158,118,0.5); transition: height 0.12s linear;
+}
+.divide-col .who { margin-top: 0.7rem; font-size: 0.84rem; color: rgba(230,242,238,0.65); }
+
+/* ---------- micro-interactions (homepage) ---------- */
+.btn { transition: transform 0.18s ease, box-shadow 0.18s ease; }
+.btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 0 1px rgba(13,158,118,0.55), 0 10px 34px -10px rgba(13,158,118,0.6);
+}
+nav { transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease; }
+nav.scrolled { background: rgba(244,247,252,0.72); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(0,0,0,0.05); }
+
+/* reveals */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .cine-line span { transform: none !important; }
+  #cine-bg { position: relative; }
+  #cine-panels { margin-top: 0; }
+}
