@@ -109,6 +109,26 @@ nav.scrolled { background: rgba(244,247,252,0.72); backdrop-filter: blur(12px); 
 /* animate exposure bars in */
 #occ-extremes .occ-bar-fill, #occ-familiar .occ-bar-fill { transition: width 0.9s cubic-bezier(0.16,1,0.3,1); }
 
+/* Hero band: top-10 E1+E2 (Tasks 6 & 7) */
+.e1e2-band .section-inner { max-width: 1000px; }
+.e1e2-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+.vintage-badge {
+  font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
+  color: #0D9E76; background: rgba(13,158,118,0.1); border: 1px solid rgba(13,158,118,0.3);
+  border-radius: 999px; padding: 0.35rem 0.85rem; margin-top: 0.3rem;
+}
+.e1e2-chart-card { position: relative; background: #0A1628; border-radius: 16px; padding: 1.4rem; margin-top: 1.4rem; box-shadow: 0 14px 40px -18px rgba(10,22,40,0.5); }
+.e1e2-chart-wrap { position: relative; height: 440px; }
+.gaia-dl-btn {
+  position: absolute; top: 1rem; right: 1rem; z-index: 2; cursor: pointer;
+  font: inherit; font-size: 0.72rem; font-weight: 600; color: #C7D3E0;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; padding: 0.35rem 0.7rem;
+  transition: background 0.15s, color 0.15s;
+}
+.gaia-dl-btn:hover { background: rgba(13,158,118,0.2); color: #fff; }
+.e1e2-mean { margin-top: 1rem; font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.e1e2-source { font-size: 0.72rem; color: var(--faint); margin-top: 0.3rem; }
+
 /* Research built on GAIA (Task 3) */
 .rbg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
 .rbg-card {

@@ -686,6 +686,26 @@
 <!-- POST-STORY (normal scrolling resumes) -->
 <div id="post-story">
 
+<!-- HERO BAND: top-10 E1+E2 (Tasks 6 & 7) -->
+<section class="e1e2-band">
+  <div class="section-inner">
+    <div class="e1e2-head">
+      <div>
+        <div class="section-label">Theoretical AI exposure · Eloundou et al. 2024</div>
+        <h2 class="section-title">The 10 most AI-exposed occupations</h2>
+        <p class="section-desc" style="margin-bottom:0">Published E1+E2 β scores — the share of tasks where AI could cut completion time by 50%+.</p>
+      </div>
+      <span class="vintage-badge">Data vintage: Feb 2026 AEI release</span>
+    </div>
+    <div class="e1e2-chart-card">
+      <button class="gaia-dl-btn" id="e1e2-dl" type="button">Download PNG</button>
+      <div class="e1e2-chart-wrap"><canvas id="e1e2-top10"></canvas></div>
+    </div>
+    <p class="e1e2-mean" id="e1e2-mean-label">Mean theoretical exposure (E1+E2) — Eloundou et al. 2024.</p>
+    <p class="e1e2-source">Source: Eloundou, Manning, Mishkin &amp; Rock (2024), <em>Science</em> 384(6702). Displayed values are the original published β scores.</p>
+  </div>
+</section>
+
 <hr class="divider" />
 
 <!-- USE CASE SECTION -->
@@ -961,9 +981,11 @@
 <script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
 
-<!-- Task 1: data-driven occupation-exposure section (PapaParse) -->
+<!-- Tasks 1, 6, 7: data-driven charts (PapaParse + Chart.js theme kit) -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script defer src="assets/gaia-chart-kit.js"></script>
 <script defer src="assets/gaia-occ-preview.js"></script>
+<script defer src="assets/gaia-hero-e1e2.js"></script>
 
 <!-- Cinematic layer: Three.js globe + Lenis + GSAP ScrollTrigger (homepage only) -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
