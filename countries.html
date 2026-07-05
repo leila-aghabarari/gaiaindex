@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
   <script src="assets/gaia-charts.js"></script>
+  <script src="assets/gaia-chart-kit.js"></script>
   <link rel="stylesheet" href="assets/gaia-ui.css" />
   <link rel="stylesheet" href="assets/gaia-enhance.css" />
   <style>
@@ -953,6 +954,19 @@
 
 <div id="detailPanel" class="detail-panel"></div>
 
+<!-- BUBBLE PANEL (Task 12) -->
+<section class="gaia-landscape">
+  <h2>The adoption landscape</h2>
+  <div class="gaia-chart-card">
+    <button class="gaia-dl-btn" id="dl-bubble" type="button">Download PNG</button>
+    <p class="gaia-chart-title">Work use vs. global usage share</p>
+    <p class="gaia-chart-sub">x = share of global Claude.ai usage (log) · y = work use % · bubble size = GAIA-A</p>
+    <div class="gaia-chart-wrap" style="height:460px"><canvas id="cty-bubble"></canvas></div>
+    <div class="cty-legend" id="cty-legend"></div>
+    <p class="gaia-chart-src">Source: GAIA country data (usage_pct_global, uc_work, gaia_a, income_group), Feb 2026 AEI release.</p>
+  </div>
+</section>
+
 <div class="table-wrap">
   <div class="loading" id="loading">Loading country data…</div>
   <table id="countryTable" style="display:none">
@@ -1355,5 +1369,6 @@ Promise.all([
 <script src="assets/ga-events.js"></script>
 <script defer src="assets/gaia-enhance.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
+<script defer src="assets/gaia-countries-bubble.js"></script>
 </body>
 </html>
