@@ -686,7 +686,21 @@ function acsDetailRow(r) {
   const note = allNa
     ? 'No ACS 2023 PUMS estimate available for this occupation.'
     : 'Workforce demographics — U.S. Census ACS 2023 1-year PUMS';
-  return `<tr class="detail-row"><td colspan="9"><div class="acs-panel"><div class="acs-grid">${cells}</div><div class="acs-src">${note}</div></div></td></tr>`;
+  // Task 10: radar values (kept in original units, 0–100 scale)
+  const ge  = (r[IDX.gaia_e]  != null && !isNaN(r[IDX.gaia_e]))  ? +(r[IDX.gaia_e] * 100).toFixed(1) : '';
+  const e1  = (r[IDX.dv_alpha] != null) ? r[IDX.dv_alpha] : '';
+  const e12 = (r[IDX.dv_beta]  != null) ? r[IDX.dv_beta]  : '';
+  const gb  = (r[IDX.sml]      != null) ? r[IDX.sml]      : '';
+  const an  = (r[IDX.aei_beta] != null) ? r[IDX.aei_beta] : '';
+  return `<tr class="detail-row"><td colspan="9"><div class="occ-detail-grid">
+      <div class="gaia-chart-card occ-radar-card">
+        <p class="gaia-chart-title">AI-exposure profile</p>
+        <p class="gaia-chart-sub">This occupation vs. all-occupation average</p>
+        <div class="gaia-chart-wrap" style="height:290px"><canvas class="occ-radar" data-ge="${ge}" data-e1="${e1}" data-e12="${e12}" data-gb="${gb}" data-an="${an}"></canvas></div>
+        <p class="gaia-chart-src">GAIA-E (index pts) · E1 / E1+E2 % (Eloundou 2024) · GAIA-B / SML (Brynjolfsson 2018) · Anthropic AI-autonomy (Claude.ai)</p>
+      </div>
+      <div class="occ-acs-side"><div class="acs-panel"><div class="acs-grid">${cells}</div><div class="acs-src">${note}</div></div></div>
+    </div></td></tr>`;
 }
 
 function updateHeaders() {
@@ -1054,6 +1068,7 @@ render();
 <script src="assets/ga-events.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script defer src="assets/gaia-chart-kit.js"></script>
+<script defer src="assets/gaia-occ-radar.js"></script>
 <script defer src="assets/gaia-occ-landscape.js"></script>
 <script defer src="assets/gaia-enhance.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
