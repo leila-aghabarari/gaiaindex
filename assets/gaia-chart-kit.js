@@ -3,6 +3,26 @@
  * and a mean-line plugin. Used site-wide. */
 (function () {
   "use strict";
+
+  // Inject shared chart-UI styles once (so every page using the kit is consistent)
+  if (!document.getElementById("gaia-chart-kit-css")) {
+    var st = document.createElement("style");
+    st.id = "gaia-chart-kit-css";
+    st.textContent = [
+      ".gaia-landscape{max-width:1300px;margin:2.5rem auto;padding:0 2rem;}",
+      ".gaia-landscape>h2{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:-.02em;margin:0 0 1rem;color:var(--text,#1a2635);}",
+      ".gaia-panel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.25rem;}",
+      ".gaia-chart-card{position:relative;background:#0A1628;border-radius:16px;padding:1.3rem;box-shadow:0 16px 44px -22px rgba(10,22,40,.55);}",
+      ".gaia-chart-title{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;color:#eaf2f8;margin:0 0 .15rem;}",
+      ".gaia-chart-sub{font-size:.8rem;color:#8AA0B6;margin:0 0 .7rem;}",
+      ".gaia-chart-wrap{position:relative;height:340px;}",
+      ".gaia-chart-src{font-size:.68rem;color:#6f8296;margin:.7rem 0 0;}",
+      ".gaia-dl-btn{position:absolute;top:1rem;right:1rem;z-index:2;cursor:pointer;font:inherit;font-size:.68rem;font-weight:600;color:#C7D3E0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:.3rem .6rem;transition:background .15s,color .15s;}",
+      ".gaia-dl-btn:hover{background:rgba(13,158,118,.22);color:#fff;}",
+    ].join("");
+    (document.head || document.documentElement).appendChild(st);
+  }
+
   var C = {
     bg: "#0A1628",
     teal: "#0D9E76",

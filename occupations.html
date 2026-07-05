@@ -526,6 +526,27 @@
   </div>
 </details>
 
+<!-- LANDSCAPE PANEL (Task 9) -->
+<section class="gaia-landscape">
+  <h2>The GAIA-E landscape</h2>
+  <div class="gaia-panel-grid">
+    <div class="gaia-chart-card">
+      <button class="gaia-dl-btn" id="dl-hist" type="button">Download PNG</button>
+      <p class="gaia-chart-title">Distribution of GAIA-E Score</p>
+      <p class="gaia-chart-sub">All 923 occupations · index points (0–100)</p>
+      <div class="gaia-chart-wrap"><canvas id="gaia-e-hist"></canvas></div>
+      <p class="gaia-chart-src">Source: GAIA-E composite (gaia_e ×100), Feb 2026 AEI release. Shaded band = interquartile range.</p>
+    </div>
+    <div class="gaia-chart-card">
+      <button class="gaia-dl-btn" id="dl-group" type="button">Download PNG</button>
+      <p class="gaia-chart-title">Mean GAIA-E by occupation group</p>
+      <p class="gaia-chart-sub">Major O*NET occupation groups · sorted</p>
+      <div class="gaia-chart-wrap" style="height:470px"><canvas id="gaia-e-group"></canvas></div>
+      <p class="gaia-chart-src">Source: GAIA-E composite (gaia_e ×100), Feb 2026 AEI release.</p>
+    </div>
+  </div>
+</section>
+
 <div class="table-wrap">
   <table id="occTable">
     <thead>
@@ -1031,6 +1052,9 @@ render();
 </script>
 <script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script defer src="assets/gaia-chart-kit.js"></script>
+<script defer src="assets/gaia-occ-landscape.js"></script>
 <script defer src="assets/gaia-enhance.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
 </body>
