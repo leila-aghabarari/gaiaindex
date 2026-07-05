@@ -967,6 +967,18 @@
   </div>
 </section>
 
+<!-- ALGORITHMIC DIVIDE (Task 13) -->
+<section class="gaia-landscape">
+  <h2>The algorithmic divide</h2>
+  <div class="gaia-chart-card">
+    <button class="gaia-dl-btn" id="dl-divide" type="button">Download PNG</button>
+    <p class="gaia-chart-title">Work vs. coursework use, by income group</p>
+    <p class="gaia-chart-sub" id="divide-sub">Mean share of Claude.ai use, by World Bank income group.</p>
+    <div class="gaia-chart-wrap" style="height:380px"><canvas id="cty-divide"></canvas></div>
+    <p class="gaia-chart-src">Source: GAIA country data (uc_work, uc_coursework by income_group), Feb 2026 AEI release.</p>
+  </div>
+</section>
+
 <div class="table-wrap">
   <div class="loading" id="loading">Loading country data…</div>
   <table id="countryTable" style="display:none">
@@ -1370,5 +1382,6 @@ Promise.all([
 <script defer src="assets/gaia-enhance.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
 <script defer src="assets/gaia-countries-bubble.js"></script>
+<script defer src="assets/gaia-countries-divide.js"></script>
 </body>
 </html>
