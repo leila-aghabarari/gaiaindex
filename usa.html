@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
+  <script src="assets/gaia-chart-kit.js"></script>
   <script src="assets/gaia-charts.js"></script>
   <link rel="stylesheet" href="assets/gaia-ui.css" />
   <style>
@@ -345,6 +346,15 @@
     <div id="wage-scatter-legend" style="margin-bottom:.75rem"></div>
     <div class="chart-wrap tall"><canvas id="wageScatterChart"></canvas></div>
     <div class="jolts-note">▲ Upper-right quadrant (high exposure, high wage): Computer &amp; Math, Management, Business &amp; Financial. Lower-right (high exposure, low wage): Office &amp; Admin, Sales, Food Preparation — displacement pressure greatest here. Wages = FRED industry averages (Apr 2026), annualized at 2,080 hrs/yr.</div>
+  </div>
+
+  <!-- Quadrant scatter (Task 17) — OEWS median wage -->
+  <div class="gaia-chart-card" style="margin-top:1.25rem">
+    <button class="gaia-dl-btn" id="dl-quad" type="button">Download PNG</button>
+    <p class="gaia-chart-title">Exposure vs. median wage — the four quadrants</p>
+    <p class="gaia-chart-sub">x = E1+E2 (%, Eloundou 2024) · y = median annual wage (OEWS) · quadrant lines at the medians</p>
+    <div class="gaia-chart-wrap" style="height:500px"><canvas id="wageQuadChart"></canvas></div>
+    <p class="gaia-chart-src">Source: E1+E2 = dv_rating_beta (Eloundou et al. 2024, <em>Science</em>); median annual wage &amp; employment = BLS OEWS (a_median, tot_emp) via gaia_occupations.csv.</p>
   </div>
 </div>
 
@@ -1247,5 +1257,7 @@ function switchFredTab(which) {
 })();
 </script>
 <script defer src="assets/gaia-nav.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script defer src="assets/gaia-usa-quadrant.js"></script>
 </body>
 </html>
