@@ -12,6 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="assets/chart.umd.min.js"></script>
   <script src="assets/gaia-charts.js"></script>
+  <script src="assets/gaia-chart-kit.js"></script>
+  <script src="assets/gaia-trends-enhance.js"></script>
   <link rel="stylesheet" href="assets/gaia-ui.css" />
   <style>
     :root {
@@ -187,6 +189,7 @@
         <button class="tog"        onclick="gtSetSmooth(4,this)">4-week</button>
         <button class="tog"        onclick="gtSetSmooth(8,this)">8-week</button>
       </div>
+      <div class="trend-chips" id="gtLineChips" aria-label="Toggle countries"></div>
       <div style="position:relative;height:360px"><canvas id="gtLineChart"></canvas></div>
       <p class="gaia-take">Each line is one country's search interest in &ldquo;ChatGPT,&rdquo; scaled to its own peak. The near-vertical jump after Nov&nbsp;2022 shows how fast awareness arrived — but it didn't arrive everywhere at once.</p>
       <p class="chart-note">Source: Google Trends via pytrends. Index 0&ndash;100, each country normalised to its own peak week (100 = maximum interest ever recorded in that country). Click legend labels to toggle countries.</p>

@@ -19,6 +19,11 @@
       ".gaia-chart-src{font-size:.68rem;color:#6f8296;margin:.7rem 0 0;}",
       ".gaia-dl-btn{position:absolute;top:1rem;right:1rem;z-index:2;cursor:pointer;font:inherit;font-size:.68rem;font-weight:600;color:#C7D3E0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:.3rem .6rem;transition:background .15s,color .15s;}",
       ".gaia-dl-btn:hover{background:rgba(13,158,118,.22);color:#fff;}",
+      ".trend-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem;}",
+      ".trend-chip{font:inherit;font-size:.72rem;font-weight:600;cursor:pointer;border:1px solid var(--border,#24333f);background:var(--card,#10212e);color:var(--muted,#9fb3c2);border-radius:999px;padding:.28rem .7rem;display:inline-flex;align-items:center;gap:.35rem;transition:all .15s;}",
+      ".trend-chip::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--chip,#0D9E76);opacity:.35;}",
+      ".trend-chip.active{color:var(--text,#e6f2ee);border-color:var(--chip,#0D9E76);}",
+      ".trend-chip.active::before{opacity:1;}",
     ].join("");
     (document.head || document.documentElement).appendChild(st);
   }
