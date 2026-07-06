@@ -10,7 +10,7 @@
   // ---------- 1. Lenis smooth scroll (homepage only, not reduced-motion) ----------
   if (!reduce && typeof window.Lenis !== "undefined") {
     try {
-      var lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+      var lenis = new Lenis({ duration: 0.8, smoothWheel: true, wheelMultiplier: 1.25, touchMultiplier: 1.6 });
       function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
       requestAnimationFrame(raf);
       if (hasGSAP) {

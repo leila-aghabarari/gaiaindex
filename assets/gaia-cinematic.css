@@ -35,6 +35,9 @@ html.no-globe #globe-canvas { display: none; }
 html.no-globe .globe-fallback { display: block; }
 
 #cine-panels { position: relative; z-index: 1; margin-top: -100vh; }
+/* Solid ground so the sticky teal globe can't bleed behind post-story content
+   (was making the teal .section-label vanish over the particles). */
+#post-story { position: relative; z-index: 2; background: #06131a; }
 .cine-panel {
   min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; padding: 6vh 6vw; position: relative;
