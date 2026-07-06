@@ -356,6 +356,15 @@
     <div class="gaia-chart-wrap" style="height:500px"><canvas id="wageQuadChart"></canvas></div>
     <p class="gaia-chart-src">Source: E1+E2 = dv_rating_beta (Eloundou et al. 2024, <em>Science</em>); median annual wage &amp; employment = BLS OEWS (a_median, tot_emp) via gaia_occupations.csv.</p>
   </div>
+
+  <!-- Employment-weighted donut (Task 18) -->
+  <div class="gaia-chart-card" style="margin-top:1.25rem;max-width:560px">
+    <button class="gaia-dl-btn" id="dl-empdonut" type="button">Download PNG</button>
+    <p class="gaia-chart-title">US employment by AI-exposure quartile</p>
+    <p class="gaia-chart-sub" id="empdonut-sub">Share of total US employment across E1+E2 quartiles, weighted by OEWS employment.</p>
+    <div class="gaia-chart-wrap" style="height:340px"><canvas id="empDonutChart"></canvas></div>
+    <p class="gaia-chart-src">Source: E1+E2 = dv_rating_beta (Eloundou 2024); employment weight = BLS OEWS tot_emp. Quartiles are on the published E1+E2 distribution.</p>
+  </div>
 </div>
 
 <!-- ── SECTION 5: FRED ── -->
@@ -1259,5 +1268,6 @@ function switchFredTab(which) {
 <script defer src="assets/gaia-nav.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script defer src="assets/gaia-usa-quadrant.js"></script>
+<script defer src="assets/gaia-usa-empdonut.js"></script>
 </body>
 </html>
