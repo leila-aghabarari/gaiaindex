@@ -270,6 +270,9 @@
   <meta name="twitter:title" content="About — GAIA: Global AI Adoption Index" />
   <meta name="twitter:description" content="About Leila Aghabarari and the GAIA Global AI Adoption Index." />
   <meta name="twitter:image" content="https://gaiaindex.org/assets/og-card.png" />
+  <script src="assets/chart.umd.min.js"></script>
+  <script src="assets/gaia-chart-kit.js"></script>
+  <style>.glance-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}.heatmap{display:grid;gap:2px;margin-top:.3rem}.hm-cell{display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;border-radius:3px;min-height:30px;color:#eaf2f8}.hm-lbl{display:flex;align-items:center;font-size:.6rem;color:#9fb3c2;font-weight:600}.hm-lbl.col{justify-content:center;text-align:center}</style>
 </head>
 <body>
 
@@ -373,6 +376,30 @@
       <button onclick="showWaitlistModal()" class="btn btn-outline">Join the Waitlist →</button>
       <p style="font-size:.72rem;color:var(--muted);margin-top:.5rem">Data access by request. Cite as: Aghabarari (2026) DOI: 10.5281/zenodo.20320112</p>
     </div>
+  </div>
+
+  <!-- GAIA at a glance (Task 21) -->
+  <div class="sec">
+    <p class="sec-label">The data, briefly</p>
+    <h2>GAIA at a glance</h2>
+    <div class="glance-grid">
+      <div class="gaia-chart-card">
+        <p class="gaia-chart-title">GAIA-E distribution</p>
+        <p class="gaia-chart-sub">923 occupations · index points</p>
+        <div class="gaia-chart-wrap" style="height:150px"><canvas id="glance-hist"></canvas></div>
+      </div>
+      <div class="gaia-chart-card">
+        <p class="gaia-chart-title">Country adoption</p>
+        <p class="gaia-chart-sub">usage × work use · size = GAIA-A</p>
+        <div class="gaia-chart-wrap" style="height:150px"><canvas id="glance-bubble"></canvas></div>
+      </div>
+      <div class="gaia-chart-card">
+        <p class="gaia-chart-title">Measure correlations</p>
+        <p class="gaia-chart-sub">Pearson r across occupations</p>
+        <div id="glance-heatmap" class="heatmap"></div>
+      </div>
+    </div>
+    <p class="gaia-chart-src" style="max-width:none;margin-top:.8rem">GAIA-E = gaia_e · E1+E2 = dv_rating_beta (Eloundou 2024) · GAIA-B = sml_score (Brynjolfsson 2018) · Anthropic obs. = AI autonomy. Source: gaia_occupations.csv / gaia_countries.csv.</p>
   </div>
 
   <div class="sec" id="research">
@@ -480,5 +507,7 @@
 <script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script defer src="assets/gaia-about.js"></script>
 </body>
 </html>
