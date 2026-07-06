@@ -265,6 +265,18 @@
 
 </div>
 
+<!-- MOMENTUM (Task 16) -->
+<section class="gaia-landscape">
+  <h2>Momentum</h2>
+  <div class="gaia-chart-card">
+    <button class="gaia-dl-btn" id="dl-momentum" type="button">Download PNG</button>
+    <p class="gaia-chart-title">Rising &amp; falling AI activities</p>
+    <p class="gaia-chart-sub" id="momentum-sub">Top-10 rising and top-5 falling O*NET tasks by observed Claude.ai usage.</p>
+    <div class="gaia-chart-wrap" style="height:460px"><canvas id="momentumChart"></canvas></div>
+    <p class="gaia-chart-src">Source: Anthropic Economic Index onet_task usage (global), earliest vs latest vintage. Activities (O*NET tasks), not occupations — occupation-level momentum isn't in the timeseries.</p>
+  </div>
+</section>
+
 <footer>
   <div class="footer-inner">
     <div class="footer-logo"><span>GAIA</span> Global AI Adoption Index</div>
@@ -661,5 +673,6 @@ gtBuildLine(0);
 </script>
 <script src="assets/ga-events.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
+<script defer src="assets/gaia-momentum.js"></script>
 </body>
 </html>

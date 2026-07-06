@@ -1,0 +1,101 @@
+{
+  "early_label": "Feb 2025",
+  "late_label": "Mar 2026",
+  "early_date": "2025-02-10",
+  "late_date": "2026-03-24",
+  "unit": "share of observed usage (%)",
+  "rising": [
+    {
+      "task": "Assist students who need extra help with their coursework outside of class",
+      "early": 0.166,
+      "late": 1.97,
+      "delta": 1.803
+    },
+    {
+      "task": "Develop instructional materials to be used by educators and instructors",
+      "early": 0.053,
+      "late": 0.801,
+      "delta": 0.748
+    },
+    {
+      "task": "Confer with clients regarding the nature of the information processing or computation needs a computer program is to address",
+      "early": 0.249,
+      "late": 0.806,
+      "delta": 0.558
+    },
+    {
+      "task": "Provide feedback and recommendations to developers on software usability and functionality",
+      "early": 0.132,
+      "late": 0.491,
+      "delta": 0.359
+    },
+    {
+      "task": "Assess the usefulness of pre-developed application packages and adapt them to a user environment",
+      "early": 0.058,
+      "late": 0.379,
+      "delta": 0.321
+    },
+    {
+      "task": "Respond to customer inquiries or complaints",
+      "early": 0.012,
+      "late": 0.3,
+      "delta": 0.288
+    },
+    {
+      "task": "Analyze user needs and software requirements to determine feasibility of design within time and cost constraints",
+      "early": 0.301,
+      "late": 0.567,
+      "delta": 0.266
+    },
+    {
+      "task": "Develop new software applications or customize existing applications to meet specific scientific project needs",
+      "early": 0.057,
+      "late": 0.289,
+      "delta": 0.231
+    },
+    {
+      "task": "Advise students on academic and vocational curricula and on career issues",
+      "early": 0.022,
+      "late": 0.216,
+      "delta": 0.193
+    },
+    {
+      "task": "Provide individual support or counseling in general wellness or nutrition",
+      "early": 0.035,
+      "late": 0.217,
+      "delta": 0.182
+    }
+  ],
+  "falling": [
+    {
+      "task": "Correct errors by making appropriate changes and rechecking the program to ensure that the desired results are produced",
+      "early": 2.997,
+      "late": 0.887,
+      "delta": -2.11
+    },
+    {
+      "task": "Modify existing programs to enhance efficiency",
+      "early": 0.783,
+      "late": 0.115,
+      "delta": -0.668
+    },
+    {
+      "task": "Modify existing databases and database management systems or direct programmers and analysts to make changes",
+      "early": 0.55,
+      "late": 0.199,
+      "delta": -0.351
+    },
+    {
+      "task": "Analyze system performance or operational requirements",
+      "early": 0.361,
+      "late": 0.069,
+      "delta": -0.292
+    },
+    {
+      "task": "Use models to simulate the behavior of animated objects in the finished sequence",
+      "early": 0.31,
+      "late": 0.127,
+      "delta": -0.182
+    }
+  ]
+}
