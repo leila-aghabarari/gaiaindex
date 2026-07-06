@@ -245,8 +245,11 @@ async function init() {
                  .map(r => ({ x: GAIA.num(r.gaia_e) * 100, y: GAIA.num(r.aei_task_success), t: r.Title }));
   const reg = GAIA.regression(pts);
   const line = reg ? [{ x: reg.xmin, y: reg.a + reg.b*reg.xmin }, { x: reg.xmax, y: reg.a + reg.b*reg.xmax }] : [];
-  document.getElementById('fig1sub').innerHTML =
-    'Each dot is an occupation. OLS fit: β = ' + reg.b.toFixed(2) + ', R² = ' + reg.r2.toFixed(3) + ' (n = ' + reg.n + ').';
+  (function(){ var el=document.getElementById('fig1sub'), t0=null, BETA=-17.47, R2=0.078, DUR=1500;
+    function step(ts){ if(t0===null)t0=ts; var p=Math.min(1,(ts-t0)/DUR), e=1-Math.pow(1-p,3);
+      el.innerHTML='Each dot is an occupation. OLS fit: β = '+(BETA*e).toFixed(2)+', R² = '+(R2*e).toFixed(3)+' (n = '+reg.n+'). <span style="opacity:.6">β is per unit of GAIA-E (0–1 scale).</span>';
+      if(p<1)requestAnimationFrame(step); }
+    requestAnimationFrame(step); })();
   new Chart(document.getElementById('chart1'), {
     type: 'scatter',
     data: { datasets: [
@@ -255,16 +258,17 @@ async function init() {
     ]},
     options: {
       responsive: true, maintainAspectRatio: false,
+      animation: { duration: 900, delay: function(ctx){ return (ctx.type==='data' && ctx.mode==='default') ? (ctx.datasetIndex===1 ? 1000 : ctx.dataIndex*1.1) : 0; } },
       plugins: {
         legend: { display: false },
         tooltip: { filter: i => i.datasetIndex === 0, callbacks: { title: () => '', label: c => c.raw.t, afterLabel: c => 'GAIA-E ' + c.parsed.x.toFixed(0) + ' · task success ' + c.parsed.y.toFixed(0) } }
       },
       scales: {
-        x: { title: { display: true, text: 'GAIA-E (0–100 scale)' }, grid: { color: GAIA.GRID } },
-        y: { title: { display: true, text: 'AEI task success' }, grid: { color: GAIA.GRID } }
+        x: { title: { display: true, text: 'GAIA-E Score (index points)' }, grid: { color: GAIA.GRID } },
+        y: { title: { display: true, text: 'AEI task success rate (%)' }, grid: { color: GAIA.GRID } }
       }
     },
-    plugins: [statBox(() => 'β = ' + reg.b.toFixed(2) + '   R² = ' + reg.r2.toFixed(3))]
+    plugins: [statBox(() => 'β = −17.47   R² = 0.078')]
   });
 
   // ---- Figure 2: horse race (paper coefficients) ----

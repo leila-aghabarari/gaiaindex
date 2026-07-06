@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/research.css" />
+  <script src="assets/chart.umd.min.js"></script>
+  <script src="assets/gaia-chart-kit.js"></script>
+  <style>.pc-thumb{margin:0 0 .9rem;background:#0A1628;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.45rem;height:92px}.pc-thumb canvas{width:100%25!important;height:100%25!important}</style>
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Research — GAIA: Global AI Adoption Index" />
@@ -81,6 +84,7 @@
       <span class="badge badge-working">Working Paper</span>
       <span class="pc-date">2026</span>
     </div>
+    <div class="pc-thumb"><canvas data-fig="hist"></canvas></div>
     <h3><a href="paper_gaia_descriptor.html">GAIA: A Global AI Adoption Index Combining Observed Usage, Theoretical Exposure, and Pre-GPT Baselines Across 923 Occupations and 138 Countries</a></h3>
     <div class="pc-authors">Leila Aghabarari · IFC, World Bank Group</div>
     <p class="pc-abstract">GAIA integrates three previously disconnected lenses on AI's labor-market reach — observed platform usage, theoretical task exposure, and pre-GPT adoption baselines — into a single harmonized index. It covers 923 O*NET occupations and 138 countries on a common crosswalk, enabling comparable exposure and adoption measures across the world.</p>
@@ -102,6 +106,7 @@
       <span class="badge badge-preliminary">Preliminary</span>
       <span class="pc-date">May 2026</span>
     </div>
+    <div class="pc-thumb"><canvas data-fig="scatter"></canvas></div>
     <h3><a href="paper_exposure_performance.html">Exposure Without Performance: Does Theoretical AI Exposure Predict Actual AI Capability? Evidence from the United States</a></h3>
     <div class="pc-authors">Leila Aghabarari · IFC, World Bank Group</div>
     <p class="pc-abstract">Theoretical AI-exposure scores are widely used as proxies for where AI will bite, yet they are rarely validated against measured capability. Using observed AI task performance across U.S. occupations, this paper tests whether exposure predicts performance — and finds a robust negative relationship that survives a horse race against alternative measures.</p>
@@ -123,6 +128,7 @@
       <span class="badge badge-forthcoming">Forthcoming</span>
       <span class="pc-date">2026</span>
     </div>
+    <div class="pc-thumb"><canvas data-fig="bars"></canvas></div>
     <h3><a href="paper_brazil.html">AI Exposure, Credit Markets, and Employment in Brazil</a></h3>
     <div class="pc-authors">Leila Aghabarari · IFC, WBG &nbsp;·&nbsp; Bernardus Van Doornik · Banco Central do Brasil</div>
     <p class="pc-abstract">This paper traces how occupational AI exposure transmits through the banking system into local labor markets in Brazil. Linking the central bank's credit registry to matched employer–employee records and the GAIA crosswalk, it studies whether AI-exposed sectors face tighter credit and adjusting employment after the generative-AI shock.</p>
@@ -181,5 +187,7 @@
   });
 </script>
 <script defer src="assets/gaia-nav.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script defer src="assets/gaia-research-thumbs.js"></script>
 </body>
 </html>
