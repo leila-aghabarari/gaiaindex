@@ -290,6 +290,20 @@
   </div>
 </div>
 
+<!-- Live Zenodo counter (Task 22) -->
+<div style="max-width:900px;margin:1.5rem auto 0;padding:0 1.5rem">
+  <div class="stats-banner">
+    <div class="stats-group">
+      <div class="stat-item"><div class="stat-num loading" id="zvViews">…</div><div class="stat-label">Zenodo views</div></div>
+      <div class="stat-item"><div class="stat-num loading" id="zvDownloads">…</div><div class="stat-label">Downloads</div></div>
+    </div>
+    <div class="zenodo-meta">
+      <a href="https://doi.org/10.5281/zenodo.20320112" target="_blank" rel="noopener" style="font-size:.72rem;font-weight:600;color:var(--teal)">DOI: 10.5281/zenodo.20320112 &#8599;</a>
+      <span class="stats-note" id="zStatsNote">Live from Zenodo</span>
+    </div>
+  </div>
+</div>
+
 <div class="content">
 
   <!-- ── ZENODO STATS (hidden) ── -->
@@ -619,5 +633,32 @@ p.sub-intro { font-size: .82rem; color: #7aada5; line-height: 1.6; margin-bottom
 <script src="assets/gaia-waitlist.js"></script>
 <script src="assets/ga-events.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
+<script>
+/* Task 22 — live Zenodo views + downloads, with graceful fallback. */
+(function () {
+  var vEl = document.getElementById('zvViews'), dEl = document.getElementById('zvDownloads'), note = document.getElementById('zStatsNote');
+  if (!vEl || !dEl) return;
+  function countUp(el, to) {
+    el.classList.remove('loading');
+    var t0 = null, dur = 1200;
+    function step(ts) { if (t0 === null) t0 = ts; var p = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(to * e).toLocaleString('en-US'); if (p < 1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  function fail() {
+    vEl.classList.remove('loading'); dEl.classList.remove('loading');
+    vEl.textContent = '—'; dEl.textContent = '—';
+    if (note) { note.className = 'stats-error'; note.textContent = 'Live stats unavailable — view the record on Zenodo.'; }
+  }
+  fetch('https://zenodo.org/api/records/20320112', { headers: { Accept: 'application/json' } })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (j) {
+      var s = j.stats || {};
+      if (s.views == null && s.downloads == null) throw 0;
+      countUp(vEl, s.views || 0); countUp(dEl, s.downloads || 0);
+      if (note) note.textContent = 'Live from Zenodo';
+    })
+    .catch(fail);
+})();
+</script>
 </body>
 </html>
