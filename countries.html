@@ -1097,7 +1097,14 @@ function showDetail(geoId) {
       if (isNaN(n)) return '';
       return `<div class="bbar-row"><span class="bbar-label">${l}</span><div class="bbar-bg"><div class="bbar-fill" style="width:${Math.min(100, n)}%;background:${c}"></div></div><span class="bbar-val" style="color:${c}">${n.toFixed(1)}%</span></div>`;
     }).join('')}
+    <div class="gaia-chart-card" style="margin-top:1.1rem">
+      <p class="gaia-chart-title">Collaboration mode split</p>
+      <p class="gaia-chart-sub">This country vs. global average</p>
+      <div class="gaia-chart-wrap" style="height:160px"><canvas id="cty-collab-stack"></canvas></div>
+      <p class="gaia-chart-src">Anthropic Economic Index — Claude.ai collaboration modes, Feb 2026.</p>
+    </div>
   </div>`;
+  if (window.GaiaCollabStack) window.GaiaCollabStack(row);
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -1383,5 +1390,6 @@ Promise.all([
 <script defer src="assets/gaia-nav.js"></script>
 <script defer src="assets/gaia-countries-bubble.js"></script>
 <script defer src="assets/gaia-countries-divide.js"></script>
+<script defer src="assets/gaia-countries-collab.js"></script>
 </body>
 </html>
