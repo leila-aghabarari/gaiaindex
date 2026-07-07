@@ -126,7 +126,8 @@
   </div>
 
   <div class="hl-strip">
-    <div class="hl"><div class="v" id="hl-op">—</div><div class="l">Operational MW (seed)</div></div>
+    <div class="hl"><div class="v" id="hl-fac">—</div><div class="l">Facilities mapped (OSM)</div></div>
+    <div class="hl"><div class="v" id="hl-op">—</div><div class="l">Named operational MW</div></div>
     <div class="hl"><div class="v" id="hl-ann">—</div><div class="l">Announced / pipeline MW</div></div>
     <div class="hl"><div class="v" id="hl-ctys">—</div><div class="l">Countries mapped</div></div>
     <div class="hl"><div class="v" id="hl-ai">—</div><div class="l">Frontier AI clusters</div></div>
@@ -143,6 +144,7 @@
       <span class="k"><span class="dc-dot" style="background:#3B82F6"></span>Hyperscale</span>
       <span class="k"><span class="dc-dot" style="background:#F59E0B"></span>Colocation</span>
       <span class="k"><span class="dc-dot" style="background:#0D9E76;opacity:.3"></span>Announced</span>
+      <span class="k"><span class="dc-dot" style="background:#6f8698;width:6px;height:6px"></span>OSM coverage</span>
       <span class="k">Country shade = AI adoption</span>
     </div>
   </div>
@@ -168,7 +170,7 @@
     </div>
   </div>
 
-  <p class="note"><strong>Methodology &amp; honesty note.</strong> This public map uses an <strong>illustrative seed dataset</strong> compiled from public announcements; coordinates and capacities are approximate, and <em>operational</em> is kept separate from <em>announced</em> on purpose — the market routinely inflates "planned capacity." The verified, provenance-tagged facility registry and all cross-analysis (dependency index, energy, fiscal) are part of the paid GAIA dataset and Country Reports. Location layer: OpenStreetMap / public directories; AI-cluster layer draws on Epoch AI-style tracking; energy benchmarks: IEA. Adoption shading: GAIA country data (share of global Claude.ai usage).</p>
+  <p class="note"><strong>Methodology &amp; honesty note.</strong> The faint dots are a <strong>real coverage layer of 4,300+ facilities ingested live from OpenStreetMap</strong> (locations real; OSM carries no capacity). The larger colored markers are a <strong>curated capacity layer</strong> of notable hubs &amp; frontier AI clusters where MW/type/status are compiled from public announcements — approximate, and with <em>operational</em> kept separate from <em>announced</em> on purpose (the market routinely inflates "planned capacity"). The verified, provenance-tagged facility registry and all cross-analysis (dependency index, energy, fiscal) are part of the paid GAIA dataset and Country Reports. Layers: OpenStreetMap (coverage), Epoch AI-style tracking (frontier clusters), IEA (energy benchmarks). Country shading: GAIA adoption (share of global Claude.ai usage).</p>
 </div>
 
 <footer>
