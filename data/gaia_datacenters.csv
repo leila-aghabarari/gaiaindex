@@ -1,0 +1,50 @@
+# GAIA data-center SEED dataset — ILLUSTRATIVE, compiled from public announcements.
+# Coordinates approximate; capacity_mw approximate (facility campus or market cluster).
+# Free/web layer only. Verified facility-level registry is the paid GAIA dataset.
+# columns: name,operator,city,country,iso3,lat,lng,type,status,capacity_mw
+name,operator,city,country,iso3,lat,lng,type,status,capacity_mw
+Colossus,xAI,Memphis,United States,USA,35.05,-89.98,ai_cluster,operational,300
+Stargate Abilene,OpenAI / Oracle,Abilene,United States,USA,32.45,-99.73,ai_cluster,construction,1200
+Hyperion,Meta,Richland Parish,United States,USA,32.36,-91.75,ai_cluster,construction,2000
+Fairwater,Microsoft,Mount Pleasant,United States,USA,42.86,-87.90,ai_cluster,construction,900
+Project Rainier,AWS / Anthropic,New Carlisle,United States,USA,41.70,-86.49,ai_cluster,construction,2200
+Prineville,Meta,Prineville,United States,USA,44.30,-120.83,hyperscale,operational,500
+Council Bluffs,Google,Council Bluffs,United States,USA,41.26,-95.86,hyperscale,operational,600
+Goodyear,Microsoft,Goodyear,United States,USA,33.44,-112.36,hyperscale,operational,300
+Data Center Alley,Multiple,Ashburn,United States,USA,39.04,-77.49,colocation,operational,3500
+Dallas Metro,Multiple,Dallas,United States,USA,32.78,-96.80,colocation,operational,700
+Phoenix Metro,Multiple,Phoenix,United States,USA,33.45,-112.07,colocation,operational,900
+Silicon Valley,Multiple,Santa Clara,United States,USA,37.35,-121.95,colocation,operational,800
+Chicago Metro,Multiple,Chicago,United States,USA,41.85,-87.65,colocation,operational,700
+Dublin Cluster,Multiple,Dublin,Ireland,IRL,53.35,-6.26,colocation,operational,1000
+Slough / London,Multiple,London,United Kingdom,GBR,51.51,-0.59,colocation,operational,1000
+Amsterdam Cluster,Multiple,Amsterdam,Netherlands,NLD,52.37,4.90,colocation,operational,900
+Frankfurt Cluster,Multiple,Frankfurt,Germany,DEU,50.11,8.68,colocation,operational,1000
+Paris Cluster,Multiple,Paris,France,FRA,48.86,2.35,colocation,operational,700
+Madrid Cluster,Multiple,Madrid,Spain,ESP,40.42,-3.70,colocation,operational,300
+Milan Cluster,Multiple,Milan,Italy,ITA,45.46,9.19,colocation,operational,250
+Warsaw Cluster,Multiple,Warsaw,Poland,POL,52.23,21.01,colocation,operational,150
+Stockholm Cluster,Multiple,Stockholm,Sweden,SWE,59.33,18.06,colocation,operational,200
+Zurich Cluster,Multiple,Zurich,Switzerland,CHE,47.38,8.54,colocation,operational,200
+Singapore Cluster,Multiple,Singapore,Singapore,SGP,1.35,103.82,colocation,operational,1000
+Tokyo Cluster,Multiple,Tokyo,Japan,JPN,35.68,139.69,colocation,operational,900
+Osaka Cluster,Multiple,Osaka,Japan,JPN,34.69,135.50,colocation,operational,300
+Seoul Cluster,Multiple,Seoul,South Korea,KOR,37.57,126.98,colocation,operational,500
+Beijing Cluster,Multiple,Beijing,China,CHN,39.90,116.40,hyperscale,operational,1500
+Shanghai Cluster,Multiple,Shanghai,China,CHN,31.23,121.47,hyperscale,operational,1200
+Zhangjiakou,Alibaba,Zhangjiakou,China,CHN,40.82,114.88,hyperscale,operational,1000
+Hong Kong Cluster,Multiple,Hong Kong,Hong Kong,HKG,22.32,114.17,colocation,operational,400
+Mumbai Cluster,Multiple,Mumbai,India,IND,19.08,72.88,colocation,operational,900
+Chennai Cluster,Multiple,Chennai,India,IND,13.08,80.27,colocation,operational,300
+Hyderabad Campus,Multiple,Hyderabad,India,IND,17.38,78.49,hyperscale,construction,500
+Jakarta Cluster,Multiple,Jakarta,Indonesia,IDN,-6.21,106.85,colocation,operational,300
+Sydney Cluster,Multiple,Sydney,Australia,AUS,-33.87,151.21,colocation,operational,700
+Sao Paulo Cluster,Multiple,Sao Paulo,Brazil,BRA,-23.55,-46.63,colocation,operational,500
+Santiago,Google,Santiago,Chile,CHL,-33.45,-70.67,hyperscale,operational,200
+Queretaro Cluster,Multiple,Queretaro,Mexico,MEX,20.59,-100.39,colocation,construction,300
+Dubai Cluster,Multiple,Dubai,United Arab Emirates,ARE,25.20,55.27,colocation,operational,300
+HUMAIN,HUMAIN,Riyadh,Saudi Arabia,SAU,24.71,46.68,ai_cluster,announced,1900
+Johannesburg Cluster,Multiple,Johannesburg,South Africa,ZAF,-26.20,28.05,colocation,operational,200
+Lagos Cluster,Multiple,Lagos,Nigeria,NGA,6.52,3.38,colocation,operational,80
+Nairobi Campus,Multiple,Nairobi,Kenya,KEN,-1.29,36.82,colocation,construction,100
+Toronto Cluster,Multiple,Toronto,Canada,CAN,43.65,-79.38,colocation,operational,400
