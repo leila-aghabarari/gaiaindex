@@ -86,6 +86,9 @@
         });
       targets.forEach(function (el, i) {
         el.classList.add("gaia-reveal");
+        // threshold 0 so it fires when any edge enters — tall sections (taller
+        // than ~8x the viewport) can never reach a fractional threshold and would
+        // otherwise stay stuck invisible.
         var io2 = new IntersectionObserver(function (es) {
           es.forEach(function (e) {
             if (e.isIntersecting) {
@@ -93,9 +96,11 @@
               io2.disconnect();
             }
           });
-        }, { threshold: 0.12 });
+        }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
         io2.observe(el);
       });
+      // safety net: never leave a section stranded at opacity 0
+      setTimeout(function () { targets.forEach(function (el) { el.classList.add("gaia-in"); }); }, 2600);
     }
   } catch (e) {}
 })();
