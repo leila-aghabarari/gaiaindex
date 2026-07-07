@@ -116,6 +116,8 @@
     scoreCard(r); useCaseChart(r); collabChart(r); aipiChart(r); quadChart(r); infra(r); takeaways(r);
     history.replaceState(null, "", "country.html?iso=" + iso);
     var sel = document.getElementById("brief-country"); if (sel) sel.value = iso;
+    var cc = document.getElementById("commission-cta");
+    if (cc) cc.href = "mailto:aghabarari.leila@gmail.com?subject=" + encodeURIComponent("GAIA Country Report enquiry — " + r.country_name);
   }
 
   function loadCsv(url, cb) { Papa.parse(url, { download: true, header: true, comments: "#", skipEmptyLines: true, complete: function (r) { cb(r.data || []); }, error: function () { cb([]); } }); }

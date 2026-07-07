@@ -80,7 +80,7 @@
         '<div class="dc-metric"><span class="dc-m-val">' + (roll.top || "—") + '</span><span class="dc-m-lbl">Top hub</span></div>' +
       '</div><p class="dc-signal">' + signal + '</p>' +
       '<div class="dc-locked">' + lockCard("Compute-dependency rank") + lockCard("Energy load vs. grid headroom") + lockCard("Net-fiscal on incentives") + '</div>' +
-      '<a class="dc-cta" href="about.html#contact">Unlock the full ' + name + ' compute report →</a>';
+      '<a class="dc-cta" href="mailto:aghabarari.leila@gmail.com?subject=' + encodeURIComponent("GAIA Compute Report enquiry — " + name) + '">Unlock the full ' + name + ' compute report →</a>';
   }
   function lockCard(t) { return '<div class="dc-lock"><span class="dc-lock-ico">🔒</span><span class="dc-lock-t">' + t + '</span><span class="dc-lock-blur">▓▓ ▓▓▓ ▓▓</span></div>'; }
 
