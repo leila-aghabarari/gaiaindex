@@ -7,8 +7,9 @@
   if (typeof Papa === "undefined" || typeof Chart === "undefined" || !window.GAIA_CHART) return;
   var K = window.GAIA_CHART, C = K.colors;
 
-  var countries = [], byIso = {}, rank = {}, gAvg = {}, osmCount = {}, curated = {};
+  var countries = [], byIso = {}, rank = {}, gAvg = {}, osmCount = {}, curated = {}, macroByIso = {};
   var charts = {};
+  function fmtUsd(v) { v = +v; return v >= 1e12 ? "$" + (v / 1e12).toFixed(1) + "T" : v >= 1e9 ? "$" + (v / 1e9).toFixed(0) + "B" : v >= 1e6 ? "$" + (v / 1e6).toFixed(0) + "M" : "$" + Math.round(v).toLocaleString(); }
   function num(v) { var n = parseFloat(v); return isNaN(n) ? null : n; }
   function mean(field) { var s = 0, n = 0; countries.forEach(function (r) { var v = num(r[field]); if (v != null) { s += v; n++; } }); return n ? s / n : 0; }
   function destroy() { Object.keys(charts).forEach(function (k) { if (charts[k]) charts[k].destroy(); }); charts = {}; }
@@ -103,7 +104,22 @@
     // exposure
     var bx = num(r.bartik_exposure);
     if (bx != null) { var bxr = countries.map(function (c) { return num(c.bartik_exposure); }).filter(function (v) { return v != null; }).sort(function (a, b) { return a - b; }); var pct = Math.round(100 * bxr.filter(function (v) { return v < bx; }).length / bxr.length); t.push("Workforce AI exposure sits at the <b>" + ord(pct) + " percentile</b> globally."); }
-    document.getElementById("b-takeaways").innerHTML = t.slice(0, 4).map(function (x) { return "<li>" + x + "</li>"; }).join("");
+    var mm = macroByIso[iso];
+    if (mm && mm.services_pct_gdp != null) t.push("Services are <b>" + mm.services_pct_gdp.toFixed(0) + "% of GDP</b> — the part of the economy most exposed to AI.");
+    document.getElementById("b-takeaways").innerHTML = t.slice(0, 5).map(function (x) { return "<li>" + x + "</li>"; }).join("");
+  }
+  function macro(r) {
+    var el = document.getElementById("b-macro"); if (!el) return;
+    var m = macroByIso[r.iso3];
+    if (!m) { el.innerHTML = '<div class="im"><div class="v">—</div><div class="l">No World Bank data</div></div>'; return; }
+    function im(v, l) { return '<div class="im"><div class="v">' + v + '</div><div class="l">' + l + '</div></div>'; }
+    el.innerHTML = [
+      m.gdp_pc != null ? im("$" + Math.round(m.gdp_pc).toLocaleString(), "GDP per capita") : "",
+      m.gdp_usd != null ? im(fmtUsd(m.gdp_usd), "GDP (current US$)") : "",
+      m.services_pct_gdp != null ? im(m.services_pct_gdp.toFixed(0) + "%", "Services (% of GDP)") : "",
+      m.tertiary_enroll != null ? im(m.tertiary_enroll.toFixed(0) + "%", "Tertiary enrollment") : "",
+      m.internet_pct != null ? im(m.internet_pct.toFixed(0) + "%", "Internet users") : "",
+    ].join("");
   }
   function ord(n) { var s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
   function median(field) { var a = countries.map(function (c) { return num(c[field]); }).filter(function (v) { return v != null; }).sort(function (x, y) { return x - y; }); return a.length ? a[Math.floor(a.length / 2)] : 0; }
@@ -113,7 +129,7 @@
     document.getElementById("b-name").textContent = r.country_name;
     document.getElementById("b-sub").textContent = (r.income_group || "") + " income · " + (num(r.usage_pct_global) != null ? num(r.usage_pct_global).toFixed(2) + "% of global Claude.ai use" : "");
     destroy();
-    scoreCard(r); useCaseChart(r); collabChart(r); aipiChart(r); quadChart(r); infra(r); takeaways(r);
+    scoreCard(r); macro(r); useCaseChart(r); collabChart(r); aipiChart(r); quadChart(r); infra(r); takeaways(r);
     history.replaceState(null, "", "country.html?iso=" + iso);
     var sel = document.getElementById("brief-country"); if (sel) sel.value = iso;
     var cc = document.getElementById("commission-cta");
@@ -132,6 +148,8 @@
       dc.forEach(function (d) { var o = curated[d.iso3] || (curated[d.iso3] = { op: 0, ann: 0, top: null, topmw: 0 }); var mw = num(d.capacity_mw) || 0; if (d.status === "operational") o.op += mw; else o.ann += mw; if (mw > o.topmw) { o.topmw = mw; o.top = d.city; } });
       loadCsv("data/gaia_datacenters_osm.csv", function (osm) {
         osm.forEach(function (d) { if (d.iso3) osmCount[d.iso3] = (osmCount[d.iso3] || 0) + 1; });
+        loadCsv("data/gaia_macro.csv", function (mac) {
+        mac.forEach(function (m) { if (m.iso3) macroByIso[m.iso3] = { gdp_pc: num(m.gdp_pc), gdp_usd: num(m.gdp_usd), services_pct_gdp: num(m.services_pct_gdp), tertiary_enroll: num(m.tertiary_enroll), internet_pct: num(m.internet_pct) }; });
         // populate selector
         var sel = document.getElementById("brief-country");
         if (sel) {
@@ -141,6 +159,7 @@
         }
         var want = new URLSearchParams(location.search).get("iso");
         render(byIso[want] ? want : "USA");
+        });
       });
     });
   });
