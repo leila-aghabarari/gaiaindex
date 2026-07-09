@@ -7,9 +7,10 @@
   if (typeof Papa === "undefined" || typeof Chart === "undefined" || !window.GAIA_CHART) return;
   var K = window.GAIA_CHART, C = K.colors;
 
-  var countries = [], byIso = {}, rank = {}, gAvg = {}, osmCount = {}, curated = {}, macroByIso = {}, energyByIso = {}, dcShareByIso = {};
+  var countries = [], byIso = {}, rank = {}, gAvg = {}, osmCount = {}, curated = {}, macroByIso = {}, energyByIso = {}, dcShareByIso = {}, innovByIso = {};
   var charts = {};
   function fmtUsd(v) { v = +v; return v >= 1e12 ? "$" + (v / 1e12).toFixed(1) + "T" : v >= 1e9 ? "$" + (v / 1e9).toFixed(0) + "B" : v >= 1e6 ? "$" + (v / 1e6).toFixed(0) + "M" : "$" + Math.round(v).toLocaleString(); }
+  function fmtNum(v) { v = +v; return v >= 1e6 ? (v / 1e6).toFixed(1) + "M" : v >= 1e3 ? Math.round(v / 1e3) + "k" : Math.round(v).toLocaleString(); }
   function num(v) { var n = parseFloat(v); return isNaN(n) ? null : n; }
   function mean(field) { var s = 0, n = 0; countries.forEach(function (r) { var v = num(r[field]); if (v != null) { s += v; n++; } }); return n ? s / n : 0; }
   function destroy() { Object.keys(charts).forEach(function (k) { if (charts[k]) charts[k].destroy(); }); charts = {}; }
@@ -112,7 +113,9 @@
     if (bx != null) { var bxr = countries.map(function (c) { return num(c.bartik_exposure); }).filter(function (v) { return v != null; }).sort(function (a, b) { return a - b; }); var pct = Math.round(100 * bxr.filter(function (v) { return v < bx; }).length / bxr.length); t.push("Workforce AI exposure sits at the <b>" + ord(pct) + " percentile</b> globally."); }
     var mm = macroByIso[iso];
     if (mm && mm.services_pct_gdp != null) t.push("Services are <b>" + mm.services_pct_gdp.toFixed(0) + "% of GDP</b> — the part of the economy most exposed to AI.");
-    document.getElementById("b-takeaways").innerHTML = t.slice(0, 5).map(function (x) { return "<li>" + x + "</li>"; }).join("");
+    var iv = innovByIso[iso];
+    if (iv && iv.rd_pct_gdp != null) { var lvl = iv.rd_pct_gdp >= 2.5 ? "high" : iv.rd_pct_gdp >= 1 ? "moderate" : "low"; t.push("R&amp;D spending is <b>" + iv.rd_pct_gdp.toFixed(1) + "% of GDP</b> — " + lvl + " innovation intensity."); }
+    document.getElementById("b-takeaways").innerHTML = t.slice(0, 6).map(function (x) { return "<li>" + x + "</li>"; }).join("");
   }
   function macro(r) {
     var el = document.getElementById("b-macro"); if (!el) return;
@@ -127,6 +130,18 @@
       m.internet_pct != null ? im(m.internet_pct.toFixed(0) + "%", "Internet users") : "",
     ].join("");
   }
+  function innov(r) {
+    var el = document.getElementById("b-innov"); if (!el) return;
+    var m = innovByIso[r.iso3];
+    if (!m) { el.innerHTML = '<div class="im"><div class="v">—</div><div class="l">No World Bank data</div></div>'; return; }
+    function im(v, l) { return '<div class="im"><div class="v">' + v + '</div><div class="l">' + l + '</div></div>'; }
+    el.innerHTML = [
+      m.rd_pct_gdp != null ? im(m.rd_pct_gdp.toFixed(2) + "%", "R&amp;D spend (% GDP)") : "",
+      m.researchers_per_m != null ? im(Math.round(m.researchers_per_m).toLocaleString(), "Researchers / million") : "",
+      m.patents_resident != null ? im(fmtNum(m.patents_resident), "Patent filings (resident)") : "",
+      m.hitech_exports_pct != null ? im(m.hitech_exports_pct.toFixed(0) + "%", "High-tech exports") : "",
+    ].join("");
+  }
   function ord(n) { var s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
   function median(field) { var a = countries.map(function (c) { return num(c[field]); }).filter(function (v) { return v != null; }).sort(function (x, y) { return x - y; }); return a.length ? a[Math.floor(a.length / 2)] : 0; }
 
@@ -135,7 +150,7 @@
     document.getElementById("b-name").textContent = r.country_name;
     document.getElementById("b-sub").textContent = (r.income_group || "") + " income · " + (num(r.usage_pct_global) != null ? num(r.usage_pct_global).toFixed(2) + "% of global Claude.ai use" : "");
     destroy();
-    scoreCard(r); macro(r); useCaseChart(r); collabChart(r); aipiChart(r); quadChart(r); infra(r); takeaways(r);
+    scoreCard(r); macro(r); innov(r); useCaseChart(r); collabChart(r); aipiChart(r); quadChart(r); infra(r); takeaways(r);
     history.replaceState(null, "", "country.html?iso=" + iso);
     var sel = document.getElementById("brief-country"); if (sel) sel.value = iso;
     var cc = document.getElementById("commission-cta");
@@ -160,6 +175,8 @@
         en.forEach(function (e) { if (e.iso3) energyByIso[e.iso3] = num(e.elec_demand_twh); });
         loadCsv("data/gaia_dc_energy.csv", function (dce) {
         dce.forEach(function (d) { if (d.iso3) dcShareByIso[d.iso3] = { pct: num(d.dc_share_pct), src: d.source }; });
+        loadCsv("data/gaia_innovation.csv", function (inv) {
+        inv.forEach(function (x) { if (x.iso3) innovByIso[x.iso3] = { rd_pct_gdp: num(x.rd_pct_gdp), researchers_per_m: num(x.researchers_per_m), patents_resident: num(x.patents_resident), hitech_exports_pct: num(x.hitech_exports_pct) }; });
         // populate selector
         var sel = document.getElementById("brief-country");
         if (sel) {
@@ -169,6 +186,7 @@
         }
         var want = new URLSearchParams(location.search).get("iso");
         render(byIso[want] ? want : "USA");
+        });
         });
         });
         });

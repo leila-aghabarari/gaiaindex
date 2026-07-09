@@ -1,0 +1,244 @@
+# World Bank WDI — innovation/capability, latest non-empty value per country (mrnev).
+iso3,country,rd_pct_gdp,researchers_per_m,patents_resident,hitech_exports_pct
+AFE,Africa Eastern and Southern,0.59,,,5.8
+AFW,Africa Western and Central,0.28,,,2.94
+ARB,Arab World,0.68,,,4.99
+CEB,Central Europe and the Baltics,1.34,3248,,15.89
+EAR,Early-demographic dividend,0.8,388,,14.14
+EAS,East Asia & Pacific,2.78,2426,1769228,34.66
+EAP,East Asia & Pacific (excluding high income),2.48,1938,,27.97
+TEA,East Asia & Pacific (IDA & IBRD countries),2.48,1938,,27.97
+EMU,Euro area,2.29,4867,,21.29
+ECS,Europe & Central Asia,2.14,3715,215964,21.44
+ECA,Europe & Central Asia (excluding high income),0.9,1773,,10.67
+TEC,Europe & Central Asia (IDA & IBRD countries),0.99,2258,,12.08
+EUU,European Union,2.26,4741,,20.62
+IBD,IBRD only,1.88,960,,21.54
+IBT,IDA & IBRD total,1.84,719,,21
+IDB,IDA blend,0.24,216,,2.94
+LTE,Late-demographic dividend,2.09,2060,,27.77
+LCN,Latin America & Caribbean,0.68,583,8385,13.11
+LAC,Latin America & Caribbean (excluding high income),0.7,592,,13.63
+TLA,Latin America & the Caribbean (IDA & IBRD countries),0.68,583,,13.16
+LMY,Low & middle income,1.95,623,,21.95
+MEA,Middle East  North Africa  Afghanistan & Pakistan,1.33,858,17557,8.65
+MNA,Middle East  North Africa  Afghanistan & Pakistan (excluding high income),0.54,831,,2.82
+TMN,Middle East  North Africa  Afghanistan & Pakistan (IDA & IBRD),0.54,831,,2.83
+MIC,Middle income,1.95,857,,22.02
+NAC,North America,3.33,5009,274038,22.9
+OED,OECD members,2.93,4464,,22.36
+OSS,Other small states,1.37,,,23.65
+PST,Post-demographic dividend,3.03,5053,,25.7
+SST,Small states,0.85,,,22.18
+SAS,South Asia,0.63,257,23872,18.06
+TSA,South Asia (IDA & IBRD),0.63,257,,18.06
+SSF,Sub-Saharan Africa,0.44,,1834,6
+SSA,Sub-Saharan Africa (excluding high income),0.44,,,6.03
+TSS,Sub-Saharan Africa (IDA & IBRD countries),0.44,,,6
+WLD,World,2.6,1652,2385200,24.72
+ALB,Albania,0.2,429,23,1.53
+DZA,Algeria,0.44,1764,268,0.96
+ASM,American Samoa,0.4,106,,
+AND,Andorra,0.16,,3,21.43
+AGO,Angola,0.03,18.94,2,16.69
+ARG,Argentina,0.6,1313,406,3.85
+ARM,Armenia,0.29,942,40,23.64
+AUS,Australia,1.86,4569,2966,25.16
+AUT,Austria,3.26,6634,1872,18.45
+AZE,Azerbaijan,0.21,1663,119,2.91
+BHR,Bahrain,0.19,849,3,0.39
+BLR,Belarus,0.59,1568,276,6.02
+BEL,Belgium,3.27,5990,799,20.39
+BMU,Bermuda,0.23,,,14.3
+BTN,Bhutan,0.1,236,1,0.01
+BOL,Bolivia,0.06,63.06,5,8.79
+BIH,Bosnia and Herzegovina,0.21,705,53,6.16
+BWA,Botswana,0.56,180,3,0.54
+BRA,Brazil,1.19,903,4666,11.11
+BRN,Brunei Darussalam,0.28,506,2,1.06
+BGR,Bulgaria,0.79,2401,165,13.43
+BFA,Burkina Faso,0.1,46.58,2,1.65
+BDI,Burundi,0.21,22.48,2,1.31
+CPV,Cabo Verde,0.07,125,1,1.15
+KHM,Cambodia,0.09,30.39,1,5.26
+CAN,Canada,1.79,5624,4710,16.78
+TCD,Chad,0.23,56.72,,
+CHL,Chile,0.39,707,402,8.32
+CHN,China,2.58,2107,1426644,26.28
+COL,Colombia,0.29,90.25,432,9.02
+COD,Congo  Dem. Rep.,0.41,10.11,72,0.2
+COG,Congo  Rep.,0.38,127,19,3.16
+CRI,Costa Rica,0.34,508,15,22.86
+CIV,Cote d'Ivoire,0.07,63.99,26,5.26
+HRV,Croatia,1.39,2440,77,11.67
+CUB,Cuba,0.44,2171,21,7.88
+CYP,Cyprus,0.68,1686,1,18.03
+CZE,Czechia,1.83,4505,541,22.4
+DNK,Denmark,3.05,8838,1090,17.62
+ECU,Ecuador,0.44,400,35,10
+EGY,Egypt  Arab Rep.,1.02,1120,881,3.81
+SLV,El Salvador,0.1,55.47,2,5.47
+EST,Estonia,1.84,4800,25,18.38
+SWZ,Eswatini,0.28,138,,0.29
+ETH,Ethiopia,0.27,89.04,6,3.75
+FRO,Faroe Islands,0.85,1825,,0.64
+FIN,Finland,3.09,8315,1557,9.29
+FRA,France,2.18,5369,13386,23.14
+GAB,Gabon,0.58,,,1.77
+GMB,Gambia  The,0.07,50.86,,3.35
+GEO,Georgia,0.26,1896,90,3.78
+DEU,Germany,3.15,5926,39822,17.98
+GHA,Ghana,0.38,87.48,12,2.11
+GRC,Greece,1.49,5283,394,15.01
+GRL,Greenland,0.65,702,,1.71
+GUM,Guam,0.26,292,,
+GTM,Guatemala,0.01,1.45,9,5.4
+HND,Honduras,0.06,188,8,3.87
+HKG,Hong Kong SAR  China,1.13,5874,401,75.57
+HUN,Hungary,1.38,4567,433,22.57
+ISL,Iceland,2.64,5953,34,53.97
+IND,India,0.65,259,26267,18.57
+IDN,Indonesia,0.28,395,1397,8.71
+IRN,Iran  Islamic Rep.,0.73,2240,10210,0.81
+IRQ,Iraq,0.04,164,635,
+IRL,Ireland,1.59,5753,75,53.52
+ISR,Israel,6.35,,1592,37.23
+ITA,Italy,1.38,2855,10281,12.28
+JAM,Jamaica,0.06,,16,2.65
+JPN,Japan,3.44,5609,222452,17.55
+JOR,Jordan,0.7,576,25,2.08
+KAZ,Kazakhstan,0.16,758,803,42.2
+KEN,Kenya,0.81,384,160,3.15
+KOR,Korea  Rep.,4.94,9472,186245,36.26
+KWT,Kuwait,0.09,145,1,5.83
+KGZ,Kyrgyz Republic,0.05,,83,10.67
+LAO,Lao PDR,0.04,15.63,1,7.42
+LVA,Latvia,0.82,2191,104,17.49
+LSO,Lesotho,0.09,32.24,1,0.09
+LIE,Liechtenstein,6.01,18130,,
+LTU,Lithuania,1.05,3704,81,17.32
+LUX,Luxembourg,1.07,5359,112,5.07
+MAC,Macao SAR  China,0.31,4634,2,0
+MDG,Madagascar,0.01,32.94,6,0.96
+MWI,Malawi,0.18,25.17,3,1.65
+MYS,Malaysia,1.01,1218,883,58.63
+MLI,Mali,0.15,26.04,1,5.36
+MLT,Malta,0.65,2355,5,45.18
+MRT,Mauritania,0.01,,,9.45
+MUS,Mauritius,0.26,689,6,1.22
+MEX,Mexico,0.25,438,1117,19.3
+MDA,Moldova,0.22,650,64,2.93
+MCO,Monaco,0.04,310,5,
+MNG,Mongolia,0.08,535,109,22.54
+MNE,Montenegro,0.36,764,5,14.46
+MAR,Morocco,0.66,1083,254,5.43
+MOZ,Mozambique,0.31,44.41,30,3.63
+MMR,Myanmar,0.02,28.01,,5.2
+NAM,Namibia,0.65,225,8,0.12
+NPL,Nepal,0.3,59.66,20,0.62
+NLD,Netherlands,2.27,6563,2080,23.47
+NZL,New Zealand,1.55,5435,330,12.97
+NIC,Nicaragua,0.11,71.27,1,0.6
+NGA,Nigeria,0.28,22.12,410,2.71
+MKD,North Macedonia,0.37,888,42,6.36
+NOR,Norway,1.85,7451,946,25.41
+OMN,Oman,0.39,739,30,5.01
+PAK,Pakistan,0.16,474,426,2.44
+PAN,Panama,0.2,250,35,1.77
+PNG,Papua New Guinea,0.03,33.16,1,10.25
+PRY,Paraguay,0.14,139,10,10.5
+PER,Peru,0.18,,94,5.21
+PHL,Philippines,0.28,320,490,60.98
+POL,Poland,1.56,3675,3377,13.51
+PRT,Portugal,1.69,5983,711,6.77
+PRI,Puerto Rico (US),0.43,332,,
+QAT,Qatar,0.68,948,47,2.81
+ROU,Romania,0.52,1082,772,13.45
+RUS,Russian Federation,0.94,2639,19569,9.73
+RWA,Rwanda,0.78,133,14,4.78
+SAU,Saudi Arabia,0.64,1235,1398,0.54
+SEN,Senegal,0.58,572,,3.04
+SRB,Serbia,0.94,2688,138,4.55
+SYC,Seychelles,0.2,147,3,0.09
+SGP,Singapore,1.81,8782,2024,59.43
+SVK,Slovak Republic,1.03,3507,146,10.59
+SVN,Slovenia,2.13,5616,222,8.34
+ZAF,South Africa,0.61,444,1804,5.71
+ESP,Spain,1.49,3654,1308,9.28
+LKA,Sri Lanka,0.11,94.49,266,1.54
+LCA,St. Lucia,0.27,,2,9.33
+VCT,St. Vincent and the Grenadines,0.11,,,4.93
+SDN,Sudan,0.23,,153,2.2
+SWE,Sweden,3.6,8911,1771,17.65
+CHE,Switzerland,3.22,6108,1288,29.62
+SYR,Syrian Arab Republic,0.04,140,102,1.38
+TJK,Tajikistan,0.09,,1,15.21
+TZA,Tanzania,0.51,19.32,1,3.01
+THA,Thailand,0.94,1592,867,28.31
+TGO,Togo,0.22,57.79,,0.68
+TTO,Trinidad and Tobago,0.05,493,2,0.22
+TUN,Tunisia,0.75,1668,180,7.7
+TUR,Turkiye,1.42,2645,8234,5.14
+TKM,Turkmenistan,0.09,,44,
+UGA,Uganda,0.44,81.31,14,1.92
+UKR,Ukraine,0.37,586,1302,6.37
+ARE,United Arab Emirates,1.49,2607,69,8.96
+GBR,United Kingdom,2.68,4473,11592,29.23
+USA,United States,3.45,4937,262244,24.32
+URY,Uruguay,0.7,938,23,9.84
+UZB,Uzbekistan,0.1,640,413,1.73
+VEN,Venezuela  RB,0.34,180,96,
+VNM,Viet Nam,0.41,836,1066,44.26
+VIR,Virgin Islands (U.S.),0.03,,,
+PSE,West Bank and Gaza,0.45,584,,1.84
+ZMB,Zambia,0.28,41.9,13,1.47
+DOM,Dominican Republic,,20.04,7,7.69
+NER,Niger,,26.94,,8.62
+ZWE,Zimbabwe,,95.13,8,2.8
+ATG,Antigua and Barbuda,,,5,0
+ABW,Aruba,,,1,6.87
+BHS,Bahamas  The,,,4,0
+BGD,Bangladesh,,,74,0.54
+BRB,Barbados,,,73,19.93
+BLZ,Belize,,,1,0
+DJI,Djibouti,,,3,3.28
+FJI,Fiji,,,2,3
+GUY,Guyana,,,40,13.33
+HTI,Haiti,,,2,
+PRK,Korea  Dem. People's Rep.,,,6937,
+LBN,Lebanon,,,110,2.9
+LBR,Liberia,,,14,0.64
+LBY,Libya,,,12,0.6
+WSM,Samoa,,,1,76.67
+SMR,San Marino,,,7,
+SOM,Somalia  Fed. Rep.,,,1,
+YEM,Yemen  Rep.,,,20,4.83
+CSS,Caribbean small states,,,,0
+HPC,Heavily indebted poor countries (HIPC),,,,2.87
+IDX,IDA only,,,,4.03
+IDA,IDA total,,,,3.52
+LDC,Least developed countries: UN classification,,,,7.93
+PSS,Pacific island small states,,,,10.36
+AFG,Afghanistan,,,,0
+BEN,Benin,,,,30.54
+CMR,Cameroon,,,,2.1
+CYM,Cayman Islands,,,,85.52
+CAF,Central African Republic,,,,8.3
+COM,Comoros,,,,3.14
+DMA,Dominica,,,,2.88
+PYF,French Polynesia,,,,1.93
+GRD,Grenada,,,,6.44
+GIN,Guinea,,,,0.9
+GNB,Guinea-Bissau,,,,5.81
+KIR,Kiribati,,,,2.3
+MDV,Maldives,,,,0
+NCL,New Caledonia,,,,5.27
+PLW,Palau,,,,51.68
+STP,Sao Tome and Principe,,,,29.27
+SLE,Sierra Leone,,,,0.74
+SLB,Solomon Islands,,,,1.36
+KNA,St. Kitts and Nevis,,,,34.6
+SUR,Suriname,,,,10.37
+TLS,Timor-Leste,,,,1.53
+TON,Tonga,,,,28.46
+TCA,Turks and Caicos Islands,,,,2.2
