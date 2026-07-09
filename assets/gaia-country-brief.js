@@ -7,7 +7,7 @@
   if (typeof Papa === "undefined" || typeof Chart === "undefined" || !window.GAIA_CHART) return;
   var K = window.GAIA_CHART, C = K.colors;
 
-  var countries = [], byIso = {}, rank = {}, gAvg = {}, osmCount = {}, curated = {}, macroByIso = {};
+  var countries = [], byIso = {}, rank = {}, gAvg = {}, osmCount = {}, curated = {}, macroByIso = {}, energyByIso = {}, dcShareByIso = {};
   var charts = {};
   function fmtUsd(v) { v = +v; return v >= 1e12 ? "$" + (v / 1e12).toFixed(1) + "T" : v >= 1e9 ? "$" + (v / 1e9).toFixed(0) + "B" : v >= 1e6 ? "$" + (v / 1e6).toFixed(0) + "M" : "$" + Math.round(v).toLocaleString(); }
   function num(v) { var n = parseFloat(v); return isNaN(n) ? null : n; }
@@ -76,12 +76,18 @@
 
   function infra(r) {
     var iso = r.iso3, cur = curated[iso] || { op: 0, ann: 0, top: "—" }, facs = osmCount[iso] || 0;
+    var en = energyByIso[iso], dcs = dcShareByIso[iso];
     document.getElementById("b-infra").innerHTML = [
       ['<div class="im"><div class="v">' + facs.toLocaleString() + '</div><div class="l">Facilities (OSM)</div></div>'],
       ['<div class="im"><div class="v">' + cur.op.toLocaleString() + '</div><div class="l">Named operational MW</div></div>'],
-      ['<div class="im"><div class="v">' + cur.ann.toLocaleString() + '</div><div class="l">Announced MW</div></div>'],
       ['<div class="im"><div class="v">' + (cur.top || "—") + '</div><div class="l">Top hub</div></div>'],
+      ['<div class="im"><div class="v">' + (en != null ? Math.round(en).toLocaleString() : "—") + '</div><div class="l">National electricity (TWh)</div></div>'],
+      ['<div class="im"><div class="v">' + (dcs && dcs.pct != null ? dcs.pct + "%" : "🔒") + '</div><div class="l">Data-centre share of grid</div></div>'],
     ].join("");
+    var eEl = document.getElementById("b-energy");
+    if (eEl) eEl.innerHTML = dcs && dcs.pct != null
+      ? "⚡ Data centres consume ≈ <b style='color:var(--cyan)'>" + dcs.pct + "% of national electricity</b> (published estimate — " + dcs.src + ")."
+      : "⚡ Country-level data-centre electricity share is part of the full report — globally, data centres are ~1.5% of electricity and rising fast (IEA).";
     var rk = rank[iso], sig;
     if (rk && rk <= 30 && cur.op < 400) sig = "⚠ High AI adoption with limited domestic operational compute — potential dependency exposure.";
     else if (cur.op >= 1000 && rk && rk <= 30) sig = "Compute and adoption broadly aligned — significant domestic capacity.";
@@ -150,6 +156,10 @@
         osm.forEach(function (d) { if (d.iso3) osmCount[d.iso3] = (osmCount[d.iso3] || 0) + 1; });
         loadCsv("data/gaia_macro.csv", function (mac) {
         mac.forEach(function (m) { if (m.iso3) macroByIso[m.iso3] = { gdp_pc: num(m.gdp_pc), gdp_usd: num(m.gdp_usd), services_pct_gdp: num(m.services_pct_gdp), tertiary_enroll: num(m.tertiary_enroll), internet_pct: num(m.internet_pct) }; });
+        loadCsv("data/gaia_energy.csv", function (en) {
+        en.forEach(function (e) { if (e.iso3) energyByIso[e.iso3] = num(e.elec_demand_twh); });
+        loadCsv("data/gaia_dc_energy.csv", function (dce) {
+        dce.forEach(function (d) { if (d.iso3) dcShareByIso[d.iso3] = { pct: num(d.dc_share_pct), src: d.source }; });
         // populate selector
         var sel = document.getElementById("brief-country");
         if (sel) {
@@ -159,6 +169,8 @@
         }
         var want = new URLSearchParams(location.search).get("iso");
         render(byIso[want] ? want : "USA");
+        });
+        });
         });
       });
     });

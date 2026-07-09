@@ -1,0 +1,216 @@
+# National electricity demand (TWh). Source: Our World in Data / Ember. Latest year per country.
+iso3,country,elec_demand_twh,year
+AFG,Afghanistan,6.8,2024
+ALB,Albania,8.7,2024
+DZA,Algeria,93.8,2024
+ASM,American Samoa,0.2,2024
+AGO,Angola,15.6,2024
+ATG,Antigua and Barbuda,0.4,2024
+ARG,Argentina,162.4,2025
+ARM,Armenia,8.1,2025
+ABW,Aruba,1.0,2024
+AUS,Australia,286.3,2025
+AUT,Austria,75.8,2025
+AZE,Azerbaijan,27.2,2025
+BHS,Bahamas,2.3,2024
+BHR,Bahrain,38.4,2024
+BGD,Bangladesh,118.1,2025
+BRB,Barbados,1.1,2024
+BLR,Belarus,45.5,2025
+BEL,Belgium,86.6,2025
+BLZ,Belize,0.8,2024
+BEN,Benin,2.3,2024
+BMU,Bermuda,0.6,2024
+BTN,Bhutan,12.5,2024
+BOL,Bolivia,13.6,2025
+BIH,Bosnia and Herzegovina,14.4,2025
+BWA,Botswana,4.7,2024
+BRA,Brazil,762.1,2025
+VGB,British Virgin Islands,0.2,2023
+BRN,Brunei,5.6,2024
+BGR,Bulgaria,36.5,2025
+BFA,Burkina Faso,3.2,2024
+BDI,Burundi,0.6,2024
+KHM,Cambodia,22.4,2025
+CMR,Cameroon,7.3,2024
+CAN,Canada,645.6,2025
+CPV,Cape Verde,0.5,2024
+CYM,Cayman Islands,0.7,2024
+CAF,Central African Republic,0.1,2023
+TCD,Chad,0.4,2024
+CHL,Chile,88.5,2025
+CHN,China,10563.9,2025
+COL,Colombia,91.6,2025
+COM,Comoros,0.1,2023
+COG,Congo,5.4,2024
+COK,Cook Islands,0.0,2024
+CRI,Costa Rica,12.4,2025
+CIV,Cote d'Ivoire,10.1,2024
+HRV,Croatia,20.1,2025
+CUB,Cuba,19.4,2024
+CYP,Cyprus,5.9,2025
+CZE,Czechia,68.0,2025
+COD,Democratic Republic of Congo,17.4,2024
+DNK,Denmark,40.7,2025
+DJI,Djibouti,0.8,2024
+DMA,Dominica,0.1,2023
+DOM,Dominican Republic,22.7,2025
+TLS,East Timor,0.5,2024
+ECU,Ecuador,36.6,2025
+EGY,Egypt,244.3,2025
+SLV,El Salvador,6.3,2025
+GNQ,Equatorial Guinea,1.5,2024
+ERI,Eritrea,0.5,2024
+EST,Estonia,9.3,2025
+SWZ,Eswatini,1.6,2024
+ETH,Ethiopia,31.0,2025
+FLK,Falkland Islands,0.0,2023
+FRO,Faroe Islands,0.5,2023
+FJI,Fiji,1.1,2024
+FIN,Finland,87.8,2025
+FRA,France,476.7,2025
+GUF,French Guiana,1.0,2023
+PYF,French Polynesia,0.7,2024
+GAB,Gabon,3.2,2024
+GMB,Gambia,0.5,2024
+GEO,Georgia,14.7,2025
+DEU,Germany,520.3,2025
+GHA,Ghana,21.8,2024
+GIB,Gibraltar,0.2,2024
+GRC,Greece,55.6,2025
+GRL,Greenland,0.6,2024
+GRD,Grenada,0.2,2024
+GLP,Guadeloupe,1.7,2023
+GUM,Guam,1.9,2024
+GTM,Guatemala,16.4,2024
+GIN,Guinea,4.0,2024
+GNB,Guinea-Bissau,0.1,2024
+GUY,Guyana,1.4,2024
+HTI,Haiti,0.9,2024
+HND,Honduras,12.6,2024
+HKG,Hong Kong,48.8,2024
+HUN,Hungary,48.9,2025
+ISL,Iceland,19.1,2024
+IND,India,2082.8,2025
+IDN,Indonesia,372.5,2024
+IRN,Iran,395.6,2025
+IRQ,Iraq,156.8,2024
+IRL,Ireland,37.6,2025
+ISR,Israel,75.7,2025
+ITA,Italy,311.6,2025
+JAM,Jamaica,4.9,2024
+JPN,Japan,1029.9,2025
+JOR,Jordan,23.7,2024
+KAZ,Kazakhstan,126.1,2025
+KEN,Kenya,15.6,2025
+KIR,Kiribati,0.0,2024
+KWT,Kuwait,92.5,2025
+KGZ,Kyrgyzstan,19.3,2025
+LAO,Laos,15.6,2024
+LVA,Latvia,7.5,2025
+LBN,Lebanon,5.3,2024
+LSO,Lesotho,0.6,2024
+LBR,Liberia,0.6,2024
+LBY,Libya,34.6,2024
+LTU,Lithuania,12.3,2025
+LUX,Luxembourg,6.7,2025
+MAC,Macao,6.3,2024
+MDG,Madagascar,2.4,2024
+MWI,Malawi,1.8,2024
+MYS,Malaysia,199.9,2025
+MDV,Maldives,0.8,2024
+MLI,Mali,5.5,2024
+MLT,Malta,3.2,2025
+MTQ,Martinique,1.5,2023
+MRT,Mauritania,2.4,2024
+MUS,Mauritius,3.4,2024
+MEX,Mexico,356.7,2025
+MDA,Moldova,6.2,2025
+MNG,Mongolia,12.4,2025
+MNE,Montenegro,4.3,2025
+MSR,Montserrat,0.0,2024
+MAR,Morocco,48.2,2025
+MOZ,Mozambique,16.5,2024
+MMR,Myanmar,21.9,2024
+NAM,Namibia,4.0,2024
+NRU,Nauru,0.1,2024
+NPL,Nepal,11.0,2024
+NLD,Netherlands,121.1,2025
+NCL,New Caledonia,3.1,2024
+NZL,New Zealand,43.3,2025
+NIC,Nicaragua,5.4,2024
+NER,Niger,2.1,2024
+NGA,Nigeria,39.2,2025
+NIU,Niue,0.0,2023
+PRK,North Korea,27.1,2024
+MKD,North Macedonia,8.3,2025
+NOR,Norway,137.7,2025
+OMN,Oman,52.8,2025
+PAK,Pakistan,195.5,2025
+PSE,Palestine,8.0,2024
+PAN,Panama,13.3,2024
+PNG,Papua New Guinea,4.7,2024
+PRY,Paraguay,29.6,2025
+PER,Peru,60.5,2025
+PHL,Philippines,123.1,2025
+POL,Poland,174.3,2025
+PRT,Portugal,60.4,2025
+PRI,Puerto Rico,20.3,2025
+QAT,Qatar,56.2,2025
+REU,Reunion,3.1,2023
+ROU,Romania,54.4,2025
+RUS,Russia,1176.1,2025
+RWA,Rwanda,1.2,2024
+SHN,Saint Helena,0.0,2023
+KNA,Saint Kitts and Nevis,0.2,2024
+LCA,Saint Lucia,0.4,2024
+SPM,Saint Pierre and Miquelon,0.1,2023
+VCT,Saint Vincent and the Grenadines,0.1,2024
+WSM,Samoa,0.2,2024
+STP,Sao Tome and Principe,0.1,2023
+SAU,Saudi Arabia,454.6,2024
+SEN,Senegal,8.1,2024
+SRB,Serbia,37.4,2025
+SYC,Seychelles,0.6,2024
+SLE,Sierra Leone,0.2,2024
+SGP,Singapore,60.4,2025
+SVK,Slovakia,26.8,2025
+SVN,Slovenia,14.3,2025
+SLB,Solomon Islands,0.1,2024
+SOM,Somalia,0.4,2024
+ZAF,South Africa,236.8,2025
+KOR,South Korea,624.7,2025
+SSD,South Sudan,0.6,2024
+ESP,Spain,275.1,2025
+LKA,Sri Lanka,17.3,2025
+SDN,Sudan,15.6,2024
+SUR,Suriname,1.7,2024
+SWE,Sweden,137.1,2025
+CHE,Switzerland,65.1,2025
+SYR,Syria,24.3,2024
+TWN,Taiwan,288.4,2025
+TJK,Tajikistan,19.5,2025
+TZA,Tanzania,9.0,2024
+THA,Thailand,225.1,2025
+TGO,Togo,2.2,2024
+TON,Tonga,0.1,2024
+TTO,Trinidad and Tobago,9.6,2024
+TUN,Tunisia,24.9,2025
+TUR,Turkey,351.9,2025
+TKM,Turkmenistan,24.0,2024
+TCA,Turks and Caicos Islands,0.3,2024
+UGA,Uganda,5.4,2024
+UKR,Ukraine,111.6,2022
+ARE,United Arab Emirates,177.0,2024
+GBR,United Kingdom,321.4,2025
+USA,United States,4535.8,2025
+VIR,United States Virgin Islands,0.7,2023
+URY,Uruguay,14.8,2025
+UZB,Uzbekistan,89.6,2025
+VUT,Vanuatu,0.1,2023
+VEN,Venezuela,80.1,2024
+VNM,Vietnam,313.6,2025
+ESH,Western Sahara,0.1,2009
+YEM,Yemen,5.3,2024
+ZMB,Zambia,16.6,2024
+ZWE,Zimbabwe,12.1,2024
