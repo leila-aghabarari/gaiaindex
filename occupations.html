@@ -549,6 +549,28 @@
   </div>
 </section>
 
+<!-- SECTOR LENS -->
+<section class="gaia-landscape">
+  <h2>The sector lens</h2>
+  <p style="color:var(--muted);max-width:640px;margin:-.5rem 0 1.25rem;font-size:.92rem">Which parts of the workforce are most exposed — and where the workers and wages actually sit. Employment-weighted using US BLS data.</p>
+  <div class="gaia-panel-grid">
+    <div class="gaia-chart-card">
+      <button class="gaia-dl-btn" id="dl-sector-map" type="button">Download PNG</button>
+      <p class="gaia-chart-title">Sector map: exposure × wage × employment</p>
+      <p class="gaia-chart-sub">Bubble size = US employment · quadrant lines at the medians</p>
+      <div class="gaia-chart-wrap" style="height:480px"><canvas id="sector-map"></canvas></div>
+      <p class="gaia-chart-src">Source: GAIA-E (Eloundou 2024) × BLS OEWS employment &amp; median wage, by major occupation group.</p>
+    </div>
+    <div class="gaia-chart-card">
+      <button class="gaia-dl-btn" id="dl-sector-bars" type="button">Download PNG</button>
+      <p class="gaia-chart-title">Exposure by occupation group</p>
+      <p class="gaia-chart-sub" id="sector-bars-sub">Employment-weighted mean GAIA-E (index points)</p>
+      <div class="gaia-chart-wrap" style="height:480px"><canvas id="sector-bars"></canvas></div>
+      <p class="gaia-chart-src">Source: GAIA-E weighted by BLS OEWS employment.</p>
+    </div>
+  </div>
+</section>
+
 <div class="table-wrap">
   <table id="occTable">
     <thead>
@@ -1085,6 +1107,7 @@ render();
 <script defer src="assets/gaia-occ-radar.js"></script>
 <script defer src="assets/gaia-occ-compare.js"></script>
 <script defer src="assets/gaia-occ-landscape.js"></script>
+<script defer src="assets/gaia-sector-lens.js"></script>
 <script defer src="assets/gaia-enhance.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
 </body>
