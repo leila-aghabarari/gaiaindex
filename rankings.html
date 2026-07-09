@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKNG86S6HH"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-QKNG86S6HH');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global AI Rankings — GAIA</title>
+  <meta name="description" content="League tables ranking countries across AI adoption, readiness, innovation, energy and compute — sortable, comparable, cite-able." />
+  <meta property="og:title" content="Global AI Rankings — GAIA" />
+  <meta property="og:description" content="Rank every country across AI adoption, readiness, innovation, energy and compute." />
+  <meta property="og:image" content="https://gaiaindex.org/assets/og-card.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/gaia-ui.css" />
+  <style>
+    :root{--bg:#06131a;--surface:#0d1c26;--card:#10212e;--border:#24333f;--teal:#0D9E76;--teal-dim:#0b7d5c;--teal-glow:rgba(13,158,118,.14);--cyan:#3fd0b0;--text:#e6f2ee;--muted:#9fb3c2;--faint:#6f8698}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{color:var(--teal);text-decoration:none}a:hover{color:var(--cyan)}
+    nav{position:sticky;top:0;z-index:1000;background:rgba(6,19,26,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
+    .nav-inner{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--text)}.nav-logo span{color:var(--teal)}.nav-logo-sub{color:var(--faint)!important;font-size:.7rem;margin-left:.3rem}
+    .nav-links{display:flex;gap:2rem;list-style:none}.nav-links a{color:var(--muted);font-size:.875rem;font-weight:500}.nav-links a:hover,.nav-links a.active{color:var(--text)}
+    .page-header{max-width:1300px;margin:0 auto;padding:52px 2rem 20px}
+    .page-header .label{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem}
+    .page-header h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,3.4vw,2.6rem);letter-spacing:-.02em;margin-bottom:.5rem}
+    .page-header p{color:var(--muted);max-width:640px;font-size:.92rem}
+    .controls{max-width:1300px;margin:0 auto;padding:1rem 2rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+    #rk-search{flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit;font-size:.875rem;padding:.55rem .85rem}
+    #rk-income{background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit;font-size:.875rem;padding:.55rem .85rem}
+    .rk-count{font-size:.8rem;color:var(--faint)}
+    .table-wrap{max-width:1300px;margin:0 auto;padding:0 2rem 3rem;overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:.86rem}
+    thead th{background:var(--surface);border-bottom:1px solid var(--border);padding:.7rem .8rem;text-align:right;font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap;cursor:pointer;user-select:none;position:sticky;top:60px}
+    thead th:first-child,thead th.txt{text-align:left}
+    thead th:hover{color:var(--text)}thead th.sorted{color:var(--teal)}
+    tbody tr{border-bottom:1px solid var(--border)}tbody tr:hover{background:rgba(13,158,118,.05)}
+    td{padding:.6rem .8rem;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+    td.txt{text-align:left}
+    .rk-num{color:var(--faint);font-family:'Space Grotesk',sans-serif;width:2.5rem}
+    .rk-name a{color:var(--text);font-weight:500}.rk-name a:hover{color:var(--teal)}
+    .rk-inc{font-size:.68rem;color:var(--faint);margin-left:.4rem}
+    .na{color:var(--faint)}
+    .note{max-width:1300px;margin:0 auto 2rem;padding:0 2rem;font-size:.76rem;color:var(--faint);line-height:1.7}
+    footer{border-top:1px solid var(--border);background:var(--surface)}
+    .footer-inner{max-width:1300px;margin:0 auto;padding:2rem;color:var(--muted);font-size:.85rem}.footer-inner a{color:var(--muted)}
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span>GAIA</span> Index <span class="nav-logo-sub">Global AI Adoption Index</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-nav="index.html">Home</a></li>
+      <li class="nav-dd"><button class="nav-dd-btn">Data <span class="nav-caret">&#9662;</span></button>
+        <ul class="nav-dd-menu"><li><a href="occupations.html" data-nav="occupations.html">Occupations</a></li><li><a href="countries.html" data-nav="countries.html">Countries</a></li><li><a href="rankings.html" data-nav="rankings.html">Rankings</a></li><li><a href="trends.html" data-nav="trends.html">Trends</a></li></ul></li>
+      <li class="nav-dd"><button class="nav-dd-btn">Country Deep Dives <span class="nav-caret">&#9662;</span></button>
+        <ul class="nav-dd-menu"><li><a href="usa.html" data-nav="usa.html">USA</a></li><li><a href="brazil.html" data-nav="brazil.html">Brazil</a></li></ul></li>
+      <li><a href="datacenters.html" data-nav="datacenters.html">Compute</a></li>
+      <li><a href="country.html" data-nav="country.html">Briefings</a></li>
+      <li><a href="research.html" data-nav="research.html">Research</a></li>
+      <li><a href="about.html" data-nav="about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="label">Global AI Rankings</div>
+  <h1>League tables</h1>
+  <p>Every country, ranked across AI adoption, readiness, innovation, energy and compute. Click any column to sort; click a country for its full briefing.</p>
+</div>
+
+<div class="controls">
+  <input id="rk-search" type="search" placeholder="Search country…" />
+  <select id="rk-income"><option value="">All income groups</option></select>
+  <span class="rk-count" id="rk-count"></span>
+</div>
+
+<div class="table-wrap">
+  <table id="rk-table">
+    <thead><tr>
+      <th class="txt">#</th>
+      <th class="txt" data-k="name" data-t="s">Country</th>
+      <th data-k="usage" data-t="n">Adoption %</th>
+      <th data-k="gaia_a" data-t="n">GAIA-A</th>
+      <th data-k="aipi" data-t="n">IMF AIPI</th>
+      <th data-k="rd" data-t="n">R&amp;D %GDP</th>
+      <th data-k="patents" data-t="n">Patents</th>
+      <th data-k="elec" data-t="n">Electricity TWh</th>
+      <th data-k="dc" data-t="n">DC facilities</th>
+    </tr></thead>
+    <tbody id="rk-body"></tbody>
+  </table>
+</div>
+
+<p class="note">Sources: GAIA country data (adoption, GAIA-A), IMF AI Preparedness Index, World Bank WDI (R&amp;D, patents), Ember/OWID (electricity demand), OpenStreetMap (data-centre facilities). Blank = not available. A composite AI-economy index, full provenance, and per-metric methodology are part of the GAIA reports.</p>
+
+<footer>
+  <div class="footer-inner">
+    <div><span style="font-family:'Space Grotesk',sans-serif;font-weight:700"><span style="color:var(--teal)">GAIA</span> Global AI Adoption Index</span></div>
+    <p style="margin-top:.5rem">Built by <a href="about.html">Leila Aghabarari</a> · © 2026 · <a href="license.html">CC BY 4.0</a> · DOI: 10.5281/zenodo.20320112</p>
+  </div>
+</footer>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script defer src="assets/gaia-nav.js"></script>
+<script defer src="assets/gaia-rankings.js"></script>
+</body>
+</html>
