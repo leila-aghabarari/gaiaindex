@@ -62,8 +62,8 @@
         ".btn:hover,button.btn:hover{transform:scale(1.03);box-shadow:0 0 0 1px rgba(13,158,118,.5),0 10px 30px -12px rgba(13,158,118,.55)}",
         ".gaia-chart-card,.paper-card,.agenda-card,.paper,.stat,.rbg-card{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}",
         ".gaia-chart-card:hover,.paper-card:hover,.agenda-card:hover,.paper:hover,.stat:hover,.rbg-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px -18px rgba(0,0,0,.5)}",
-        "html.gaia-js .gaia-reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}",
-        ".gaia-reveal.gaia-in{opacity:1;transform:none}",
+        "html.gaia-js .gaia-reveal{transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}",
+        "html.gaia-js .gaia-reveal:not(.gaia-in){opacity:0;transform:translateY(18px)}",
         "@media (prefers-reduced-motion:reduce){html.gaia-js .gaia-reveal{opacity:1!important;transform:none!important;transition:none!important}}",
       ].join("");
       document.head.appendChild(st);
