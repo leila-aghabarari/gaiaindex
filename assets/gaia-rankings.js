@@ -1,6 +1,6 @@
 /* GAIA rankings — sortable league table merging adoption, readiness, innovation,
  * energy and compute per country. Free engagement/funnel layer; the composite
- * index and methodology are the paid report. PapaParse. */
+ * index and methodology are available in the full report. PapaParse. */
 (function () {
   "use strict";
   if (typeof Papa === "undefined") return;

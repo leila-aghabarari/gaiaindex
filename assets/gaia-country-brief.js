@@ -1,7 +1,7 @@
 /* GAIA Country AI-Economy Briefing — templated, data-driven, one per country.
  * Reads ?iso=XXX (default USA), renders scorecard, adoption, readiness, compute,
  * and auto-generated takeaways from the country data + data-center layers.
- * This is the FREE briefing; the commissioned report is the gated product. */
+ * This is the FREE briefing; the full report is available on request. */
 (function () {
   "use strict";
   if (typeof Papa === "undefined" || typeof Chart === "undefined" || !window.GAIA_CHART) return;
@@ -93,7 +93,7 @@
     if (rk && rk <= 30 && cur.op < 400) sig = "⚠ High AI adoption with limited domestic operational compute — potential dependency exposure.";
     else if (cur.op >= 1000 && rk && rk <= 30) sig = "Compute and adoption broadly aligned — significant domestic capacity.";
     else if (facs === 0) sig = "No mapped facilities — hosting is likely offshore.";
-    else sig = "Mixed profile — full dependency index in the commissioned report.";
+    else sig = "Mixed profile — full dependency index in the full report.";
     document.getElementById("b-signal").textContent = sig;
   }
 
@@ -154,7 +154,7 @@
     history.replaceState(null, "", "country.html?iso=" + iso);
     var sel = document.getElementById("brief-country"); if (sel) sel.value = iso;
     var cc = document.getElementById("commission-cta");
-    if (cc) cc.href = "mailto:aghabarari.leila@gmail.com?subject=" + encodeURIComponent("GAIA Country Report enquiry — " + r.country_name);
+    if (cc) { cc.href = "#"; cc.onclick = function () { return window.gaiaContact ? gaiaContact("Country Report — " + r.country_name) : true; }; }
   }
 
   function loadCsv(url, cb) { Papa.parse(url, { download: true, header: true, comments: "#", skipEmptyLines: true, complete: function (r) { cb(r.data || []); }, error: function () { cb([]); } }); }

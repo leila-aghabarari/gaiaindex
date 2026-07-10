@@ -156,7 +156,7 @@
     <div class="dc-panel" id="dc-panel"><p style="color:var(--muted)">Click a country on the map to see its compute snapshot.</p></div>
     <div class="dc-report">
       <h3>What's in the GAIA Compute Report</h3>
-      <p style="font-size:.85rem;color:var(--muted)">The map is the free view. The decision-grade layer is the paid report:</p>
+      <p style="font-size:.85rem;color:var(--muted)">The map is the free view. The decision-grade layer is available on request:</p>
       <ul>
         <li class="free">Facility locations &amp; capacity bands (this map)</li>
         <li class="free">Operational vs. announced, by country</li>
@@ -166,11 +166,11 @@
         <li>Jobs-per-MW and net-fiscal return on incentives</li>
         <li>Sovereignty exposure &amp; scenario projections</li>
       </ul>
-      <a class="dc-cta" href="mailto:aghabarari.leila@gmail.com?subject=GAIA%20Compute%20Report%20enquiry&body=Hi%20Leila%2C%20I%27d%20like%20to%20discuss%20the%20GAIA%20Compute%20Report." style="margin-top:.6rem">Request the Compute Report →</a>
+      <a class="dc-cta" href="#" onclick="return gaiaContact('Compute Report')" style="margin-top:.6rem">Contact for more information →</a>
     </div>
   </div>
 
-  <p class="note"><strong>Methodology &amp; honesty note.</strong> The faint dots are a <strong>real coverage layer of 4,300+ facilities ingested live from OpenStreetMap</strong> (locations real; OSM carries no capacity). The larger colored markers are a <strong>curated capacity layer</strong> of notable hubs &amp; frontier AI clusters where MW/type/status are compiled from public announcements — approximate, and with <em>operational</em> kept separate from <em>announced</em> on purpose (the market routinely inflates "planned capacity"). The verified, provenance-tagged facility registry and all cross-analysis (dependency index, energy, fiscal) are part of the paid GAIA dataset and Country Reports. Layers: OpenStreetMap (coverage), Epoch AI-style tracking (frontier clusters), IEA (energy benchmarks). Country shading: GAIA adoption (share of global Claude.ai usage).</p>
+  <p class="note"><strong>Methodology &amp; honesty note.</strong> The faint dots are a <strong>real coverage layer of 4,300+ facilities ingested live from OpenStreetMap</strong> (locations real; OSM carries no capacity). The larger colored markers are a <strong>curated capacity layer</strong> of notable hubs &amp; frontier AI clusters where MW/type/status are compiled from public announcements — approximate, and with <em>operational</em> kept separate from <em>announced</em> on purpose (the market routinely inflates "planned capacity"). The verified, provenance-tagged facility registry and all cross-analysis (dependency index, energy, fiscal) are available in the full GAIA dataset and Country Reports (contact for details). Layers: OpenStreetMap (coverage), Epoch AI-style tracking (frontier clusters), IEA (energy benchmarks). Country shading: GAIA adoption (share of global Claude.ai usage).</p>
 </div>
 
 <footer>
@@ -184,5 +184,6 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
 <script defer src="assets/gaia-datacenters.js"></script>
+<script defer src="assets/gaia-contact.js"></script>
 </body>
 </html>
