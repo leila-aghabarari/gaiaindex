@@ -99,8 +99,9 @@
         }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
         io2.observe(el);
       });
-      // safety net: never leave a section stranded at opacity 0
-      setTimeout(function () { targets.forEach(function (el) { el.classList.add("gaia-in"); }); }, 2600);
+      // safety net: never leave a section stranded / looking blank — short delay
+      // so content is guaranteed visible within a blink even if the observer misfires.
+      setTimeout(function () { targets.forEach(function (el) { el.classList.add("gaia-in"); }); }, 600);
     }
   } catch (e) {}
 })();
