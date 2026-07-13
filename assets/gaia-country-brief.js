@@ -142,6 +142,36 @@
       m.hitech_exports_pct != null ? im(m.hitech_exports_pct.toFixed(0) + "%", "High-tech exports") : "",
     ].join("");
   }
+  // Equity callout — US only (ACS/IPUMS demographics), lazily computed & cached.
+  var equityCache = null;
+  function equity(r) {
+    var sec = document.getElementById("b-equity-sec"); if (!sec) return;
+    if (r.iso3 !== "USA") { sec.hidden = true; return; }
+    sec.hidden = false;
+    if (equityCache) return fillEquity(equityCache);
+    Papa.parse("data/gaia_occupations.csv", {
+      download: true, header: true, comments: "#", skipEmptyLines: true,
+      complete: function (res) {
+        var rows = (res.data || []).map(function (x) {
+          return { e: num(x.gaia_e) != null ? num(x.gaia_e) * 100 : null, col: num(x.pct_college), rem: num(x.pct_remote_eligible), min: num(x.pct_minority) };
+        }).filter(function (x) { return x.e != null; });
+        function pear(f) {
+          var d = rows.filter(function (x) { return x[f] != null; }), n = d.length; if (n < 3) return 0;
+          var mx = d.reduce(function (s, x) { return s + x.e; }, 0) / n, my = d.reduce(function (s, x) { return s + x[f]; }, 0) / n, sxy = 0, sxx = 0, syy = 0;
+          d.forEach(function (x) { sxy += (x.e - mx) * (x[f] - my); sxx += (x.e - mx) * (x.e - mx); syy += (x[f] - my) * (x[f] - my); });
+          return sxy / Math.sqrt(sxx * syy);
+        }
+        equityCache = { col: pear("col"), rem: pear("rem"), min: pear("min") };
+        fillEquity(equityCache);
+      },
+    });
+  }
+  function fillEquity(e) {
+    var el = document.getElementById("b-equity"); if (!el) return;
+    el.innerHTML = "AI exposure concentrates in <b>college-educated</b> (r ≈ " + e.col.toFixed(2) + ") and <b>remote-capable</b> (r ≈ " + e.rem.toFixed(2) +
+      ") work, and is <b>lower in minority-heavy occupations</b> (r ≈ " + e.min.toFixed(2) + ") — roughly even by gender once employment-weighted. " +
+      "<a href=\"occupations.html\" style=\"color:var(--cyan)\">See the full equity breakdown →</a>";
+  }
   function ord(n) { var s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
   function median(field) { var a = countries.map(function (c) { return num(c[field]); }).filter(function (v) { return v != null; }).sort(function (x, y) { return x - y; }); return a.length ? a[Math.floor(a.length / 2)] : 0; }
 
@@ -150,7 +180,7 @@
     document.getElementById("b-name").textContent = r.country_name;
     document.getElementById("b-sub").textContent = (r.income_group || "") + " income · " + (num(r.usage_pct_global) != null ? num(r.usage_pct_global).toFixed(2) + "% of global Claude.ai use" : "");
     destroy();
-    scoreCard(r); macro(r); innov(r); useCaseChart(r); collabChart(r); aipiChart(r); quadChart(r); infra(r); takeaways(r);
+    scoreCard(r); macro(r); innov(r); useCaseChart(r); collabChart(r); aipiChart(r); quadChart(r); infra(r); takeaways(r); equity(r);
     history.replaceState(null, "", "country.html?iso=" + iso);
     var sel = document.getElementById("brief-country"); if (sel) sel.value = iso;
     var cc = document.getElementById("commission-cta");
