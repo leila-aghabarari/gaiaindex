@@ -568,6 +568,29 @@
   </div>
 </section>
 
+<!-- EQUITY & DISTRIBUTION -->
+<section class="gaia-landscape">
+  <h2>Equity &amp; distribution</h2>
+  <p style="color:var(--muted);max-width:660px;margin:-.5rem 0 1.25rem;font-size:.92rem">Who bears AI exposure? Occupation exposure crossed with US workforce demographics (American Community Survey / IPUMS), employment-weighted.</p>
+  <div class="gaia-panel-grid">
+    <div class="gaia-chart-card">
+      <button class="gaia-dl-btn" id="dl-eq-corr" type="button">Download PNG</button>
+      <p class="gaia-chart-title">What predicts AI exposure?</p>
+      <p class="gaia-chart-sub">Correlation of GAIA-E with each demographic (teal = more exposed, coral = less)</p>
+      <div class="gaia-chart-wrap" style="height:360px"><canvas id="eq-corr"></canvas></div>
+      <p class="gaia-chart-src">Source: GAIA-E (Eloundou 2024) × ACS/IPUMS occupation demographics. Pearson r across 898 occupations.</p>
+    </div>
+    <div class="gaia-chart-card">
+      <button class="gaia-dl-btn" id="dl-eq-group" type="button">Download PNG</button>
+      <p class="gaia-chart-title">Exposure by group</p>
+      <p class="gaia-chart-sub" id="eq-group-sub">Employment-weighted mean GAIA-E, by demographic split</p>
+      <div class="gaia-chart-wrap" style="height:360px"><canvas id="eq-group"></canvas></div>
+      <p class="gaia-chart-src">Source: employment-weighted (BLS OEWS) mean exposure by ACS/IPUMS demographic split.</p>
+    </div>
+  </div>
+  <p id="eq-take" style="font-size:.9rem;color:var(--cyan);background:var(--teal-glow);border:1px solid var(--teal-dim);border-radius:9px;padding:.8rem 1rem;margin-top:1rem;max-width:none"></p>
+</section>
+
 <div class="table-wrap">
   <table id="occTable">
     <thead>
@@ -1105,6 +1128,7 @@ render();
 <script defer src="assets/gaia-occ-compare.js"></script>
 <script defer src="assets/gaia-occ-landscape.js"></script>
 <script defer src="assets/gaia-sector-lens.js"></script>
+<script defer src="assets/gaia-equity-lens.js"></script>
 <script defer src="assets/gaia-enhance.js"></script>
 <script defer src="assets/gaia-nav.js"></script>
 </body>
