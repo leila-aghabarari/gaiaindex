@@ -20,7 +20,8 @@
   function render() {
     var q = (document.getElementById("rk-search").value || "").toLowerCase();
     var inc = document.getElementById("rk-income").value;
-    view = rows.filter(function (r) { return (!q || r.name.toLowerCase().indexOf(q) >= 0) && (!inc || r.income === inc); });
+    var reg = document.getElementById("rk-region").value;
+    view = rows.filter(function (r) { return (!q || r.name.toLowerCase().indexOf(q) >= 0) && (!inc || r.income === inc) && (!reg || r.continent === reg); });
     view.sort(function (a, b) {
       var x = a[sortK], y = b[sortK];
       if (x == null && y == null) return 0;
@@ -48,11 +49,18 @@
         en.forEach(function (x) { if (byIso[x.iso3]) byIso[x.iso3].elec = num(x.elec_demand_twh); });
         load("data/gaia_datacenters_osm.csv", function (dc) {
           dc.forEach(function (x) { if (x.iso3 && byIso[x.iso3]) byIso[x.iso3].dc++; });
+          load("data/gaia_regions.csv", function (rg) {
+          rg.forEach(function (x) { if (x.iso3 && byIso[x.iso3]) byIso[x.iso3].continent = x.continent; });
           rows = Object.values(byIso);
           // income filter options
           var incs = {}; rows.forEach(function (r) { if (r.income) incs[r.income] = 1; });
           var sel = document.getElementById("rk-income");
           Object.keys(incs).sort().forEach(function (i) { var o = document.createElement("option"); o.value = i; o.textContent = i + " income"; sel.appendChild(o); });
+          // continent filter options
+          var cont = {}; rows.forEach(function (r) { if (r.continent) cont[r.continent] = 1; });
+          var rsel = document.getElementById("rk-region");
+          Object.keys(cont).sort().forEach(function (c) { var o = document.createElement("option"); o.value = c; o.textContent = c; rsel.appendChild(o); });
+          rsel.addEventListener("change", render);
           // sort handlers
           document.querySelectorAll("th[data-k]").forEach(function (th) {
             th.addEventListener("click", function () {
@@ -64,6 +72,7 @@
           document.getElementById("rk-search").addEventListener("input", render);
           sel.addEventListener("change", render);
           render();
+          });
         });
       });
     });

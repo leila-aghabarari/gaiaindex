@@ -1,0 +1,140 @@
+# ISO3 -> continent (static reference for the region filter).
+iso3,country,continent
+ARE,United Arab Emirates,Asia
+ALB,Albania,Europe
+ARM,Armenia,Asia
+AGO,Angola,Africa
+ARG,Argentina,South America
+AUT,Austria,Europe
+AUS,Australia,Oceania
+AZE,Azerbaijan,Asia
+BIH,Bosnia,Europe
+BRB,Barbados,North America
+BGD,Bangladesh,Asia
+BEL,Belgium,Europe
+BFA,Burkina Faso,Africa
+BGR,Bulgaria,Europe
+BHR,Bahrain,Asia
+BEN,Benin,Africa
+BRN,Brunei,Asia
+BOL,Bolivia,South America
+BRA,Brazil,South America
+BTN,Bhutan,Asia
+BWA,Botswana,Africa
+BLZ,Belize,North America
+CAN,Canada,North America
+COG,Congo,Africa
+CHE,Switzerland,Europe
+CIV,Ivory Coast,Africa
+CHL,Chile,South America
+CMR,Cameroon,Africa
+COL,Colombia,South America
+CRI,Costa Rica,North America
+CZE,Czech Republic,Europe
+DEU,Germany,Europe
+DJI,Djibouti,Africa
+DNK,Denmark,Europe
+DOM,Dominican Republic,North America
+DZA,Algeria,Africa
+ECU,Ecuador,South America
+EST,Estonia,Europe
+EGY,Egypt,Africa
+ESP,Spain,Europe
+FIN,Finland,Europe
+FJI,Fiji,Oceania
+FRA,France,Europe
+GBR,United Kingdom,Europe
+GRD,Grenada,North America
+GEO,Georgia,Asia
+GHA,Ghana,Africa
+GMB,Gambia,Africa
+GIN,Guinea,Africa
+GRC,Greece,Europe
+GTM,Guatemala,North America
+HND,Honduras,North America
+HRV,Croatia,Europe
+HTI,Haiti,North America
+HUN,Hungary,Europe
+IDN,Indonesia,Asia
+IRL,Ireland,Europe
+ISR,Israel,Asia
+IND,India,Asia
+IRQ,Iraq,Asia
+ITA,Italy,Europe
+JAM,Jamaica,North America
+JOR,Jordan,Asia
+JPN,Japan,Asia
+KEN,Kenya,Africa
+KGZ,Kyrgyzstan,Asia
+KHM,Cambodia,Asia
+COM,Comoros,Africa
+KOR,South Korea,Asia
+KWT,Kuwait,Asia
+KAZ,Kazakhstan,Asia
+LBN,Lebanon,Asia
+LCA,Saint Lucia,North America
+LKA,Sri Lanka,Asia
+LBR,Liberia,Africa
+LTU,Lithuania,Europe
+LUX,Luxembourg,Europe
+LVA,Latvia,Europe
+MAR,Morocco,Africa
+MDA,Moldova,Europe
+MNE,Montenegro,Europe
+MDG,Madagascar,Africa
+MKD,North Macedonia,Europe
+MNG,Mongolia,Asia
+MRT,Mauritania,Africa
+MUS,Mauritius,Africa
+MDV,Maldives,Asia
+MWI,Malawi,Africa
+MEX,Mexico,North America
+MYS,Malaysia,Asia
+MOZ,Mozambique,Africa
+NER,Niger,Africa
+NGA,Nigeria,Africa
+NLD,Netherlands,Europe
+NOR,Norway,Europe
+NPL,Nepal,Asia
+NZL,New Zealand,Oceania
+OMN,Oman,Asia
+PAN,Panama,North America
+PER,Peru,South America
+PNG,Papua New Guinea,Oceania
+PHL,Philippines,Asia
+PAK,Pakistan,Asia
+POL,Poland,Europe
+PSE,Palestine,Asia
+PRT,Portugal,Europe
+PRY,Paraguay,South America
+QAT,Qatar,Asia
+ROU,Romania,Europe
+SRB,Serbia,Europe
+RWA,Rwanda,Africa
+SAU,Saudi Arabia,Asia
+SWE,Sweden,Europe
+SGP,Singapore,Asia
+SVN,Slovenia,Europe
+SVK,Slovakia,Europe
+SLE,Sierra Leone,Africa
+SEN,Senegal,Africa
+TCD,Chad,Africa
+TGO,Togo,Africa
+THA,Thailand,Asia
+TJK,Tajikistan,Asia
+TLS,Timor-Leste,Asia
+TUN,Tunisia,Africa
+TUR,Turkey,Asia
+TTO,Trinidad and Tobago,North America
+TWN,Taiwan,Asia
+TZA,Tanzania,Africa
+UKR,Ukraine,Europe
+UGA,Uganda,Africa
+USA,United States,North America
+URY,Uruguay,South America
+UZB,Uzbekistan,Asia
+VCT,Saint Vincent,North America
+VNM,Vietnam,Asia
+ZAF,South Africa,Africa
+ZMB,Zambia,Africa
+ZWE,Zimbabwe,Africa

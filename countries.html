@@ -882,6 +882,9 @@
 </aside>
 
 <div class="controls">
+  <select id="regionFilter">
+    <option value="">All continents</option>
+  </select>
   <select id="incomeFilter">
     <option value="">All income groups</option>
     <option value="High">High income</option>
@@ -1109,7 +1112,8 @@ function showDetail(geoId) {
 
 function applyFilters() {
   const income = document.getElementById('incomeFilter').value;
-  filtered = allData.filter(row => !income || row.income_group === income);
+  const region = document.getElementById('regionFilter').value;
+  filtered = allData.filter(row => (!income || row.income_group === income) && (!region || row._continent === region));
 
   const sortMap = {
     'usage_desc':      ['usage_pct_global', -1],
@@ -1356,7 +1360,9 @@ Promise.all([
   parseCsv('data/ai_regulation.csv'),
   parseCsv('data/oecd_adoption.csv'),
   parseCsv('data/imf_aipi.csv'),
-]).then(([main, sentiment, regulation, adoption, aipi]) => {
+  parseCsv('data/gaia_regions.csv'),
+]).then(([main, sentiment, regulation, adoption, aipi, regions]) => {
+  const regionMap = Object.fromEntries(regions.map(r => [r.iso3, r.continent]).filter(([,v]) => v));
   sentimentMap   = Object.fromEntries(sentiment.map(r  => [r.iso3,  parseFloat(r.ai_net_optimism)]).filter(([,v]) => !isNaN(v)));
   regulationMap  = Object.fromEntries(regulation.map(r => [r.iso3,  parseInt(r.ai_policies)]).filter(([,v]) => !isNaN(v)));
   // oecd_adoption uses ISO2 geo codes matching gaia_countries geo_id
@@ -1370,7 +1376,14 @@ Promise.all([
     r._regulation   = regulationMap[iso3]  ?? null;
     r._oecd_adoption= adoptionMap[geo]     ?? null;
     r._aipi         = aipiMap[geo] ?? (r.aipi_overall ? parseFloat(r.aipi_overall) : null);
+    r._continent    = regionMap[iso3] || '';
     return r;
+  });
+
+  // populate continent filter
+  const rf = document.getElementById('regionFilter');
+  [...new Set(allData.map(r => r._continent).filter(Boolean))].sort().forEach(c => {
+    const o = document.createElement('option'); o.value = c; o.textContent = c; rf.appendChild(o);
   });
 
   document.getElementById('loading').style.display = 'none';
@@ -1378,6 +1391,7 @@ Promise.all([
   applyFilters();
   document.getElementById('searchInput').addEventListener('input', updateCharts);
   document.getElementById('incomeFilter').addEventListener('change', applyFilters);
+  document.getElementById('regionFilter').addEventListener('change', applyFilters);
   document.getElementById('sortSelect').addEventListener('change', applyFilters);
 }).catch(() => {
   document.getElementById('loading').textContent = 'Error loading data.';
