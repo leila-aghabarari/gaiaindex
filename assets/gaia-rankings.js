@@ -50,7 +50,7 @@
         load("data/gaia_datacenters_osm.csv", function (dc) {
           dc.forEach(function (x) { if (x.iso3 && byIso[x.iso3]) byIso[x.iso3].dc++; });
           load("data/gaia_regions.csv", function (rg) {
-          rg.forEach(function (x) { if (x.iso3 && byIso[x.iso3]) byIso[x.iso3].continent = x.continent; });
+          rg.forEach(function (x) { if (x.iso3 && byIso[x.iso3]) byIso[x.iso3].continent = x.region; });
           rows = Object.values(byIso);
           // income filter options
           var incs = {}; rows.forEach(function (r) { if (r.income) incs[r.income] = 1; });

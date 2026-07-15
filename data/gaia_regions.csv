@@ -1,140 +1,140 @@
-# ISO3 -> continent (static reference for the region filter).
-iso3,country,continent
-ARE,United Arab Emirates,Asia
-ALB,Albania,Europe
-ARM,Armenia,Asia
-AGO,Angola,Africa
-ARG,Argentina,South America
-AUT,Austria,Europe
-AUS,Australia,Oceania
-AZE,Azerbaijan,Asia
-BIH,Bosnia,Europe
-BRB,Barbados,North America
-BGD,Bangladesh,Asia
-BEL,Belgium,Europe
-BFA,Burkina Faso,Africa
-BGR,Bulgaria,Europe
-BHR,Bahrain,Asia
-BEN,Benin,Africa
-BRN,Brunei,Asia
-BOL,Bolivia,South America
-BRA,Brazil,South America
-BTN,Bhutan,Asia
-BWA,Botswana,Africa
-BLZ,Belize,North America
+# ISO3 -> World Bank region (static reference for the region filter).
+iso3,country,region
+ARE,United Arab Emirates,Middle East & North Africa
+ALB,Albania,Europe & Central Asia
+ARM,Armenia,Europe & Central Asia
+AGO,Angola,Sub-Saharan Africa
+ARG,Argentina,Latin America & Caribbean
+AUT,Austria,Europe & Central Asia
+AUS,Australia,East Asia & Pacific
+AZE,Azerbaijan,Europe & Central Asia
+BIH,Bosnia,Europe & Central Asia
+BRB,Barbados,Latin America & Caribbean
+BGD,Bangladesh,South Asia
+BEL,Belgium,Europe & Central Asia
+BFA,Burkina Faso,Sub-Saharan Africa
+BGR,Bulgaria,Europe & Central Asia
+BHR,Bahrain,Middle East & North Africa
+BEN,Benin,Sub-Saharan Africa
+BRN,Brunei,East Asia & Pacific
+BOL,Bolivia,Latin America & Caribbean
+BRA,Brazil,Latin America & Caribbean
+BTN,Bhutan,South Asia
+BWA,Botswana,Sub-Saharan Africa
+BLZ,Belize,Latin America & Caribbean
 CAN,Canada,North America
-COG,Congo,Africa
-CHE,Switzerland,Europe
-CIV,Ivory Coast,Africa
-CHL,Chile,South America
-CMR,Cameroon,Africa
-COL,Colombia,South America
-CRI,Costa Rica,North America
-CZE,Czech Republic,Europe
-DEU,Germany,Europe
-DJI,Djibouti,Africa
-DNK,Denmark,Europe
-DOM,Dominican Republic,North America
-DZA,Algeria,Africa
-ECU,Ecuador,South America
-EST,Estonia,Europe
-EGY,Egypt,Africa
-ESP,Spain,Europe
-FIN,Finland,Europe
-FJI,Fiji,Oceania
-FRA,France,Europe
-GBR,United Kingdom,Europe
-GRD,Grenada,North America
-GEO,Georgia,Asia
-GHA,Ghana,Africa
-GMB,Gambia,Africa
-GIN,Guinea,Africa
-GRC,Greece,Europe
-GTM,Guatemala,North America
-HND,Honduras,North America
-HRV,Croatia,Europe
-HTI,Haiti,North America
-HUN,Hungary,Europe
-IDN,Indonesia,Asia
-IRL,Ireland,Europe
-ISR,Israel,Asia
-IND,India,Asia
-IRQ,Iraq,Asia
-ITA,Italy,Europe
-JAM,Jamaica,North America
-JOR,Jordan,Asia
-JPN,Japan,Asia
-KEN,Kenya,Africa
-KGZ,Kyrgyzstan,Asia
-KHM,Cambodia,Asia
-COM,Comoros,Africa
-KOR,South Korea,Asia
-KWT,Kuwait,Asia
-KAZ,Kazakhstan,Asia
-LBN,Lebanon,Asia
-LCA,Saint Lucia,North America
-LKA,Sri Lanka,Asia
-LBR,Liberia,Africa
-LTU,Lithuania,Europe
-LUX,Luxembourg,Europe
-LVA,Latvia,Europe
-MAR,Morocco,Africa
-MDA,Moldova,Europe
-MNE,Montenegro,Europe
-MDG,Madagascar,Africa
-MKD,North Macedonia,Europe
-MNG,Mongolia,Asia
-MRT,Mauritania,Africa
-MUS,Mauritius,Africa
-MDV,Maldives,Asia
-MWI,Malawi,Africa
-MEX,Mexico,North America
-MYS,Malaysia,Asia
-MOZ,Mozambique,Africa
-NER,Niger,Africa
-NGA,Nigeria,Africa
-NLD,Netherlands,Europe
-NOR,Norway,Europe
-NPL,Nepal,Asia
-NZL,New Zealand,Oceania
-OMN,Oman,Asia
-PAN,Panama,North America
-PER,Peru,South America
-PNG,Papua New Guinea,Oceania
-PHL,Philippines,Asia
-PAK,Pakistan,Asia
-POL,Poland,Europe
-PSE,Palestine,Asia
-PRT,Portugal,Europe
-PRY,Paraguay,South America
-QAT,Qatar,Asia
-ROU,Romania,Europe
-SRB,Serbia,Europe
-RWA,Rwanda,Africa
-SAU,Saudi Arabia,Asia
-SWE,Sweden,Europe
-SGP,Singapore,Asia
-SVN,Slovenia,Europe
-SVK,Slovakia,Europe
-SLE,Sierra Leone,Africa
-SEN,Senegal,Africa
-TCD,Chad,Africa
-TGO,Togo,Africa
-THA,Thailand,Asia
-TJK,Tajikistan,Asia
-TLS,Timor-Leste,Asia
-TUN,Tunisia,Africa
-TUR,Turkey,Asia
-TTO,Trinidad and Tobago,North America
-TWN,Taiwan,Asia
-TZA,Tanzania,Africa
-UKR,Ukraine,Europe
-UGA,Uganda,Africa
+COG,Congo,Sub-Saharan Africa
+CHE,Switzerland,Europe & Central Asia
+CIV,Ivory Coast,Sub-Saharan Africa
+CHL,Chile,Latin America & Caribbean
+CMR,Cameroon,Sub-Saharan Africa
+COL,Colombia,Latin America & Caribbean
+CRI,Costa Rica,Latin America & Caribbean
+CZE,Czech Republic,Europe & Central Asia
+DEU,Germany,Europe & Central Asia
+DJI,Djibouti,Middle East & North Africa
+DNK,Denmark,Europe & Central Asia
+DOM,Dominican Republic,Latin America & Caribbean
+DZA,Algeria,Middle East & North Africa
+ECU,Ecuador,Latin America & Caribbean
+EST,Estonia,Europe & Central Asia
+EGY,Egypt,Middle East & North Africa
+ESP,Spain,Europe & Central Asia
+FIN,Finland,Europe & Central Asia
+FJI,Fiji,East Asia & Pacific
+FRA,France,Europe & Central Asia
+GBR,United Kingdom,Europe & Central Asia
+GRD,Grenada,Latin America & Caribbean
+GEO,Georgia,Europe & Central Asia
+GHA,Ghana,Sub-Saharan Africa
+GMB,Gambia,Sub-Saharan Africa
+GIN,Guinea,Sub-Saharan Africa
+GRC,Greece,Europe & Central Asia
+GTM,Guatemala,Latin America & Caribbean
+HND,Honduras,Latin America & Caribbean
+HRV,Croatia,Europe & Central Asia
+HTI,Haiti,Latin America & Caribbean
+HUN,Hungary,Europe & Central Asia
+IDN,Indonesia,East Asia & Pacific
+IRL,Ireland,Europe & Central Asia
+ISR,Israel,Middle East & North Africa
+IND,India,South Asia
+IRQ,Iraq,Middle East & North Africa
+ITA,Italy,Europe & Central Asia
+JAM,Jamaica,Latin America & Caribbean
+JOR,Jordan,Middle East & North Africa
+JPN,Japan,East Asia & Pacific
+KEN,Kenya,Sub-Saharan Africa
+KGZ,Kyrgyzstan,Europe & Central Asia
+KHM,Cambodia,East Asia & Pacific
+COM,Comoros,Sub-Saharan Africa
+KOR,South Korea,East Asia & Pacific
+KWT,Kuwait,Middle East & North Africa
+KAZ,Kazakhstan,Europe & Central Asia
+LBN,Lebanon,Middle East & North Africa
+LCA,Saint Lucia,Latin America & Caribbean
+LKA,Sri Lanka,South Asia
+LBR,Liberia,Sub-Saharan Africa
+LTU,Lithuania,Europe & Central Asia
+LUX,Luxembourg,Europe & Central Asia
+LVA,Latvia,Europe & Central Asia
+MAR,Morocco,Middle East & North Africa
+MDA,Moldova,Europe & Central Asia
+MNE,Montenegro,Europe & Central Asia
+MDG,Madagascar,Sub-Saharan Africa
+MKD,North Macedonia,Europe & Central Asia
+MNG,Mongolia,East Asia & Pacific
+MRT,Mauritania,Sub-Saharan Africa
+MUS,Mauritius,Sub-Saharan Africa
+MDV,Maldives,South Asia
+MWI,Malawi,Sub-Saharan Africa
+MEX,Mexico,Latin America & Caribbean
+MYS,Malaysia,East Asia & Pacific
+MOZ,Mozambique,Sub-Saharan Africa
+NER,Niger,Sub-Saharan Africa
+NGA,Nigeria,Sub-Saharan Africa
+NLD,Netherlands,Europe & Central Asia
+NOR,Norway,Europe & Central Asia
+NPL,Nepal,South Asia
+NZL,New Zealand,East Asia & Pacific
+OMN,Oman,Middle East & North Africa
+PAN,Panama,Latin America & Caribbean
+PER,Peru,Latin America & Caribbean
+PNG,Papua New Guinea,East Asia & Pacific
+PHL,Philippines,East Asia & Pacific
+PAK,Pakistan,South Asia
+POL,Poland,Europe & Central Asia
+PSE,Palestine,Middle East & North Africa
+PRT,Portugal,Europe & Central Asia
+PRY,Paraguay,Latin America & Caribbean
+QAT,Qatar,Middle East & North Africa
+ROU,Romania,Europe & Central Asia
+SRB,Serbia,Europe & Central Asia
+RWA,Rwanda,Sub-Saharan Africa
+SAU,Saudi Arabia,Middle East & North Africa
+SWE,Sweden,Europe & Central Asia
+SGP,Singapore,East Asia & Pacific
+SVN,Slovenia,Europe & Central Asia
+SVK,Slovakia,Europe & Central Asia
+SLE,Sierra Leone,Sub-Saharan Africa
+SEN,Senegal,Sub-Saharan Africa
+TCD,Chad,Sub-Saharan Africa
+TGO,Togo,Sub-Saharan Africa
+THA,Thailand,East Asia & Pacific
+TJK,Tajikistan,Europe & Central Asia
+TLS,Timor-Leste,East Asia & Pacific
+TUN,Tunisia,Middle East & North Africa
+TUR,Turkey,Europe & Central Asia
+TTO,Trinidad and Tobago,Latin America & Caribbean
+TWN,Taiwan,East Asia & Pacific
+TZA,Tanzania,Sub-Saharan Africa
+UKR,Ukraine,Europe & Central Asia
+UGA,Uganda,Sub-Saharan Africa
 USA,United States,North America
-URY,Uruguay,South America
-UZB,Uzbekistan,Asia
-VCT,Saint Vincent,North America
-VNM,Vietnam,Asia
-ZAF,South Africa,Africa
-ZMB,Zambia,Africa
-ZWE,Zimbabwe,Africa
+URY,Uruguay,Latin America & Caribbean
+UZB,Uzbekistan,Europe & Central Asia
+VCT,Saint Vincent,Latin America & Caribbean
+VNM,Vietnam,East Asia & Pacific
+ZAF,South Africa,Sub-Saharan Africa
+ZMB,Zambia,Sub-Saharan Africa
+ZWE,Zimbabwe,Sub-Saharan Africa

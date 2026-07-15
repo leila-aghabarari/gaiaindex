@@ -883,7 +883,7 @@
 
 <div class="controls">
   <select id="regionFilter">
-    <option value="">All continents</option>
+    <option value="">All regions</option>
   </select>
   <select id="incomeFilter">
     <option value="">All income groups</option>
@@ -1362,7 +1362,7 @@ Promise.all([
   parseCsv('data/imf_aipi.csv'),
   parseCsv('data/gaia_regions.csv'),
 ]).then(([main, sentiment, regulation, adoption, aipi, regions]) => {
-  const regionMap = Object.fromEntries(regions.map(r => [r.iso3, r.continent]).filter(([,v]) => v));
+  const regionMap = Object.fromEntries(regions.map(r => [r.iso3, r.region]).filter(([,v]) => v));
   sentimentMap   = Object.fromEntries(sentiment.map(r  => [r.iso3,  parseFloat(r.ai_net_optimism)]).filter(([,v]) => !isNaN(v)));
   regulationMap  = Object.fromEntries(regulation.map(r => [r.iso3,  parseInt(r.ai_policies)]).filter(([,v]) => !isNaN(v)));
   // oecd_adoption uses ISO2 geo codes matching gaia_countries geo_id

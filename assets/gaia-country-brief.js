@@ -7,7 +7,7 @@
   if (typeof Papa === "undefined" || typeof Chart === "undefined" || !window.GAIA_CHART) return;
   var K = window.GAIA_CHART, C = K.colors;
 
-  var countries = [], byIso = {}, rank = {}, gAvg = {}, osmCount = {}, curated = {}, macroByIso = {}, energyByIso = {}, dcShareByIso = {}, innovByIso = {};
+  var countries = [], byIso = {}, rank = {}, gAvg = {}, osmCount = {}, curated = {}, macroByIso = {}, energyByIso = {}, dcShareByIso = {}, innovByIso = {}, regionByIso = {};
   var charts = {};
   function fmtUsd(v) { v = +v; return v >= 1e12 ? "$" + (v / 1e12).toFixed(1) + "T" : v >= 1e9 ? "$" + (v / 1e9).toFixed(0) + "B" : v >= 1e6 ? "$" + (v / 1e6).toFixed(0) + "M" : "$" + Math.round(v).toLocaleString(); }
   function fmtNum(v) { v = +v; return v >= 1e6 ? (v / 1e6).toFixed(1) + "M" : v >= 1e3 ? Math.round(v / 1e3) + "k" : Math.round(v).toLocaleString(); }
@@ -207,15 +207,27 @@
         dce.forEach(function (d) { if (d.iso3) dcShareByIso[d.iso3] = { pct: num(d.dc_share_pct), src: d.source }; });
         loadCsv("data/gaia_innovation.csv", function (inv) {
         inv.forEach(function (x) { if (x.iso3) innovByIso[x.iso3] = { rd_pct_gdp: num(x.rd_pct_gdp), researchers_per_m: num(x.researchers_per_m), patents_resident: num(x.patents_resident), hitech_exports_pct: num(x.hitech_exports_pct) }; });
-        // populate selector
-        var sel = document.getElementById("brief-country");
-        if (sel) {
-          countries.slice().sort(function (a, b) { return (a.country_name || "").localeCompare(b.country_name || ""); })
+        loadCsv("data/gaia_regions.csv", function (rg) {
+        rg.forEach(function (x) { if (x.iso3) regionByIso[x.iso3] = x.region; });
+        var sel = document.getElementById("brief-country"), rsel = document.getElementById("brief-region");
+        function fillCountries(region) {
+          if (!sel) return;
+          var cur = sel.value;
+          sel.innerHTML = '<option value="">Country…</option>';
+          countries.slice().filter(function (r) { return !region || regionByIso[r.iso3] === region; })
+            .sort(function (a, b) { return (a.country_name || "").localeCompare(b.country_name || ""); })
             .forEach(function (r) { var o = document.createElement("option"); o.value = r.iso3; o.textContent = r.country_name; sel.appendChild(o); });
-          sel.addEventListener("change", function () { if (sel.value) render(sel.value); });
+          if ([].some.call(sel.options, function (o) { return o.value === cur; })) sel.value = cur;
+        }
+        if (sel) { fillCountries(""); sel.addEventListener("change", function () { if (sel.value) render(sel.value); }); }
+        if (rsel) {
+          var regs = {}; countries.forEach(function (r) { if (regionByIso[r.iso3]) regs[regionByIso[r.iso3]] = 1; });
+          Object.keys(regs).sort().forEach(function (rn) { var o = document.createElement("option"); o.value = rn; o.textContent = rn; rsel.appendChild(o); });
+          rsel.addEventListener("change", function () { fillCountries(rsel.value); });
         }
         var want = new URLSearchParams(location.search).get("iso");
         render(byIso[want] ? want : "USA");
+        });
         });
         });
         });
