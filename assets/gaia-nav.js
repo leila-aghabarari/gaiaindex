@@ -35,6 +35,27 @@
   document.addEventListener("click", function () { closeAll(null); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAll(null); });
 
+  // mobile hamburger — toggles the whole nav on small screens
+  var navEl = document.querySelector("nav");
+  var inner = navEl && navEl.querySelector(".nav-inner");
+  if (inner && !inner.querySelector(".gaia-burger")) {
+    var burger = document.createElement("button");
+    burger.className = "gaia-burger";
+    burger.setAttribute("aria-label", "Toggle menu");
+    burger.setAttribute("aria-expanded", "false");
+    burger.innerHTML = "<span></span><span></span><span></span>";
+    inner.appendChild(burger);
+    burger.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = navEl.classList.toggle("gaia-nav-open");
+      burger.setAttribute("aria-expanded", String(open));
+    });
+    navEl.querySelectorAll(".nav-links a").forEach(function (a) {
+      a.addEventListener("click", function () { navEl.classList.remove("gaia-nav-open"); });
+    });
+    document.addEventListener("click", function (e) { if (!navEl.contains(e.target)) navEl.classList.remove("gaia-nav-open"); });
+  }
+
   // ensure License + Community are reachable from the footer
   var footer = document.querySelector("footer");
   if (footer) {
@@ -65,6 +86,34 @@
         "html.gaia-js .gaia-reveal{transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}",
         "html.gaia-js .gaia-reveal:not(.gaia-in){opacity:0;transform:translateY(18px)}",
         "@media (prefers-reduced-motion:reduce){html.gaia-js .gaia-reveal{opacity:1!important;transform:none!important;transition:none!important}}",
+        // ── mobile nav (hamburger) — injected last so it beats each page's inline nav styles ──
+        ".gaia-burger{display:none;background:none;border:0;cursor:pointer;padding:.5rem;margin-left:.5rem;flex-direction:column;justify-content:center}",
+        ".gaia-burger span{display:block;width:22px;height:2px;background:#e6f2ee;margin:3px 0;border-radius:2px;transition:transform .25s,opacity .2s}",
+        "nav.gaia-nav-open .gaia-burger span:nth-child(1){transform:translateY(5px) rotate(45deg)}",
+        "nav.gaia-nav-open .gaia-burger span:nth-child(2){opacity:0}",
+        "nav.gaia-nav-open .gaia-burger span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}",
+        "@media(max-width:860px){",
+        "  nav .nav-inner{position:relative}",
+        "  .gaia-burger{display:inline-flex}",
+        "  nav .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;align-items:stretch;background:#0d1c26;border:1px solid #24333f;border-radius:0 0 12px 12px;box-shadow:0 22px 44px -22px rgba(0,0,0,.7);padding:.4rem .6rem 1rem;max-height:calc(100vh - 60px);overflow-y:auto;display:none}",
+        "  nav.gaia-nav-open .nav-links{display:flex}",
+        "  nav .nav-links>li{width:100%;border-top:1px solid rgba(255,255,255,.05)}",
+        "  nav .nav-links>li:first-child{border-top:0}",
+        "  nav .nav-links a,nav .nav-dd-btn{display:block;width:100%;padding:.8rem .5rem;font-size:1rem;text-align:left}",
+        "  nav .nav-dd{position:static}",
+        "  nav .nav-dd-menu{position:static;min-width:0;background:transparent;border:0;box-shadow:none;opacity:1;visibility:visible;transform:none;padding:0 0 .3rem 1rem;display:none}",
+        "  nav .nav-dd.open .nav-dd-menu{display:block}",
+        "  nav .nav-dd-btn .nav-caret{float:right}",
+        "}",
+        "@media(max-width:520px){.nav-logo-sub{display:none}}",
+        // ── general mobile: tighten oversized horizontal padding, prevent sideways overflow ──
+        "@media(max-width:600px){",
+        "  html,body{overflow-x:hidden}",
+        "  nav{padding:0 1rem}",
+        "  section{padding-left:1.15rem;padding-right:1.15rem}",
+        "  .wrap,.container,.page-header,.controls,.table-wrap,.hero,.section-inner,.brief-head{padding-left:1.15rem;padding-right:1.15rem}",
+        "  img,canvas,svg{max-width:100%}",
+        "}",
       ].join("");
       document.head.appendChild(st);
     }
